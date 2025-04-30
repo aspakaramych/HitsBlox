@@ -1,0 +1,11 @@
+import 'package:app/core/abstracts/Expression.dart';
+import 'package:app/core/registry/VariableRegistry.dart';
+
+class BoolLiteral implements Expression {
+  final bool value;
+
+  BoolLiteral(this.value);
+
+  @override
+  bool evaluate(VariableRegistry registry) => value;
+}
