@@ -21,14 +21,16 @@ class Engine {
   }
 
   Future<void> startExecution(Node node) async {
-    await node.execute(registry, this);
+    await node.execute(registry);
+    await goToNextNodes(node);
   }
 
-  Future<void> triggerConnections(Node currentNode) async{
+  Future<void> goToNextNodes(Node currentNode) async{
     for (var conn in graph.connections.where((c) => c.fromNodeId == currentNode.id)){
       var nextNode = graph.getNodeById(conn.toNodeId);
       if (nextNode != null){
-        await nextNode.execute(registry, this);
+        await nextNode.execute(registry);
+        await goToNextNodes(nextNode);
       }
     }
   }

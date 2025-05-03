@@ -1,3 +1,4 @@
+
 import 'package:app/core/Engine.dart';
 import 'package:app/core/Pins/Pin.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
@@ -17,5 +18,5 @@ abstract class Node {
     outputs.add(pin);
   }
 
-  Future<void> execute(VariableRegistry registry, Engine engine);
+  Future<void> execute(VariableRegistry registry);
 }
