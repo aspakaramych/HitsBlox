@@ -24,5 +24,4 @@ class BinaryOperations implements Expression{
       default: throw Exception("unknown operator $operator");
     }
   }
-
 }

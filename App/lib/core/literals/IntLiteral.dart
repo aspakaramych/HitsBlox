@@ -8,4 +8,9 @@ class IntLiteral implements Expression {
 
   @override
   int evaluate(VariableRegistry registry) => value;
+
+  @override
+  String toString(){
+    return value.toString();
+  }
 }

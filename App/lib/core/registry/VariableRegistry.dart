@@ -1,12 +1,13 @@
 class VariableRegistry{
-  final Map<String, dynamic> _variables = {};
+  final Map<String, Object?> _variables = {};
 
-  void setInt(String name, int value) => _variables[name] = value;
-  void setBool(String name, bool value) => _variables[name] = value;
-  void setArray<T>(String name, List<T> value) => _variables[name] = value;
+  void setValue<T>(String name, T value) => _variables[name] = value;
 
-  dynamic get(String name) => _variables[name];
-  int? getInt(String name) => _variables[name] as int?;
-  bool? getBool(String name) => _variables[name] as bool?;
-  List<dynamic>? getArray(String name) => _variables[name] as List<dynamic>?;
+  T? getValue<T>(String name) {
+    var value = _variables[name];
+    if (value is T){
+      return value;
+    }
+    return null;
+  }
 }

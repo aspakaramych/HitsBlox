@@ -8,4 +8,9 @@ class BoolLiteral implements Expression {
 
   @override
   bool evaluate(VariableRegistry registry) => value;
+
+  @override
+  String toString(){
+    return value ? "true" : "false";
+  }
 }
