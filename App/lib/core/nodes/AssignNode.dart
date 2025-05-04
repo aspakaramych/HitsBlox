@@ -52,7 +52,9 @@ class AssignNode extends Node {
 
       Expression expression = parseExpression(exprStr);
       commands.add(AssignVariableCommand<int>(variableName, expression));
-      addOutput(Pin(id: variableName, name: variableName, isInput: false));
+      var pin = new Pin(id: variableName, name: variableName, isInput: false);
+      pin.setValue((expression as IntLiteral).value); //TODO: Влад, я сделал страшную вещь
+      addOutput(pin);
     }
   }
 
