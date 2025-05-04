@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:app/core/nodes/AssignNode.dart';
 
-class LogicBlock {
+class AssignmentBlock {
   Offset position;
   AssignNode assignNode;
   bool isEditing;
@@ -10,5 +10,5 @@ class LogicBlock {
   double width;
   double height;
 
-  LogicBlock({required this.position, required this.assignNode, this.isEditing = false, this.width = 200, this.height = 60});
+  AssignmentBlock({required this.position, required this.assignNode, this.isEditing = false, this.width = 200, this.height = 60});
 }
