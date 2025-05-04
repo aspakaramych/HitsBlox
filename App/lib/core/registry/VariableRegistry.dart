@@ -1,5 +1,5 @@
 class VariableRegistry{
-  final Map<String, Object?> _variables = {};
+  final Map<String, dynamic> _variables = {};
 
   void setValue<T>(String name, T value) => _variables[name] = value;
 
@@ -10,4 +10,6 @@ class VariableRegistry{
     }
     return null;
   }
+
+  List<String> getAllVars() => _variables.keys.toList();
 }

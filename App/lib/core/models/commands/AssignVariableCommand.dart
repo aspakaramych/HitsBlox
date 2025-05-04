@@ -9,7 +9,7 @@ class AssignVariableCommand<T> implements Command{
   AssignVariableCommand(this.variableName, this.expression);
 
   @override
-  void execute(VariableRegistry registry) {
+  Future<void> execute(VariableRegistry registry) async {
     var result = expression.evaluate(registry);
     registry.setValue<T>(variableName, result as T);
   }
