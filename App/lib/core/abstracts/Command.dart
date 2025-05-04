@@ -1,5 +1,5 @@
 import 'package:app/core/registry/VariableRegistry.dart';
 
 abstract class Command{
-  void execute(VariableRegistry registry);
+  Future<void> execute(VariableRegistry registry);
 }
