@@ -1,5 +1,5 @@
-import 'package:app/design/screens/test_screen.dart';
-import 'package:app/design/screens/home_screen.dart';
+import 'package:app/screens/TestScreen.dart';
+import 'package:app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 

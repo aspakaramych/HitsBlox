@@ -1,0 +1,4 @@
+enum BockType {
+  assignment,
+  binaryOperation
+}
