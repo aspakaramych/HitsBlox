@@ -1,12 +1,12 @@
-class Pin {
+class Pin<T> {
   final String id;
   final String name;
   final bool isInput;
-  dynamic value;
+  T? value;
 
   Pin({required this.id, required this.name, required this.isInput});
 
-  void setValue(dynamic newValue) {
+  void setValue(T newValue) {
     value = newValue;
   }
 
