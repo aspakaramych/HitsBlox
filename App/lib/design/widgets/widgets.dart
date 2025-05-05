@@ -6,3 +6,4 @@ import '../theme/colors.dart';
 
 part 'bottomBar.dart';
 part 'topBar.dart';
+part 'console.dart';

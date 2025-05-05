@@ -1,6 +1,10 @@
 part of 'widgets.dart';
 
 class BottomBar extends StatelessWidget {
+  final VoidCallback onTerminalPressed;
+
+  const BottomBar({Key? key, required this.onTerminalPressed}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,7 +42,7 @@ class BottomBar extends StatelessWidget {
                 height: 40,
                 colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcIn),
               ),
-              onPressed: () {},
+              onPressed: onTerminalPressed,
             ),
             IconButton(
               icon: SvgPicture.asset(

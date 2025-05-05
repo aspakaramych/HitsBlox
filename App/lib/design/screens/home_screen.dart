@@ -1,40 +1,47 @@
 import 'package:flutter/material.dart';
 import 'test_screen.dart';
+import 'package:app/design/widgets/widgets.dart';
+import 'package:app/design/theme/colors.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class mainScreen extends StatefulWidget {
+  const mainScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<mainScreen> createState() => _mainScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  int _counter = 0;
+class _mainScreenState extends State<mainScreen> {
+  final GlobalKey<ConsoleState> consoleKey = GlobalKey();
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
+  void _showTerminalPanel(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+      ),
+      builder: (context) {
+        return Console(key: consoleKey);
+      },
+    );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (consoleKey.currentState != null) {
+        consoleKey.currentState?.appendText('> Консоль открыта');
+      } else {
+        print("Консоль ещё не создана");
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    const String from = "home";
     return Scaffold(
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          const SizedBox(width: 10),
-          FloatingActionButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed('/test-page');
-            },
-            child: const Icon(Icons.navigate_next),
-          ),
-        ],
-      ),
-
+      appBar: PreferredSize(preferredSize: Size(150, 75), child: TopBar()),
+      body: Center(child: Text('Hello Gleb'),),
+      bottomNavigationBar: BottomBar(onTerminalPressed: () {
+        _showTerminalPanel(context);
+      }),
+      backgroundColor: AppColors.background,
     );
   }
 }
