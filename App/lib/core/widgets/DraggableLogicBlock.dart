@@ -8,12 +8,12 @@ class AssignmentNodeWidget extends StatelessWidget {
   final Function() deleteNode;
 
   const AssignmentNodeWidget({
-    Key? key,
+    super.key,
     required this.block,
     required this.onEditToggle,
     required this.onDragEnd,
     required this.deleteNode,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
