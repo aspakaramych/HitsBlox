@@ -1,9 +1,8 @@
 import 'dart:developer';
 
+import 'package:app/core/nodes/AssignNode.dart';
+import 'package:app/design/widgets/AssignmentNodeWidget.dart';
 import 'package:flutter/material.dart';
-
-import '../core/nodes/AssignNode.dart';
-import '../core/widgets/AssignmentNodeWidget.dart';
 import '../utils/Randomizer.dart';
 import '../viewmodels/LogicBlock.dart';
 import '../viewmodels/MovableBlock.dart';
