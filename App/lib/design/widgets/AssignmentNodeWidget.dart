@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+<<<<<<<< HEAD:App/lib/design/widgets/DraggableLogicBlock.dart
 import '../../viewmodels/AssignmentNode.dart';
+========
+import 'package:app/design/viewmodels/LogicBlock.dart';
+>>>>>>>> origin:App/lib/design/widgets/AssignmentNodeWidget.dart
 
 class AssignmentBlockWidget extends StatelessWidget {
   final AssignmentBlock block;

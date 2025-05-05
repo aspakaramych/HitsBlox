@@ -1,5 +1,10 @@
 
+<<<<<<< HEAD
 import 'package:app/screens/TestScreen.dart';
+=======
+import 'package:app/design/screens/test_screen.dart';
+import 'package:app/screens/test_screen.dart';
+>>>>>>> origin
 import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
 
