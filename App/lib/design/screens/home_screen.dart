@@ -11,7 +11,6 @@ class mainScreen extends StatefulWidget {
 }
 
 class _mainScreenState extends State<mainScreen> {
-  final GlobalKey<ConsoleState> consoleKey = GlobalKey();
 
   void _showTerminalPanel(BuildContext context) {
     showModalBottomSheet(
@@ -20,17 +19,9 @@ class _mainScreenState extends State<mainScreen> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
       ),
       builder: (context) {
-        return Console(key: consoleKey);
+        return Console();
       },
     );
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (consoleKey.currentState != null) {
-        consoleKey.currentState?.appendText('> Консоль открыта');
-      } else {
-        print("Консоль ещё не создана");
-      }
-    });
   }
 
   @override

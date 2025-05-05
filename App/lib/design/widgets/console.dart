@@ -1,49 +1,60 @@
 part of 'widgets.dart';
 
 class Console extends StatefulWidget {
-  final String initialOutput;
-
-  const Console({Key? key, this.initialOutput = ""}) : super(key: key);
+  const Console({super.key});
 
   @override
-  State<Console> createState() => ConsoleState();
+  State<Console> createState() => _ConsoleState();
 }
 
-class ConsoleState extends State<Console> {
-  late String currentOutput;
-
-  void appendText(String newText) {
-    setState(() {
-      currentOutput += "\n$newText";
-    });
-  }
+class _ConsoleState extends State<Console> {
+  late final ConsoleService _consoleService; //TODO: эту штуку надо импортировать откуда-то
 
   @override
   void initState() {
     super.initState();
-    currentOutput = widget.initialOutput;
+    _consoleService = ConsoleService();
+    _consoleService.addListener(_onLogsChanged);
+  }
+
+  void _onLogsChanged() {
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    _consoleService.removeListener(_onLogsChanged);
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final logs = _consoleService.logs;
+
     return Container(
       padding: EdgeInsets.all(16),
-      margin: EdgeInsets.symmetric(horizontal: 100),
-      height: 500,
-      width: double.infinity,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text("Консоль", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.text), textAlign: TextAlign.left,),
+          Align(
+            alignment: Alignment.center,
+            child: Text(
+              "Консоль",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.text),
+            ),
+          ),
+          SizedBox(height: 10),
           Expanded(
             child: Align(
               alignment: Alignment.topLeft,
-              child: SingleChildScrollView(
-                child: Text(currentOutput,
-                  style: TextStyle(fontSize: 14, fontFamily: 'monospace', color: AppColors.text),
-                  textAlign: TextAlign.left,),
+              child: ListView(
+                children: [
+                  Text(
+                    '>' + logs.join('\n>'),
+                    style: TextStyle(fontFamily: 'monospace', fontSize: 14, color: AppColors.text),
+                  ),
+                ],
               ),
-            )
+            ),
           ),
         ],
       ),
