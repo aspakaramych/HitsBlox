@@ -33,32 +33,39 @@ class _mainScreenState extends State<mainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(preferredSize: Size(150, 75), child: TopBar()),
-      body: Column(
-        children: [
-          Expanded(
-            child: Center(
-              child: Text('Hello Gleb'),
-            ),
-          ),
+    return Stack(
+      children: [
+        TestScreen(),
 
-          if (_isAddSectionVisible)
-            AnimatedSize(
-              duration: Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: ItemsList(),
-              ),
-            ),
-        ],
-      ),
-      bottomNavigationBar: BottomBar(
-        onTerminalPressed: () => _showTerminalPanel(context),
-        onAddPressed: () => _toggleAddSection(),
-      ),
-      backgroundColor: AppColors.background,
+        Stack(
+          children: [
+            Column(
+              children: [
+                TopBar(),
+                Expanded(
+                  child: Center(),
+                ),
+
+                if (_isAddSectionVisible)
+                  AnimatedSize(
+                    duration: Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 16),
+                      child: ItemsList(),
+                    ),
+                  ),
+                BottomBar(
+                  onTerminalPressed: () => _showTerminalPanel(context),
+                  onAddPressed: () => _toggleAddSection(),
+                ),
+              ],
+            ),]
+        ),
+
+      ],
+
+
     );
   }
 }
