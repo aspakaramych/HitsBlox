@@ -91,6 +91,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  gesture_zoom_box:
+    dependency: "direct main"
+    description:
+      name: gesture_zoom_box
+      sha256: "96f4e1be4f8d46e1d7d7bc99b3cfe47f6d8ea3917ebf602ea4268da86e7b6358"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.4"
   http:
     dependency: transitive
     description:

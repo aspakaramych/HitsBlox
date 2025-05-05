@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'test_screen.dart';
 import 'package:app/design/widgets/widgets.dart';
+import 'package:app/design/theme/colors.dart';
+import 'TestScreen.dart';
 
 class mainScreen extends StatefulWidget {
   const mainScreen({super.key});
