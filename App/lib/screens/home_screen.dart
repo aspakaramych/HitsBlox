@@ -1,20 +1,35 @@
 import 'package:flutter/material.dart';
 import 'TestScreen.dart';
+import 'package:app/design/widgets/widgets.dart';
+import 'package:app/design/theme/colors.dart';
+import 'TestScreen.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class mainScreen extends StatefulWidget {
+  const mainScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<mainScreen> createState() => _mainScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  int _counter = 0;
+class _mainScreenState extends State<mainScreen> {
+  bool _isAddSectionVisible = false;
 
-  void _incrementCounter() {
+  void _toggleAddSection() {
     setState(() {
-      _counter++;
+      _isAddSectionVisible = !_isAddSectionVisible;
     });
+  }
+
+  void _showTerminalPanel(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+      ),
+      builder: (context) {
+        return Console();
+      },
+    );
   }
 
   @override
@@ -22,19 +37,31 @@ class _HomeScreenState extends State<HomeScreen> {
     final theme = Theme.of(context);
     const String from = "home";
     return Scaffold(
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
+      appBar: PreferredSize(preferredSize: Size(150, 75), child: TopBar()),
+      body: Column(
         children: [
-          const SizedBox(width: 10),
-          FloatingActionButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed('/test-page');
-            },
-            child: const Icon(Icons.navigate_next),
+          Expanded(
+            child: Center(
+              child: Text('Hello Gleb'),
+            ),
           ),
+
+          if (_isAddSectionVisible)
+            AnimatedSize(
+              duration: Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: ItemsList(),
+              ),
+            ),
         ],
       ),
-
+      bottomNavigationBar: BottomBar(
+        onTerminalPressed: () => _showTerminalPanel(context),
+        onAddPressed: () => _toggleAddSection(),
+      ),
+      backgroundColor: AppColors.background,
     );
   }
 }
