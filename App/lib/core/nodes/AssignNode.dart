@@ -2,11 +2,13 @@ import 'package:app/core/Pins/Pin.dart';
 import 'package:app/core/abstracts/Command.dart';
 import 'package:app/core/abstracts/Expression.dart';
 import 'package:app/core/abstracts/Node.dart';
+import 'package:app/core/literals/BoolLiteral.dart';
 import 'package:app/core/literals/IntLiteral.dart';
 import 'package:app/core/literals/VariableLiteral.dart';
 import 'package:app/core/models/BinaryOperations.dart';
 import 'package:app/core/models/commands/AssignVariableCommand.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 class AssignNode extends Node {
@@ -42,35 +44,54 @@ class AssignNode extends Node {
 
     var lines = text.split(';');
     for (var line in lines) {
-      if (line.trim().isEmpty) continue;
+      var trimmedLine = line.trim();
+      if (trimmedLine.isEmpty) continue;
 
-      var match = RegExp(r'(\w+)\s*=\s*(.+)').firstMatch(line);
+      var match = RegExp(r'^(\w+)\s+(\w+)\s*=\s*(.+)$').firstMatch(trimmedLine);
       if (match == null) continue;
 
-      var variableName = match.group(1)!;
-      var exprStr = match.group(2)!;
+      var type = match.group(1);
+      var variableName = match.group(2)!;
+      var exprStr = match.group(3)!;
 
       Expression expression = parseExpression(exprStr);
-      commands.add(AssignVariableCommand<int>(variableName, expression));
-      var pin = new Pin(id: variableName, name: variableName, isInput: false);
-      pin.setValue((expression as IntLiteral).value); //TODO: Влад, я сделал страшную вещь
+      dynamic value;
+      switch (type) {
+        case 'int':
+          commands.add(AssignVariableCommand<int>(variableName, expression));
+          value = (expression as IntLiteral).value;
+          break;
+        case 'bool':
+          commands.add(AssignVariableCommand<bool>(variableName, expression));
+          value = (expression as BoolLiteral).value;
+          break;
+        default:
+          commands.add(AssignVariableCommand<dynamic>(variableName, expression));
+      }
+      var pin = Pin(id: variableName, name: variableName, isInput: false);
+      pin.setValue(value);
       addOutput(pin);
     }
   }
 
   Expression parseExpression(String exprStr) {
-    var tokens = exprStr.split(' ');
-    if (tokens.length == 1 && tokens[0].contains(RegExp(r'^\d+$'))) {
-      return IntLiteral(int.parse(tokens[0]));
-    } else if (tokens.length == 3 && tokens[1] == '+' || tokens[1] == '-') {
-      var left = tokens[0];
-      var right = tokens[2];
+    exprStr = exprStr.trim();
 
-      return BinaryOperations(
-        VariableLiteral(left),
-        IntLiteral(int.parse(right)),
-        tokens[1],
-      );
+    if (exprStr == 'true' || exprStr == 'false') {
+      return BoolLiteral(exprStr == 'true');
+    } else if (RegExp(r'^\d+$').hasMatch(exprStr)) {
+      return IntLiteral(int.parse(exprStr));
+    } else if (RegExp(r'^[a-zA-Z_]\w*$').hasMatch(exprStr)) {
+      return VariableLiteral(exprStr);
+    } else if (exprStr.contains(' ')) {
+      var tokens = exprStr.split(' ');
+      if (tokens.length == 3 && ['+', '-', '*', '/'].contains(tokens[1])) {
+        return BinaryOperations(
+          parseExpression(tokens[0]),
+          parseExpression(tokens[2]),
+          tokens[1],
+        );
+      }
     }
 
     throw Exception("Неизвестное выражение: $exprStr");
