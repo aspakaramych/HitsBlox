@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import '../../viewmodels/LogicBlock.dart';
+import '../../viewmodels/AssignmentNode.dart';
 
-class AssignmentNodeWidget extends StatelessWidget {
+class AssignmentBlockWidget extends StatelessWidget {
   final AssignmentBlock block;
   final VoidCallback onEditToggle;
   final Function(Offset) onDragEnd;
   final Function() deleteNode;
 
-  const AssignmentNodeWidget({
+  const AssignmentBlockWidget({
     super.key,
     required this.block,
     required this.onEditToggle,
@@ -23,27 +23,31 @@ class AssignmentNodeWidget extends StatelessWidget {
     return Draggable(
       feedback: Container(
         width: block.width,
-        height: totalHeight,
+        height: block.height,
         decoration: BoxDecoration(
-          color: Colors.red.withOpacity(0.7),
+          color: Colors.red.withValues(alpha: 0.7),
           borderRadius: BorderRadius.circular(20),
         ),
       ),
       childWhenDragging: Container(
         width: block.width,
-        height: totalHeight,
+        height: block.height,
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.white10, width: 2),
+          border: Border.all(color: Colors.white, width: 2),
           borderRadius: BorderRadius.circular(20),
         ),
       ),
       onDraggableCanceled: (_, offset) => onDragEnd(offset),
       child: GestureDetector(
-        onTap: () => onEditToggle(),
+        onTap: () => {
+          onEditToggle(),
+          block.height += (block.wasEdited) ? 0 : 60,
+          block.wasEdited = true
+        },
         onDoubleTap: () => deleteNode(),
         child: Container(
           width: block.width,
-          height: totalHeight,
+          height: block.height,
           decoration: BoxDecoration(
             color: Colors.red,
             border: Border.all(color: Colors.black, width: 3),
@@ -52,12 +56,14 @@ class AssignmentNodeWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Присвоить",
-                  style: theme.textTheme.labelSmall,
-                  textAlign: TextAlign.center,
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    block.assignNode.title,
+                    style: theme.textTheme.labelSmall,
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ),
               if (block.isEditing)
@@ -79,16 +85,17 @@ class AssignmentNodeWidget extends StatelessWidget {
                       border: OutlineInputBorder(),
                       contentPadding: EdgeInsets.all(4),
                     ),
-                    style: const TextStyle(fontSize: 12),
+                    style: theme.textTheme.labelSmall,
                   ),
                 ),
               if (!block.isEditing && block.assignNode.outputs.isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0, top: 4.0),
-                  child: Wrap(
-                    spacing: 4,
-                    runSpacing: 2,
-                    children:
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0, top: 4.0),
+                    child: Wrap(
+                      spacing: 4,
+                      runSpacing: 2,
+                      children:
                         block.assignNode.outputs
                             .where((p) => !p.isInput && p.id != 'exec_out')
                             .map((pin) {
@@ -96,14 +103,11 @@ class AssignmentNodeWidget extends StatelessWidget {
                               final name = pin.name;
                               return Chip(
                                 label: Text('$name: $value'),
-                                backgroundColor: Colors.black.withOpacity(0.3),
-                                labelStyle: const TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.white,
-                                ),
+                                backgroundColor: Colors.black.withValues(alpha: 0.3),
+                                labelStyle: theme.textTheme.labelSmall,
                               );
-                            })
-                            .toList(),
+                        }).toList(),
+                    ),
                   ),
                 ),
             ],
