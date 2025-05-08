@@ -1,9 +1,14 @@
+import 'package:app/core/nodes/BoolAssignNode.dart';
+import 'package:app/utils/pair.dart';
 import 'package:flutter/material.dart';
 
 import '../core/nodes/AssignNode.dart';
+import '../core/nodes/IntAssignNode.dart';
 import '../core/widgets/assignment_widget.dart';
 import '../utils/Randomizer.dart';
+import '../utils/bezier_line_painter.dart';
 import '../viewmodels/assignment_block.dart';
+import '../utils/background_painter.dart';
 
 class TestScreen extends StatefulWidget {
   const TestScreen({Key? key}) : super(key: key);
@@ -16,9 +21,12 @@ class _TestScreenState extends State<TestScreen> {
   final List<AssignmentBlock> assignmentBlocks = [];
   final blockColor = Colors.red;
 
+  final List<Pair> wiredBlocks = [];
+  var temp;
+
   void addIntBlock() {
     final currUserOffset = getVisibleContentRect().topLeft;
-    final assignNode = AssignNode(
+    final assignNode = IntAssignNode(
       'node_${Randomizer.getRandomInt()}',
       Offset(currUserOffset.dx + 50, currUserOffset.dy + 50),
     );
@@ -37,7 +45,7 @@ class _TestScreenState extends State<TestScreen> {
 
   void addBoolBlock() {
     final currUserOffset = getVisibleContentRect().topLeft;
-    final assignNode = AssignNode(
+    final assignNode = BoolAssignNode(
       'node_${Randomizer.getRandomInt()}',
        Offset(currUserOffset.dx + 50, currUserOffset.dy + 50),
     );
@@ -66,7 +74,7 @@ class _TestScreenState extends State<TestScreen> {
     final RenderBox renderBox = context.findRenderObject() as RenderBox;
     final viewportSize = renderBox.size;
 
-    final contentWidth = viewportSize.width * 5;
+    final contentWidth = viewportSize.width * 10;
     final contentHeight = viewportSize.height * 3;
 
     final centerX = (contentWidth - viewportSize.width) / 2;
@@ -112,7 +120,7 @@ class _TestScreenState extends State<TestScreen> {
             maxScale: 2.0,
             child: Container(
               constraints: BoxConstraints(
-                minWidth: constraints.maxWidth * 5,
+                minWidth: constraints.maxWidth * 10,
                 minHeight: constraints.maxHeight * 3,
               ),
               color: Colors.white10,
@@ -121,10 +129,10 @@ class _TestScreenState extends State<TestScreen> {
                 children: [
                   CustomPaint(
                     size: Size(
-                      constraints.maxWidth * 5,
+                      constraints.maxWidth * 10,
                       constraints.maxHeight * 3,
                     ),
-                    painter: BackgroundPaint(),
+                    painter: BackgroundPainter(),
                   ),
 
                   for (var block in assignmentBlocks)
@@ -139,6 +147,12 @@ class _TestScreenState extends State<TestScreen> {
                       deleteNode: () {
                         setState(() {
                           assignmentBlocks.remove(block);
+                          for(var binding in wiredBlocks) {
+                            if(binding.first.assignNode.id == block.assignNode.id ||
+                                binding.second.assignNode.id == block.assignNode.id) {
+                              wiredBlocks.remove(binding);
+                            }
+                          }
                         });
                       },
                       onPositionChanged: (newPosition) {
@@ -146,6 +160,24 @@ class _TestScreenState extends State<TestScreen> {
                           block.position = newPosition;
                         });
                       },
+                      onLeftArrowClick: () {
+                        setState(() {
+                          if(temp != null) {
+                            wiredBlocks.add(Pair(temp, block));
+                            temp = null;
+                          }
+                        });
+                      },
+                      onRightArrowClick: () {
+                        setState(() {
+                          temp = block;
+                        });
+                      },
+                    ),
+                  for(var binding in wiredBlocks)
+                    CustomPaint(
+                      painter: BezierLinePainter(binding.first.position, binding.second.position),
+                      size: MediaQuery.of(context).size,
                     ),
                 ],
               ),
@@ -168,45 +200,5 @@ class _TestScreenState extends State<TestScreen> {
         ],
       ),
     );
-  }
-}
-
-class BackgroundPaint extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final height = size.height;
-    final width = size.width;
-    final paint = Paint();
-
-    Path mainBackground = Path();
-    mainBackground.addRect(Rect.fromLTRB(0, 0, width, height));
-    paint.color = Colors.white12;
-
-    final heightLine = height ~/ 40; // вот такое целочисленное деление (~delenye) :D
-    final widthLine = width ~/ 30;
-
-    for (int i = 1; i < height; i++) {
-      if (i % heightLine == 0) {
-        Path linePath = Path();
-        linePath.addRect(
-          Rect.fromLTRB(0, i.toDouble(), width, (i + 2).toDouble()),
-        );
-        canvas.drawPath(linePath, paint);
-      }
-    }
-    for (int i = 1; i < width; i++) {
-      if (i % widthLine == 0 || i == 1) {
-        Path linePath = Path();
-        linePath.addRect(
-          Rect.fromLTRB(i.toDouble(), 0, (i + 2).toDouble(), height),
-        );
-        canvas.drawPath(linePath, paint);
-      }
-    }
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return oldDelegate != this;
   }
 }
