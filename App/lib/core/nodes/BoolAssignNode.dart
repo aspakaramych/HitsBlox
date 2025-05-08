@@ -5,9 +5,6 @@ import '../abstracts/Command.dart';
 import '../abstracts/Expression.dart';
 import '../abstracts/Node.dart';
 import '../literals/BoolLiteral.dart';
-import '../literals/IntLiteral.dart';
-import '../literals/VariableLiteral.dart';
-import '../models/BinaryOperations.dart';
 import '../models/commands/AssignVariableCommand.dart';
 import '../registry/VariableRegistry.dart';
 
@@ -72,22 +69,6 @@ class BoolAssignNode extends Node {
 
     if (exprStr == 'true' || exprStr == 'false') {
       return BoolLiteral(exprStr == 'true');
-    } else if (exprStr.contains(' ')) {
-      var tokens = exprStr.split(' ');
-      if (tokens.length == 3 && ['==', '!=', '>', '<'].contains(tokens[1])) {
-        var left = tokens[0];
-        var right = tokens[2];
-
-        return BinaryOperations(
-          RegExp(r'^\d+$').hasMatch(left)
-              ? IntLiteral(int.parse(left))
-              : VariableLiteral(left),
-          RegExp(r'^\d+$').hasMatch(right)
-              ? IntLiteral(int.parse(right))
-              : VariableLiteral(right),
-          tokens[1],
-        );
-      }
     }
 
     throw Exception("Неизвестное выражение: $exprStr");

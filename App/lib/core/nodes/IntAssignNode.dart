@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import '../abstracts/Expression.dart';
 import '../literals/IntLiteral.dart';
 import '../literals/VariableLiteral.dart';
-import '../models/BinaryOperations.dart';
 import '../models/commands/AssignVariableCommand.dart';
 
 class IntAssignNode extends Node {
@@ -66,23 +65,10 @@ class IntAssignNode extends Node {
 
     if (RegExp(r'^\d+$').hasMatch(exprStr)) {
       return IntLiteral(int.parse(exprStr));
-    } else if (exprStr.contains(' ')) {
-      var tokens = exprStr.split(' ');
-      if (tokens.length == 3 && ['+', '-', '*', '/'].contains(tokens[1])) {
-        var left = tokens[0];
-        var right = tokens[2];
-
-        return BinaryOperations(
-          parseExpression(left),
-          parseExpression(right),
-          tokens[1],
-        );
-      }
-    } else {
+    }
+    else {
       return VariableLiteral(exprStr);
     }
-
-    throw Exception("Неизвестное выражение: $exprStr");
   }
 
   void addInput(Pin<int> pin) => _inputs.add(pin);
