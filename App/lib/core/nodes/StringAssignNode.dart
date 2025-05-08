@@ -1,22 +1,20 @@
 import 'package:app/core/Pins/Pin.dart';
 import 'package:app/core/abstracts/Command.dart';
 import 'package:app/core/abstracts/Node.dart';
-import 'package:app/core/nodes/AssignNode.dart';
+import 'package:app/core/literals/StringLiteral.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:flutter/material.dart';
 
 import '../abstracts/Expression.dart';
-import '../literals/IntLiteral.dart';
 import '../literals/VariableLiteral.dart';
 import '../models/commands/AssignVariableCommand.dart';
 
-class IntAssignNode extends Node implements AssignNode{
+class StringAssignNode extends Node {
   final List<Command> commands = [];
 
   final List<Pin> _inputs = [];
   final List<Pin> _outputs = [];
 
-  @override
   String rawExpression = '';
   final TextEditingController controller = TextEditingController();
 
@@ -32,12 +30,11 @@ class IntAssignNode extends Node implements AssignNode{
   @override
   String get title => "Присвоить";
 
-  IntAssignNode(String this.id, Offset position) : super(position) {
-    addInput(Pin<int>(id: 'exec_in', name: 'Exec In', isInput: true));
-    addOutput(Pin<int>(id: 'exec_out', name: 'Exec Out', isInput: false));
+  StringAssignNode(String this.id, Offset position) : super(position) {
+    addInput(Pin<String>(id: 'exec_in', name: 'Exec In', isInput: true));
+    addOutput(Pin<String>(id: 'exec_out', name: 'Exec Out', isInput: false));
   }
 
-  @override
   void setAssignmentsFromText(String text) {
     rawExpression = text;
     commands.clear();
@@ -55,28 +52,26 @@ class IntAssignNode extends Node implements AssignNode{
       var exprStr = match.group(2)!;
 
       Expression expression = parseExpression(exprStr);
-      commands.add(AssignVariableCommand<int>(variableName, expression));
+      commands.add(AssignVariableCommand<String>(variableName, expression));
 
 
-      var pin = Pin<int>(id: variableName, name: variableName, isInput: false);
+      var pin = Pin<String>(id: variableName, name: variableName, isInput: false);
       addOutput(pin);
     }
   }
 
   Expression parseExpression(String exprStr) {
-    exprStr = exprStr.trim();
 
-    if (RegExp(r'^\d+$').hasMatch(exprStr)) {
-      return IntLiteral(int.parse(exprStr));
+    exprStr = exprStr.trim();
+    if (exprStr.startsWith('"') && exprStr.endsWith('"')) {
+      return StringLiteral(exprStr.substring(1, exprStr.length - 1));
     }
-    else {
-      return VariableLiteral(exprStr);
-    }
+    return VariableLiteral(exprStr);
   }
 
-  void addInput(Pin<int> pin) => _inputs.add(pin);
+  void addInput(Pin<String> pin) => _inputs.add(pin);
 
-  void addOutput(Pin<int> pin) => _outputs.add(pin);
+  void addOutput(Pin<String> pin) => _outputs.add(pin);
 
   @override
   Future<void> execute(VariableRegistry registry) async {
@@ -85,10 +80,10 @@ class IntAssignNode extends Node implements AssignNode{
     }
 
     for (var pin in _outputs.where((p) => !p.isInput)) {
+
       final value = registry.getValue(pin.id);
-      if (value is int?) {
-        pin.setValue(value);
-      }
+      pin.setValue(value);
+
     }
   }
 }
