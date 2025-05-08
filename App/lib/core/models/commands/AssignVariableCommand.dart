@@ -13,6 +13,5 @@ class AssignVariableCommand<T> implements Command{
     var result = expression.evaluate(registry);
     registry.setValue<T>(variableName, result as T);
   }
-  
-  
+
 }

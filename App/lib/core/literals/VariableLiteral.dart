@@ -7,5 +7,10 @@ class VariableLiteral implements Expression {
   VariableLiteral(this.name);
 
   @override
-  dynamic evaluate(VariableRegistry registry) => registry.getValue(name);
+  dynamic evaluate([VariableRegistry? registry]) {
+    if (registry != null) {
+      return registry.getValue(name);
+    }
+    return null;
+  }
 }
