@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../utils/triangle_painter.dart';
 import '../../viewmodels/assignment_block.dart';
 
 class AssignmentBlockWidget extends StatefulWidget {
@@ -6,6 +7,8 @@ class AssignmentBlockWidget extends StatefulWidget {
   final VoidCallback onEditToggle;
   final Function() deleteNode;
   final Function(Offset) onPositionChanged;
+  final Function() onLeftArrowClick;
+  final Function() onRightArrowClick;
 
   const AssignmentBlockWidget({
     super.key,
@@ -13,6 +16,8 @@ class AssignmentBlockWidget extends StatefulWidget {
     required this.onEditToggle,
     required this.deleteNode,
     required this.onPositionChanged,
+    required this.onLeftArrowClick,
+    required this.onRightArrowClick,
   });
 
   @override
@@ -21,6 +26,8 @@ class AssignmentBlockWidget extends StatefulWidget {
 
 class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
   Offset _currentOffset = Offset.zero;
+
+  String currText = '';
 
   @override
   void initState() {
@@ -46,7 +53,7 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
         onTap: () {
           widget.onEditToggle();
           setState(() {
-            if(widget.block.wasEdited) {
+            if (widget.block.wasEdited) {
               return;
             }
             widget.block.height += 60;
@@ -62,65 +69,100 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
             border: Border.all(color: Colors.black, width: 3),
             borderRadius: BorderRadius.circular(20),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Stack(
             children: [
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    widget.block.blockName,
-                    style: theme.textTheme.labelSmall,
-                    textAlign: TextAlign.center,
+              // левая стрелка
+              Positioned(
+                left: 15,
+                top: 15,
+                child: GestureDetector(
+                  onTap: () => widget.onLeftArrowClick(),
+                  child: SizedBox(
+                    width: 15,
+                    height: 15,
+                    child: CustomPaint(painter: TrianglePainter()),
                   ),
                 ),
               ),
-              if (widget.block.isEditing)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: TextField(
-                    controller: TextEditingController(
-                      text: widget.block.assignNode.rawExpression,
-                    ),
-                    maxLines: 1,
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.done,
-                    onSubmitted: (text) {
-                      widget.block.assignNode.setAssignmentsFromText(text);
-                      widget.onEditToggle();
-                    },
-                    decoration: const InputDecoration(
-                      hintText: 'a={value};',
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.all(4),
-                    ),
-                    style: theme.textTheme.labelSmall,
+              // правая стрелка
+              Positioned(
+                right: 15,
+                top: 15,
+                child: GestureDetector(
+                  onTap: () => widget.onRightArrowClick(),
+                  child: SizedBox(
+                    width: 15,
+                    height: 15,
+                    child: CustomPaint(painter: TrianglePainter()),
                   ),
                 ),
-              if (!widget.block.isEditing && widget.block.assignNode.outputs.isNotEmpty)
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0, top: 4.0),
-                    child: Wrap(
-                      spacing: 4,
-                      runSpacing: 2,
-                      children:
-                          widget.block.assignNode.outputs
-                              .where((p) => !p.isInput && p.id != 'exec_out')
-                              .map((pin) {
-                                return Chip(
-                                  label: Text(
-                                    '${pin.name}: ${pin.getValue() ?? '?'}',
-                                  ),
-                                  backgroundColor: Colors.black.withValues(
-                                    alpha: 0.3,
-                                  ),
-                                  labelStyle: theme.textTheme.labelSmall,
-                                );
-                              }).toList(),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        widget.block.blockName,
+                        style: theme.textTheme.labelSmall,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
-                ),
+                  if (widget.block.isEditing)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: TextField(
+                        controller: TextEditingController(
+                          text: widget.block.assignNode.rawExpression,
+                        ),
+                        maxLines: 1,
+                        keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.done,
+                        onSubmitted: (text) {
+                          currText = text;
+                          widget.block.assignNode.setAssignmentsFromText(text);
+                          widget.onEditToggle();
+                        },
+                        decoration: const InputDecoration(
+                          hintText: 'a={value};',
+                          border: OutlineInputBorder(),
+                          contentPadding: EdgeInsets.all(4),
+                        ),
+                        style: theme.textTheme.labelSmall,
+                      ),
+                    ),
+                  if (!widget.block.isEditing &&
+                      widget.block.assignNode.outputs.isNotEmpty)
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8.0, top: 4.0),
+                        child: Wrap(
+                          spacing: 4,
+                          runSpacing: 2,
+                          children:
+                              widget.block.assignNode.outputs
+                                  .where(
+                                    (p) => !p.isInput && p.id != 'exec_out',
+                                  )
+                                  .map((pin) {
+                                    return Chip(
+                                      label: Text(
+                                        currText,
+                                      ),
+                                      backgroundColor: Colors.black.withValues(
+                                        alpha: 0.3,
+                                      ),
+                                      labelStyle: theme.textTheme.labelSmall,
+                                    );
+                                  })
+                                  .toList(),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
             ],
           ),
         ),

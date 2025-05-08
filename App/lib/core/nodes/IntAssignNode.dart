@@ -1,6 +1,7 @@
 import 'package:app/core/Pins/Pin.dart';
 import 'package:app/core/abstracts/Command.dart';
 import 'package:app/core/abstracts/Node.dart';
+import 'package:app/core/nodes/AssignNode.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:flutter/material.dart';
 
@@ -10,12 +11,13 @@ import '../literals/VariableLiteral.dart';
 import '../models/BinaryOperations.dart';
 import '../models/commands/AssignVariableCommand.dart';
 
-class IntAssignNode extends Node {
+class IntAssignNode extends Node implements AssignNode{
   final List<Command> commands = [];
 
   final List<Pin> _inputs = [];
   final List<Pin> _outputs = [];
 
+  @override
   String rawExpression = '';
   final TextEditingController controller = TextEditingController();
 
@@ -36,6 +38,7 @@ class IntAssignNode extends Node {
     addOutput(Pin<int>(id: 'exec_out', name: 'Exec Out', isInput: false));
   }
 
+  @override
   void setAssignmentsFromText(String text) {
     rawExpression = text;
     commands.clear();

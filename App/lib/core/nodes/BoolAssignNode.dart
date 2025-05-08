@@ -1,3 +1,4 @@
+import 'package:app/core/nodes/AssignNode.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../Pins/Pin.dart';
@@ -11,12 +12,13 @@ import '../models/BinaryOperations.dart';
 import '../models/commands/AssignVariableCommand.dart';
 import '../registry/VariableRegistry.dart';
 
-class BoolAssignNode extends Node {
+class BoolAssignNode extends Node implements AssignNode{
   final List<Command> commands = [];
 
   final List<Pin> _inputs = [];
   final List<Pin> _outputs = [];
 
+  @override
   String rawExpression = '';
   final TextEditingController controller = TextEditingController();
 
@@ -37,6 +39,7 @@ class BoolAssignNode extends Node {
     addOutput(Pin(id: 'exec_out', name: 'Exec Out', isInput: false));
   }
 
+  @override
   void setAssignmentsFromText(String text) {
     rawExpression = text;
     commands.clear();
