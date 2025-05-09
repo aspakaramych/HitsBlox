@@ -1,3 +1,4 @@
+import 'package:app/screens/storage_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -36,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (_scrollController.position.userScrollDirection ==
         ScrollDirection.reverse) {
       setState(() {
-        _showFullGrid = true;
+        Navigator.push(context, MaterialPageRoute(builder: (context) => StorageScreen()));
       });
     } else if (_scrollController.position.userScrollDirection ==
         ScrollDirection.forward) {
@@ -63,7 +64,6 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             },
           ),
-
           Column(
             children: [
               Expanded(
@@ -89,14 +89,6 @@ class _HomeScreenState extends State<HomeScreen> {
               BottomBar(onTerminalPressed: () {}, onAddPressed: () {},),
             ],
           ),
-          if (_showFullGrid)
-            Positioned.fill(
-              child: Container(
-                color: AppColors.background,
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 60),
-                child: GridSaves(itemCount: cnt,),
-              ),
-            ),
         ]
       ),
     );

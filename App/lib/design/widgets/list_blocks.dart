@@ -44,7 +44,7 @@ class Item {
 class ItemCard extends StatefulWidget {
   final Item item;
 
-  const ItemCard({required this.item});
+  const ItemCard({super.key, required this.item});
 
   @override
   State<ItemCard> createState() => _ItemCardState();
@@ -94,7 +94,7 @@ class _ItemCardState extends State<ItemCard> {
 class ItemsGrid extends StatefulWidget {
   final List<Item> items;
 
-  const ItemsGrid({required this.items});
+  const ItemsGrid({super.key, required this.items});
 
   @override
   State<ItemsGrid> createState() => _ItemsGridState();
@@ -122,6 +122,8 @@ class _ItemsGridState extends State<ItemsGrid> {
 
 class ItemsList extends StatefulWidget {
   final List<Item> items = ITEMS;
+
+  ItemsList({super.key});
 
   // const ItemsList({required this.items});
 
