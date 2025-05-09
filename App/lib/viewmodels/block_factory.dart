@@ -1,7 +1,9 @@
+import 'package:app/core/nodes/MultiplyNode.dart';
 import 'package:app/core/nodes/PrintNode.dart';
 import 'package:app/core/nodes/StartNode.dart';
 import 'package:app/viewmodels/assignment_block.dart';
 import 'package:app/viewmodels/logic_block.dart';
+import 'package:app/viewmodels/position.dart';
 import 'package:app/viewmodels/start_block.dart';
 import 'package:flutter/material.dart';
 
@@ -72,8 +74,10 @@ class BlockFactory {
       node: printNode,
       color: Colors.orangeAccent,
       blockName: "print",
-      leftArrowsCount: 1,
-      rightArrowsCount: 1,
+      width: 200,
+      height: 60,
+      leftArrows: List.of([Position(Offset(15, 15), false)]),
+      rightArrows: List.of([Position(Offset(15, 15), false)]),
     );
   }
 
@@ -87,8 +91,27 @@ class BlockFactory {
     return StartBlock(
       position: startNode.position,
       node: startNode,
-      color: Colors.yellow,
+      color: Colors.green,
       blockName: "start",
+    );
+  }
+
+  static createMultiplyBlock(TransformationController transformationController) {
+    final currUserOffset = UserPositionUtils.getVisibleContentRect(transformationController).topLeft;
+    final multiplyNode = MultiplyNode(
+      'node_${Randomizer.getRandomInt()}',
+      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+    );
+
+    return LogicBlock(
+      position: multiplyNode.position,
+      node: multiplyNode,
+      color: Colors.deepOrangeAccent,
+      blockName: "multiply",
+      width: 200,
+      height: 80,
+      leftArrows: List.of([Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
+      rightArrows: List.of([Position(Offset(15, 15), false)]),
     );
   }
 }
