@@ -5,10 +5,10 @@ class BottomBar extends StatelessWidget {
   final VoidCallback onAddPressed;
 
   const BottomBar({
-    Key? key,
+    super.key,
     required this.onTerminalPressed,
     required this.onAddPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,12 @@ class BottomBar extends StatelessWidget {
                   height: 40,
                   colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcIn),
                 ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                );
+              },
             ),
             IconButton(
               icon: SvgPicture.asset(

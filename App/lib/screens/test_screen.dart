@@ -1,6 +1,5 @@
 import 'package:app/core/Engine.dart';
 import 'package:app/core/NodeGraph.dart';
-import 'package:app/core/nodes/StartNode.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:app/core/widgets/logic_block_widget.dart';
 import 'package:app/utils/pair.dart';
@@ -262,7 +261,7 @@ class _TestScreenState extends State<TestScreen> {
       onLeftArrowClick: () {
         setState(() {
           if (temp != null) {
-            makeConnection(temp.node as Node, block.node as Node);
+            makeConnection(temp.node as Node, block.node);
             wiredBlocks.add(Pair(temp, block));
             temp = null;
           }

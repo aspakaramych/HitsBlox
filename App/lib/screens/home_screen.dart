@@ -1,67 +1,104 @@
-import 'package:app/screens/test_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:app/design/widgets/widgets.dart';
 import 'package:app/design/theme/colors.dart';
 
-class mainScreen extends StatefulWidget {
-  const mainScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<mainScreen> createState() => _mainScreenState();
+  State<StatefulWidget> createState() => _HomeScreenState();
 }
 
-class _mainScreenState extends State<mainScreen> {
-  bool _isAddSectionVisible = false;
+class _HomeScreenState extends State<HomeScreen> {
+  late ScrollController _scrollController;
+  bool _showFullGrid = false;
+  int cnt = 4;
 
-  void _toggleAddSection() {
-    setState(() {
-      _isAddSectionVisible = !_isAddSectionVisible;
-    });
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    _scrollController.addListener(_onScroll);
   }
 
-  void _showTerminalPanel(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-      ),
-      builder: (context) {
-        return Console();
-      },
-    );
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    cnt += 1;
+    if (_scrollController.position.userScrollDirection ==
+        ScrollDirection.reverse) {
+      setState(() {
+        _showFullGrid = true;
+      });
+    } else if (_scrollController.position.userScrollDirection ==
+        ScrollDirection.forward) {
+      setState(() {
+        _showFullGrid = false;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        TestScreen(),
+    return Container(
+      color: AppColors.background,
+      child: Stack(
+        children: [
+          LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                controller: _scrollController,
+                child: SizedBox(
+                  height: constraints.maxHeight * 2,
+                  child: Center(),
+                ),
+              );
+            },
+          ),
 
-        Stack(
-          children: [
-            Column(
-              children: [
-                TopBar(),
-                Expanded(child: Center()),
-
-                if (_isAddSectionVisible)
-                  AnimatedSize(
-                    duration: Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 16),
-                      child: ItemsList(),
-                    ),
+          Column(
+            children: [
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 40),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: GridSaves(),
                   ),
-                // BottomBar(
-                //   onTerminalPressed: () => _showTerminalPanel(context),
-                //   onAddPressed: () => _toggleAddSection(),
-                // ),
-              ],
+                ),
+              ),
+              AnimatedOpacity(
+                opacity: _showFullGrid ? 0 : 1,
+                duration: Duration(milliseconds: 300),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    margin: EdgeInsets.symmetric(vertical: 20),
+                    child: SvgPicture.asset("lib/design/assets/icons/scroll.svg"),
+                  ),
+                ),
+              ),
+              BottomBar(onTerminalPressed: () {}, onAddPressed: () {},),
+            ],
+          ),
+          if (_showFullGrid)
+            Positioned.fill(
+              child: Container(
+                color: AppColors.background,
+                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 60),
+                child: GridSaves(itemCount: cnt,),
+              ),
             ),
-          ],
-        ),
-      ],
+        ]
+      ),
     );
   }
 }
