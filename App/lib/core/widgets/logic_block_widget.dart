@@ -1,13 +1,13 @@
 import 'package:app/viewmodels/logic_block.dart';
 import 'package:flutter/material.dart';
+
 import '../../utils/triangle_painter.dart';
-import '../../viewmodels/assignment_block.dart';
 
 class LogicBlockWidget extends StatefulWidget {
   final LogicBlock block;
   final Function() deleteNode;
   final Function(Offset) onPositionChanged;
-  final Function() onLeftArrowClick;
+  final Function(Offset) onLeftArrowClick;
   final Function() onRightArrowClick;
 
   const LogicBlockWidget({
@@ -59,31 +59,33 @@ class _LogicBlockWidgetState extends State<LogicBlockWidget> {
           child: Stack(
             children: [
               /// левая стрелка
-              Positioned(
-                left: 15,
-                top: 15,
-                child: GestureDetector(
-                  onTap: () => widget.onLeftArrowClick(),
-                  child: SizedBox(
-                    width: 15,
-                    height: 15,
-                    child: CustomPaint(painter: TrianglePainter()),
+              for(int i = 0; i < widget.block.leftArrows.length; i++)
+                Positioned(
+                  left: widget.block.leftArrows[i].position.dx,
+                  top: widget.block.leftArrows[i].position.dy,
+                  child: GestureDetector(
+                    onTap: () => widget.onLeftArrowClick(widget.block.leftArrows[i].position),
+                    child: SizedBox(
+                      width: 15,
+                      height: 15,
+                      child: CustomPaint(painter: TrianglePainter()),
+                    ),
                   ),
                 ),
-              ),
               /// правая стрелка
-              Positioned(
-                right: 15,
-                top: 15,
-                child: GestureDetector(
-                  onTap: () => widget.onRightArrowClick(),
-                  child: SizedBox(
-                    width: 15,
-                    height: 15,
-                    child: CustomPaint(painter: TrianglePainter()),
+              for(int i = 0; i < widget.block.rightArrows.length; i++)
+                Positioned(
+                  right: widget.block.rightArrows[i].position.dx,
+                  top: widget.block.rightArrows[i].position.dy,
+                  child: GestureDetector(
+                    onTap: () => widget.onRightArrowClick(),
+                    child: SizedBox(
+                      width: 15,
+                      height: 15,
+                      child: CustomPaint(painter: TrianglePainter()),
+                    ),
                   ),
                 ),
-              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

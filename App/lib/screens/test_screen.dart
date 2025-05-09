@@ -4,7 +4,7 @@ import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:app/core/widgets/logic_block_widget.dart';
 import 'package:app/utils/pair.dart';
 import 'package:app/utils/user_position_utils.dart';
-import 'package:app/viewmodels/assignment_block_factory.dart';
+import 'package:app/viewmodels/block_factory.dart';
 import 'package:app/viewmodels/logic_block.dart';
 import 'package:app/viewmodels/start_block.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +28,8 @@ class _TestScreenState extends State<TestScreen> {
   final List<AssignmentBlock> assignmentBlocks = [];
   final List<LogicBlock> logicBlocks = [];
   var startBlock;
+
+  final Map<String, Offset> calibrations = {};
 
   late NodeGraph nodeGraph = NodeGraph();
   late Engine engine = Engine();
@@ -75,13 +77,19 @@ class _TestScreenState extends State<TestScreen> {
     });
   }
 
+  void addMultiplyBlock() {
+    setState(() {
+      var block = BlockFactory.createMultiplyBlock(_transformationController);
+      logicBlocks.add(block);
+      nodeGraph.addNode(block.node);
+    });
+  }
+
   void makeConnection(Node first, Node second) {
     String firstNodeId = first.id;
     String secondNodeId = second.id;
-    Pin firstPin = first.outputs
-        .where((p) => p.id == 'exec_out').first;
-    Pin secondPin = second.inputs
-        .where((p) => p.id == 'exec_in').first;
+    Pin firstPin = first.outputs.where((p) => p.id == 'exec_out').first;
+    Pin secondPin = second.inputs.where((p) => p.id == 'exec_in').first;
     nodeGraph.connect(firstNodeId, firstPin.id, secondNodeId, secondPin.id);
   }
 
@@ -135,14 +143,12 @@ class _TestScreenState extends State<TestScreen> {
                     painter: BackgroundPainter(),
                   ),
 
-                  if(startBlock != null)
-                    _buildStartBlock(startBlock),
+                  if (startBlock != null) _buildStartBlock(startBlock),
 
                   for (var block in assignmentBlocks)
                     _buildAssignmentBlock(block),
 
-                  for(var block in logicBlocks)
-                    _buildLogicBlock(block),
+                  for (var block in logicBlocks) _buildLogicBlock(block),
 
                   for (var binding in wiredBlocks)
                     CustomPaint(
@@ -151,7 +157,8 @@ class _TestScreenState extends State<TestScreen> {
                       ),
                       painter: BezierLinePainter(
                         binding.first.position,
-                        binding.second.position,
+                        binding.second.position +
+                            calibrations['${binding.first.nodeId}${binding.second.nodeId}']!,
                       ),
                       size: MediaQuery.of(context).size,
                     ),
@@ -170,7 +177,7 @@ class _TestScreenState extends State<TestScreen> {
           ),
           SizedBox(width: 10),
           FloatingActionButton(
-            onPressed: addBoolBlock,
+            onPressed: addMultiplyBlock,
             child: const Icon(Icons.add),
           ),
           SizedBox(width: 10),
@@ -210,9 +217,11 @@ class _TestScreenState extends State<TestScreen> {
       deleteNode: () {
         setState(() {
           assignmentBlocks.remove(block);
-          wiredBlocks.removeWhere((binding) =>
-          binding.first.nodeId == block.node.id ||
-              binding.second.nodeId == block.node.id);
+          wiredBlocks.removeWhere(
+            (binding) =>
+                binding.first.nodeId == block.node.id ||
+                binding.second.nodeId == block.node.id,
+          );
           deleteNode(block.nodeId);
           deleteConnection(block.nodeId);
         });
@@ -223,6 +232,7 @@ class _TestScreenState extends State<TestScreen> {
         });
       },
       onLeftArrowClick: () {
+        //TODO: поправить калибровки
         setState(() {
           if (temp != null) {
             makeConnection(temp.node as Node, block.node as Node);
@@ -246,11 +256,23 @@ class _TestScreenState extends State<TestScreen> {
       deleteNode: () {
         setState(() {
           logicBlocks.remove(block);
-          wiredBlocks.removeWhere((binding) =>
-          binding.first.nodeId == block.nodeId ||
-              binding.second.nodeId == block.nodeId);
+          wiredBlocks.removeWhere(
+            (binding) =>
+                binding.first.nodeId == block.nodeId ||
+                binding.second.nodeId == block.nodeId,
+          );
           deleteNode(block.nodeId);
           deleteConnection(block.nodeId);
+
+          var keysToRemove =
+              calibrations.keys
+                  .where((key) => key.contains(block.nodeId))
+                  .toList();
+
+          for (var key in keysToRemove) {
+            calibrations.remove(key);
+            print(calibrations.length);
+          }
         });
       },
       onPositionChanged: (newPosition) {
@@ -258,10 +280,13 @@ class _TestScreenState extends State<TestScreen> {
           block.position = newPosition;
         });
       },
-      onLeftArrowClick: () {
+      onLeftArrowClick: (position) {
+        //TODO: поправить калибровки
         setState(() {
           if (temp != null) {
-            makeConnection(temp.node as Node, block.node);
+            makeConnection(temp.node as Node, block.node as Node);
+            position -= Offset(15, 20);
+            calibrations["${temp.nodeId}${block.nodeId}"] = position;
             wiredBlocks.add(Pair(temp, block));
             temp = null;
           }
@@ -282,9 +307,11 @@ class _TestScreenState extends State<TestScreen> {
       deleteNode: () {
         setState(() {
           startBlock = null;
-          wiredBlocks.removeWhere((binding) =>
-          binding.first.nodeId == block.nodeId ||
-              binding.second.nodeId == block.nodeId);
+          wiredBlocks.removeWhere(
+            (binding) =>
+                binding.first.nodeId == block.nodeId ||
+                binding.second.nodeId == block.nodeId,
+          );
           deleteNode(block.nodeId);
           deleteConnection(block.nodeId);
         });
@@ -295,6 +322,7 @@ class _TestScreenState extends State<TestScreen> {
         });
       },
       onLeftArrowClick: () {
+        //TODO: поправить калибровки
         setState(() {
           if (temp != null) {
             makeConnection(temp.node as Node, block.node as Node);
