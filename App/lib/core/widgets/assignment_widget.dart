@@ -71,7 +71,7 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
           ),
           child: Stack(
             children: [
-              // левая стрелка
+              /// левая стрелка
               Positioned(
                 left: 15,
                 top: 15,
@@ -84,7 +84,7 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                   ),
                 ),
               ),
-              // правая стрелка
+              /// правая стрелка
               Positioned(
                 right: 15,
                 top: 15,
@@ -115,14 +115,14 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: TextField(
                         controller: TextEditingController(
-                          text: widget.block.assignNode.rawExpression,
+                          text: widget.block.node.rawExpression,
                         ),
                         maxLines: 1,
                         keyboardType: TextInputType.text,
                         textInputAction: TextInputAction.done,
                         onSubmitted: (text) {
                           currText = text;
-                          widget.block.assignNode.setAssignmentsFromText(text);
+                          widget.block.node.setAssignmentsFromText(text);
                           widget.onEditToggle();
                         },
                         decoration: const InputDecoration(
@@ -134,7 +134,7 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                       ),
                     ),
                   if (!widget.block.isEditing &&
-                      widget.block.assignNode.outputs.isNotEmpty)
+                      widget.block.node.outputs.isNotEmpty)
                     Center(
                       child: Padding(
                         padding: const EdgeInsets.only(left: 8.0, top: 4.0),
@@ -142,7 +142,7 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                           spacing: 4,
                           runSpacing: 2,
                           children:
-                              widget.block.assignNode.outputs
+                              widget.block.node.outputs
                                   .where(
                                     (p) => !p.isInput && p.id != 'exec_out',
                                   )

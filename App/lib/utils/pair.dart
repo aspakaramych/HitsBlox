@@ -1,6 +1,6 @@
-import 'package:app/viewmodels/assignment_block.dart';
+import '../viewmodels/positioned_block.dart';
 
-class Pair<T1 extends AssignmentBlock, T2 extends AssignmentBlock> {
+class Pair<T1 extends PositionedBlock, T2 extends PositionedBlock> {
   final T1 first;
   final T2 second;
 

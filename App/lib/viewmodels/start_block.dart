@@ -1,27 +1,24 @@
 import 'dart:ui';
 
-import 'package:app/core/abstracts/Node.dart';
 import 'package:app/viewmodels/positioned_block.dart';
 
-class LogicBlock implements PositionedBlock{
+import '../core/nodes/StartNode.dart';
+
+class StartBlock implements PositionedBlock {
   @override
   Offset position;
-  Node node;
+  StartNode node;
   Color color;
   String blockName;
-  int leftArrowsCount;
-  int rightArrowsCount;
 
   double width;
   double height;
 
-  LogicBlock({
+  StartBlock({
     required this.position,
     required this.node,
     required this.color,
     required this.blockName,
-    required this.leftArrowsCount,
-    required this.rightArrowsCount,
     this.width = 200,
     this.height = 60,
   });

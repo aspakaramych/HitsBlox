@@ -2,6 +2,7 @@ import 'package:app/core/Pins/Pin.dart';
 import 'package:app/core/abstracts/Command.dart';
 import 'package:app/core/abstracts/Node.dart';
 import 'package:app/core/literals/StringLiteral.dart';
+import 'package:app/core/nodes/AssignNode.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:flutter/material.dart';
 
@@ -9,12 +10,13 @@ import '../abstracts/Expression.dart';
 import '../literals/VariableLiteral.dart';
 import '../models/commands/AssignVariableCommand.dart';
 
-class StringAssignNode extends Node {
+class StringAssignNode extends Node implements AssignNode{
   final List<Command> commands = [];
 
   final List<Pin> _inputs = [];
   final List<Pin> _outputs = [];
 
+  @override
   String rawExpression = '';
   final TextEditingController controller = TextEditingController();
 

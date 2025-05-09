@@ -1,12 +1,17 @@
 import 'dart:ui';
 
+import 'package:app/core/abstracts/Node.dart';
 import 'package:app/core/nodes/AssignNode.dart';
+import 'package:app/viewmodels/positioned_block.dart';
 
-class AssignmentBlock {
+class AssignmentBlock implements PositionedBlock{
+  @override
   Offset position;
   Color color;
   String blockName;
-  AssignNode assignNode;
+  AssignNode node;
+  @override
+  String nodeId;
   bool isEditing;
   bool wasEdited;
 
@@ -17,7 +22,8 @@ class AssignmentBlock {
     required this.position,
     required this.color,
     required this.blockName,
-    required this.assignNode,
+    required this.node,
+    required this.nodeId,
     this.isEditing = false,
     this.wasEdited = false,
     this.width = 200,
