@@ -53,10 +53,10 @@ class _mainScreenState extends State<mainScreen> {
                       child: ItemsList(),
                     ),
                   ),
-                BottomBar(
-                  onTerminalPressed: () => _showTerminalPanel(context),
-                  onAddPressed: () => _toggleAddSection(),
-                ),
+                // BottomBar(
+                //   onTerminalPressed: () => _showTerminalPanel(context),
+                //   onAddPressed: () => _toggleAddSection(),
+                // ),
               ],
             ),
           ],

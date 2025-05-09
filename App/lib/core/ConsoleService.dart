@@ -20,6 +20,7 @@ class ConsoleService {
   }
 
   void log(String message) {
+    print('\n\n\n\n\n ${message} \n\n\n\n');
     _logs.add(message);
     notifyListeners();
   }

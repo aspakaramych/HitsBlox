@@ -13,7 +13,17 @@ class NodeGraph {
     connections.add(Connection(fromNodeId: fromNodeId, fromPinId: fromPinId, toNodeId: toNodeId, toPinId: toPinId));
   }
 
+  void disconnect(String nodeId) {
+    connections.removeWhere(
+            (conn) => conn.fromNodeId == nodeId || conn.toNodeId == nodeId);
+  }
+
   Node? getNodeById(String id){
     nodes.firstWhere((node) => node.id == id);
+  }
+
+  void deleteNode(String nodeId) {
+    nodes.removeWhere(
+            (node) => node.id == nodeId);
   }
 }

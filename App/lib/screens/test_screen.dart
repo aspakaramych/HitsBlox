@@ -1,17 +1,25 @@
-import 'package:app/core/nodes/BoolAssignNode.dart';
+import 'package:app/core/Engine.dart';
+import 'package:app/core/NodeGraph.dart';
+import 'package:app/core/nodes/StartNode.dart';
+import 'package:app/core/registry/VariableRegistry.dart';
+import 'package:app/core/widgets/logic_block_widget.dart';
 import 'package:app/utils/pair.dart';
+import 'package:app/utils/user_position_utils.dart';
+import 'package:app/viewmodels/assignment_block_factory.dart';
+import 'package:app/viewmodels/logic_block.dart';
+import 'package:app/viewmodels/start_block.dart';
 import 'package:flutter/material.dart';
 
-import '../core/nodes/AssignNode.dart';
-import '../core/nodes/IntAssignNode.dart';
+import '../core/Pins/Pin.dart';
+import '../core/abstracts/Node.dart';
 import '../core/widgets/assignment_widget.dart';
-import '../utils/Randomizer.dart';
+import '../core/widgets/start_block_widget.dart';
+import '../utils/background_painter.dart';
 import '../utils/bezier_line_painter.dart';
 import '../viewmodels/assignment_block.dart';
-import '../utils/background_painter.dart';
 
 class TestScreen extends StatefulWidget {
-  const TestScreen({Key? key}) : super(key: key);
+  const TestScreen({super.key});
 
   @override
   State<TestScreen> createState() => _TestScreenState();
@@ -19,89 +27,83 @@ class TestScreen extends StatefulWidget {
 
 class _TestScreenState extends State<TestScreen> {
   final List<AssignmentBlock> assignmentBlocks = [];
-  final blockColor = Colors.red;
+  final List<LogicBlock> logicBlocks = [];
+  var startBlock;
+
+  late NodeGraph nodeGraph = NodeGraph();
+  late Engine engine = Engine();
+  late VariableRegistry registry = VariableRegistry();
 
   final List<Pair> wiredBlocks = [];
   var temp;
 
   void addIntBlock() {
-    final currUserOffset = getVisibleContentRect().topLeft;
-    final assignNode = IntAssignNode(
-      'node_${Randomizer.getRandomInt()}',
-      Offset(currUserOffset.dx + 50, currUserOffset.dy + 50),
-    );
-
     setState(() {
-      assignmentBlocks.add(
-        AssignmentBlock(
-          position: assignNode.position,
-          color: Colors.blueAccent,
-          blockName: "int",
-          assignNode: assignNode,
-        ),
-      );
+      var block = BlockFactory.createIntBlock(_transformationController);
+      assignmentBlocks.add(block);
+      nodeGraph.addNode(block.node as Node);
     });
   }
 
   void addBoolBlock() {
-    final currUserOffset = getVisibleContentRect().topLeft;
-    final assignNode = BoolAssignNode(
-      'node_${Randomizer.getRandomInt()}',
-       Offset(currUserOffset.dx + 50, currUserOffset.dy + 50),
-    );
-
     setState(() {
-      assignmentBlocks.add(
-        AssignmentBlock(
-          position: assignNode.position,
-          color: Colors.deepPurple,
-          blockName: "bool",
-          assignNode: assignNode,
-        ),
-      );
+      var block = BlockFactory.createBoolBlock(_transformationController);
+      assignmentBlocks.add(block);
+      nodeGraph.addNode(block.node as Node);
     });
+  }
+
+  void addStringBlock() {
+    setState(() {
+      var block = BlockFactory.createStringBlock(_transformationController);
+      assignmentBlocks.add(block);
+      nodeGraph.addNode(block.node as Node);
+    });
+  }
+
+  void addPrintBlock() {
+    setState(() {
+      var block = BlockFactory.createPrintBlock(_transformationController);
+      logicBlocks.add(block);
+      nodeGraph.addNode(block.node);
+    });
+  }
+
+  void addStartBlock() {
+    setState(() {
+      startBlock = BlockFactory.createStartBlock(_transformationController);
+      nodeGraph.addNode(startBlock.node);
+    });
+  }
+
+  void makeConnection(Node first, Node second) {
+    String firstNodeId = first.id;
+    String secondNodeId = second.id;
+    Pin firstPin = first.outputs
+        .where((p) => p.id == 'exec_out').first;
+    Pin secondPin = second.inputs
+        .where((p) => p.id == 'exec_in').first;
+    nodeGraph.connect(firstNodeId, firstPin.id, secondNodeId, secondPin.id);
+  }
+
+  void deleteNode(String nodeId) {
+    nodeGraph.deleteNode(nodeId);
+  }
+
+  void deleteConnection(String nodeId) {
+    nodeGraph.disconnect(nodeId);
   }
 
   @override
   void initState() {
     super.initState();
+    // initInterpreter();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _centerInitialPosition();
+      UserPositionUtils.centerInitialPosition(
+        context,
+        _transformationController,
+      );
     });
-  }
-
-  void _centerInitialPosition() {
-    final RenderBox renderBox = context.findRenderObject() as RenderBox;
-    final viewportSize = renderBox.size;
-
-    final contentWidth = viewportSize.width * 10;
-    final contentHeight = viewportSize.height * 3;
-
-    final centerX = (contentWidth - viewportSize.width) / 2;
-    final centerY = (contentHeight - viewportSize.height) / 2;
-
-    _transformationController.value =
-        Matrix4.identity()..translate(-centerX, -centerY);
-  }
-
-  final Size _viewportSize = Size(1, 1);
-
-  Rect getVisibleContentRect() {
-    final Matrix4 matrix = _transformationController.value;
-    final double scaleX = matrix.getColumn(0).x;
-    final double scaleY = matrix.getColumn(1).y;
-    final double translateX = matrix.getTranslation().x;
-    final double translateY = matrix.getTranslation().y;
-
-    final double viewportWidth = _viewportSize.width;
-    final double viewportHeight = _viewportSize.height;
-
-    final double visibleLeft = -translateX / scaleX;
-    final double visibleTop = -translateY / scaleY;
-    final double visibleRight = visibleLeft + viewportWidth / scaleX;
-    final double visibleBottom = visibleTop + viewportHeight / scaleY;
-
-    return Rect.fromLTRB(visibleLeft, visibleTop, visibleRight, visibleBottom);
   }
 
   final TransformationController _transformationController =
@@ -109,7 +111,6 @@ class _TestScreenState extends State<TestScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Scaffold(
       body: LayoutBuilder(
         builder: (context, constraints) {
@@ -135,48 +136,24 @@ class _TestScreenState extends State<TestScreen> {
                     painter: BackgroundPainter(),
                   ),
 
+                  if(startBlock != null)
+                    _buildStartBlock(startBlock),
+
                   for (var block in assignmentBlocks)
-                    AssignmentBlockWidget(
-                      key: ValueKey(block.assignNode.id),
-                      block: block,
-                      onEditToggle: () {
-                        setState(() {
-                          block.isEditing = !block.isEditing;
-                        });
-                      },
-                      deleteNode: () {
-                        setState(() {
-                          assignmentBlocks.remove(block);
-                          for(var binding in wiredBlocks) {
-                            if(binding.first.assignNode.id == block.assignNode.id ||
-                                binding.second.assignNode.id == block.assignNode.id) {
-                              wiredBlocks.remove(binding);
-                            }
-                          }
-                        });
-                      },
-                      onPositionChanged: (newPosition) {
-                        setState(() {
-                          block.position = newPosition;
-                        });
-                      },
-                      onLeftArrowClick: () {
-                        setState(() {
-                          if(temp != null) {
-                            wiredBlocks.add(Pair(temp, block));
-                            temp = null;
-                          }
-                        });
-                      },
-                      onRightArrowClick: () {
-                        setState(() {
-                          temp = block;
-                        });
-                      },
-                    ),
-                  for(var binding in wiredBlocks)
+                    _buildAssignmentBlock(block),
+
+                  for(var block in logicBlocks)
+                    _buildLogicBlock(block),
+
+                  for (var binding in wiredBlocks)
                     CustomPaint(
-                      painter: BezierLinePainter(binding.first.position, binding.second.position),
+                      key: ValueKey(
+                        '${binding.first.nodeId}-${binding.second.nodeId}',
+                      ),
+                      painter: BezierLinePainter(
+                        binding.first.position,
+                        binding.second.position,
+                      ),
                       size: MediaQuery.of(context).size,
                     ),
                 ],
@@ -190,15 +167,148 @@ class _TestScreenState extends State<TestScreen> {
         children: [
           FloatingActionButton(
             onPressed: addIntBlock,
-            child: const Icon(Icons.add),
+            child: const Icon(Icons.access_alarm),
           ),
-          SizedBox(height: 10),
+          SizedBox(width: 10),
           FloatingActionButton(
             onPressed: addBoolBlock,
             child: const Icon(Icons.add),
           ),
+          SizedBox(width: 10),
+          FloatingActionButton(
+            onPressed: addStringBlock,
+            child: const Icon(Icons.account_tree),
+          ),
+          SizedBox(width: 10),
+          FloatingActionButton(
+            onPressed: addPrintBlock,
+            child: const Icon(Icons.add_call),
+          ),
+          SizedBox(width: 10),
+          FloatingActionButton(
+            onPressed: addStartBlock,
+            child: const Icon(Icons.ac_unit),
+          ),
+          SizedBox(width: 10),
+          FloatingActionButton(
+            onPressed: () => engine.run(nodeGraph, registry),
+            child: const Icon(Icons.adb),
+          ),
         ],
       ),
+    );
+  }
+
+  Widget _buildAssignmentBlock(AssignmentBlock block) {
+    return AssignmentBlockWidget(
+      key: ValueKey(block.node.id),
+      block: block,
+      onEditToggle: () {
+        setState(() {
+          block.isEditing = !block.isEditing;
+        });
+      },
+      deleteNode: () {
+        setState(() {
+          assignmentBlocks.remove(block);
+          wiredBlocks.removeWhere((binding) =>
+          binding.first.nodeId == block.node.id ||
+              binding.second.nodeId == block.node.id);
+          deleteNode(block.nodeId);
+          deleteConnection(block.nodeId);
+        });
+      },
+      onPositionChanged: (newPosition) {
+        setState(() {
+          block.position = newPosition;
+        });
+      },
+      onLeftArrowClick: () {
+        setState(() {
+          if (temp != null) {
+            makeConnection(temp.node as Node, block.node as Node);
+            wiredBlocks.add(Pair(temp, block));
+            temp = null;
+          }
+        });
+      },
+      onRightArrowClick: () {
+        setState(() {
+          temp = block;
+        });
+      },
+    );
+  }
+
+  Widget _buildLogicBlock(LogicBlock block) {
+    return LogicBlockWidget(
+      key: ValueKey(block.nodeId),
+      block: block,
+      deleteNode: () {
+        setState(() {
+          logicBlocks.remove(block);
+          wiredBlocks.removeWhere((binding) =>
+          binding.first.nodeId == block.nodeId ||
+              binding.second.nodeId == block.nodeId);
+          deleteNode(block.nodeId);
+          deleteConnection(block.nodeId);
+        });
+      },
+      onPositionChanged: (newPosition) {
+        setState(() {
+          block.position = newPosition;
+        });
+      },
+      onLeftArrowClick: () {
+        setState(() {
+          if (temp != null) {
+            makeConnection(temp.node as Node, block.node as Node);
+            wiredBlocks.add(Pair(temp, block));
+            temp = null;
+          }
+        });
+      },
+      onRightArrowClick: () {
+        setState(() {
+          temp = block;
+        });
+      },
+    );
+  }
+
+  Widget _buildStartBlock(StartBlock block) {
+    return StartBlockWidget(
+      key: ValueKey(block.nodeId),
+      block: block,
+      deleteNode: () {
+        setState(() {
+          startBlock = null;
+          wiredBlocks.removeWhere((binding) =>
+          binding.first.nodeId == block.nodeId ||
+              binding.second.nodeId == block.nodeId);
+          deleteNode(block.nodeId);
+          deleteConnection(block.nodeId);
+        });
+      },
+      onPositionChanged: (newPosition) {
+        setState(() {
+          block.position = newPosition;
+        });
+      },
+      onLeftArrowClick: () {
+        setState(() {
+          if (temp != null) {
+            makeConnection(temp.node as Node, block.node as Node);
+            wiredBlocks.add(Pair(temp, block));
+            temp = null;
+          }
+        });
+      },
+      onRightArrowClick: () {
+        setState(() {
+          temp = block;
+        });
+      },
     );
   }
 }
