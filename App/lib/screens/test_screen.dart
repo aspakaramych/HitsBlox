@@ -236,6 +236,7 @@ class _TestScreenState extends State<TestScreen> {
         setState(() {
           if (temp != null) {
             makeConnection(temp.node as Node, block.node as Node);
+            calibrations["${temp.nodeId}${block.nodeId}"] = Offset(0,0);
             wiredBlocks.add(Pair(temp, block));
             temp = null;
           }
@@ -326,6 +327,7 @@ class _TestScreenState extends State<TestScreen> {
         setState(() {
           if (temp != null) {
             makeConnection(temp.node as Node, block.node as Node);
+            calibrations["${temp.nodeId}${block.nodeId}"] = Offset(0,0);
             wiredBlocks.add(Pair(temp, block));
             temp = null;
           }
