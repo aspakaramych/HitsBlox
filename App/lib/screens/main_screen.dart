@@ -11,6 +11,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   bool _isAddSectionVisible = false;
+  final GlobalKey<TestScreenState> _testScreenKey = GlobalKey();
 
   void _toggleAddSection() {
     setState(() {
@@ -34,24 +35,14 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        TestScreen(),
-
+        TestScreen(key: _testScreenKey,),
         Stack(
           children: [
             Column(
               children: [
                 TopBar(),
                 Expanded(child: Center()),
-
-                if (_isAddSectionVisible)
-                  AnimatedSize(
-                    duration: Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 16),
-                      child: ItemsList(),
-                    ),
-                  ),
+                if (_isAddSectionVisible) BlocksList(blocks: _testScreenKey.currentState?.blocks ?? []),
                 BottomBar(
                   onTerminalPressed: () => _showTerminalPanel(context),
                   onAddPressed: () => _toggleAddSection(),

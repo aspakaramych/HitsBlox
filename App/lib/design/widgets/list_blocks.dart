@@ -1,143 +1,96 @@
 part of 'widgets.dart';
 
-final ITEMS = [
-  Item(
-    id: '1',
-    title: 'Блок 1',
-    subtitle: '',
-    imageUrl: 'https://via.placeholder.com/150',
-  ),
-  Item(
-    id: '2',
-    title: 'Блок 2',
-    subtitle: 'обновлено 03.05.2025',
-    imageUrl: 'https://via.placeholder.com/150',
-  ),
-  Item(
-    id: '3',
-    title: 'Блок 3',
-    subtitle: 'обновлено 03.05.2025',
-    imageUrl: 'https://via.placeholder.com/150',
-  ),
-  Item(
-    id: '4',
-    title: 'Блок 4',
-    subtitle: 'обновлено 03.05.2025',
-    imageUrl: 'https://via.placeholder.com/150',
-  ),
-];
+class Block {
+  late String name;
+  VoidCallback action;
 
-class Item {
-  final String id;
-  final String title;
-  final String subtitle;
-  final String imageUrl;
-
-  Item({
-    required this.id,
-    required this.title,
-    required this.subtitle,
-    required this.imageUrl,
-  });
+  Block({required this.name, required this.action});
 }
 
-class ItemCard extends StatefulWidget {
-  final Item item;
+class BlockCard extends StatefulWidget {
+  final Block item;
 
-  const ItemCard({super.key, required this.item});
+  const BlockCard({super.key, required this.item});
 
   @override
-  State<ItemCard> createState() => _ItemCardState();
+  State<BlockCard> createState() => _BlockCardState();
 }
 
-class _ItemCardState extends State<ItemCard> {
+class _BlockCardState extends State<BlockCard> {
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
-            child: Image.network(
-              widget.item.imageUrl,
-              height: 150,
-              width: double.infinity,
-              fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: widget.item.action,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        margin: EdgeInsets.symmetric(horizontal: 5),
+        decoration: BoxDecoration(
+          color: AppColors.primary,
+          borderRadius: BorderRadius.all(Radius.circular(25)),
+        ),
+        child: Center(
+          child: Text(
+            widget.item.name,
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 16.0,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontStyle: FontStyle.italic,
             ),
           ),
-          Padding(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.item.title,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 4),
-                Text(
-                  widget.item.subtitle,
-                  style: TextStyle(fontSize: 12, color: Colors.grey),
-                ),
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
 }
 
-class ItemsGrid extends StatefulWidget {
-  final List<Item> items;
+class BlocksGrid extends StatefulWidget {
+  final List<Block> blocks;
 
-  const ItemsGrid({super.key, required this.items});
+  const BlocksGrid({super.key, required this.blocks});
 
   @override
-  State<ItemsGrid> createState() => _ItemsGridState();
+  State<BlocksGrid> createState() => _BlocksGridState();
 }
 
-class _ItemsGridState extends State<ItemsGrid> {
+class _BlocksGridState extends State<BlocksGrid> {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 16,
         mainAxisSpacing: 16,
-        childAspectRatio: 1,
+        childAspectRatio: 1.8,
       ),
-      itemCount: widget.items.length,
+      itemCount: widget.blocks.length,
       itemBuilder: (context, index) {
-        return ItemCard(item: widget.items[index]);
+        return BlockCard(item: widget.blocks[index]);
       },
     );
   }
 }
 
-class ItemsList extends StatefulWidget {
-  final List<Item> items = ITEMS;
+class BlocksList extends StatefulWidget {
+  final List<Block> blocks;
 
-  ItemsList({super.key});
-
-  // const ItemsList({required this.items});
+  BlocksList({required this.blocks});
 
   @override
-  State<ItemsList> createState() => _ItemsListState();
+  State<BlocksList> createState() => _BlocksListState();
 }
 
-class _ItemsListState extends State<ItemsList> {
+class _BlocksListState extends State<BlocksList> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.all(16),
-        child: ItemsGrid(items: widget.items),
+        child: BlocksGrid(blocks: widget.blocks),
       ),
     );
   }

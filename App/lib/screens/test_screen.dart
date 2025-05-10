@@ -16,15 +16,16 @@ import '../core/widgets/start_block_widget.dart';
 import '../utils/background_painter.dart';
 import '../utils/bezier_line_painter.dart';
 import '../viewmodels/assignment_block.dart';
+import 'package:app/design/widgets/widgets.dart';
 
 class TestScreen extends StatefulWidget {
   const TestScreen({super.key});
 
   @override
-  State<TestScreen> createState() => _TestScreenState();
+  State<TestScreen> createState() => TestScreenState();
 }
 
-class _TestScreenState extends State<TestScreen> {
+class TestScreenState extends State<TestScreen> {
   final List<AssignmentBlock> assignmentBlocks = [];
   final List<LogicBlock> logicBlocks = [];
   var startBlock;
@@ -37,6 +38,8 @@ class _TestScreenState extends State<TestScreen> {
 
   final List<Pair> wiredBlocks = [];
   var temp;
+
+  List<Block> blocks = [];
 
   void addIntBlock() {
     setState(() {
@@ -111,6 +114,32 @@ class _TestScreenState extends State<TestScreen> {
         _transformationController,
       );
     });
+    blocks = [
+      Block(
+          name: "Целочисленная переменная",
+          action: addIntBlock
+      ),
+      Block(
+          name: "Булева переменная",
+          action: addBoolBlock
+      ),
+      Block(
+          name: "Строковая переменная",
+          action: addStringBlock
+      ),
+      Block(
+          name: "Вывод",
+          action: addPrintBlock
+      ),
+      Block(
+          name: "Старт",
+          action: addStartBlock
+      ),
+      Block(
+          name: "Умножение",
+          action: addMultiplyBlock
+      ),
+    ];
   }
 
   final TransformationController _transformationController =
@@ -168,40 +197,40 @@ class _TestScreenState extends State<TestScreen> {
           );
         },
       ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            onPressed: addIntBlock,
-            child: const Icon(Icons.access_alarm),
-          ),
-          SizedBox(width: 10),
-          FloatingActionButton(
-            onPressed: addMultiplyBlock,
-            child: const Icon(Icons.add),
-          ),
-          SizedBox(width: 10),
-          FloatingActionButton(
-            onPressed: addStringBlock,
-            child: const Icon(Icons.account_tree),
-          ),
-          SizedBox(width: 10),
-          FloatingActionButton(
-            onPressed: addPrintBlock,
-            child: const Icon(Icons.add_call),
-          ),
-          SizedBox(width: 10),
-          FloatingActionButton(
-            onPressed: addStartBlock,
-            child: const Icon(Icons.ac_unit),
-          ),
-          SizedBox(width: 10),
-          FloatingActionButton(
-            onPressed: () => engine.run(nodeGraph, registry),
-            child: const Icon(Icons.adb),
-          ),
-        ],
-      ),
+      // floatingActionButton: Row(
+      //   mainAxisAlignment: MainAxisAlignment.end,
+      //   children: [
+      //     FloatingActionButton(
+      //       onPressed: addIntBlock,
+      //       child: const Icon(Icons.access_alarm),
+      //     ),
+      //     SizedBox(width: 10),
+      //     FloatingActionButton(
+      //       onPressed: addMultiplyBlock,
+      //       child: const Icon(Icons.add),
+      //     ),
+      //     SizedBox(width: 10),
+      //     FloatingActionButton(
+      //       onPressed: addStringBlock,
+      //       child: const Icon(Icons.account_tree),
+      //     ),
+      //     SizedBox(width: 10),
+      //     FloatingActionButton(
+      //       onPressed: addPrintBlock,
+      //       child: const Icon(Icons.add_call),
+      //     ),
+      //     SizedBox(width: 10),
+      //     FloatingActionButton(
+      //       onPressed: addStartBlock,
+      //       child: const Icon(Icons.ac_unit),
+      //     ),
+      //     SizedBox(width: 10),
+      //     FloatingActionButton(
+      //       onPressed: () => engine.run(nodeGraph, registry),
+      //       child: const Icon(Icons.adb),
+      //     ),
+      //   ],
+      // ),
     );
   }
 

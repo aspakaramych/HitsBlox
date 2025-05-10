@@ -21,12 +21,7 @@ class BottomBar extends StatelessWidget {
         padding: EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: AppColors.primary,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(25),
-            topRight: Radius.circular(25),
-            bottomLeft: Radius.circular(25),
-            bottomRight: Radius.circular(25),
-          ),
+          borderRadius: BorderRadius.all(Radius.circular(25)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
