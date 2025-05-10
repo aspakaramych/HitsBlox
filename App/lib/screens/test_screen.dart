@@ -224,6 +224,15 @@ class _TestScreenState extends State<TestScreen> {
           );
           deleteNode(block.nodeId);
           deleteConnection(block.nodeId);
+
+          var keysToRemove =
+          calibrations.keys
+              .where((key) => key.contains(block.nodeId))
+              .toList();
+
+          for (var key in keysToRemove) {
+            calibrations.remove(key);
+          }
         });
       },
       onPositionChanged: (newPosition) {
@@ -232,7 +241,6 @@ class _TestScreenState extends State<TestScreen> {
         });
       },
       onLeftArrowClick: () {
-        //TODO: поправить калибровки
         setState(() {
           if (temp != null) {
             makeConnection(temp.node as Node, block.node as Node);
@@ -272,7 +280,6 @@ class _TestScreenState extends State<TestScreen> {
 
           for (var key in keysToRemove) {
             calibrations.remove(key);
-            print(calibrations.length);
           }
         });
       },
@@ -282,7 +289,6 @@ class _TestScreenState extends State<TestScreen> {
         });
       },
       onLeftArrowClick: (position) {
-        //TODO: поправить калибровки
         setState(() {
           if (temp != null) {
             makeConnection(temp.node as Node, block.node as Node);
@@ -315,6 +321,15 @@ class _TestScreenState extends State<TestScreen> {
           );
           deleteNode(block.nodeId);
           deleteConnection(block.nodeId);
+
+          var keysToRemove =
+          calibrations.keys
+              .where((key) => key.contains(block.nodeId))
+              .toList();
+
+          for (var key in keysToRemove) {
+            calibrations.remove(key);
+          }
         });
       },
       onPositionChanged: (newPosition) {
@@ -323,7 +338,6 @@ class _TestScreenState extends State<TestScreen> {
         });
       },
       onLeftArrowClick: () {
-        //TODO: поправить калибровки
         setState(() {
           if (temp != null) {
             makeConnection(temp.node as Node, block.node as Node);
