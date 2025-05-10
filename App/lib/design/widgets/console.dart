@@ -49,7 +49,7 @@ class _ConsoleState extends State<Console> {
               child: ListView(
                 children: [
                   Text(
-                    '>' + logs.join('\n>'),
+                    '>${logs.join('\n>')}',
                     style: TextStyle(fontFamily: 'monospace', fontSize: 14, color: AppColors.text),
                   ),
                 ],

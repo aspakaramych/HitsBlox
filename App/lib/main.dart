@@ -1,7 +1,7 @@
 
 import 'package:app/screens/test_screen.dart';
 import 'package:flutter/material.dart';
-import 'screens/home_screen.dart';
+import 'package:app/screens/main_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
           ),
       ),
       routes: {
-        '/': (context) => mainScreen(),
+        '/': (context) => MainScreen(),
         '/test-page': (context) => TestScreen()
       },
       // home: const HomeScreen(),
