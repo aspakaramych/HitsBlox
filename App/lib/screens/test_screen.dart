@@ -1,3 +1,4 @@
+import 'package:app/core/ConsoleService.dart';
 import 'package:app/core/Engine.dart';
 import 'package:app/core/NodeGraph.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
@@ -33,6 +34,7 @@ class TestScreenState extends State<TestScreen> {
   final Map<String, Offset> calibrations = {};
 
   late NodeGraph nodeGraph = NodeGraph();
+  final ConsoleService consoleService = new ConsoleService();
   late Engine engine = Engine();
   late VariableRegistry registry = VariableRegistry();
 
@@ -67,7 +69,7 @@ class TestScreenState extends State<TestScreen> {
 
   void addPrintBlock() {
     setState(() {
-      var block = BlockFactory.createPrintBlock(_transformationController);
+      var block = BlockFactory.createPrintBlock(_transformationController, consoleService);
       logicBlocks.add(block);
       nodeGraph.addNode(block.node);
     });
@@ -253,6 +255,15 @@ class TestScreenState extends State<TestScreen> {
           );
           deleteNode(block.nodeId);
           deleteConnection(block.nodeId);
+
+          var keysToRemove =
+          calibrations.keys
+              .where((key) => key.contains(block.nodeId))
+              .toList();
+
+          for (var key in keysToRemove) {
+            calibrations.remove(key);
+          }
         });
       },
       onPositionChanged: (newPosition) {
@@ -261,10 +272,10 @@ class TestScreenState extends State<TestScreen> {
         });
       },
       onLeftArrowClick: () {
-        //TODO: поправить калибровки
         setState(() {
           if (temp != null) {
             makeConnection(temp.node as Node, block.node as Node);
+            calibrations["${temp.nodeId}${block.nodeId}"] = Offset(0,0);
             wiredBlocks.add(Pair(temp, block));
             temp = null;
           }
@@ -300,7 +311,6 @@ class TestScreenState extends State<TestScreen> {
 
           for (var key in keysToRemove) {
             calibrations.remove(key);
-            print(calibrations.length);
           }
         });
       },
@@ -310,7 +320,6 @@ class TestScreenState extends State<TestScreen> {
         });
       },
       onLeftArrowClick: (position) {
-        //TODO: поправить калибровки
         setState(() {
           if (temp != null) {
             makeConnection(temp.node as Node, block.node as Node);
@@ -343,6 +352,15 @@ class TestScreenState extends State<TestScreen> {
           );
           deleteNode(block.nodeId);
           deleteConnection(block.nodeId);
+
+          var keysToRemove =
+          calibrations.keys
+              .where((key) => key.contains(block.nodeId))
+              .toList();
+
+          for (var key in keysToRemove) {
+            calibrations.remove(key);
+          }
         });
       },
       onPositionChanged: (newPosition) {
@@ -351,10 +369,10 @@ class TestScreenState extends State<TestScreen> {
         });
       },
       onLeftArrowClick: () {
-        //TODO: поправить калибровки
         setState(() {
           if (temp != null) {
             makeConnection(temp.node as Node, block.node as Node);
+            calibrations["${temp.nodeId}${block.nodeId}"] = Offset(0,0);
             wiredBlocks.add(Pair(temp, block));
             temp = null;
           }

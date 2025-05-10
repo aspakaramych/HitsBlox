@@ -1,3 +1,4 @@
+import 'package:app/core/ConsoleService.dart';
 import 'package:app/core/nodes/MultiplyNode.dart';
 import 'package:app/core/nodes/PrintNode.dart';
 import 'package:app/core/nodes/StartNode.dart';
@@ -62,11 +63,12 @@ class BlockFactory {
     );
   }
 
-  static createPrintBlock(TransformationController transformationController) {
+  static createPrintBlock(TransformationController transformationController, ConsoleService consoleService) {
     final currUserOffset = UserPositionUtils.getVisibleContentRect(transformationController).topLeft;
     final printNode = PrintNode(
-      'node_${Randomizer.getRandomInt()}',
-      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+        consoleService: consoleService,
+      id: 'node_${Randomizer.getRandomInt()}',
+      position: Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
     );
 
     return LogicBlock(
