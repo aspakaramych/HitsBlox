@@ -13,44 +13,39 @@ class StorageSaves extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        // 🔽 Добавляем пустой слайвер с нужным padding
-        SliverPadding(
-          padding: const EdgeInsets.only(top: 40), // ← Задаём отступ сверху
-          sliver: SliverGrid(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-              childAspectRatio: 0.8,
-            ),
-            delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => MainScreen()),
-                    );
-                  },
-                  child: Card(
-                    color: AppColors.primary,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    child: Center(
-                      child: Text('Сохранение $index'),
-                    ),
-                  ),
-                );
-              },
-              childCount: itemCount,
-            ),
-          ),
+    return Padding(
+      padding: const EdgeInsets.only(top: 40),
+      child: GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+          childAspectRatio: 0.8,
         ),
-      ],
+        itemCount: itemCount,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MainScreen()),
+              );
+            },
+            child: Card(
+              color: AppColors.primary,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
+              ),
+              child: Center(
+                child: Text('Сохранение $index'),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }
@@ -63,8 +58,6 @@ class StorageScreen extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 40),
       color: AppColors.background,
-      height: double.infinity,
-      width: double.infinity,
       child: StorageSaves()
     );
   }

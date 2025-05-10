@@ -10,13 +10,12 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<StatefulWidget> createState() => _HomeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
   late ScrollController _scrollController;
-  bool _showFullGrid = false;
-  int cnt = 4;
+  bool _showStorage = false;
 
   @override
   void initState() {
@@ -33,63 +32,49 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _onScroll() {
-    cnt += 1;
     if (_scrollController.position.userScrollDirection ==
         ScrollDirection.reverse) {
       setState(() {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => StorageScreen()));
+        _showStorage = true;
       });
     } else if (_scrollController.position.userScrollDirection ==
         ScrollDirection.forward) {
       setState(() {
-        _showFullGrid = false;
+        _showStorage = false;
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: AppColors.background,
-      child: Stack(
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      body: Column(
         children: [
-          LayoutBuilder(
-            builder: (context, constraints) {
-              return SingleChildScrollView(
-                controller: _scrollController,
-                child: SizedBox(
-                  height: constraints.maxHeight * 2,
-                  child: Center(),
-                ),
-              );
-            },
-          ),
-          Column(
-            children: [
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 40),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: GridSaves(),
+          Expanded(
+            child: CustomScrollView(
+              slivers: [
+                SliverFillRemaining(
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Align(alignment:Alignment.bottomCenter, child: Container(margin: EdgeInsets.symmetric(horizontal: 40), child: GridSaves())),
+                      ),
+                      Container(margin: EdgeInsets.symmetric(vertical: 20), child: SvgPicture.asset("lib/design/assets/icons/scroll.svg")),
+                      BottomBar(
+                          onTerminalPressed: () {},
+                          onAddPressed: () {},
+                        ),
+                    ],
                   ),
                 ),
-              ),
-              AnimatedOpacity(
-                opacity: _showFullGrid ? 0 : 1,
-                duration: Duration(milliseconds: 300),
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    margin: EdgeInsets.symmetric(vertical: 20),
-                    child: SvgPicture.asset("lib/design/assets/icons/scroll.svg"),
-                  ),
+                SliverToBoxAdapter(
+                  child: StorageScreen(),
                 ),
-              ),
-              BottomBar(onTerminalPressed: () {}, onAddPressed: () {},),
-            ],
+              ],
+            )
           ),
-        ]
+        ],
       ),
     );
   }
