@@ -1,10 +1,9 @@
-import 'dart:ui';
-
-import 'package:app/core/ConsoleService.dart';
-import 'package:app/core/Pins/Pin.dart';
-import 'package:app/core/abstracts/Node.dart';
-import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:flutter/material.dart';
+
+import '../ConsoleService.dart';
+import '../Pins/Pin.dart';
+import '../abstracts/Node.dart';
+import '../registry/VariableRegistry.dart';
 
 class PrintNode extends Node {
   final TextEditingController controller = TextEditingController();
@@ -13,17 +12,25 @@ class PrintNode extends Node {
   final List<Pin> _inputs = [];
   final List<Pin> _outputs = [];
 
+  final ConsoleService consoleService;
+
   @override
   List<Pin> get inputs => _inputs;
+
   @override
   List<Pin> get outputs => _outputs;
 
   @override
   final String id;
+
   @override
   String get title => "Вывести";
 
-  PrintNode(String this.id, Offset position) : super(position) {
+  PrintNode({
+    required this.consoleService,
+    required String this.id,
+    required Offset position,
+  }) : super(position) {
     controller.text = 'value';
     addInput(Pin(id: 'exec_in', name: 'Exec In', isInput: true));
     addInput(Pin(id: 'value', name: 'Value', isInput: true));
@@ -31,6 +38,7 @@ class PrintNode extends Node {
   }
 
   void addInput(Pin pin) => _inputs.add(pin);
+
   void addOutput(Pin pin) => _outputs.add(pin);
 
   @override
@@ -38,6 +46,6 @@ class PrintNode extends Node {
     inputVarName = controller.text.trim();
 
     var value = registry.getValue(inputVarName);
-    ConsoleService().log("$inputVarName = $value");
+    consoleService.log("$inputVarName = $value");
   }
 }

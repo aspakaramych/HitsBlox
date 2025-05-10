@@ -1,3 +1,4 @@
+import 'package:app/core/ConsoleService.dart';
 import 'package:app/core/Engine.dart';
 import 'package:app/core/NodeGraph.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
@@ -32,6 +33,7 @@ class _TestScreenState extends State<TestScreen> {
   final Map<String, Offset> calibrations = {};
 
   late NodeGraph nodeGraph = NodeGraph();
+  final ConsoleService consoleService = new ConsoleService();
   late Engine engine = Engine();
   late VariableRegistry registry = VariableRegistry();
 
@@ -64,7 +66,7 @@ class _TestScreenState extends State<TestScreen> {
 
   void addPrintBlock() {
     setState(() {
-      var block = BlockFactory.createPrintBlock(_transformationController);
+      var block = BlockFactory.createPrintBlock(_transformationController, consoleService);
       logicBlocks.add(block);
       nodeGraph.addNode(block.node);
     });

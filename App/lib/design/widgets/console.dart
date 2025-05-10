@@ -14,7 +14,6 @@ class _ConsoleState extends State<Console> {
   void initState() {
     super.initState();
     _consoleService = ConsoleService();
-    _consoleService.addListener(_onLogsChanged);
   }
 
   void _onLogsChanged() {
@@ -23,7 +22,6 @@ class _ConsoleState extends State<Console> {
 
   @override
   void dispose() {
-    _consoleService.removeListener(_onLogsChanged);
     super.dispose();
   }
 
