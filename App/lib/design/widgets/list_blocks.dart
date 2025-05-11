@@ -29,16 +29,9 @@ class _BlockCardState extends State<BlockCard> {
           borderRadius: BorderRadius.all(Radius.circular(25)),
         ),
         child: Center(
-          child: Text(
-            widget.item.name,
-            textAlign: TextAlign.center,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontSize: 16.0,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontStyle: FontStyle.italic,
+          child: RichText(
+            text: TextSpan(
+              text: widget.item.name,
             ),
           ),
         ),
