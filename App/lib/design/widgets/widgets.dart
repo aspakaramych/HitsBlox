@@ -7,6 +7,7 @@ import 'package:app/screens/test_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../theme/colors.dart';
+import 'package:path_drawing/path_drawing.dart';
 
 import '../../core/ConsoleService.dart';
 
