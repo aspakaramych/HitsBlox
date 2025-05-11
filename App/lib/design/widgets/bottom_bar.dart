@@ -74,7 +74,10 @@ class BottomBar extends StatelessWidget {
                 height: 40,
                 colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcIn),
               ),
-              onPressed: () {},
+              onPressed: () => Navigator.push(
+                context,
+                PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) => SettingsScreen()),
+              )
             ),
           ],
         ),
