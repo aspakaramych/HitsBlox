@@ -19,7 +19,7 @@ class NodeGraph {
   }
 
   Node? getNodeById(String id){
-    nodes.firstWhere((node) => node.id == id);
+    return nodes.firstWhere((node) => node.id == id);
   }
 
   void deleteNode(String nodeId) {

@@ -1,7 +1,11 @@
 import 'package:app/core/ConsoleService.dart';
+import 'package:app/core/nodes/AddNode.dart';
+import 'package:app/core/nodes/ConcatNode.dart';
+import 'package:app/core/nodes/DivideNode.dart';
 import 'package:app/core/nodes/MultiplyNode.dart';
 import 'package:app/core/nodes/PrintNode.dart';
 import 'package:app/core/nodes/StartNode.dart';
+import 'package:app/core/nodes/SubNode.dart';
 import 'package:app/viewmodels/assignment_block.dart';
 import 'package:app/viewmodels/logic_block.dart';
 import 'package:app/viewmodels/position.dart';
@@ -110,6 +114,82 @@ class BlockFactory {
       node: multiplyNode,
       color: Colors.deepOrangeAccent,
       blockName: "multiply",
+      width: 200,
+      height: 80,
+      leftArrows: List.of([Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
+      rightArrows: List.of([Position(Offset(15, 15), false)]),
+    );
+  }
+
+  static createAddictionBlock(TransformationController transformationController) {
+    final currUserOffset = UserPositionUtils.getVisibleContentRect(transformationController).topLeft;
+    final addictionNode = AddNode(
+      'node_${Randomizer.getRandomInt()}',
+      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+    );
+
+    return LogicBlock(
+      position: addictionNode.position,
+      node: addictionNode,
+      color: Color.fromARGB(255, 35, 0, 124),
+      blockName: "add",
+      width: 200,
+      height: 80,
+      leftArrows: List.of([Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
+      rightArrows: List.of([Position(Offset(15, 15), false)]),
+    );
+  }
+
+  static createConcatBlock(TransformationController transformationController) {
+    final currUserOffset = UserPositionUtils.getVisibleContentRect(transformationController).topLeft;
+    final concatNode = ConcatNode(
+      'node_${Randomizer.getRandomInt()}',
+      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+    );
+
+    return LogicBlock(
+      position: concatNode.position,
+      node: concatNode,
+      color: Color.fromARGB(255, 163, 71, 216),
+      blockName: "concat",
+      width: 200,
+      height: 80,
+      leftArrows: List.of([Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
+      rightArrows: List.of([Position(Offset(15, 15), false)]),
+    );
+  }
+
+  static createDivisionBlock(TransformationController transformationController) {
+    final currUserOffset = UserPositionUtils.getVisibleContentRect(transformationController).topLeft;
+    final divideNode = DivideNode(
+      'node_${Randomizer.getRandomInt()}',
+      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+    );
+
+    return LogicBlock(
+      position: divideNode.position,
+      node: divideNode,
+      color: Color.fromARGB(255, 99, 81, 38),
+      blockName: "divide",
+      width: 200,
+      height: 80,
+      leftArrows: List.of([Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
+      rightArrows: List.of([Position(Offset(15, 15), false)]),
+    );
+  }
+
+  static createSubtractBlock(TransformationController transformationController) {
+    final currUserOffset = UserPositionUtils.getVisibleContentRect(transformationController).topLeft;
+    final subNode = SubNode(
+      'node_${Randomizer.getRandomInt()}',
+      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+    );
+
+    return LogicBlock(
+      position: subNode.position,
+      node: subNode,
+      color: Color.fromARGB(255, 255, 180, 117),
+      blockName: "subtract",
       width: 200,
       height: 80,
       leftArrows: List.of([Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
