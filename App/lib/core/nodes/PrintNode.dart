@@ -41,9 +41,15 @@ class PrintNode extends Node {
 
   @override
   Future<void> execute(VariableRegistry registry) async {
-    var value = registry.getValue(inputVarName);
-    if (value != null) {
-      consoleService.log("$inputVarName = $value");
+    var names = inputVarName.trim().split(", ");
+    for (var name in names){
+      var val = registry.getValue(name);
+      if (val != null){
+        consoleService.log("$inputVarName = $val");
+      }
+      else{
+        throw Exception("$val is not exist");
+      }
     }
   }
 }
