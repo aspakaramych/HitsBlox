@@ -43,23 +43,7 @@ class TestScreenState extends State<TestScreen> {
   final List<Pair> wiredBlocks = [];
   var temp;
 
-  void addIntBlock() {
-    setState(() {
-      var block = BlockFactory.createIntBlock(_transformationController);
-      assignmentBlocks.add(block);
-      nodeGraph.addNode(block.node as Node);
-    });
-  }
-
-  void addBoolBlock() {
-    setState(() {
-      var block = BlockFactory.createBoolBlock(_transformationController);
-      assignmentBlocks.add(block);
-      nodeGraph.addNode(block.node as Node);
-    });
-  }
-
-  void addStringBlock() {
+  void addAssignmentBlock(AssignmentBlock block) {
     setState(() {
       var block = BlockFactory.createStringBlock(_transformationController);
       assignmentBlocks.add(block);
@@ -67,11 +51,10 @@ class TestScreenState extends State<TestScreen> {
     });
   }
 
-  void addPrintBlock() {
+  void addLogicBlock(LogicBlock block) {
     setState(() {
-      var block = BlockFactory.createPrintBlock(_transformationController, consoleService);
       logicBlocks.add(block);
-      nodeGraph.addNode(block.node);
+      nodeGraph.addNode(block.node as Node);
     });
   }
 
@@ -79,14 +62,6 @@ class TestScreenState extends State<TestScreen> {
     setState(() {
       startBlock = BlockFactory.createStartBlock(_transformationController);
       nodeGraph.addNode(startBlock.node);
-    });
-  }
-
-  void addMultiplyBlock() {
-    setState(() {
-      var block = BlockFactory.createMultiplyBlock(_transformationController);
-      logicBlocks.add(block);
-      nodeGraph.addNode(block.node);
     });
   }
 
@@ -119,27 +94,43 @@ class TestScreenState extends State<TestScreen> {
     widget.blocks = [
       Block(
           name: "Целочисленная переменная",
-          action: addIntBlock
+          action: () => addAssignmentBlock(BlockFactory.createIntBlock(_transformationController))
       ),
       Block(
           name: "Булева переменная",
-          action: addBoolBlock
+          action: () => addAssignmentBlock(BlockFactory.createBoolBlock(_transformationController))
       ),
       Block(
           name: "Строковая переменная",
-          action: addStringBlock
+          action: () => addAssignmentBlock(BlockFactory.createStringBlock(_transformationController))
       ),
       Block(
           name: "Вывод",
-          action: addPrintBlock
+          action: () => addLogicBlock(BlockFactory.createPrintBlock(_transformationController, consoleService))
       ),
       Block(
           name: "Старт",
-          action: addStartBlock
+          action: addStartBlock,
       ),
       Block(
           name: "Умножение",
-          action: addMultiplyBlock
+          action: () => addLogicBlock(BlockFactory.createMultiplyBlock(_transformationController))
+      ),
+      Block(
+          name: "Деление",
+          action: () => addLogicBlock(BlockFactory.createDivisionBlock(_transformationController))
+      ),
+      Block(
+          name: "Вычитание",
+          action: () => addLogicBlock(BlockFactory.createSubtractBlock(_transformationController))
+      ),
+      Block(
+          name: "Сложение",
+          action: () => addLogicBlock(BlockFactory.createAddictionBlock(_transformationController))
+      ),
+      Block(
+          name: "Конкатенация",
+          action: () => addLogicBlock(BlockFactory.createConcatBlock(_transformationController))
       ),
     ];
   }
@@ -199,40 +190,6 @@ class TestScreenState extends State<TestScreen> {
           );
         },
       ),
-      // floatingActionButton: Row(
-      //   mainAxisAlignment: MainAxisAlignment.end,
-      //   children: [
-      //     FloatingActionButton(
-      //       onPressed: addIntBlock,
-      //       child: const Icon(Icons.access_alarm),
-      //     ),
-      //     SizedBox(width: 10),
-      //     FloatingActionButton(
-      //       onPressed: addMultiplyBlock,
-      //       child: const Icon(Icons.add),
-      //     ),
-      //     SizedBox(width: 10),
-      //     FloatingActionButton(
-      //       onPressed: addStringBlock,
-      //       child: const Icon(Icons.account_tree),
-      //     ),
-      //     SizedBox(width: 10),
-      //     FloatingActionButton(
-      //       onPressed: addPrintBlock,
-      //       child: const Icon(Icons.add_call),
-      //     ),
-      //     SizedBox(width: 10),
-      //     FloatingActionButton(
-      //       onPressed: addStartBlock,
-      //       child: const Icon(Icons.ac_unit),
-      //     ),
-      //     SizedBox(width: 10),
-      //     FloatingActionButton(
-      //       onPressed: () => engine.run(nodeGraph, registry),
-      //       child: const Icon(Icons.adb),
-      //     ),
-      //   ],
-      // ),
     );
   }
 
