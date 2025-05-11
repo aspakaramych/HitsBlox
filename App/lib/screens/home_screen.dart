@@ -2,6 +2,7 @@ import 'package:app/screens/storage_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 import 'package:app/design/widgets/widgets.dart';
 import 'package:app/design/theme/colors.dart';
@@ -15,7 +16,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late ScrollController _scrollController;
-  bool _showStorage = false;
+  bool _isStorageVisible = false;
+  bool _hasSnapped = false;
+
+  bool _isAnimating = false;
 
   @override
   void initState() {
@@ -31,16 +35,48 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  void _onScroll() {
-    if (_scrollController.position.userScrollDirection ==
-        ScrollDirection.reverse) {
+  void _onScroll() async {
+    if (_isAnimating) return;
+
+    final screenHeight = MediaQuery.of(context).size.height;
+    final offset = _scrollController.offset;
+
+    if (offset > 0 && !_hasSnapped) {
+      _isAnimating = true;
+      await _snapToStorage();
+      _isAnimating = false;
+    } else if (offset < screenHeight && _hasSnapped) {
+      _isAnimating = true;
+      await _snapToMain();
+      _isAnimating = false;
+    }
+  }
+
+  Future<void> _snapToStorage() async {
+    final screenHeight = MediaQuery.of(context).size.height;
+    await _scrollController.animateTo(
+      screenHeight,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeOut,
+    );
+
+    if (mounted) {
       setState(() {
-        _showStorage = true;
+        _hasSnapped = true;
       });
-    } else if (_scrollController.position.userScrollDirection ==
-        ScrollDirection.forward) {
+    }
+  }
+
+  Future<void> _snapToMain() async {
+    await _scrollController.animateTo(
+      0,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeOut,
+    );
+
+    if (mounted) {
       setState(() {
-        _showStorage = false;
+        _hasSnapped = false;
       });
     }
   }
@@ -53,6 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Expanded(
             child: CustomScrollView(
+              controller: _scrollController,
               slivers: [
                 SliverFillRemaining(
                   child: Column(
@@ -60,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Expanded(
                         child: Align(alignment:Alignment.bottomCenter, child: Container(margin: EdgeInsets.symmetric(horizontal: 40), child: GridSaves())),
                       ),
-                      Container(margin: EdgeInsets.symmetric(vertical: 20), child: SvgPicture.asset("lib/design/assets/icons/scroll.svg")),
+                      Container(margin: EdgeInsets.symmetric(vertical: 0), child: SvgPicture.asset("lib/design/assets/icons/scroll.svg")),
                       BottomBar(
                           onTerminalPressed: () {},
                           onAddPressed: () {},
@@ -70,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SliverToBoxAdapter(
                   child: StorageScreen(),
-                ),
+                  ),
               ],
             )
           ),

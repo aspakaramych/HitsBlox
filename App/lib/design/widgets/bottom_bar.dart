@@ -15,7 +15,7 @@ class BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 165,
+      height: 156,
       color: Colors.transparent,
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       width: double.infinity,
