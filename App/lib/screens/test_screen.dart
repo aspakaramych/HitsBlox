@@ -20,7 +20,9 @@ import '../viewmodels/assignment_block.dart';
 import 'package:app/design/widgets/widgets.dart';
 
 class TestScreen extends StatefulWidget {
-  const TestScreen({super.key});
+  List<Block> blocks = [];
+
+  TestScreen({super.key});
 
   @override
   State<TestScreen> createState() => TestScreenState();
@@ -40,8 +42,6 @@ class TestScreenState extends State<TestScreen> {
 
   final List<Pair> wiredBlocks = [];
   var temp;
-
-  List<Block> blocks = [];
 
   void addIntBlock() {
     setState(() {
@@ -116,7 +116,7 @@ class TestScreenState extends State<TestScreen> {
         _transformationController,
       );
     });
-    blocks = [
+    widget.blocks = [
       Block(
           name: "Целочисленная переменная",
           action: addIntBlock
