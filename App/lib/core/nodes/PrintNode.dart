@@ -7,12 +7,17 @@ import '../abstracts/Node.dart';
 import '../registry/VariableRegistry.dart';
 
 class PrintNode extends Node {
-  Pin? get valuePin => inputs.firstWhereOrNull((p) => p.id == 'value');
+  String inputVarName = 'value';
+  final TextEditingController controller = TextEditingController(text: 'value');
+
+  final List<Pin> _inputs = [];
+  final List<Pin> _outputs = [];
 
   @override
-  final List<Pin> inputs = [];
+  List<Pin> get inputs => _inputs;
+
   @override
-  final List<Pin> outputs = [];
+  List<Pin> get outputs => _outputs;
 
   final ConsoleService consoleService;
 
@@ -28,19 +33,17 @@ class PrintNode extends Node {
     required Offset position,
   }) : super(position) {
     addInput(Pin(id: 'exec_in', name: 'Exec In', isInput: true));
-    addInput(Pin(id: 'value', name: 'Value', isInput: true));
     addOutput(Pin(id: 'exec_out', name: 'Exec Out', isInput: false));
   }
 
-  void addInput(Pin pin) => inputs.add(pin);
-
-  void addOutput(Pin pin) => outputs.add(pin);
+  void addInput(Pin pin) => _inputs.add(pin);
+  void addOutput(Pin pin) => _outputs.add(pin);
 
   @override
   Future<void> execute(VariableRegistry registry) async {
-    var valuePin = inputs.firstWhereOrNull((p) => p.id == 'value');
-    if (valuePin != null && valuePin.getValue() != null) {
-      consoleService.log("${valuePin.name} = ${valuePin.getValue()}");
+    var value = registry.getValue(inputVarName);
+    if (value != null) {
+      consoleService.log("$inputVarName = $value");
     }
   }
 }
