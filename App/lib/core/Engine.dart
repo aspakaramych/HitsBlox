@@ -8,12 +8,17 @@ class Engine {
   late NodeGraph graph;
   late VariableRegistry registry;
 
+  Engine();
+
   Future<void> run(NodeGraph nodeGraph, VariableRegistry variableRegistry) async {
     this.graph = nodeGraph;
     this.registry = variableRegistry;
 
-    for (var node in graph.nodes.where((n) => n is StartNode)) {
-      await executeNode(node);
+    for (var node in graph.nodes) {
+      if (node is StartNode) {
+        await executeNode(node);
+        break;
+      }
     }
   }
 
@@ -23,7 +28,6 @@ class Engine {
         return;
       }
     }
-
     await node.execute(registry);
 
     for (var conn in graph.connections.where((c) => c.fromNodeId == node.id)) {
@@ -31,12 +35,15 @@ class Engine {
       var outputPin = node.outputs.firstWhereOrNull((p) => p.id == conn.fromPinId);
       var inputPin = nextNode?.inputs.firstWhereOrNull((p) => p.id == conn.toPinId);
 
-      if (outputPin != null && inputPin != null && outputPin.isInput == false) {
+      if (outputPin != null && inputPin != null) {
         inputPin.setValue(outputPin.getValue());
       }
+    }
 
-      if (conn.fromPinId == 'exec_out') {
-        await executeNode(nextNode!);
+    for (var conn in graph.connections.where((c) => c.fromNodeId == node.id && c.fromPinId == 'exec_out')) {
+      var nextNode = graph.getNodeById(conn.toNodeId);
+      if (nextNode != null) {
+        await executeNode(nextNode);
       }
     }
   }

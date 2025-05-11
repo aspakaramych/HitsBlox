@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 import '../ConsoleService.dart';
@@ -6,19 +7,14 @@ import '../abstracts/Node.dart';
 import '../registry/VariableRegistry.dart';
 
 class PrintNode extends Node {
-  final TextEditingController controller = TextEditingController();
-  String inputVarName = 'value';
+  Pin? get valuePin => inputs.firstWhereOrNull((p) => p.id == 'value');
 
-  final List<Pin> _inputs = [];
-  final List<Pin> _outputs = [];
+  @override
+  final List<Pin> inputs = [];
+  @override
+  final List<Pin> outputs = [];
 
   final ConsoleService consoleService;
-
-  @override
-  List<Pin> get inputs => _inputs;
-
-  @override
-  List<Pin> get outputs => _outputs;
 
   @override
   final String id;
@@ -31,21 +27,20 @@ class PrintNode extends Node {
     required String this.id,
     required Offset position,
   }) : super(position) {
-    controller.text = 'value';
     addInput(Pin(id: 'exec_in', name: 'Exec In', isInput: true));
     addInput(Pin(id: 'value', name: 'Value', isInput: true));
     addOutput(Pin(id: 'exec_out', name: 'Exec Out', isInput: false));
   }
 
-  void addInput(Pin pin) => _inputs.add(pin);
+  void addInput(Pin pin) => inputs.add(pin);
 
-  void addOutput(Pin pin) => _outputs.add(pin);
+  void addOutput(Pin pin) => outputs.add(pin);
 
   @override
   Future<void> execute(VariableRegistry registry) async {
-    inputVarName = controller.text.trim();
-
-    var value = registry.getValue(inputVarName);
-    consoleService.log("$inputVarName = $value");
+    var valuePin = inputs.firstWhereOrNull((p) => p.id == 'value');
+    if (valuePin != null && valuePin.getValue() != null) {
+      consoleService.log("${valuePin.name} = ${valuePin.getValue()}");
+    }
   }
 }
