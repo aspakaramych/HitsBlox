@@ -33,8 +33,8 @@ class IntAssignNode extends Node implements AssignNode{
   String get title => "Присвоить";
 
   IntAssignNode(String this.id, Offset position) : super(position) {
-    addInput(Pin<int>(id: 'exec_in', name: 'Exec In', isInput: true));
-    addOutput(Pin<int>(id: 'exec_out', name: 'Exec Out', isInput: false));
+    addInput(Pin(id: 'exec_in', name: 'Exec In', isInput: true));
+    addOutput(Pin(id: 'exec_out', name: 'Exec Out', isInput: false));
   }
 
   @override
@@ -58,7 +58,8 @@ class IntAssignNode extends Node implements AssignNode{
       commands.add(AssignVariableCommand<int>(variableName, expression));
 
 
-      var pin = Pin<int>(id: "value", name: variableName, isInput: false);
+      var pin = Pin(id: "value", name: variableName, isInput: false);
+      pin.setValue(variableName);
       addOutput(pin);
     }
   }
@@ -74,21 +75,14 @@ class IntAssignNode extends Node implements AssignNode{
     }
   }
 
-  void addInput(Pin<int> pin) => _inputs.add(pin);
+  void addInput(Pin pin) => _inputs.add(pin);
 
-  void addOutput(Pin<int> pin) => _outputs.add(pin);
+  void addOutput(Pin pin) => _outputs.add(pin);
 
   @override
   Future<void> execute(VariableRegistry registry) async {
     for (var cmd in commands) {
       await cmd.execute(registry);
-    }
-
-    for (var pin in _outputs.where((p) => !p.isInput)) {
-      final value = registry.getValue(pin.id);
-      if (value is int?) {
-        pin.setValue(value);
-      }
     }
   }
 }

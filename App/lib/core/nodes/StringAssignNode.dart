@@ -81,12 +81,5 @@ class StringAssignNode extends Node implements AssignNode{
     for (var cmd in commands) {
       await cmd.execute(registry);
     }
-
-    // for (var pin in _outputs.where((p) => !p.isInput)) {
-    //
-    //   final value = registry.getValue(pin.id);
-    //   pin.setValue(value);
-    //
-    // }
   }
 }

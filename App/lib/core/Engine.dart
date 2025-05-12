@@ -25,8 +25,8 @@ class Engine {
 
   Future<void> executeNode(Node node) async {
     for (var pin in node.inputs) {
-      if (pin.isInput && pin.id != 'exec_in' && pin.getValue() == null) {
-        return;
+      if (pin.isInput && pin.id == 'exec_in') {
+        break;
       }
     }
     await node.execute(registry);
