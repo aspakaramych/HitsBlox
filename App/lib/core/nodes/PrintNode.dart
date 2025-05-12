@@ -55,8 +55,7 @@ class PrintNode extends Node {
   }
   @override
   Future<void> execute(VariableRegistry registry) async {
-    var expression = controller.text.trim();
-    var parsedText = parseInput(expression, registry);
+    var parsedText = parseInput(rawExpression, registry);
     consoleService.log(parsedText);
   }
 }

@@ -3,10 +3,12 @@ import 'package:app/core/Engine.dart';
 import 'package:app/core/NodeGraph.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:app/core/widgets/logic_block_widget.dart';
+import 'package:app/core/widgets/print_block_widget.dart';
 import 'package:app/utils/pair.dart';
 import 'package:app/utils/user_position_utils.dart';
 import 'package:app/viewmodels/block_factory.dart';
 import 'package:app/viewmodels/logic_block.dart';
+import 'package:app/viewmodels/print_block.dart';
 import 'package:app/viewmodels/start_block.dart';
 import 'package:flutter/material.dart';
 
@@ -31,9 +33,12 @@ class TestScreen extends StatefulWidget {
 class TestScreenState extends State<TestScreen> {
   final List<AssignmentBlock> assignmentBlocks = [];
   final List<LogicBlock> logicBlocks = [];
+  final List<PrintBlock> printBlocks = [];
   var startBlock;
 
   final Map<String, Offset> calibrations = {};
+  final Map<String, Offset> nodeCalibration = {};
+  final Map<String, Offset> valueBindingsCalibrations = {};
 
   late NodeGraph nodeGraph = NodeGraph();
   final ConsoleService consoleService = new ConsoleService();
@@ -41,6 +46,7 @@ class TestScreenState extends State<TestScreen> {
   late VariableRegistry registry = VariableRegistry();
 
   final List<Pair> wiredBlocks = [];
+  final List<Pair> wiredValues = [];
   var temp;
 
   void addAssignmentBlock(AssignmentBlock block) {
@@ -65,11 +71,26 @@ class TestScreenState extends State<TestScreen> {
     });
   }
 
+  void addPrintBlock(PrintBlock block) {
+    setState(() {
+      printBlocks.add(block);
+      nodeGraph.addNode(block.node as Node);
+    });
+  }
+
   void makeConnection(Node first, Node second) {
     String firstNodeId = first.id;
     String secondNodeId = second.id;
     Pin firstPin = first.outputs.where((p) => p.id == 'exec_out').first;
     Pin secondPin = second.inputs.where((p) => p.id == 'exec_in').first;
+    nodeGraph.connect(firstNodeId, firstPin.id, secondNodeId, secondPin.id);
+  }
+
+  void makeValueConnection(Node first, Node second) {
+    String firstNodeId = first.id;
+    String secondNodeId = second.id;
+    Pin firstPin = first.outputs.where((p) => p.id == 'value').first;
+    Pin secondPin = second.inputs.where((p) => p.id == 'value').first;
     nodeGraph.connect(firstNodeId, firstPin.id, secondNodeId, secondPin.id);
   }
 
@@ -93,44 +114,70 @@ class TestScreenState extends State<TestScreen> {
     });
     widget.blocks = [
       Block(
-          name: "Целочисленная переменная",
-          action: () => addAssignmentBlock(BlockFactory.createIntBlock(_transformationController))
+        name: "Целочисленная переменная",
+        action:
+            () => {engine.run(nodeGraph, registry)},
       ),
       Block(
-          name: "Булева переменная",
-          action: () => addAssignmentBlock(BlockFactory.createBoolBlock(_transformationController))
+        name: "Булева переменная",
+        action:
+            () => addAssignmentBlock(
+              BlockFactory.createBoolBlock(_transformationController),
+            ),
       ),
       Block(
-          name: "Строковая переменная",
-          action: () => addAssignmentBlock(BlockFactory.createStringBlock(_transformationController))
+        name: "Строковая переменная",
+        action:
+            () => addAssignmentBlock(
+              BlockFactory.createStringBlock(_transformationController),
+            ),
       ),
       Block(
-          name: "Вывод",
-          action: () => addLogicBlock(BlockFactory.createPrintBlock(_transformationController, consoleService))
+        name: "Вывод",
+        action:
+            () => addPrintBlock(
+              BlockFactory.createPrintBlock(
+                _transformationController,
+                consoleService,
+                registry,
+              ),
+            ),
+      ),
+      Block(name: "Старт", action: addStartBlock),
+      Block(
+        name: "Умножение",
+        action:
+            () => addLogicBlock(
+              BlockFactory.createMultiplyBlock(_transformationController),
+            ),
       ),
       Block(
-          name: "Старт",
-          action: addStartBlock,
+        name: "Деление",
+        action:
+            () => addLogicBlock(
+              BlockFactory.createDivisionBlock(_transformationController),
+            ),
       ),
       Block(
-          name: "Умножение",
-          action: () => addLogicBlock(BlockFactory.createMultiplyBlock(_transformationController))
+        name: "Вычитание",
+        action:
+            () => addLogicBlock(
+              BlockFactory.createSubtractBlock(_transformationController),
+            ),
       ),
       Block(
-          name: "Деление",
-          action: () => addLogicBlock(BlockFactory.createDivisionBlock(_transformationController))
+        name: "Сложение",
+        action:
+            () => addLogicBlock(
+              BlockFactory.createAddictionBlock(_transformationController),
+            ),
       ),
       Block(
-          name: "Вычитание",
-          action: () => addLogicBlock(BlockFactory.createSubtractBlock(_transformationController))
-      ),
-      Block(
-          name: "Сложение",
-          action: () => addLogicBlock(BlockFactory.createAddictionBlock(_transformationController))
-      ),
-      Block(
-          name: "Конкатенация",
-          action: () => addLogicBlock(BlockFactory.createConcatBlock(_transformationController))
+        name: "Конкатенация",
+        action:
+            () => addLogicBlock(
+              BlockFactory.createConcatBlock(_transformationController),
+            ),
       ),
     ];
   }
@@ -172,6 +219,8 @@ class TestScreenState extends State<TestScreen> {
 
                   for (var block in logicBlocks) _buildLogicBlock(block),
 
+                  for (var block in printBlocks) _buildPrintBlock(block),
+
                   for (var binding in wiredBlocks)
                     CustomPaint(
                       key: ValueKey(
@@ -181,6 +230,20 @@ class TestScreenState extends State<TestScreen> {
                         binding.first.position,
                         binding.second.position +
                             calibrations['${binding.first.nodeId}${binding.second.nodeId}']!,
+                      ),
+                      size: MediaQuery.of(context).size,
+                    ),
+
+                  for (var binding in wiredValues)
+                    CustomPaint(
+                      key: ValueKey(
+                        '${binding.first.nodeId}${binding.second.nodeId}',
+                      ),
+                      painter: BezierLinePainter(
+                        binding.first.position +
+                            valueBindingsCalibrations['${binding.second.nodeId}${binding.first.nodeId}']!,
+                        binding.second.position +
+                            valueBindingsCalibrations['${binding.first.nodeId}${binding.second.nodeId}']!,
                       ),
                       size: MediaQuery.of(context).size,
                     ),
@@ -213,14 +276,7 @@ class TestScreenState extends State<TestScreen> {
           deleteNode(block.nodeId);
           deleteConnection(block.nodeId);
 
-          var keysToRemove =
-          calibrations.keys
-              .where((key) => key.contains(block.nodeId))
-              .toList();
-
-          for (var key in keysToRemove) {
-            calibrations.remove(key);
-          }
+          deleteKey(block.nodeId);
         });
       },
       onPositionChanged: (newPosition) {
@@ -232,7 +288,7 @@ class TestScreenState extends State<TestScreen> {
         setState(() {
           if (temp != null) {
             makeConnection(temp.node as Node, block.node as Node);
-            calibrations["${temp.nodeId}${block.nodeId}"] = Offset(0,0);
+            calibrations["${temp.nodeId}${block.nodeId}"] = Offset(0, 0);
             wiredBlocks.add(Pair(temp, block));
             temp = null;
           }
@@ -241,6 +297,12 @@ class TestScreenState extends State<TestScreen> {
       onRightArrowClick: () {
         setState(() {
           temp = block;
+        });
+      },
+      onOutputValueClick: (position) {
+        setState(() {
+          temp = block;
+          nodeCalibration[block.nodeId] = position - Offset(15, 15);
         });
       },
     );
@@ -261,14 +323,7 @@ class TestScreenState extends State<TestScreen> {
           deleteNode(block.nodeId);
           deleteConnection(block.nodeId);
 
-          var keysToRemove =
-              calibrations.keys
-                  .where((key) => key.contains(block.nodeId))
-                  .toList();
-
-          for (var key in keysToRemove) {
-            calibrations.remove(key);
-          }
+          deleteKey(block.nodeId);
         });
       },
       onPositionChanged: (newPosition) {
@@ -310,14 +365,7 @@ class TestScreenState extends State<TestScreen> {
           deleteNode(block.nodeId);
           deleteConnection(block.nodeId);
 
-          var keysToRemove =
-          calibrations.keys
-              .where((key) => key.contains(block.nodeId))
-              .toList();
-
-          for (var key in keysToRemove) {
-            calibrations.remove(key);
-          }
+          deleteKey(block.nodeId);
         });
       },
       onPositionChanged: (newPosition) {
@@ -329,7 +377,7 @@ class TestScreenState extends State<TestScreen> {
         setState(() {
           if (temp != null) {
             makeConnection(temp.node as Node, block.node as Node);
-            calibrations["${temp.nodeId}${block.nodeId}"] = Offset(0,0);
+            calibrations["${temp.nodeId}${block.nodeId}"] = Offset(0, 0);
             wiredBlocks.add(Pair(temp, block));
             temp = null;
           }
@@ -341,5 +389,79 @@ class TestScreenState extends State<TestScreen> {
         });
       },
     );
+  }
+
+  Widget _buildPrintBlock(PrintBlock block) {
+    return PrintBlockWidget(
+      key: ValueKey(block.node.id),
+      block: block,
+      onEditToggle: () {
+        setState(() {
+          block.isEditing = !block.isEditing;
+        });
+      },
+      deleteNode: () {
+        setState(() {
+          printBlocks.remove(block);
+          wiredBlocks.removeWhere(
+            (binding) =>
+                binding.first.nodeId == block.node.id ||
+                binding.second.nodeId == block.node.id,
+          );
+          wiredValues.removeWhere(
+            (binding) =>
+                binding.first.nodeId == block.node.id ||
+                binding.second.nodeId == block.node.id,
+          );
+          deleteNode(block.nodeId);
+          deleteConnection(block.nodeId);
+
+          deleteKey(block.nodeId);
+        });
+      },
+      onPositionChanged: (newPosition) {
+        setState(() {
+          block.position = newPosition;
+        });
+      },
+      onLeftArrowClick: () {
+        setState(() {
+          if (temp != null) {
+            makeConnection(temp.node as Node, block.node as Node);
+            calibrations["${temp.nodeId}${block.nodeId}"] = Offset(0, 0);
+            wiredBlocks.add(Pair(temp, block));
+            temp = null;
+          }
+        });
+      },
+      onRightArrowClick: () {
+        setState(() {
+          temp = block;
+        });
+      },
+      onInputValueClick: (position) {
+        setState(() {
+          if (temp != null) {
+            makeValueConnection(temp.node as Node, block.node as Node);
+            position -= Offset(15, 15);
+            valueBindingsCalibrations["${temp.nodeId}${block.nodeId}"] =
+                position;
+            valueBindingsCalibrations["${block.nodeId}${temp.nodeId}"] =
+                nodeCalibration[temp.nodeId]!;
+            wiredValues.add(Pair(temp, block));
+            temp = null;
+          }
+        });
+      },
+    );
+  }
+
+  void deleteKey(String nodeId) {
+    var keysToRemove =
+        calibrations.keys.where((key) => key.contains(nodeId)).toList();
+
+    for (var key in keysToRemove) {
+      calibrations.remove(key);
+    }
   }
 }

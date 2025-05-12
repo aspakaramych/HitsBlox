@@ -60,6 +60,8 @@ class _LogicBlockWidgetState extends State<LogicBlockWidget> {
             children: [
               /// левая стрелка
               for(int i = 0; i < widget.block.leftArrows.length; i++)
+
+                //TODO: переписать на кружки
                 Positioned(
                   left: widget.block.leftArrows[i].position.dx,
                   top: widget.block.leftArrows[i].position.dy,

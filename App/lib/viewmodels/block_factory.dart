@@ -6,9 +6,11 @@ import 'package:app/core/nodes/MultiplyNode.dart';
 import 'package:app/core/nodes/PrintNode.dart';
 import 'package:app/core/nodes/StartNode.dart';
 import 'package:app/core/nodes/SubNode.dart';
+import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:app/viewmodels/assignment_block.dart';
 import 'package:app/viewmodels/logic_block.dart';
 import 'package:app/viewmodels/position.dart';
+import 'package:app/viewmodels/print_block.dart';
 import 'package:app/viewmodels/start_block.dart';
 import 'package:flutter/material.dart';
 
@@ -67,7 +69,7 @@ class BlockFactory {
     );
   }
 
-  static createPrintBlock(TransformationController transformationController, ConsoleService consoleService) {
+  static createPrintBlock(TransformationController transformationController, ConsoleService consoleService, VariableRegistry registry) {
     final currUserOffset = UserPositionUtils.getVisibleContentRect(transformationController).topLeft;
     final printNode = PrintNode(
         consoleService: consoleService,
@@ -75,15 +77,15 @@ class BlockFactory {
       position: Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
     );
 
-    return LogicBlock(
+    return PrintBlock(
       position: printNode.position,
-      node: printNode,
       color: Colors.orangeAccent,
       blockName: "print",
+      node: printNode,
+      nodeId: printNode.id,
+      registry: registry,
       width: 200,
-      height: 60,
-      leftArrows: List.of([Position(Offset(15, 15), false)]),
-      rightArrows: List.of([Position(Offset(15, 15), false)]),
+      height: 80,
     );
   }
 

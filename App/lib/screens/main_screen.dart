@@ -1,3 +1,4 @@
+import 'package:app/core/ConsoleService.dart';
 import 'package:app/screens/test_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:app/design/widgets/widgets.dart';
@@ -26,7 +27,7 @@ class _MainScreenState extends State<MainScreen> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
       ),
       builder: (context) {
-        return Console();
+        return Console(consoleService: new ConsoleService(),);
       },
     );
   }

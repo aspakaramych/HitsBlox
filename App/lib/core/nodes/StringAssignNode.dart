@@ -58,6 +58,7 @@ class StringAssignNode extends Node implements AssignNode{
 
 
       var pin = Pin<String>(id: "value", name: variableName, isInput: false);
+      pin.setValue(variableName);
       addOutput(pin);
     }
   }
@@ -81,11 +82,11 @@ class StringAssignNode extends Node implements AssignNode{
       await cmd.execute(registry);
     }
 
-    for (var pin in _outputs.where((p) => !p.isInput)) {
-
-      final value = registry.getValue(pin.id);
-      pin.setValue(value);
-
-    }
+    // for (var pin in _outputs.where((p) => !p.isInput)) {
+    //
+    //   final value = registry.getValue(pin.id);
+    //   pin.setValue(value);
+    //
+    // }
   }
 }
