@@ -61,7 +61,7 @@ class BoolAssignNode extends Node implements AssignNode{
         value = expression.value;
       }
 
-      var pin = Pin<bool>(id: variableName, name: variableName, isInput: false);
+      var pin = Pin<bool>(id: "value", name: variableName, isInput: false);
       pin.setValue(value);
       addOutput(pin);
     }

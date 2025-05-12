@@ -57,7 +57,7 @@ class StringAssignNode extends Node implements AssignNode{
       commands.add(AssignVariableCommand<String>(variableName, expression));
 
 
-      var pin = Pin<String>(id: variableName, name: variableName, isInput: false);
+      var pin = Pin<String>(id: "value", name: variableName, isInput: false);
       addOutput(pin);
     }
   }

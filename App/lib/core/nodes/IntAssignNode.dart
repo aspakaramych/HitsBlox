@@ -58,7 +58,7 @@ class IntAssignNode extends Node implements AssignNode{
       commands.add(AssignVariableCommand<int>(variableName, expression));
 
 
-      var pin = Pin<int>(id: variableName, name: variableName, isInput: false);
+      var pin = Pin<int>(id: "value", name: variableName, isInput: false);
       addOutput(pin);
     }
   }
