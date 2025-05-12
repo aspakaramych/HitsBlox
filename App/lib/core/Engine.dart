@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:app/core/NodeGraph.dart';
 import 'package:app/core/abstracts/Node.dart';
 import 'package:app/core/nodes/PrintNode.dart';
@@ -25,8 +27,8 @@ class Engine {
 
   Future<void> executeNode(Node node) async {
     for (var pin in node.inputs) {
-      if (pin.isInput && pin.id == 'exec_in') {
-        break;
+      if (pin.isInput && pin.id == 'value' && pin.value == null) {
+        return;
       }
     }
     await node.execute(registry);
