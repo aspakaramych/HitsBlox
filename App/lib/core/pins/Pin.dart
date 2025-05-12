@@ -6,11 +6,14 @@ class Pin<T> {
 
   Pin({required this.id, required this.name, required this.isInput});
 
-  void setValue(T newValue) {
+  void setValue(T? newValue) {
+    if (T != dynamic && newValue != null && newValue is! T) {
+      throw Exception("Type mismatch: expected $T, got ${newValue.runtimeType}");
+    }
     value = newValue;
   }
 
-  dynamic getValue() {
+  T? getValue() {
     return value;
   }
 }
