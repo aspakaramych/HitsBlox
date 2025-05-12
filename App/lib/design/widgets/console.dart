@@ -1,19 +1,24 @@
 part of 'widgets.dart';
 
 class Console extends StatefulWidget {
-  const Console({super.key});
+  final ConsoleService consoleService;
+
+  const Console({
+    super.key,
+    required this.consoleService,
+  });
 
   @override
   State<Console> createState() => _ConsoleState();
 }
 
 class _ConsoleState extends State<Console> {
-  late final ConsoleService _consoleService; //TODO: эту штуку надо импортировать откуда-то
+  late ConsoleService _consoleService;
 
   @override
   void initState() {
     super.initState();
-    _consoleService = ConsoleService();
+    _consoleService = widget.consoleService;
   }
 
   void _onLogsChanged() {
