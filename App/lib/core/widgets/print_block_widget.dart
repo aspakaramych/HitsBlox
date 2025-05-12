@@ -159,22 +159,27 @@ class _PrintBlockWidgetState extends State<PrintBlockWidget> {
                         ),
                       ),
                     ),
-                  if (!widget.block.isEditing && widget.block.node.outputs.isNotEmpty)
+                  if (!widget.block.isEditing &&
+                      widget.block.node.outputs.isNotEmpty)
                     Center(
                       child: Padding(
                         padding: const EdgeInsets.only(left: 8.0, top: 4.0),
                         child: Wrap(
                           spacing: 4,
                           runSpacing: 2,
-                          children:
-                                    [Chip(
-                                      label: Text(currText),
-                                      backgroundColor: Colors.black.withValues(
-                                        alpha: 0.3,
-                                      ),
-                                      labelStyle: theme.textTheme.labelSmall,
-                                    ),
-                                  ]
+                          children: [
+                            if (currText != '')
+                              SizedBox(
+                                width: 120,
+                                child: Chip(
+                                  label: Text(currText),
+                                  backgroundColor: Colors.black.withValues(
+                                    alpha: 0.3,
+                                  ),
+                                  labelStyle: theme.textTheme.labelSmall,
+                                ),
+                              ),
+                          ],
                         ),
                       ),
                     ),

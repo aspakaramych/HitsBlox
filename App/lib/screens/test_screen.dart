@@ -51,7 +51,6 @@ class TestScreenState extends State<TestScreen> {
 
   void addAssignmentBlock(AssignmentBlock block) {
     setState(() {
-      var block = BlockFactory.createStringBlock(_transformationController);
       assignmentBlocks.add(block);
       nodeGraph.addNode(block.node as Node);
     });
@@ -116,7 +115,9 @@ class TestScreenState extends State<TestScreen> {
       Block(
         name: "Целочисленная переменная",
         action:
-            () => {engine.run(nodeGraph, registry)},
+            () => addAssignmentBlock(
+              BlockFactory.createIntBlock(_transformationController),
+            ),
       ),
       Block(
         name: "Булева переменная",
@@ -190,6 +191,7 @@ class TestScreenState extends State<TestScreen> {
     return Scaffold(
       body: LayoutBuilder(
         builder: (context, constraints) {
+          print(assignmentBlocks);
           return InteractiveViewer(
             transformationController: _transformationController,
             constrained: false,
@@ -253,6 +255,15 @@ class TestScreenState extends State<TestScreen> {
           );
         },
       ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          FloatingActionButton(
+            onPressed: () => engine.run(nodeGraph, registry),
+            child: const Icon(Icons.add),
+          ),
+        ],
+      ),
     );
   }
 
@@ -271,6 +282,11 @@ class TestScreenState extends State<TestScreen> {
           wiredBlocks.removeWhere(
             (binding) =>
                 binding.first.nodeId == block.node.id ||
+                binding.second.nodeId == block.node.id,
+          );
+          wiredValues.removeWhere(
+                (binding) =>
+            binding.first.nodeId == block.node.id ||
                 binding.second.nodeId == block.node.id,
           );
           deleteNode(block.nodeId);

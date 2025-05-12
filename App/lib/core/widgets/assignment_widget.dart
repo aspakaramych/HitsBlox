@@ -106,13 +106,13 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                 right: 15,
                 top: 50,
                 child: GestureDetector(
-                  onTap: () => widget.onOutputValueClick(Offset(15,50)),
+                  onTap: () => widget.onOutputValueClick(Offset(15, 50)),
                   child: SizedBox(
                     width: 15,
                     height: 15,
                     child: DecoratedBox(
                       decoration: BoxDecoration(
-                          shape: BoxShape.circle,
+                        shape: BoxShape.circle,
                         color: Colors.white,
                       ),
                     ),
@@ -176,9 +176,8 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                                       width: 100,
                                       child: Chip(
                                         label: Text(currText),
-                                        backgroundColor: Colors.black.withValues(
-                                          alpha: 0.3,
-                                        ),
+                                        backgroundColor: Colors.black
+                                            .withValues(alpha: 0.3),
                                         labelStyle: theme.textTheme.labelSmall,
                                       ),
                                     );
