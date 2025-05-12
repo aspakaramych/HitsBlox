@@ -41,7 +41,7 @@ class TestScreenState extends State<TestScreen> {
   final Map<String, Offset> valueBindingsCalibrations = {};
 
   late NodeGraph nodeGraph = NodeGraph();
-  final ConsoleService consoleService = new ConsoleService();
+  final ConsoleService consoleService = ConsoleService();
   late Engine engine = Engine();
   late VariableRegistry registry = VariableRegistry();
 
