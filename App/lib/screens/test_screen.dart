@@ -20,7 +20,9 @@ import '../viewmodels/assignment_block.dart';
 import 'package:app/design/widgets/widgets.dart';
 
 class TestScreen extends StatefulWidget {
-  const TestScreen({super.key});
+  List<Block> blocks = [];
+
+  TestScreen({super.key});
 
   @override
   State<TestScreen> createState() => TestScreenState();
@@ -43,6 +45,7 @@ class TestScreenState extends State<TestScreen> {
 
   void addAssignmentBlock(AssignmentBlock block) {
     setState(() {
+      var block = BlockFactory.createStringBlock(_transformationController);
       assignmentBlocks.add(block);
       nodeGraph.addNode(block.node as Node);
     });
@@ -61,8 +64,6 @@ class TestScreenState extends State<TestScreen> {
       nodeGraph.addNode(startBlock.node);
     });
   }
-
-  List<Block> blocks = [];
 
   void makeConnection(Node first, Node second) {
     String firstNodeId = first.id;
@@ -90,7 +91,7 @@ class TestScreenState extends State<TestScreen> {
         _transformationController,
       );
     });
-    blocks = [
+    widget.blocks = [
       Block(
           name: "Целочисленная переменная",
           action: () => addAssignmentBlock(BlockFactory.createIntBlock(_transformationController))
