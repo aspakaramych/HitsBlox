@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:app/core/Pins/Pin.dart';
+import 'package:app/core/pins/Pin.dart';
 import 'package:app/core/abstracts/Node.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 

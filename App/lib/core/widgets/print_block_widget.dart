@@ -10,7 +10,6 @@ class PrintBlockWidget extends StatefulWidget {
   final Function(Offset) onPositionChanged;
   final Function() onLeftArrowClick;
   final Function() onRightArrowClick;
-  final Function(Offset) onInputValueClick;
 
   const PrintBlockWidget({
     super.key,
@@ -20,7 +19,6 @@ class PrintBlockWidget extends StatefulWidget {
     required this.onPositionChanged,
     required this.onLeftArrowClick,
     required this.onRightArrowClick,
-    required this.onInputValueClick,
   });
 
   @override
@@ -98,25 +96,6 @@ class _PrintBlockWidgetState extends State<PrintBlockWidget> {
                     width: 15,
                     height: 15,
                     child: CustomPaint(painter: TrianglePainter()),
-                  ),
-                ),
-              ),
-
-              /// входной кружок value
-              Positioned(
-                left: 15,
-                top: 50,
-                child: GestureDetector(
-                  onTap: () => widget.onInputValueClick(Offset(15, 50)),
-                  child: SizedBox(
-                    width: 15,
-                    height: 15,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                      ),
-                    ),
                   ),
                 ),
               ),

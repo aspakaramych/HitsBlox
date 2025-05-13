@@ -12,7 +12,7 @@ import 'package:app/viewmodels/print_block.dart';
 import 'package:app/viewmodels/start_block.dart';
 import 'package:flutter/material.dart';
 
-import '../core/Pins/Pin.dart';
+import '../core/pins/Pin.dart';
 import '../core/abstracts/Node.dart';
 import '../core/widgets/assignment_widget.dart';
 import '../core/widgets/start_block_widget.dart';
@@ -42,8 +42,6 @@ class _TestScreenState extends State<TestScreen> {
   var startBlock;
 
   final Map<String, Offset> calibrations = {};
-  final Map<String, Offset> nodeCalibration = {};
-  final Map<String, Offset> valueBindingsCalibrations = {};
 
   late NodeGraph nodeGraph = NodeGraph();
   final ConsoleService consoleService = ConsoleService();
@@ -260,16 +258,15 @@ class _TestScreenState extends State<TestScreen> {
                       size: MediaQuery.of(context).size,
                     ),
 
-                  for (var binding in wiredValues)
+                  for (var binding in wiredBlocks)
                     CustomPaint(
                       key: ValueKey(
-                        '${binding.first.nodeId}${binding.second.nodeId}',
+                        '${binding.first.nodeId}-${binding.second.nodeId}',
                       ),
                       painter: BezierLinePainter(
-                        binding.first.position +
-                            valueBindingsCalibrations['${binding.second.nodeId}${binding.first.nodeId}']!,
+                        binding.first.position,
                         binding.second.position +
-                            valueBindingsCalibrations['${binding.first.nodeId}${binding.second.nodeId}']!,
+                            calibrations['${binding.first.nodeId}${binding.second.nodeId}']!,
                       ),
                       size: MediaQuery.of(context).size,
                     ),
@@ -339,12 +336,6 @@ class _TestScreenState extends State<TestScreen> {
           temp = block;
         });
       },
-      onOutputValueClick: (position) {
-        setState(() {
-          temp = block;
-          nodeCalibration[block.nodeId] = position - Offset(15, 15);
-        });
-      },
     );
   }
 
@@ -376,7 +367,7 @@ class _TestScreenState extends State<TestScreen> {
           block.position = newPosition;
         });
       },
-      onLeftArrowClick: () {
+      onLeftArrowClick: (position) {
         setState(() {
           if (temp != null) {
             makeConnection(temp.node as Node, block.node as Node);
@@ -388,26 +379,6 @@ class _TestScreenState extends State<TestScreen> {
       onRightArrowClick: () {
         setState(() {
           temp = block;
-        });
-      },
-      onInputValueClick: (position) {
-        setState(() {
-          if (temp != null) {
-            makeValueConnection(temp.node as Node, block.node as Node);
-            position -= Offset(15, 15);
-            valueBindingsCalibrations["${temp.nodeId}${block.nodeId}"] =
-                position;
-            valueBindingsCalibrations["${block.nodeId}${temp.nodeId}"] =
-            nodeCalibration[temp.nodeId]!;
-            wiredValues.add(Pair(temp, block));
-            temp = null;
-          }
-        });
-      },
-      onOutputValueClick: (position) {
-        setState(() {
-          temp = block;
-          nodeCalibration[block.nodeId] = position - Offset(15, 15);
         });
       },
     );
@@ -500,20 +471,6 @@ class _TestScreenState extends State<TestScreen> {
       onRightArrowClick: () {
         setState(() {
           temp = block;
-        });
-      },
-      onInputValueClick: (position) {
-        setState(() {
-          if (temp != null) {
-            makeValueConnection(temp.node as Node, block.node as Node);
-            position -= Offset(15, 15);
-            valueBindingsCalibrations["${temp.nodeId}${block.nodeId}"] =
-                position;
-            valueBindingsCalibrations["${block.nodeId}${temp.nodeId}"] =
-                nodeCalibration[temp.nodeId]!;
-            wiredValues.add(Pair(temp, block));
-            temp = null;
-          }
         });
       },
     );

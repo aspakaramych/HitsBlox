@@ -1,4 +1,4 @@
-import '../Pins/Pin.dart';
+import '../pins/Pin.dart';
 
 abstract class AssignNode {
   String get id;

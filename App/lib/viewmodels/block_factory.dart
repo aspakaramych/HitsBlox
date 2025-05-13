@@ -118,8 +118,8 @@ class BlockFactory {
       blockName: "multiply",
       width: 200,
       height: 110,
-      inputValues: List.of([Position(Offset(15, 40), false), Position(Offset(15, 70), false)]),
-      outputValues: List.of([Position(Offset(15, 40), false)]),
+      leftArrows: List.of([Position(Offset(15, 40), false), Position(Offset(15, 70), false)]),
+      rightArrows: List.of([Position(Offset(15, 40), false)]),
     );
   }
 
@@ -137,8 +137,8 @@ class BlockFactory {
       blockName: "add",
       width: 200,
       height: 110,
-      inputValues: List.of([Position(Offset(15, 40), false), Position(Offset(15, 70), false)]),
-      outputValues: List.of([Position(Offset(15, 40), false)]),
+      leftArrows: List.of([Position(Offset(15, 40), false), Position(Offset(15, 70), false)]),
+      rightArrows: List.of([Position(Offset(15, 40), false)]),
     );
   }
 
@@ -156,8 +156,8 @@ class BlockFactory {
       blockName: "concat",
       width: 200,
       height: 110,
-      inputValues: List.of([Position(Offset(15, 40), false), Position(Offset(15, 70), false)]),
-      outputValues: List.of([Position(Offset(15, 40), false)]),
+      leftArrows: List.of([Position(Offset(15, 40), false), Position(Offset(15, 70), false)]),
+      rightArrows: List.of([Position(Offset(15, 40), false)]),
     );
   }
 
@@ -175,8 +175,8 @@ class BlockFactory {
       blockName: "divide",
       width: 200,
       height: 110,
-      inputValues: List.of([Position(Offset(15, 40), false), Position(Offset(15, 70), false)]),
-      outputValues: List.of([Position(Offset(15, 40), false)]),
+      leftArrows: List.of([Position(Offset(15, 40), false), Position(Offset(15, 70), false)]),
+      rightArrows: List.of([Position(Offset(15, 40), false)]),
     );
   }
 
@@ -194,8 +194,8 @@ class BlockFactory {
       blockName: "subtract",
       width: 200,
       height: 110,
-      inputValues: List.of([Position(Offset(15, 40), false), Position(Offset(15, 70), false)]),
-      outputValues: List.of([Position(Offset(15, 40), false)]),
+      leftArrows: List.of([Position(Offset(15, 40), false), Position(Offset(15, 70), false)]),
+      rightArrows: List.of([Position(Offset(15, 40), false)]),
     );
   }
 }

@@ -9,7 +9,6 @@ class AssignmentBlockWidget extends StatefulWidget {
   final Function(Offset) onPositionChanged;
   final Function() onLeftArrowClick;
   final Function() onRightArrowClick;
-  final Function(Offset) onOutputValueClick;
 
   const AssignmentBlockWidget({
     super.key,
@@ -19,7 +18,6 @@ class AssignmentBlockWidget extends StatefulWidget {
     required this.onPositionChanged,
     required this.onLeftArrowClick,
     required this.onRightArrowClick,
-    required this.onOutputValueClick,
   });
 
   @override
@@ -97,25 +95,6 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                     width: 15,
                     height: 15,
                     child: CustomPaint(painter: TrianglePainter()),
-                  ),
-                ),
-              ),
-
-              /// кружок value
-              Positioned(
-                right: 15,
-                top: 50,
-                child: GestureDetector(
-                  onTap: () => widget.onOutputValueClick(Offset(15, 47)),
-                  child: SizedBox(
-                    width: 15,
-                    height: 15,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                      ),
-                    ),
                   ),
                 ),
               ),

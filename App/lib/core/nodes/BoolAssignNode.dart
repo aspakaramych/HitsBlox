@@ -1,7 +1,7 @@
 import 'package:app/core/nodes/AssignNode.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../Pins/Pin.dart';
+import '../pins/Pin.dart';
 import '../abstracts/Command.dart';
 import '../abstracts/Expression.dart';
 import '../abstracts/Node.dart';

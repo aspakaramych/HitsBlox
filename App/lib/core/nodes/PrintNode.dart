@@ -2,7 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 import '../ConsoleService.dart';
-import '../Pins/Pin.dart';
+import 'package:app/core/pins/Pin.dart';
 import '../abstracts/Node.dart';
 import '../registry/VariableRegistry.dart';
 
