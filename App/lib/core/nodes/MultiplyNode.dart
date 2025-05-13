@@ -36,11 +36,12 @@ class MultiplyNode extends Node{
         resultVarName = 'result',
         super(position) {
     addInput(Pin(id: 'exec_in', name: 'Exec In', isInput: true));
+    addInput(Pin(id: "value", name: "Value", isInput: true));
     addOutput(Pin(id: 'exec_out', name: 'Exec Out', isInput: false));
 
     addInput(Pin<int>(id: leftVarName, name: 'A', isInput: true));
     addInput(Pin<int>(id: rightVarName, name: 'B', isInput: true));
-    addOutput(Pin<int>(id: resultVarName, name: 'Result', isInput: false));
+    addOutput(Pin<int>(id: 'value', name: 'Result', isInput: false));
   }
 
   void addInput(Pin pin) => _inputs.add(pin);

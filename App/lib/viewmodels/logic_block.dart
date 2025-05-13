@@ -10,8 +10,8 @@ class LogicBlock implements PositionedBlock {
   Node node;
   Color color;
   String blockName;
-  List<Position> leftArrows;
-  List<Position> rightArrows;
+  List<Position> inputValues;
+  List<Position> outputValues;
 
   double width;
   double height;
@@ -23,8 +23,8 @@ class LogicBlock implements PositionedBlock {
     required this.blockName,
     required this.width,
     required this.height,
-    required this.leftArrows,
-    required this.rightArrows,
+    required this.inputValues,
+    required this.outputValues,
   });
 
   @override

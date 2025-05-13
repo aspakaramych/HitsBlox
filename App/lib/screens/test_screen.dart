@@ -336,6 +336,11 @@ class TestScreenState extends State<TestScreen> {
                 binding.first.nodeId == block.nodeId ||
                 binding.second.nodeId == block.nodeId,
           );
+          wiredValues.removeWhere(
+                (binding) =>
+            binding.first.nodeId == block.node.id ||
+                binding.second.nodeId == block.node.id,
+          );
           deleteNode(block.nodeId);
           deleteConnection(block.nodeId);
 
@@ -347,12 +352,10 @@ class TestScreenState extends State<TestScreen> {
           block.position = newPosition;
         });
       },
-      onLeftArrowClick: (position) {
+      onLeftArrowClick: () {
         setState(() {
           if (temp != null) {
             makeConnection(temp.node as Node, block.node as Node);
-            position -= Offset(15, 20);
-            calibrations["${temp.nodeId}${block.nodeId}"] = position;
             wiredBlocks.add(Pair(temp, block));
             temp = null;
           }
@@ -361,6 +364,26 @@ class TestScreenState extends State<TestScreen> {
       onRightArrowClick: () {
         setState(() {
           temp = block;
+        });
+      },
+      onInputValueClick: (position) {
+        setState(() {
+          if (temp != null) {
+            makeValueConnection(temp.node as Node, block.node as Node);
+            position -= Offset(15, 15);
+            valueBindingsCalibrations["${temp.nodeId}${block.nodeId}"] =
+                position;
+            valueBindingsCalibrations["${block.nodeId}${temp.nodeId}"] =
+            nodeCalibration[temp.nodeId]!;
+            wiredValues.add(Pair(temp, block));
+            temp = null;
+          }
+        });
+      },
+      onOutputValueClick: (position) {
+        setState(() {
+          temp = block;
+          nodeCalibration[block.nodeId] = position - Offset(15, 15);
         });
       },
     );

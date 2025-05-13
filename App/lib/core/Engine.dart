@@ -27,7 +27,7 @@ class Engine {
 
   Future<void> executeNode(Node node) async {
     for (var pin in node.inputs) {
-      if (pin.isInput && pin.id == 'value' && pin.value == null) {
+      if (pin.isInput && pin.id == 'value' && pin.value == null && node is !PrintNode) {
         return;
       }
     }
