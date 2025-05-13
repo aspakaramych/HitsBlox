@@ -26,13 +26,13 @@ class Engine {
   }
 
   Future<void> executeNode(Node node) async {
-    for (var pin in node.inputs) {
-      if (pin.isInput && pin.id == 'value' && pin.value == null) {
-        return;
-      }
+    if (!node.areAllInputsReady()) {
+      print('Node "${node.title}" skipped: not all inputs ready');
+      return;
     }
-    await node.execute(registry);
 
+    print('Executing node: ${node.title}');
+    await node.execute(registry);
     for (var conn in graph.connections.where((c) => c.fromNodeId == node.id)) {
       var nextNode = graph.getNodeById(conn.toNodeId);
       var outputPin = node.outputs.firstWhereOrNull((p) => p.id == conn.fromPinId);
@@ -40,14 +40,19 @@ class Engine {
 
       if (outputPin != null && inputPin != null) {
         inputPin.setValue(outputPin.getValue());
+        scheduleExecution(nextNode!);
       }
     }
 
-    for (var conn in graph.connections.where((c) => c.fromNodeId == node.id && c.fromPinId == 'exec_out')) {
+    for (var conn in graph.connections.where((c) => c.fromNodeId == node.id && c.fromPinId.contains('exec_out') )) {
       var nextNode = graph.getNodeById(conn.toNodeId);
       if (nextNode != null) {
         await executeNode(nextNode);
       }
     }
+  }
+
+  void scheduleExecution(Node node) {
+    Future.microtask(() => executeNode(node));
   }
 }

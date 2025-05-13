@@ -146,7 +146,7 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                           textInputAction: TextInputAction.done,
                           onSubmitted: (text) {
                             currText = text;
-                            widget.block.node.setAssignmentsFromText(text);
+                            widget.block.node.setText(text);
                             widget.onEditToggle();
                           },
                           decoration: const InputDecoration(

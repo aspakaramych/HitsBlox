@@ -3,6 +3,7 @@ import 'package:app/core/abstracts/Command.dart';
 import 'package:app/core/abstracts/Node.dart';
 import 'package:app/core/nodes/AssignNode.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 import '../abstracts/Expression.dart';
@@ -33,15 +34,14 @@ class IntAssignNode extends Node implements AssignNode{
   String get title => "Присвоить";
 
   IntAssignNode(String this.id, Offset position) : super(position) {
-    addInput(Pin(id: 'exec_in', name: 'Exec In', isInput: true));
-    addOutput(Pin(id: 'exec_out', name: 'Exec Out', isInput: false));
+
   }
 
   @override
   void setAssignmentsFromText(String text) {
     rawExpression = text;
     commands.clear();
-    outputs.removeWhere((p) => p.id != 'exec_out');
+
 
     var lines = text.split(';');
     for (var line in lines) {
@@ -58,9 +58,8 @@ class IntAssignNode extends Node implements AssignNode{
       commands.add(AssignVariableCommand<int>(variableName, expression));
 
 
-      var pin = Pin(id: "value", name: variableName, isInput: false);
-      pin.setValue(variableName);
-      addOutput(pin);
+      _outputs[0].setValue(variableName);
+
     }
   }
 
@@ -75,14 +74,29 @@ class IntAssignNode extends Node implements AssignNode{
     }
   }
 
+  @override
   void addInput(Pin pin) => _inputs.add(pin);
 
+  @override
   void addOutput(Pin pin) => _outputs.add(pin);
 
   @override
+  void setText(String text) => rawExpression = text;
+
+  @override
   Future<void> execute(VariableRegistry registry) async {
+    setAssignmentsFromText(rawExpression);
     for (var cmd in commands) {
       await cmd.execute(registry);
     }
+  }
+  bool areAllInputsReady() {
+    final execIn = inputs.firstWhereOrNull((p) => p.id.contains('exec_in')) as Pin?;
+
+    if (execIn == null) {
+      return false;
+    }
+
+    return true;
   }
 }

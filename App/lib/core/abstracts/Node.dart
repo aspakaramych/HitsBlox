@@ -16,4 +16,10 @@ abstract class Node {
   Node(this.position);
 
   Future<void> execute(VariableRegistry registry);
+  bool areAllInputsReady() {
+    return inputs.every((pin) =>
+    !pin.isInput || pin.isExecutionPin || !pin.isRequired || pin.getValue() != null);
+  }
+  void addInput(Pin pin) => inputs.add(pin);
+  void addOutput(Pin pin) => outputs.add(pin);
 }

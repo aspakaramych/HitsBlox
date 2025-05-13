@@ -78,11 +78,30 @@ class TestScreenState extends State<TestScreen> {
   }
 
   void makeConnection(Node first, Node second) {
-    String firstNodeId = first.id;
-    String secondNodeId = second.id;
-    Pin firstPin = first.outputs.where((p) => p.id == 'exec_out').first;
-    Pin secondPin = second.inputs.where((p) => p.id == 'exec_in').first;
-    nodeGraph.connect(firstNodeId, firstPin.id, secondNodeId, secondPin.id);
+    String newOutputPinId = 'exec_out_${first.outputs.length + 1}';
+    String newInputPinId = 'exec_in_${second.inputs.length + 1}';
+
+    final outputPin = Pin(
+      id: newOutputPinId,
+      name: 'Exec Out',
+      isInput: false,
+      isExecutionPin: true,
+    );
+
+    final inputPin = Pin(
+      id: newInputPinId,
+      name: 'Exec In',
+      isInput: true,
+      isExecutionPin: true,
+    );
+
+    first.addOutput(outputPin);
+    second.addInput(inputPin);
+
+    nodeGraph.connect(
+      first.id, outputPin.id,
+      second.id, inputPin.id,
+    );
   }
 
   void makeValueConnection(Node first, Node second) {
@@ -104,7 +123,6 @@ class TestScreenState extends State<TestScreen> {
   @override
   void initState() {
     super.initState();
-    // initInterpreter();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       UserPositionUtils.centerInitialPosition(
         context,

@@ -91,4 +91,7 @@ class BoolAssignNode extends Node implements AssignNode{
       pin.setValue(registry.getValue(pin.id));
     }
   }
+
+  @override
+  void setText(String text) => rawExpression = text;
 }
