@@ -101,18 +101,10 @@ class _TestScreenState extends State<TestScreen> {
     first.addOutput(outputPin);
     second.addInput(inputPin);
 
-    nodeGraph.connect(
+    widget.nodeGraph.connect(
       first.id, outputPin.id,
       second.id, inputPin.id,
     );
-  }
-
-  void makeValueConnection(Node first, Node second) {
-    String firstNodeId = first.id;
-    String secondNodeId = second.id;
-    Pin firstPin = first.outputs.where((p) => p.id == 'value').first;
-    Pin secondPin = second.inputs.where((p) => p.id == 'value').first;
-    widget.nodeGraph.connect(firstNodeId, firstPin.id, secondNodeId, secondPin.id);
   }
 
   void deleteNode(String nodeId) {
@@ -257,33 +249,11 @@ class _TestScreenState extends State<TestScreen> {
                       ),
                       size: MediaQuery.of(context).size,
                     ),
-
-                  for (var binding in wiredBlocks)
-                    CustomPaint(
-                      key: ValueKey(
-                        '${binding.first.nodeId}-${binding.second.nodeId}',
-                      ),
-                      painter: BezierLinePainter(
-                        binding.first.position,
-                        binding.second.position +
-                            calibrations['${binding.first.nodeId}${binding.second.nodeId}']!,
-                      ),
-                      size: MediaQuery.of(context).size,
-                    ),
                 ],
               ),
             ),
           );
         },
-      ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          FloatingActionButton(
-            onPressed: () => engine.run(nodeGraph, registry),
-            child: const Icon(Icons.add),
-          ),
-        ],
       ),
     );
   }
@@ -371,6 +341,7 @@ class _TestScreenState extends State<TestScreen> {
         setState(() {
           if (temp != null) {
             makeConnection(temp.node as Node, block.node as Node);
+            calibrations["${temp.nodeId}${block.nodeId}"] = Offset(0, position.dy - 20);
             wiredBlocks.add(Pair(temp, block));
             temp = null;
           }

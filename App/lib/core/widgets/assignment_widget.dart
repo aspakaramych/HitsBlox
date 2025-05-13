@@ -137,31 +137,26 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                         ),
                       ),
                     ),
-                  if (!widget.block.isEditing &&
-                      widget.block.node.outputs.isNotEmpty)
+                  if (!widget.block.isEditing)
                     Center(
                       child: Padding(
                         padding: const EdgeInsets.only(left: 8.0, top: 4.0),
                         child: Wrap(
                           spacing: 4,
                           runSpacing: 2,
-                          children:
-                              widget.block.node.outputs
-                                  .where(
-                                    (p) => !p.isInput && p.id != 'exec_out',
-                                  )
-                                  .map((pin) {
-                                    return SizedBox(
-                                      width: 100,
-                                      child: Chip(
-                                        label: Text(currText),
-                                        backgroundColor: Colors.black
-                                            .withValues(alpha: 0.3),
-                                        labelStyle: theme.textTheme.labelSmall,
-                                      ),
-                                    );
-                                  })
-                                  .toList(),
+                          children: [
+                            if(currText != '')
+                              SizedBox(
+                                width: 100,
+                                child: Chip(
+                                  label: Text(currText),
+                                  backgroundColor: Colors.black.withValues(
+                                    alpha: 0.3,
+                                  ),
+                                  labelStyle: theme.textTheme.labelSmall,
+                                ),
+                              ),
+                          ],
                         ),
                       ),
                     ),
