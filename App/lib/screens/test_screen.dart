@@ -24,13 +24,18 @@ import 'package:app/design/widgets/widgets.dart';
 class TestScreen extends StatefulWidget {
   List<Block> blocks = [];
 
+  late NodeGraph nodeGraph = NodeGraph();
+  final ConsoleService consoleService = ConsoleService();
+  late Engine engine = Engine();
+  late VariableRegistry registry = VariableRegistry();
+
   TestScreen({super.key});
 
   @override
-  State<TestScreen> createState() => TestScreenState();
+  State<TestScreen> createState() => _TestScreenState();
 }
 
-class TestScreenState extends State<TestScreen> {
+class _TestScreenState extends State<TestScreen> {
   final List<AssignmentBlock> assignmentBlocks = [];
   final List<LogicBlock> logicBlocks = [];
   final List<PrintBlock> printBlocks = [];
@@ -40,11 +45,6 @@ class TestScreenState extends State<TestScreen> {
   final Map<String, Offset> nodeCalibration = {};
   final Map<String, Offset> valueBindingsCalibrations = {};
 
-  late NodeGraph nodeGraph = NodeGraph();
-  final ConsoleService consoleService = ConsoleService();
-  late Engine engine = Engine();
-  late VariableRegistry registry = VariableRegistry();
-
   final List<Pair> wiredBlocks = [];
   final List<Pair> wiredValues = [];
   var temp;
@@ -52,28 +52,28 @@ class TestScreenState extends State<TestScreen> {
   void addAssignmentBlock(AssignmentBlock block) {
     setState(() {
       assignmentBlocks.add(block);
-      nodeGraph.addNode(block.node as Node);
+      widget.nodeGraph.addNode(block.node as Node);
     });
   }
 
   void addLogicBlock(LogicBlock block) {
     setState(() {
       logicBlocks.add(block);
-      nodeGraph.addNode(block.node as Node);
+      widget.nodeGraph.addNode(block.node as Node);
     });
   }
 
   void addStartBlock() {
     setState(() {
       startBlock = BlockFactory.createStartBlock(_transformationController);
-      nodeGraph.addNode(startBlock.node);
+      widget.nodeGraph.addNode(startBlock.node);
     });
   }
 
   void addPrintBlock(PrintBlock block) {
     setState(() {
       printBlocks.add(block);
-      nodeGraph.addNode(block.node as Node);
+      widget.nodeGraph.addNode(block.node as Node);
     });
   }
 
@@ -82,7 +82,7 @@ class TestScreenState extends State<TestScreen> {
     String secondNodeId = second.id;
     Pin firstPin = first.outputs.where((p) => p.id == 'exec_out').first;
     Pin secondPin = second.inputs.where((p) => p.id == 'exec_in').first;
-    nodeGraph.connect(firstNodeId, firstPin.id, secondNodeId, secondPin.id);
+    widget.nodeGraph.connect(firstNodeId, firstPin.id, secondNodeId, secondPin.id);
   }
 
   void makeValueConnection(Node first, Node second) {
@@ -90,15 +90,15 @@ class TestScreenState extends State<TestScreen> {
     String secondNodeId = second.id;
     Pin firstPin = first.outputs.where((p) => p.id == 'value').first;
     Pin secondPin = second.inputs.where((p) => p.id == 'value').first;
-    nodeGraph.connect(firstNodeId, firstPin.id, secondNodeId, secondPin.id);
+    widget.nodeGraph.connect(firstNodeId, firstPin.id, secondNodeId, secondPin.id);
   }
 
   void deleteNode(String nodeId) {
-    nodeGraph.deleteNode(nodeId);
+    widget.nodeGraph.deleteNode(nodeId);
   }
 
   void deleteConnection(String nodeId) {
-    nodeGraph.disconnect(nodeId);
+    widget.nodeGraph.disconnect(nodeId);
   }
 
   @override
@@ -139,8 +139,8 @@ class TestScreenState extends State<TestScreen> {
             () => addPrintBlock(
               BlockFactory.createPrintBlock(
                 _transformationController,
-                consoleService,
-                registry,
+                widget.consoleService,
+                widget.registry,
               ),
             ),
       ),
@@ -254,15 +254,6 @@ class TestScreenState extends State<TestScreen> {
             ),
           );
         },
-      ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          FloatingActionButton(
-            onPressed: () => engine.run(nodeGraph, registry),
-            child: const Icon(Icons.add),
-          ),
-        ],
       ),
     );
   }

@@ -1,5 +1,8 @@
 library;
 
+import 'package:app/core/NodeGraph.dart';
+import 'package:app/core/literals/VariableLiteral.dart';
+import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:app/screens/home_screen.dart';
 import 'package:app/screens/main_screen.dart';
 import 'package:app/screens/settings_screen.dart';
@@ -8,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../theme/colors.dart';
 import 'package:path_drawing/path_drawing.dart';
+import 'package:app/core/Engine.dart';
 
 import '../../core/ConsoleService.dart';
 

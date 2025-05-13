@@ -41,7 +41,7 @@ class _MainScreenState extends State<MainScreen> {
           children: [
             Column(
               children: [
-                TopBar(),
+                TopBar(play: _testScreen.engine, nodeGraph: _testScreen.nodeGraph, registry: _testScreen.registry,),
                 Expanded(child: Center()),
                 if (_isAddSectionVisible) BlocksList(blocks: _testScreen.blocks),
                 BottomBar(
