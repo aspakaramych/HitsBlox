@@ -24,13 +24,18 @@ import 'package:app/design/widgets/widgets.dart';
 class TestScreen extends StatefulWidget {
   List<Block> blocks = [];
 
+  late NodeGraph nodeGraph = NodeGraph();
+  final ConsoleService consoleService = ConsoleService();
+  late Engine engine = Engine();
+  late VariableRegistry registry = VariableRegistry();
+
   TestScreen({super.key});
 
   @override
-  State<TestScreen> createState() => TestScreenState();
+  State<TestScreen> createState() => _TestScreenState();
 }
 
-class TestScreenState extends State<TestScreen> {
+class _TestScreenState extends State<TestScreen> {
   final List<AssignmentBlock> assignmentBlocks = [];
   final List<LogicBlock> logicBlocks = [];
   final List<PrintBlock> printBlocks = [];
@@ -52,28 +57,28 @@ class TestScreenState extends State<TestScreen> {
   void addAssignmentBlock(AssignmentBlock block) {
     setState(() {
       assignmentBlocks.add(block);
-      nodeGraph.addNode(block.node as Node);
+      widget.nodeGraph.addNode(block.node as Node);
     });
   }
 
   void addLogicBlock(LogicBlock block) {
     setState(() {
       logicBlocks.add(block);
-      nodeGraph.addNode(block.node as Node);
+      widget.nodeGraph.addNode(block.node as Node);
     });
   }
 
   void addStartBlock() {
     setState(() {
       startBlock = BlockFactory.createStartBlock(_transformationController);
-      nodeGraph.addNode(startBlock.node);
+      widget.nodeGraph.addNode(startBlock.node);
     });
   }
 
   void addPrintBlock(PrintBlock block) {
     setState(() {
       printBlocks.add(block);
-      nodeGraph.addNode(block.node as Node);
+      widget.nodeGraph.addNode(block.node as Node);
     });
   }
 
@@ -109,20 +114,21 @@ class TestScreenState extends State<TestScreen> {
     String secondNodeId = second.id;
     Pin firstPin = first.outputs.where((p) => p.id == 'value').first;
     Pin secondPin = second.inputs.where((p) => p.id == 'value').first;
-    nodeGraph.connect(firstNodeId, firstPin.id, secondNodeId, secondPin.id);
+    widget.nodeGraph.connect(firstNodeId, firstPin.id, secondNodeId, secondPin.id);
   }
 
   void deleteNode(String nodeId) {
-    nodeGraph.deleteNode(nodeId);
+    widget.nodeGraph.deleteNode(nodeId);
   }
 
   void deleteConnection(String nodeId) {
-    nodeGraph.disconnect(nodeId);
+    widget.nodeGraph.disconnect(nodeId);
   }
 
   @override
   void initState() {
     super.initState();
+    // initInterpreter();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       UserPositionUtils.centerInitialPosition(
         context,
@@ -354,6 +360,11 @@ class TestScreenState extends State<TestScreen> {
                 binding.first.nodeId == block.nodeId ||
                 binding.second.nodeId == block.nodeId,
           );
+          wiredValues.removeWhere(
+                (binding) =>
+            binding.first.nodeId == block.node.id ||
+                binding.second.nodeId == block.node.id,
+          );
           deleteNode(block.nodeId);
           deleteConnection(block.nodeId);
 
@@ -365,12 +376,10 @@ class TestScreenState extends State<TestScreen> {
           block.position = newPosition;
         });
       },
-      onLeftArrowClick: (position) {
+      onLeftArrowClick: () {
         setState(() {
           if (temp != null) {
             makeConnection(temp.node as Node, block.node as Node);
-            position -= Offset(15, 20);
-            calibrations["${temp.nodeId}${block.nodeId}"] = position;
             wiredBlocks.add(Pair(temp, block));
             temp = null;
           }
@@ -379,6 +388,26 @@ class TestScreenState extends State<TestScreen> {
       onRightArrowClick: () {
         setState(() {
           temp = block;
+        });
+      },
+      onInputValueClick: (position) {
+        setState(() {
+          if (temp != null) {
+            makeValueConnection(temp.node as Node, block.node as Node);
+            position -= Offset(15, 15);
+            valueBindingsCalibrations["${temp.nodeId}${block.nodeId}"] =
+                position;
+            valueBindingsCalibrations["${block.nodeId}${temp.nodeId}"] =
+            nodeCalibration[temp.nodeId]!;
+            wiredValues.add(Pair(temp, block));
+            temp = null;
+          }
+        });
+      },
+      onOutputValueClick: (position) {
+        setState(() {
+          temp = block;
+          nodeCalibration[block.nodeId] = position - Offset(15, 15);
         });
       },
     );

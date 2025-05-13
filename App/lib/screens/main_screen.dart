@@ -27,7 +27,7 @@ class _MainScreenState extends State<MainScreen> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
       ),
       builder: (context) {
-        return Console(consoleService: new ConsoleService(),);
+        return Console(consoleService: _testScreen.consoleService,);
       },
     );
   }
@@ -41,7 +41,7 @@ class _MainScreenState extends State<MainScreen> {
           children: [
             Column(
               children: [
-                TopBar(),
+                TopBar(play: _testScreen.engine, nodeGraph: _testScreen.nodeGraph, registry: _testScreen.registry,),
                 Expanded(child: Center()),
                 if (_isAddSectionVisible) BlocksList(blocks: _testScreen.blocks),
                 BottomBar(

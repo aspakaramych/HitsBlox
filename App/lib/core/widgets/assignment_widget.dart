@@ -106,7 +106,7 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                 right: 15,
                 top: 50,
                 child: GestureDetector(
-                  onTap: () => widget.onOutputValueClick(Offset(15, 50)),
+                  onTap: () => widget.onOutputValueClick(Offset(15, 47)),
                   child: SizedBox(
                     width: 15,
                     height: 15,

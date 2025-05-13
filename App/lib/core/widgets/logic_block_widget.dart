@@ -7,8 +7,10 @@ class LogicBlockWidget extends StatefulWidget {
   final LogicBlock block;
   final Function() deleteNode;
   final Function(Offset) onPositionChanged;
-  final Function(Offset) onLeftArrowClick;
+  final Function() onLeftArrowClick;
   final Function() onRightArrowClick;
+  final Function(Offset) onInputValueClick;
+  final Function(Offset) onOutputValueClick;
 
   const LogicBlockWidget({
     super.key,
@@ -17,6 +19,8 @@ class LogicBlockWidget extends StatefulWidget {
     required this.onPositionChanged,
     required this.onLeftArrowClick,
     required this.onRightArrowClick,
+    required this.onInputValueClick,
+    required this.onOutputValueClick,
   });
 
   @override
@@ -58,33 +62,67 @@ class _LogicBlockWidgetState extends State<LogicBlockWidget> {
           ),
           child: Stack(
             children: [
-              /// левая стрелка
-              for(int i = 0; i < widget.block.leftArrows.length; i++)
+              Positioned(
+                left: 15,
+                top: 15,
+                child: GestureDetector(
+                  onTap: () => widget.onLeftArrowClick(),
+                  child: SizedBox(
+                    width: 15,
+                    height: 15,
+                    child: CustomPaint(painter: TrianglePainter()),
+                  ),
+                ),
+              ),
 
-                //TODO: переписать на кружки
+              /// правая стрелка
+              Positioned(
+                right: 15,
+                top: 15,
+                child: GestureDetector(
+                  onTap: () => widget.onRightArrowClick(),
+                  child: SizedBox(
+                    width: 15,
+                    height: 15,
+                    child: CustomPaint(painter: TrianglePainter()),
+                  ),
+                ),
+              ),
+              /// левые кружки
+              for(int i = 0; i < widget.block.inputValues.length; i++)
                 Positioned(
-                  left: widget.block.leftArrows[i].position.dx,
-                  top: widget.block.leftArrows[i].position.dy,
+                  left: widget.block.inputValues[i].position.dx,
+                  top: widget.block.inputValues[i].position.dy,
                   child: GestureDetector(
-                    onTap: () => widget.onLeftArrowClick(widget.block.leftArrows[i].position),
+                    onTap: () => widget.onInputValueClick(widget.block.inputValues[i].position - Offset(0, 3)),
                     child: SizedBox(
                       width: 15,
                       height: 15,
-                      child: CustomPaint(painter: TrianglePainter()),
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              /// правая стрелка
-              for(int i = 0; i < widget.block.rightArrows.length; i++)
+              /// правые кружки
+              for(int i = 0; i < widget.block.outputValues.length; i++)
                 Positioned(
-                  right: widget.block.rightArrows[i].position.dx,
-                  top: widget.block.rightArrows[i].position.dy,
+                  right: widget.block.outputValues[i].position.dx,
+                  top: widget.block.outputValues[i].position.dy,
                   child: GestureDetector(
-                    onTap: () => widget.onRightArrowClick(),
+                    onTap: () => widget.onOutputValueClick(widget.block.outputValues[i].position - Offset(0, 3)),
                     child: SizedBox(
                       width: 15,
                       height: 15,
-                      child: CustomPaint(painter: TrianglePainter()),
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ),
                 ),

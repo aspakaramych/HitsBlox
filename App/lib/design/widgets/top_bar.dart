@@ -1,7 +1,11 @@
 part of 'widgets.dart';
 
 class TopBar extends StatelessWidget {
-  const TopBar({super.key});
+  final Engine play;
+  final VariableRegistry registry;
+  final NodeGraph nodeGraph;
+
+  const TopBar({super.key, required this.play, required this.nodeGraph, required this.registry});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +29,7 @@ class TopBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () => play.run(nodeGraph, registry),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.transparent,
                 maximumSize: Size(40, 40),
