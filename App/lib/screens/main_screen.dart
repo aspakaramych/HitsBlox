@@ -27,7 +27,7 @@ class _MainScreenState extends State<MainScreen> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
       ),
       builder: (context) {
-        return Console(consoleService: new ConsoleService(),);
+        return Console(consoleService: _testScreen.consoleService,);
       },
     );
   }
