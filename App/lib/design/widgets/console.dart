@@ -27,6 +27,7 @@ class _ConsoleState extends State<Console> {
 
   @override
   void dispose() {
+    _consoleService.clear();
     super.dispose();
   }
 
