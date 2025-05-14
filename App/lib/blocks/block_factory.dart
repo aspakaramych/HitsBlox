@@ -1,8 +1,10 @@
+import 'package:app/blocks/if_else_block.dart';
 import 'package:app/core/ConsoleService.dart';
 import 'package:app/core/nodes/AddNode.dart';
 import 'package:app/core/nodes/ConcatNode.dart';
 import 'package:app/core/nodes/DivideNode.dart';
 import 'package:app/core/nodes/EqualsNode.dart';
+import 'package:app/core/nodes/IfElseNode.dart';
 import 'package:app/core/nodes/LessNode.dart';
 import 'package:app/core/nodes/MoreNode.dart';
 import 'package:app/core/nodes/MultiplyNode.dart';
@@ -10,11 +12,11 @@ import 'package:app/core/nodes/PrintNode.dart';
 import 'package:app/core/nodes/StartNode.dart';
 import 'package:app/core/nodes/SubNode.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
-import 'package:app/viewmodels/assignment_block.dart';
-import 'package:app/viewmodels/logic_block.dart';
-import 'package:app/viewmodels/position.dart';
-import 'package:app/viewmodels/print_block.dart';
-import 'package:app/viewmodels/start_block.dart';
+import 'package:app/blocks/assignment_block.dart';
+import 'package:app/blocks/logic_block.dart';
+import 'package:app/blocks/position.dart';
+import 'package:app/blocks/print_block.dart';
+import 'package:app/blocks/start_block.dart';
 import 'package:flutter/material.dart';
 
 import '../core/nodes/BoolAssignNode.dart';
@@ -112,11 +114,15 @@ class BlockFactory {
       Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
     );
 
-    return StartBlock(
+    return LogicBlock(
       position: startNode.position,
       node: startNode,
       color: Colors.green,
       blockName: "start",
+      width: 200,
+      height: 60,
+      leftArrows: [],
+      rightArrows: List.of([Position(Offset(15, 15), false)]),
     );
   }
 
@@ -295,6 +301,28 @@ class BlockFactory {
       leftArrows: List.of(
           [Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
       rightArrows: List.of([Position(Offset(15, 15), false)]),
+    );
+  }
+
+  static createIfElseBlock(TransformationController transformationController) {
+    final currUserOffset = UserPositionUtils
+        .getVisibleContentRect(transformationController)
+        .topLeft;
+    final ifElseNode = IfElseNode(
+      'node_${Randomizer.getRandomInt()}',
+      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+    );
+
+    return IfElseBlock(
+      position: ifElseNode.position,
+      node: ifElseNode,
+      color: Color.fromARGB(255, 47, 44, 44),
+      blockName: "if else",
+      width: 200,
+      height: 80,
+      leftArrows: List.of(
+          [Position(Offset(15, 15), false)]),
+      rightArrows: List.of([Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
     );
   }
 }
