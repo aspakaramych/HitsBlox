@@ -14,18 +14,15 @@ import '../models/commands/AssignVariableCommand.dart';
 class IntAssignNode extends Node implements AssignNode{
   final List<Command> commands = [];
 
-  final List<Pin> _inputs = [];
-  final List<Pin> _outputs = [];
-
   @override
   String rawExpression = '';
   final TextEditingController controller = TextEditingController();
 
   @override
-  List<Pin> get inputs => _inputs;
+  final List<Pin> inputs = [];
 
   @override
-  List<Pin> get outputs => _outputs;
+  final List<Pin> outputs = [];
 
   @override
   final String id;
@@ -76,10 +73,10 @@ class IntAssignNode extends Node implements AssignNode{
   }
 
   @override
-  void addInput(Pin pin) => _inputs.add(pin);
+  void addInput(Pin pin) => inputs.add(pin);
 
   @override
-  void addOutput(Pin pin) => _outputs.add(pin);
+  void addOutput(Pin pin) => outputs.add(pin);
 
   @override
   void setText(String text) => rawExpression = text;

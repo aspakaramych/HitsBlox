@@ -9,14 +9,12 @@ import '../registry/VariableRegistry.dart';
 class PrintNode extends Node {
   final TextEditingController controller = TextEditingController();
   String rawExpression = '';
-  final List<Pin> _inputs = [];
-  final List<Pin> _outputs = [];
 
   @override
-  List<Pin> get inputs => _inputs;
+  final List<Pin> inputs = [];
 
   @override
-  List<Pin> get outputs => _outputs;
+  final List<Pin> outputs = [];
 
   final ConsoleService consoleService;
 
@@ -34,9 +32,9 @@ class PrintNode extends Node {
 
   }
   @override
-  void addInput(Pin pin) => _inputs.add(pin);
+  void addInput(Pin pin) => inputs.add(pin);
   @override
-  void addOutput(Pin pin) => _outputs.add(pin);
+  void addOutput(Pin pin) => outputs.add(pin);
 
   String parseInput(String text, VariableRegistry registry) {
     var result = text;

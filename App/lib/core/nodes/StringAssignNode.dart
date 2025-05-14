@@ -13,19 +13,15 @@ import '../models/commands/AssignVariableCommand.dart';
 
 class StringAssignNode extends Node implements AssignNode{
   final List<Command> commands = [];
-
-  final List<Pin> _inputs = [];
-  final List<Pin> _outputs = [];
-
-  @override
+    @override
   String rawExpression = '';
   final TextEditingController controller = TextEditingController();
 
   @override
-  List<Pin> get inputs => _inputs;
+  final List<Pin> inputs = [];
 
   @override
-  List<Pin> get outputs => _outputs;
+  final List<Pin> outputs = [];
 
   @override
   final String id;
@@ -54,7 +50,9 @@ class StringAssignNode extends Node implements AssignNode{
 
       Expression expression = parseExpression(exprStr);
       commands.add(AssignVariableCommand<String>(variableName, expression));
-      _outputs[0].setValue(variableName);
+      for (var p in outputs){
+        p.setValue(variableName);
+      }
     }
   }
 
@@ -67,9 +65,9 @@ class StringAssignNode extends Node implements AssignNode{
     return VariableLiteral(exprStr);
   }
   @override
-  void addInput(Pin pin) => _inputs.add(pin);
+  void addInput(Pin pin) => inputs.add(pin);
   @override
-  void addOutput(Pin pin) => _outputs.add(pin);
+  void addOutput(Pin pin) => outputs.add(pin);
 
   @override
   Future<void> execute(VariableRegistry registry) async {

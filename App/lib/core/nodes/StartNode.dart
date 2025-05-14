@@ -5,13 +5,10 @@ import 'package:app/core/abstracts/Node.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 
 class StartNode extends Node {
-  final List<Pin> _inputs = [];
-  final List<Pin> _outputs = [];
-
   @override
-  List<Pin> get inputs => _inputs;
+  final List<Pin> inputs = [];
   @override
-  List<Pin> get outputs => _outputs;
+  final List<Pin> outputs = [];
 
   @override
   final String id;
@@ -22,9 +19,9 @@ class StartNode extends Node {
 
   }
   @override
-  void addInput(Pin pin) => _inputs.add(pin);
+  void addInput(Pin pin) => inputs.add(pin);
   @override
-  void addOutput(Pin pin) => _outputs.add(pin);
+  void addOutput(Pin pin) => outputs.add(pin);
 
   @override
   bool areAllInputsReady() => true;

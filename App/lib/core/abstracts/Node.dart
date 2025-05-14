@@ -6,8 +6,8 @@ import 'package:app/core/registry/VariableRegistry.dart';
 
 abstract class Node {
   String get id;
-  List<Pin> get inputs;
-  List<Pin> get outputs;
+  List<Pin> inputs = [];
+  List<Pin> outputs = [];
 
   Offset position;
 

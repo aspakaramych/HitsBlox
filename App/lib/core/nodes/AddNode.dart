@@ -10,14 +10,8 @@ import '../abstracts/Command.dart';
 import '../literals/VariableLiteral.dart';
 
 class AddNode extends Node {
-
-  final List<Pin> _inputs = [];
-  final List<Pin> _outputs = [];
-
-  @override
-  List<Pin> get inputs => _inputs;
-  @override
-  List<Pin> get outputs => _outputs;
+  final List<Pin> inputs= [];
+  final List<Pin> outputs = [];
 
   @override
   final String id;
@@ -29,15 +23,15 @@ class AddNode extends Node {
   }
 
   @override
-  void addInput(Pin pin) => _inputs.add(pin);
+  void addInput(Pin pin) => inputs.add(pin);
   @override
-  void addOutput(Pin pin) => _outputs.add(pin);
+  void addOutput(Pin pin) => outputs.add(pin);
 
   @override
   Future<void> execute(VariableRegistry registry) async {
-    var aPin = _inputs[0];
-    var bPin = _inputs[1];
-    var resultPin = _outputs[0];
+    var aPin = inputs[0];
+    var bPin = inputs[1];
+    var resultPin = outputs[0];
     int aVal, bVal;
     if (aPin != null && bPin != null && resultPin != null) {
       if (aPin.getValue() is int){

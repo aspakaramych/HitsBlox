@@ -36,6 +36,9 @@ class NodeGraph {
     var connection = connections.firstWhere((conn) => conn.fromNodeId == nodeId || conn.toNodeId == nodeId);
     connections.removeWhere((conn) =>
     conn.fromNodeId == nodeId || conn.toNodeId == nodeId);
-    //Todo доделать удаление pin при дисконнекте
+    var nodeFrom = getNodeById(connection.fromNodeId);
+    nodeFrom?.outputs.removeWhere((p) => p.id == connection.fromPinId);
+    var nodeTo = getNodeById(connection.toNodeId);
+    nodeTo?.inputs.removeWhere((p) => p.id == connection.toPinId);
   }
 }
