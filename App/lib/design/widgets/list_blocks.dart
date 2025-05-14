@@ -80,11 +80,9 @@ class BlocksList extends StatefulWidget {
 class _BlocksListState extends State<BlocksList> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        padding: EdgeInsets.all(16),
-        child: BlocksGrid(blocks: widget.blocks),
-      ),
+    return Container(
+      padding: EdgeInsets.all(16),
+      child: BlocksGrid(blocks: widget.blocks),
     );
   }
 }

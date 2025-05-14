@@ -48,7 +48,7 @@ class IntAssignNode extends Node implements AssignNode{
       var trimmedLine = line.trim();
       if (trimmedLine.isEmpty) continue;
 
-      var match = RegExp(r'^(\w+)\s*=\s*(.+)$').firstMatch(trimmedLine);
+      var match = RegExp(r'^\s*(\w+)\s*=\s*(-?\d+)\s*;?$').firstMatch(trimmedLine);
       if (match == null) continue;
 
       var variableName = match.group(1)!;
@@ -58,15 +58,16 @@ class IntAssignNode extends Node implements AssignNode{
       commands.add(AssignVariableCommand<int>(variableName, expression));
 
 
-      _outputs[0].setValue(variableName);
-
+      for (var p in outputs){
+        p.setValue(variableName);
+      }
     }
   }
 
   Expression parseExpression(String exprStr) {
     exprStr = exprStr.trim();
 
-    if (RegExp(r'^\d+$').hasMatch(exprStr)) {
+    if (RegExp(r'^-?\d+$').hasMatch(exprStr)) {
       return IntLiteral(int.parse(exprStr));
     }
     else {

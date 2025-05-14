@@ -43,7 +43,7 @@ class _MainScreenState extends State<MainScreen> {
               children: [
                 TopBar(play: _testScreen.engine, nodeGraph: _testScreen.nodeGraph, registry: _testScreen.registry,),
                 Expanded(child: Center()),
-                if (_isAddSectionVisible) BlocksList(blocks: _testScreen.blocks),
+                if (_isAddSectionVisible) SizedBox(height: 400, child: BlocksList(blocks: _testScreen.blocks)),
                 BottomBar(
                   onTerminalPressed: () => _showTerminalPanel(context),
                   onAddPressed: () => _toggleAddSection(),

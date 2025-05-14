@@ -153,8 +153,8 @@ class _TestScreenState extends State<TestScreen> {
             () => addPrintBlock(
               BlockFactory.createPrintBlock(
                 _transformationController,
-                consoleService,
-                registry,
+                widget.consoleService,
+                widget.registry,
               ),
             ),
       ),

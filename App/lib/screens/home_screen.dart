@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final screenHeight = MediaQuery.of(context).size.height;
     await _scrollController.animateTo(
       screenHeight,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 350),
       curve: Curves.easeOut,
     );
 
@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _snapToMain() async {
     await _scrollController.animateTo(
       0,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 300),
       curve: Curves.easeOut,
     );
 
