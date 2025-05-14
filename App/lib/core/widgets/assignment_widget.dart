@@ -9,7 +9,6 @@ class AssignmentBlockWidget extends StatefulWidget {
   final Function(Offset) onPositionChanged;
   final Function() onLeftArrowClick;
   final Function() onRightArrowClick;
-  final Function(Offset) onOutputValueClick;
 
   const AssignmentBlockWidget({
     super.key,
@@ -19,7 +18,6 @@ class AssignmentBlockWidget extends StatefulWidget {
     required this.onPositionChanged,
     required this.onLeftArrowClick,
     required this.onRightArrowClick,
-    required this.onOutputValueClick,
   });
 
   @override
@@ -100,25 +98,6 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                   ),
                 ),
               ),
-
-              /// кружок value
-              Positioned(
-                right: 15,
-                top: 50,
-                child: GestureDetector(
-                  onTap: () => widget.onOutputValueClick(Offset(15, 47)),
-                  child: SizedBox(
-                    width: 15,
-                    height: 15,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -146,7 +125,7 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                           textInputAction: TextInputAction.done,
                           onSubmitted: (text) {
                             currText = text;
-                            widget.block.node.setAssignmentsFromText(text);
+                            widget.block.node.setText(text);
                             widget.onEditToggle();
                           },
                           decoration: const InputDecoration(
@@ -158,31 +137,26 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                         ),
                       ),
                     ),
-                  if (!widget.block.isEditing &&
-                      widget.block.node.outputs.isNotEmpty)
+                  if (!widget.block.isEditing)
                     Center(
                       child: Padding(
                         padding: const EdgeInsets.only(left: 8.0, top: 4.0),
                         child: Wrap(
                           spacing: 4,
                           runSpacing: 2,
-                          children:
-                              widget.block.node.outputs
-                                  .where(
-                                    (p) => !p.isInput && p.id != 'exec_out',
-                                  )
-                                  .map((pin) {
-                                    return SizedBox(
-                                      width: 100,
-                                      child: Chip(
-                                        label: Text(currText),
-                                        backgroundColor: Colors.black
-                                            .withValues(alpha: 0.3),
-                                        labelStyle: theme.textTheme.labelSmall,
-                                      ),
-                                    );
-                                  })
-                                  .toList(),
+                          children: [
+                            if(currText != '')
+                              SizedBox(
+                                width: 100,
+                                child: Chip(
+                                  label: Text(currText),
+                                  backgroundColor: Colors.black.withValues(
+                                    alpha: 0.3,
+                                  ),
+                                  labelStyle: theme.textTheme.labelSmall,
+                                ),
+                              ),
+                          ],
                         ),
                       ),
                     ),

@@ -12,7 +12,7 @@ import 'package:app/viewmodels/print_block.dart';
 import 'package:app/viewmodels/start_block.dart';
 import 'package:flutter/material.dart';
 
-import '../core/Pins/Pin.dart';
+import '../core/pins/Pin.dart';
 import '../core/abstracts/Node.dart';
 import '../core/widgets/assignment_widget.dart';
 import '../core/widgets/start_block_widget.dart';
@@ -42,8 +42,11 @@ class _TestScreenState extends State<TestScreen> {
   var startBlock;
 
   final Map<String, Offset> calibrations = {};
-  final Map<String, Offset> nodeCalibration = {};
-  final Map<String, Offset> valueBindingsCalibrations = {};
+
+  late NodeGraph nodeGraph = NodeGraph();
+  final ConsoleService consoleService = ConsoleService();
+  late Engine engine = Engine();
+  late VariableRegistry registry = VariableRegistry();
 
   final List<Pair> wiredBlocks = [];
   final List<Pair> wiredValues = [];
@@ -78,19 +81,30 @@ class _TestScreenState extends State<TestScreen> {
   }
 
   void makeConnection(Node first, Node second) {
-    String firstNodeId = first.id;
-    String secondNodeId = second.id;
-    Pin firstPin = first.outputs.where((p) => p.id == 'exec_out').first;
-    Pin secondPin = second.inputs.where((p) => p.id == 'exec_in').first;
-    widget.nodeGraph.connect(firstNodeId, firstPin.id, secondNodeId, secondPin.id);
-  }
+    String newOutputPinId = 'exec_out_${first.outputs.length + 1}';
+    String newInputPinId = 'exec_in_${second.inputs.length + 1}';
 
-  void makeValueConnection(Node first, Node second) {
-    String firstNodeId = first.id;
-    String secondNodeId = second.id;
-    Pin firstPin = first.outputs.where((p) => p.id == 'value').first;
-    Pin secondPin = second.inputs.where((p) => p.id == 'value').first;
-    widget.nodeGraph.connect(firstNodeId, firstPin.id, secondNodeId, secondPin.id);
+    final outputPin = Pin(
+      id: newOutputPinId,
+      name: 'Exec Out',
+      isInput: false,
+      isExecutionPin: true,
+    );
+
+    final inputPin = Pin(
+      id: newInputPinId,
+      name: 'Exec In',
+      isInput: true,
+      isExecutionPin: true,
+    );
+
+    first.addOutput(outputPin);
+    second.addInput(inputPin);
+
+    widget.nodeGraph.connect(
+      first.id, outputPin.id,
+      second.id, inputPin.id,
+    );
   }
 
   void deleteNode(String nodeId) {
@@ -235,20 +249,6 @@ class _TestScreenState extends State<TestScreen> {
                       ),
                       size: MediaQuery.of(context).size,
                     ),
-
-                  for (var binding in wiredValues)
-                    CustomPaint(
-                      key: ValueKey(
-                        '${binding.first.nodeId}${binding.second.nodeId}',
-                      ),
-                      painter: BezierLinePainter(
-                        binding.first.position +
-                            valueBindingsCalibrations['${binding.second.nodeId}${binding.first.nodeId}']!,
-                        binding.second.position +
-                            valueBindingsCalibrations['${binding.first.nodeId}${binding.second.nodeId}']!,
-                      ),
-                      size: MediaQuery.of(context).size,
-                    ),
                 ],
               ),
             ),
@@ -306,12 +306,6 @@ class _TestScreenState extends State<TestScreen> {
           temp = block;
         });
       },
-      onOutputValueClick: (position) {
-        setState(() {
-          temp = block;
-          nodeCalibration[block.nodeId] = position - Offset(15, 15);
-        });
-      },
     );
   }
 
@@ -343,10 +337,11 @@ class _TestScreenState extends State<TestScreen> {
           block.position = newPosition;
         });
       },
-      onLeftArrowClick: () {
+      onLeftArrowClick: (position) {
         setState(() {
           if (temp != null) {
             makeConnection(temp.node as Node, block.node as Node);
+            calibrations["${temp.nodeId}${block.nodeId}"] = Offset(0, position.dy - 20);
             wiredBlocks.add(Pair(temp, block));
             temp = null;
           }
@@ -355,26 +350,6 @@ class _TestScreenState extends State<TestScreen> {
       onRightArrowClick: () {
         setState(() {
           temp = block;
-        });
-      },
-      onInputValueClick: (position) {
-        setState(() {
-          if (temp != null) {
-            makeValueConnection(temp.node as Node, block.node as Node);
-            position -= Offset(15, 15);
-            valueBindingsCalibrations["${temp.nodeId}${block.nodeId}"] =
-                position;
-            valueBindingsCalibrations["${block.nodeId}${temp.nodeId}"] =
-            nodeCalibration[temp.nodeId]!;
-            wiredValues.add(Pair(temp, block));
-            temp = null;
-          }
-        });
-      },
-      onOutputValueClick: (position) {
-        setState(() {
-          temp = block;
-          nodeCalibration[block.nodeId] = position - Offset(15, 15);
         });
       },
     );
@@ -467,20 +442,6 @@ class _TestScreenState extends State<TestScreen> {
       onRightArrowClick: () {
         setState(() {
           temp = block;
-        });
-      },
-      onInputValueClick: (position) {
-        setState(() {
-          if (temp != null) {
-            makeValueConnection(temp.node as Node, block.node as Node);
-            position -= Offset(15, 15);
-            valueBindingsCalibrations["${temp.nodeId}${block.nodeId}"] =
-                position;
-            valueBindingsCalibrations["${block.nodeId}${temp.nodeId}"] =
-                nodeCalibration[temp.nodeId]!;
-            wiredValues.add(Pair(temp, block));
-            temp = null;
-          }
         });
       },
     );

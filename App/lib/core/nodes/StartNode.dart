@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:app/core/Pins/Pin.dart';
+import 'package:app/core/pins/Pin.dart';
 import 'package:app/core/abstracts/Node.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 
@@ -19,11 +19,15 @@ class StartNode extends Node {
   String get title => "Старт";
 
   StartNode(String this.id, Offset position) : super(position) {
-    addOutput(Pin(id: 'exec_out', name: 'Exec Out', isInput: false));
-  }
 
+  }
+  @override
   void addInput(Pin pin) => _inputs.add(pin);
+  @override
   void addOutput(Pin pin) => _outputs.add(pin);
+
+  @override
+  bool areAllInputsReady() => true;
 
   @override
   Future<void> execute(VariableRegistry registry) async {

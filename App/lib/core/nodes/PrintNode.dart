@@ -2,12 +2,11 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 import '../ConsoleService.dart';
-import '../Pins/Pin.dart';
+import 'package:app/core/pins/Pin.dart';
 import '../abstracts/Node.dart';
 import '../registry/VariableRegistry.dart';
 
 class PrintNode extends Node {
-  String inputVarName = 'value';
   final TextEditingController controller = TextEditingController();
   String rawExpression = '';
   final List<Pin> _inputs = [];
@@ -32,16 +31,18 @@ class PrintNode extends Node {
     required String this.id,
     required Offset position,
   }) : super(position) {
-    addInput(Pin(id: 'exec_in', name: 'Exec In', isInput: true));
-    addInput(Pin(id: "value", name: "Value", isInput: true));
-    addOutput(Pin(id: 'exec_out', name: 'Exec Out', isInput: false));
-  }
 
+  }
+  @override
   void addInput(Pin pin) => _inputs.add(pin);
+  @override
   void addOutput(Pin pin) => _outputs.add(pin);
 
   String parseInput(String text, VariableRegistry registry) {
     var result = text;
+    if (result == ""){
+      return "";
+    }
     final regex = RegExp(r'\{(\w+)\}');
 
     final matches = regex.allMatches(text);
@@ -56,6 +57,19 @@ class PrintNode extends Node {
   @override
   Future<void> execute(VariableRegistry registry) async {
     var parsedText = parseInput(rawExpression, registry);
+    if (parsedText == "" && inputs[0].value != null){
+      consoleService.log(inputs[0].value.toString());
+      return;
+    }
     consoleService.log(parsedText);
+  }
+  bool areAllInputsReady() {
+    final execIn = inputs.firstWhereOrNull((p) => p.id.contains('exec_in')) as Pin?;
+
+    if (execIn == null) {
+      return false;
+    }
+
+    return true;
   }
 }

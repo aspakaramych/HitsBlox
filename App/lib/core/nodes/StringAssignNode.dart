@@ -1,9 +1,10 @@
-import 'package:app/core/Pins/Pin.dart';
+import 'package:app/core/pins/Pin.dart';
 import 'package:app/core/abstracts/Command.dart';
 import 'package:app/core/abstracts/Node.dart';
 import 'package:app/core/literals/StringLiteral.dart';
 import 'package:app/core/nodes/AssignNode.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 import '../abstracts/Expression.dart';
@@ -33,14 +34,12 @@ class StringAssignNode extends Node implements AssignNode{
   String get title => "Присвоить";
 
   StringAssignNode(String this.id, Offset position) : super(position) {
-    addInput(Pin<String>(id: 'exec_in', name: 'Exec In', isInput: true));
-    addOutput(Pin<String>(id: 'exec_out', name: 'Exec Out', isInput: false));
+
   }
 
   void setAssignmentsFromText(String text) {
     rawExpression = text;
     commands.clear();
-    outputs.removeWhere((p) => p.id != 'exec_out');
 
     var lines = text.split(';');
     for (var line in lines) {
@@ -55,11 +54,7 @@ class StringAssignNode extends Node implements AssignNode{
 
       Expression expression = parseExpression(exprStr);
       commands.add(AssignVariableCommand<String>(variableName, expression));
-
-
-      var pin = Pin<String>(id: "value", name: variableName, isInput: false);
-      pin.setValue(variableName);
-      addOutput(pin);
+      _outputs[0].setValue(variableName);
     }
   }
 
@@ -71,15 +66,27 @@ class StringAssignNode extends Node implements AssignNode{
     }
     return VariableLiteral(exprStr);
   }
-
-  void addInput(Pin<String> pin) => _inputs.add(pin);
-
-  void addOutput(Pin<String> pin) => _outputs.add(pin);
+  @override
+  void addInput(Pin pin) => _inputs.add(pin);
+  @override
+  void addOutput(Pin pin) => _outputs.add(pin);
 
   @override
   Future<void> execute(VariableRegistry registry) async {
+    setAssignmentsFromText(rawExpression);
     for (var cmd in commands) {
       await cmd.execute(registry);
     }
   }
+  bool areAllInputsReady() {
+    final execIn = inputs.firstWhereOrNull((p) => p.id.contains('exec_in')) as Pin?;
+
+    if (execIn == null) {
+      return false;
+    }
+
+    return true;
+  }
+  @override
+  void setText(String text) => rawExpression = text;
 }
