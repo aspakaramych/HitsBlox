@@ -55,9 +55,12 @@ class DivideNode extends Node{
       }
 
 
-      if (aVal == null || bVal == null || aVal == 0) return;
+      if (aVal == null || bVal == null) return;
+      if ( bVal == 0){
+        throw Exception("NullDivideError");
+      }
 
-      int sum = bVal ~/ aVal;
+      int sum =aVal ~/ bVal;
       resultPin.setValue(sum);
     }
   }

@@ -1,5 +1,6 @@
 import 'package:app/core/Connection.dart';
 import 'package:app/core/abstracts/Node.dart';
+import 'package:collection/collection.dart';
 
 class NodeGraph {
   final List<Node> nodes = [];
@@ -32,7 +33,9 @@ class NodeGraph {
   }
 
   void disconnect(String nodeId) {
+    var connection = connections.firstWhere((conn) => conn.fromNodeId == nodeId || conn.toNodeId == nodeId);
     connections.removeWhere((conn) =>
     conn.fromNodeId == nodeId || conn.toNodeId == nodeId);
+    //Todo доделать удаление pin при дисконнекте
   }
 }

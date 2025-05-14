@@ -2,6 +2,9 @@ import 'package:app/core/ConsoleService.dart';
 import 'package:app/core/nodes/AddNode.dart';
 import 'package:app/core/nodes/ConcatNode.dart';
 import 'package:app/core/nodes/DivideNode.dart';
+import 'package:app/core/nodes/EqualsNode.dart';
+import 'package:app/core/nodes/LessNode.dart';
+import 'package:app/core/nodes/MoreNode.dart';
 import 'package:app/core/nodes/MultiplyNode.dart';
 import 'package:app/core/nodes/PrintNode.dart';
 import 'package:app/core/nodes/StartNode.dart';
@@ -21,40 +24,48 @@ import '../utils/Randomizer.dart';
 import '../utils/user_position_utils.dart';
 
 class BlockFactory {
-  static AssignmentBlock createIntBlock(TransformationController transformationController) {
-    final currUserOffset = UserPositionUtils.getVisibleContentRect(transformationController).topLeft;
+  static AssignmentBlock createIntBlock(
+      TransformationController transformationController) {
+    final currUserOffset = UserPositionUtils
+        .getVisibleContentRect(transformationController)
+        .topLeft;
     final assignNode = IntAssignNode(
       'node_${Randomizer.getRandomInt()}',
       Offset(currUserOffset.dx + 50, currUserOffset.dy + 50),
     );
 
     return AssignmentBlock(
-            position: assignNode.position,
-            color: Colors.blueAccent,
-            blockName: "int",
-            node: assignNode,
-            nodeId: assignNode.id
-        );
+        position: assignNode.position,
+        color: Colors.blueAccent,
+        blockName: "int",
+        node: assignNode,
+        nodeId: assignNode.id
+    );
   }
 
-  static AssignmentBlock createBoolBlock(TransformationController transformationController) {
-    final currUserOffset = UserPositionUtils.getVisibleContentRect(transformationController).topLeft;
+  static AssignmentBlock createBoolBlock(
+      TransformationController transformationController) {
+    final currUserOffset = UserPositionUtils
+        .getVisibleContentRect(transformationController)
+        .topLeft;
     final assignNode = BoolAssignNode(
       'node_${Randomizer.getRandomInt()}',
       Offset(currUserOffset.dx + 50, currUserOffset.dy + 50),
     );
 
     return AssignmentBlock(
-            position: assignNode.position,
-            color: Colors.deepPurple,
-            blockName: "bool",
-            node: assignNode,
-            nodeId: assignNode.id
-        );
+        position: assignNode.position,
+        color: Colors.deepPurple,
+        blockName: "bool",
+        node: assignNode,
+        nodeId: assignNode.id
+    );
   }
 
   static createStringBlock(TransformationController transformationController) {
-    final currUserOffset = UserPositionUtils.getVisibleContentRect(transformationController).topLeft;
+    final currUserOffset = UserPositionUtils
+        .getVisibleContentRect(transformationController)
+        .topLeft;
     final assignNode = StringAssignNode(
       'node_${Randomizer.getRandomInt()}',
       Offset(currUserOffset.dx + 50, currUserOffset.dy + 50),
@@ -69,10 +80,13 @@ class BlockFactory {
     );
   }
 
-  static createPrintBlock(TransformationController transformationController, ConsoleService consoleService, VariableRegistry registry) {
-    final currUserOffset = UserPositionUtils.getVisibleContentRect(transformationController).topLeft;
+  static createPrintBlock(TransformationController transformationController,
+      ConsoleService consoleService, VariableRegistry registry) {
+    final currUserOffset = UserPositionUtils
+        .getVisibleContentRect(transformationController)
+        .topLeft;
     final printNode = PrintNode(
-        consoleService: consoleService,
+      consoleService: consoleService,
       id: 'node_${Randomizer.getRandomInt()}',
       position: Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
     );
@@ -90,7 +104,9 @@ class BlockFactory {
   }
 
   static createStartBlock(TransformationController transformationController) {
-    final currUserOffset = UserPositionUtils.getVisibleContentRect(transformationController).topLeft;
+    final currUserOffset = UserPositionUtils
+        .getVisibleContentRect(transformationController)
+        .topLeft;
     final startNode = StartNode(
       'node_${Randomizer.getRandomInt()}',
       Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
@@ -104,8 +120,11 @@ class BlockFactory {
     );
   }
 
-  static createMultiplyBlock(TransformationController transformationController) {
-    final currUserOffset = UserPositionUtils.getVisibleContentRect(transformationController).topLeft;
+  static createMultiplyBlock(
+      TransformationController transformationController) {
+    final currUserOffset = UserPositionUtils
+        .getVisibleContentRect(transformationController)
+        .topLeft;
     final multiplyNode = MultiplyNode(
       'node_${Randomizer.getRandomInt()}',
       Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
@@ -118,13 +137,17 @@ class BlockFactory {
       blockName: "multiply",
       width: 200,
       height: 80,
-      leftArrows: List.of([Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
+      leftArrows: List.of(
+          [Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
       rightArrows: List.of([Position(Offset(15, 15), false)]),
     );
   }
 
-  static createAddictionBlock(TransformationController transformationController) {
-    final currUserOffset = UserPositionUtils.getVisibleContentRect(transformationController).topLeft;
+  static createAddictionBlock(
+      TransformationController transformationController) {
+    final currUserOffset = UserPositionUtils
+        .getVisibleContentRect(transformationController)
+        .topLeft;
     final addictionNode = AddNode(
       'node_${Randomizer.getRandomInt()}',
       Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
@@ -137,13 +160,16 @@ class BlockFactory {
       blockName: "add",
       width: 200,
       height: 80,
-      leftArrows: List.of([Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
+      leftArrows: List.of(
+          [Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
       rightArrows: List.of([Position(Offset(15, 15), false)]),
     );
   }
 
   static createConcatBlock(TransformationController transformationController) {
-    final currUserOffset = UserPositionUtils.getVisibleContentRect(transformationController).topLeft;
+    final currUserOffset = UserPositionUtils
+        .getVisibleContentRect(transformationController)
+        .topLeft;
     final concatNode = ConcatNode(
       'node_${Randomizer.getRandomInt()}',
       Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
@@ -156,13 +182,17 @@ class BlockFactory {
       blockName: "concat",
       width: 200,
       height: 80,
-      leftArrows: List.of([Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
+      leftArrows: List.of(
+          [Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
       rightArrows: List.of([Position(Offset(15, 15), false)]),
     );
   }
 
-  static createDivisionBlock(TransformationController transformationController) {
-    final currUserOffset = UserPositionUtils.getVisibleContentRect(transformationController).topLeft;
+  static createDivisionBlock(
+      TransformationController transformationController) {
+    final currUserOffset = UserPositionUtils
+        .getVisibleContentRect(transformationController)
+        .topLeft;
     final divideNode = DivideNode(
       'node_${Randomizer.getRandomInt()}',
       Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
@@ -175,13 +205,17 @@ class BlockFactory {
       blockName: "divide",
       width: 200,
       height: 80,
-      leftArrows: List.of([Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
+      leftArrows: List.of(
+          [Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
       rightArrows: List.of([Position(Offset(15, 15), false)]),
     );
   }
 
-  static createSubtractBlock(TransformationController transformationController) {
-    final currUserOffset = UserPositionUtils.getVisibleContentRect(transformationController).topLeft;
+  static createSubtractBlock(
+      TransformationController transformationController) {
+    final currUserOffset = UserPositionUtils
+        .getVisibleContentRect(transformationController)
+        .topLeft;
     final subNode = SubNode(
       'node_${Randomizer.getRandomInt()}',
       Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
@@ -194,7 +228,72 @@ class BlockFactory {
       blockName: "subtract",
       width: 200,
       height: 80,
-      leftArrows: List.of([Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
+      leftArrows: List.of(
+          [Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
+      rightArrows: List.of([Position(Offset(15, 15), false)]),
+    );
+  }
+
+  static createEqualsBlock(TransformationController transformationController) {
+    final currUserOffset = UserPositionUtils
+        .getVisibleContentRect(transformationController)
+        .topLeft;
+    final equalsNode = EqualsNode(
+      'node_${Randomizer.getRandomInt()}',
+      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+    );
+
+    return LogicBlock(
+      position: equalsNode.position,
+      node: equalsNode,
+      color: Color.fromARGB(255, 255, 180, 117),
+      blockName: "equals",
+      width: 200,
+      height: 80,
+      leftArrows: List.of(
+          [Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
+      rightArrows: List.of([Position(Offset(15, 15), false)]),
+    );
+  }
+  static createMoreBlock(TransformationController transformationController) {
+    final currUserOffset = UserPositionUtils
+        .getVisibleContentRect(transformationController)
+        .topLeft;
+    final moreNode = MoreNode(
+      'node_${Randomizer.getRandomInt()}',
+      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+    );
+
+    return LogicBlock(
+      position: moreNode.position,
+      node: moreNode,
+      color: Color.fromARGB(255, 255, 180, 117),
+      blockName: "more",
+      width: 200,
+      height: 80,
+      leftArrows: List.of(
+          [Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
+      rightArrows: List.of([Position(Offset(15, 15), false)]),
+    );
+  }
+  static createLessBlock(TransformationController transformationController) {
+    final currUserOffset = UserPositionUtils
+        .getVisibleContentRect(transformationController)
+        .topLeft;
+    final lessNode = LessNode(
+      'node_${Randomizer.getRandomInt()}',
+      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+    );
+
+    return LogicBlock(
+      position: lessNode.position,
+      node: lessNode,
+      color: Color.fromARGB(255, 255, 180, 117),
+      blockName: "less",
+      width: 200,
+      height: 80,
+      leftArrows: List.of(
+          [Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
       rightArrows: List.of([Position(Offset(15, 15), false)]),
     );
   }

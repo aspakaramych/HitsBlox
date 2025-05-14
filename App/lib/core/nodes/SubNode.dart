@@ -53,7 +53,7 @@ class SubNode extends Node {
 
       if (aVal == null || bVal == null) return;
 
-      int sum = bVal - aVal;
+      int sum = aVal - bVal;
       resultPin.setValue(sum);
     }
 

@@ -18,7 +18,7 @@ class MoreNode extends Node{
   }
 
   @override
-  Future<void> execute(VariableRegistry registry) {
+  Future<void> execute(VariableRegistry registry) async {
     var aPin = _inputs[0];
     var bPin = _inputs[1];
     var resultPin = _outputs[0];
@@ -41,7 +41,7 @@ class MoreNode extends Node{
 
       if (aVal == null || bVal == null) return;
       if (aVal is int && bVal is int){
-        bool znac = aVal < bVal;
+        bool znac = aVal > bVal;
         resultPin.setValue(znac);
         return;
       }

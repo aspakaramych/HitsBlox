@@ -73,35 +73,4 @@ class Engine {
       await Future<void>.delayed(Duration(milliseconds: 100));
     }
   }
-
-  Future<void> executeNode(Node node) async {
-    if (!node.areAllInputsReady()) {
-      print('Node "${node.title}" skipped: not all inputs ready');
-      return;
-    }
-
-    print('Executing node: ${node.title}');
-    await node.execute(registry);
-    for (var conn in graph.connections.where((c) => c.fromNodeId == node.id)) {
-      var nextNode = graph.getNodeById(conn.toNodeId);
-      var outputPin = node.outputs.firstWhereOrNull((p) => p.id == conn.fromPinId);
-      var inputPin = nextNode?.inputs.firstWhereOrNull((p) => p.id == conn.toPinId);
-
-      if (outputPin != null && inputPin != null) {
-        inputPin.setValue(outputPin.getValue());
-        scheduleExecution(nextNode!);
-      }
-    }
-
-    for (var conn in graph.connections.where((c) => c.fromNodeId == node.id && c.fromPinId.contains('exec_out') )) {
-      var nextNode = graph.getNodeById(conn.toNodeId);
-      if (nextNode != null) {
-        await executeNode(nextNode);
-      }
-    }
-  }
-
-  void scheduleExecution(Node node) {
-    Future.microtask(() => executeNode(node));
-  }
 }

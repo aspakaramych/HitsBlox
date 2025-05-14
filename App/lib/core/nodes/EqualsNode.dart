@@ -18,7 +18,7 @@ class EqualsNode extends Node{
   }
 
   @override
-  Future<void> execute(VariableRegistry registry) {
+  Future<void> execute(VariableRegistry registry) async {
     var aPin = _inputs[0];
     var bPin = _inputs[1];
     var resultPin = _outputs[0];
