@@ -4,16 +4,16 @@ import 'package:app/core/abstracts/Node.dart';
 import 'package:app/core/pins/Pin.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 
-class EqualsNode extends Node{
+class LessNode extends Node{
   final List<Pin> _inputs = [];
   final List<Pin> _outputs = [];
 
   @override
   final String id;
   @override
-  String get title => "Эквивалентность";
+  String get title => "Меньше";
 
-  EqualsNode(String this.id, Offset position) : super(position){
+  LessNode(String this.id, Offset position) : super(position){
 
   }
 
@@ -40,9 +40,11 @@ class EqualsNode extends Node{
 
 
       if (aVal == null || bVal == null) return;
-
-      bool znac = aVal == bVal;
-      resultPin.setValue(znac);
+      if (aVal is int && bVal is int){
+        bool znac = aVal > bVal;
+        resultPin.setValue(znac);
+        return;
+      }
     }
   }
 
@@ -52,6 +54,4 @@ class EqualsNode extends Node{
 
   @override
   List<Pin> get outputs => _outputs;
-
-
 }
