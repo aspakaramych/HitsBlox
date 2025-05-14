@@ -1,4 +1,4 @@
-import '../viewmodels/positioned_block.dart';
+import '../blocks/positioned_block.dart';
 
 class Pair<T1 extends PositionedBlock, T2 extends PositionedBlock> {
   final T1 first;

@@ -1,5 +1,5 @@
 import 'package:app/utils/sizes.dart';
-import 'package:app/viewmodels/logic_block.dart';
+import 'package:app/blocks/logic_block.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/triangle_painter.dart';

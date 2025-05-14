@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:app/core/nodes/PrintNode.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
-import 'package:app/viewmodels/positioned_block.dart';
+import 'package:app/blocks/positioned_block.dart';
 
 class PrintBlock implements PositionedBlock{
   @override

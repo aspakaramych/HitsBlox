@@ -1,8 +1,8 @@
 import 'dart:ui';
 
 import 'package:app/core/abstracts/Node.dart';
-import 'package:app/viewmodels/position.dart';
-import 'package:app/viewmodels/positioned_block.dart';
+import 'package:app/blocks/position.dart';
+import 'package:app/blocks/positioned_block.dart';
 
 class LogicBlock implements PositionedBlock {
   @override

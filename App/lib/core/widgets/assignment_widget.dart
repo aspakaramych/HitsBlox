@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../utils/sizes.dart';
 import '../../utils/triangle_painter.dart';
-import '../../viewmodels/assignment_block.dart';
+import '../../blocks/assignment_block.dart';
 
 class AssignmentBlockWidget extends StatefulWidget {
   final AssignmentBlock block;

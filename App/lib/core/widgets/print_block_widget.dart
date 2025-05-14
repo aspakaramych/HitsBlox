@@ -1,8 +1,8 @@
-import 'package:app/viewmodels/print_block.dart';
+import 'package:app/blocks/print_block.dart';
 import 'package:flutter/material.dart';
 import '../../utils/sizes.dart';
 import '../../utils/triangle_painter.dart';
-import '../../viewmodels/assignment_block.dart';
+import '../../blocks/assignment_block.dart';
 
 class PrintBlockWidget extends StatefulWidget {
   final PrintBlock block;
