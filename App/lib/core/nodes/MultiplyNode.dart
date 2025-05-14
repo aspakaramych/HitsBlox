@@ -9,14 +9,9 @@ import 'package:collection/collection.dart';
 import '../abstracts/Command.dart';
 import '../literals/VariableLiteral.dart';
 
-class MultiplyNode extends Node{
-  final List<Command> commands = [];
+class MultiplyNode extends Node {
   final List<Pin> _inputs = [];
   final List<Pin> _outputs = [];
-
-  final String leftVarName;
-  final String rightVarName;
-  final String resultVarName;
 
   @override
   List<Pin> get inputs => _inputs;
@@ -30,40 +25,43 @@ class MultiplyNode extends Node{
   @override
   String get title => "Умножение";
 
-  MultiplyNode(String this.id, Offset position)
-      : leftVarName = 'a',
-        rightVarName = 'b',
-        resultVarName = 'result',
-        super(position) {
-    addInput(Pin(id: 'exec_in', name: 'Exec In', isInput: true));
-    addInput(Pin(id: "value", name: "Value", isInput: true));
-    addOutput(Pin(id: 'exec_out', name: 'Exec Out', isInput: false));
-
-    addInput(Pin<int>(id: leftVarName, name: 'A', isInput: true));
-    addInput(Pin<int>(id: rightVarName, name: 'B', isInput: true));
-    addOutput(Pin<int>(id: 'value', name: 'Result', isInput: false));
-  }
+  MultiplyNode(String this.id, Offset position) : super(position) {}
 
   void addInput(Pin pin) => _inputs.add(pin);
+
   void addOutput(Pin pin) => _outputs.add(pin);
 
   @override
   Future<void> execute(VariableRegistry registry) async {
-    var aPin = _inputs.firstWhereOrNull((p) => p.id == leftVarName);
-    var bPin = _inputs.firstWhereOrNull((p) => p.id == rightVarName);
-    var resultPin = _outputs.firstWhereOrNull((p) => p.id == resultVarName);
-
+    var aPin = _inputs[0];
+    var bPin = _inputs[1];
+    var resultPin = _outputs[0];
+    int aVal, bVal;
     if (aPin != null && bPin != null && resultPin != null) {
-      var expression = BinaryOperations(
-        VariableLiteral(leftVarName),
-        VariableLiteral(rightVarName),
-        '*',
-      );
+      if (aPin.getValue() is int) {
+        aVal = aPin.getValue();
+      } else {
+        aVal = registry.getValue(aPin.getValue());
+      }
+      if (bPin.getValue() is int) {
+        bVal = bPin.getValue();
+      } else {
+        bVal = registry.getValue(bPin.getValue());
+      }
 
-      var cmd = AssignVariableCommand<int>(resultVarName, expression);
-      await cmd.execute(registry);
+      if (aVal == null || bVal == null) return;
 
-      resultPin.setValue(registry.getValue(resultVarName));
+      int sum = aVal * bVal;
+      resultPin.setValue(sum);
     }
+  }
+
+  bool areAllInputsReady() {
+    for (var p in inputs) {
+      if (p != null && !p.hasValue()) {
+        return false;
+      }
+    }
+    return true;
   }
 }
