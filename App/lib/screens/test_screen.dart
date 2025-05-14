@@ -224,6 +224,7 @@ class _TestScreenState extends State<TestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surfaceDim,
       body: LayoutBuilder(
         builder: (context, constraints) {
           print(assignmentBlocks);

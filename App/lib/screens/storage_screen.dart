@@ -34,13 +34,12 @@ class StorageSaves extends StatelessWidget {
               );
             },
             child: Card(
-              color: AppColors.primary,
-              elevation: 0,
+              color: Theme.of(context).colorScheme.primaryFixed,
+              elevation: 3,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(25),
-              ),
+                  borderRadius: BorderRadius.circular(25)),
               child: Center(
-                child: Text('Сохранение $index'),
+                child: Text('Сохранение $index', style: TextStyle(color: Theme.of(context).colorScheme.onPrimaryFixed)),
               ),
             ),
           );
@@ -57,7 +56,7 @@ class StorageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 40),
-      color: AppColors.background,
+      color: Theme.of(context).colorScheme.surfaceDim,
       child: StorageSaves()
     );
   }
