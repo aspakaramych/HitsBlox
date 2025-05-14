@@ -25,7 +25,7 @@ class BottomBar extends StatelessWidget {
           PhysicalModel(
             elevation: 10,
             color: Colors.transparent,
-            shadowColor: Colors.black.withOpacity(0.01),
+            shadowColor: Colors.black.withOpacity(0.0001),
             clipBehavior: Clip.none,
             shape: BoxShape.rectangle,
             child: Container(
@@ -43,7 +43,7 @@ class BottomBar extends StatelessWidget {
           ClipPath(
             clipper: CustomSvgClipper(shape),
             child: Container(
-              color: AppColors.primary,
+              color: Theme.of(context).colorScheme.primaryFixed,
               padding: EdgeInsets.all(10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -54,7 +54,7 @@ class BottomBar extends StatelessWidget {
                       width: 40,
                       height: 40,
                       colorFilter: ColorFilter.mode(
-                          Colors.black, BlendMode.srcIn),
+                          Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
                     ),
                     onPressed: () {
                       Navigator.push(
@@ -69,7 +69,7 @@ class BottomBar extends StatelessWidget {
                       width: 40,
                       height: 40,
                       colorFilter: ColorFilter.mode(
-                          Colors.black, BlendMode.srcIn),
+                          Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
                     ),
                     onPressed: onTerminalPressed,
                   ),
@@ -83,14 +83,14 @@ class BottomBar extends StatelessWidget {
                   //   ),
                   //   onPressed: onAddPressed,
                   // ),
-                  SizedBox(width: 10,),
+                  SizedBox(width: 40,),
                   IconButton(
                     icon: SvgPicture.asset(
                       'lib/design/assets/icons/download.svg',
                       width: 40,
                       height: 40,
                       colorFilter: ColorFilter.mode(
-                          Colors.black, BlendMode.srcIn),
+                          Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
                     ),
                     onPressed: () {},
                   ),
@@ -121,7 +121,7 @@ class BottomBar extends StatelessWidget {
               borderRadius: BorderRadius.circular(50),
               child: Container(
                 decoration: BoxDecoration(
-                  color: AppColors.primary,
+                  color: Theme.of(context).colorScheme.primary,
                   borderRadius: BorderRadius.circular(50),
                 ),
                 child: IconButton(
@@ -130,7 +130,7 @@ class BottomBar extends StatelessWidget {
                     width: 40,
                     height: 40,
                     colorFilter:
-                    ColorFilter.mode(Colors.black, BlendMode.srcIn),
+                    ColorFilter.mode(Theme.of(context).colorScheme.onPrimary, BlendMode.srcIn),
                   ),
                   onPressed: onAddPressed,
                 ),
@@ -189,8 +189,8 @@ class BottomBarShadowPainter extends CustomPainter {
     Path transformedPath = path.transform(matrix.storage);
 
     final shadowPaint = Paint()
-      ..color = Colors.black.withOpacity(0.2)
-      ..maskFilter = MaskFilter.blur(BlurStyle.normal, 10);
+      ..color = Colors.black.withOpacity(0.1)
+      ..maskFilter = MaskFilter.blur(BlurStyle.normal, 2);
 
     canvas.drawPath(transformedPath, shadowPaint);
   }

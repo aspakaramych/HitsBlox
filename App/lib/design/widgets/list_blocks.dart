@@ -21,13 +21,14 @@ class _BlockCardState extends State<BlockCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: widget.item.action,
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      child: Card(
+        // padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         margin: EdgeInsets.symmetric(horizontal: 5),
-        decoration: BoxDecoration(
-          color: AppColors.primary,
-          borderRadius: BorderRadius.all(Radius.circular(25)),
-        ),
+        // decoration: BoxDecoration(
+        //   color: AppColors.primary,
+        //   borderRadius: BorderRadius.all(Radius.circular(25)),
+        // ),
+        color: Theme.of(context).colorScheme.primaryFixedDim,
         child: Center(
           child: RichText(
             text: TextSpan(

@@ -36,6 +36,7 @@ class _ConsoleState extends State<Console> {
     final logs = _consoleService.logs;
 
     return Container(
+      color: Theme.of(context).colorScheme.surfaceDim,
       padding: EdgeInsets.all(16),
       child: Column(
         children: [
