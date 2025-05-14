@@ -117,9 +117,9 @@ class BlockFactory {
       color: Colors.deepOrangeAccent,
       blockName: "multiply",
       width: 200,
-      height: 110,
-      leftArrows: List.of([Position(Offset(15, 40), false), Position(Offset(15, 70), false)]),
-      rightArrows: List.of([Position(Offset(15, 40), false)]),
+      height: 80,
+      leftArrows: List.of([Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
+      rightArrows: List.of([Position(Offset(15, 15), false)]),
     );
   }
 
@@ -136,9 +136,9 @@ class BlockFactory {
       color: Color.fromARGB(255, 35, 0, 124),
       blockName: "add",
       width: 200,
-      height: 110,
-      leftArrows: List.of([Position(Offset(15, 40), false), Position(Offset(15, 70), false)]),
-      rightArrows: List.of([Position(Offset(15, 40), false)]),
+      height: 80,
+      leftArrows: List.of([Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
+      rightArrows: List.of([Position(Offset(15, 15), false)]),
     );
   }
 
@@ -155,9 +155,9 @@ class BlockFactory {
       color: Color.fromARGB(255, 163, 71, 216),
       blockName: "concat",
       width: 200,
-      height: 110,
-      leftArrows: List.of([Position(Offset(15, 40), false), Position(Offset(15, 70), false)]),
-      rightArrows: List.of([Position(Offset(15, 40), false)]),
+      height: 80,
+      leftArrows: List.of([Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
+      rightArrows: List.of([Position(Offset(15, 15), false)]),
     );
   }
 
@@ -174,9 +174,9 @@ class BlockFactory {
       color: Color.fromARGB(255, 99, 81, 38),
       blockName: "divide",
       width: 200,
-      height: 110,
-      leftArrows: List.of([Position(Offset(15, 40), false), Position(Offset(15, 70), false)]),
-      rightArrows: List.of([Position(Offset(15, 40), false)]),
+      height: 80,
+      leftArrows: List.of([Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
+      rightArrows: List.of([Position(Offset(15, 15), false)]),
     );
   }
 
@@ -193,9 +193,9 @@ class BlockFactory {
       color: Color.fromARGB(255, 255, 180, 117),
       blockName: "subtract",
       width: 200,
-      height: 110,
-      leftArrows: List.of([Position(Offset(15, 40), false), Position(Offset(15, 70), false)]),
-      rightArrows: List.of([Position(Offset(15, 40), false)]),
+      height: 80,
+      leftArrows: List.of([Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
+      rightArrows: List.of([Position(Offset(15, 15), false)]),
     );
   }
 }

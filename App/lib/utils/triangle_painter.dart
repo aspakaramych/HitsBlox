@@ -1,13 +1,18 @@
 import 'package:flutter/cupertino.dart';
 
 class TrianglePainter extends CustomPainter {
+
+  Size arrowSize;
+
+  TrianglePainter(this.arrowSize);
+
   @override
   void paint(Canvas canvas, Size size) {
     final path = Path();
-
+    print(size);
     path.moveTo(0, 0);
-    path.lineTo(size.width, size.height / 2);
-    path.lineTo(0, size.height);
+    path.lineTo(arrowSize.width, arrowSize.height / 2);
+    path.lineTo(0, arrowSize.height);
     path.close();
 
     canvas.drawPath(
@@ -22,4 +27,5 @@ class TrianglePainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return false;
   }
+
 }

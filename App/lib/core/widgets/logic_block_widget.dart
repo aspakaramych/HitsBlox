@@ -1,3 +1,4 @@
+import 'package:app/utils/sizes.dart';
 import 'package:app/viewmodels/logic_block.dart';
 import 'package:flutter/material.dart';
 
@@ -66,23 +67,31 @@ class _LogicBlockWidgetState extends State<LogicBlockWidget> {
                   child: GestureDetector(
                     onTap: () => widget.onLeftArrowClick(widget.block.leftArrows[i].position),
                     child: SizedBox(
-                      width: 15,
-                      height: 15,
-                      child: CustomPaint(painter: TrianglePainter()),
+                      width: 30,
+                      height: 30,
+                      child: SizedBox(
+                        width: 15,
+                        height: 15,
+                        child: CustomPaint(painter: TrianglePainter(Sizes.arrowSize)),
+                      ),
                     ),
                   ),
                 ),
               /// правая стрелка
               for(int i = 0; i < widget.block.rightArrows.length; i++)
                 Positioned(
-                  right: widget.block.rightArrows[i].position.dx,
+                  right: 0,
                   top: widget.block.rightArrows[i].position.dy,
                   child: GestureDetector(
                     onTap: () => widget.onRightArrowClick(),
                     child: SizedBox(
-                      width: 15,
-                      height: 15,
-                      child: CustomPaint(painter: TrianglePainter()),
+                      width: 30,
+                      height: 30,
+                      child: SizedBox(
+                        width: 15,
+                        height: 15,
+                        child: CustomPaint(painter: TrianglePainter(Sizes.arrowSize)),
+                      ),
                     ),
                   ),
                 ),
