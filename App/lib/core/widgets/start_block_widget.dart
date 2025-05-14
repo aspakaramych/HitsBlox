@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../utils/sizes.dart';
 import '../../utils/triangle_painter.dart';
 import '../../viewmodels/start_block.dart';
 
@@ -67,7 +68,7 @@ class _StartBlockWidgetState extends State<StartBlockWidget> {
                   child: SizedBox(
                     width: 15,
                     height: 15,
-                    child: CustomPaint(painter: TrianglePainter()),
+                    child: CustomPaint(painter: TrianglePainter(Sizes.arrowSize)),
                   ),
                 ),
               ),

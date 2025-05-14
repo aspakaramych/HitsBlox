@@ -1,4 +1,8 @@
+import 'dart:math';
+
+import 'package:app/core/literals/VariableLiteral.dart';
 import 'package:app/core/nodes/AssignNode.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../pins/Pin.dart';
@@ -9,21 +13,19 @@ import '../literals/BoolLiteral.dart';
 import '../models/commands/AssignVariableCommand.dart';
 import '../registry/VariableRegistry.dart';
 
-class BoolAssignNode extends Node implements AssignNode{
+class BoolAssignNode extends Node implements AssignNode {
   final List<Command> commands = [];
 
-  final List<Pin> _inputs = [];
-  final List<Pin> _outputs = [];
 
   @override
   String rawExpression = '';
   final TextEditingController controller = TextEditingController();
 
   @override
-  List<Pin> get inputs => _inputs;
+  final List<Pin> inputs = [];
 
   @override
-  List<Pin> get outputs => _outputs;
+  final List<Pin> outputs = [];
 
   @override
   final String id;
@@ -32,15 +34,13 @@ class BoolAssignNode extends Node implements AssignNode{
   String get title => "Присвоить (bool)";
 
   BoolAssignNode(String this.id, Offset position) : super(position) {
-    addInput(Pin(id: 'exec_in', name: 'Exec In', isInput: true));
-    addOutput(Pin(id: 'exec_out', name: 'Exec Out', isInput: false));
+
   }
 
   @override
   void setAssignmentsFromText(String text) {
     rawExpression = text;
     commands.clear();
-    outputs.removeWhere((p) => p.id != 'exec_out');
 
     var lines = text.split(';');
     for (var line in lines) {
@@ -56,14 +56,9 @@ class BoolAssignNode extends Node implements AssignNode{
       Expression expression = parseExpression(exprStr);
 
       commands.add(AssignVariableCommand<bool>(variableName, expression));
-      bool value = false;
-      if (expression is BoolLiteral) {
-        value = expression.value;
+      for (var p in outputs){
+        p.setValue(variableName);
       }
-
-      var pin = Pin<bool>(id: "value", name: variableName, isInput: false);
-      pin.setValue(value);
-      addOutput(pin);
     }
   }
 
@@ -73,25 +68,36 @@ class BoolAssignNode extends Node implements AssignNode{
     if (exprStr == 'true' || exprStr == 'false') {
       return BoolLiteral(exprStr == 'true');
     }
-
-    throw Exception("Неизвестное выражение: $exprStr");
+    else{
+      return VariableLiteral(exprStr);
+    }
   }
 
-  void addInput(Pin pin) => _inputs.add(pin);
+  @override
+  void addInput(Pin pin) => inputs.add(pin);
 
-  void addOutput(Pin pin) => _outputs.add(pin);
+  @override
+  void addOutput(Pin pin) => outputs.add(pin);
 
   @override
   Future<void> execute(VariableRegistry registry) async {
+    setAssignmentsFromText(rawExpression);
     for (var cmd in commands) {
       await cmd.execute(registry);
-    }
-
-    for (var pin in _outputs.where((p) => !p.isInput)) {
-      pin.setValue(registry.getValue(pin.id));
     }
   }
 
   @override
   void setText(String text) => rawExpression = text;
+
+  bool areAllInputsReady() {
+    final execIn = inputs.firstWhereOrNull((p) =>
+        p.id.contains('exec_in')) as Pin?;
+
+    if (execIn == null) {
+      return false;
+    }
+
+    return true;
+  }
 }

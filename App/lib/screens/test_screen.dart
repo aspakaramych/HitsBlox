@@ -194,6 +194,27 @@ class _TestScreenState extends State<TestScreen> {
               BlockFactory.createConcatBlock(_transformationController),
             ),
       ),
+      Block(
+        name: "Эквивалентность",
+        action:
+        () => addLogicBlock(
+          BlockFactory.createEqualsBlock(_transformationController),
+        ),
+      ),
+      Block(
+        name: "Больше",
+        action:
+            () => addLogicBlock(
+          BlockFactory.createMoreBlock(_transformationController),
+        ),
+      ),
+      Block(
+        name: "Меньше",
+        action:
+            () => addLogicBlock(
+          BlockFactory.createLessBlock(_transformationController),
+        ),
+      ),
     ];
   }
 

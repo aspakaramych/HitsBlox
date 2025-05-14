@@ -1,5 +1,6 @@
 import 'package:app/core/Connection.dart';
 import 'package:app/core/abstracts/Node.dart';
+import 'package:collection/collection.dart';
 
 class NodeGraph {
   final List<Node> nodes = [];
@@ -32,7 +33,12 @@ class NodeGraph {
   }
 
   void disconnect(String nodeId) {
+    var connection = connections.firstWhere((conn) => conn.fromNodeId == nodeId || conn.toNodeId == nodeId);
     connections.removeWhere((conn) =>
     conn.fromNodeId == nodeId || conn.toNodeId == nodeId);
+    var nodeFrom = getNodeById(connection.fromNodeId);
+    nodeFrom?.outputs.removeWhere((p) => p.id == connection.fromPinId);
+    var nodeTo = getNodeById(connection.toNodeId);
+    nodeTo?.inputs.removeWhere((p) => p.id == connection.toPinId);
   }
 }

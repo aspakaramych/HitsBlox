@@ -1,5 +1,6 @@
 import 'package:app/viewmodels/print_block.dart';
 import 'package:flutter/material.dart';
+import '../../utils/sizes.dart';
 import '../../utils/triangle_painter.dart';
 import '../../viewmodels/assignment_block.dart';
 
@@ -79,23 +80,13 @@ class _PrintBlockWidgetState extends State<PrintBlockWidget> {
                 child: GestureDetector(
                   onTap: () => widget.onLeftArrowClick(),
                   child: SizedBox(
-                    width: 15,
-                    height: 15,
-                    child: CustomPaint(painter: TrianglePainter()),
-                  ),
-                ),
-              ),
-
-              /// правая стрелка
-              Positioned(
-                right: 15,
-                top: 15,
-                child: GestureDetector(
-                  onTap: () => widget.onRightArrowClick(),
-                  child: SizedBox(
-                    width: 15,
-                    height: 15,
-                    child: CustomPaint(painter: TrianglePainter()),
+                    width: 30,
+                    height: 30,
+                    child: SizedBox(
+                      width: 15,
+                      height: 15,
+                      child: CustomPaint(painter: TrianglePainter(Sizes.arrowSize)),
+                    ),
                   ),
                 ),
               ),
@@ -138,8 +129,7 @@ class _PrintBlockWidgetState extends State<PrintBlockWidget> {
                         ),
                       ),
                     ),
-                  if (!widget.block.isEditing &&
-                      widget.block.node.outputs.isNotEmpty)
+                  if (!widget.block.isEditing)
                     Center(
                       child: Padding(
                         padding: const EdgeInsets.only(left: 8.0, top: 4.0),

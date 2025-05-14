@@ -10,14 +10,11 @@ import '../abstracts/Command.dart';
 import '../literals/VariableLiteral.dart';
 
 class SubNode extends Node {
-  final List<Pin> _inputs = [];
-  final List<Pin> _outputs = [];
+  @override
+  final List<Pin> inputs = [];
 
   @override
-  List<Pin> get inputs => _inputs;
-
-  @override
-  List<Pin> get outputs => _outputs;
+  final List<Pin> outputs = [];
 
   @override
   final String id;
@@ -27,15 +24,15 @@ class SubNode extends Node {
 
   SubNode(String this.id, Offset position) : super(position) {}
 
-  void addInput(Pin pin) => _inputs.add(pin);
+  void addInput(Pin pin) => inputs.add(pin);
 
-  void addOutput(Pin pin) => _outputs.add(pin);
+  void addOutput(Pin pin) => outputs.add(pin);
 
   @override
   Future<void> execute(VariableRegistry registry) async {
-    var aPin = _inputs[0];
-    var bPin = _inputs[1];
-    var resultPin = _outputs[0];
+    var aPin = inputs[0];
+    var bPin = inputs[1];
+    var resultPin = outputs[0];
     int aVal, bVal;
     if (aPin != null && bPin != null && resultPin != null) {
       if (aPin.getValue() is int){
@@ -53,7 +50,7 @@ class SubNode extends Node {
 
       if (aVal == null || bVal == null) return;
 
-      int sum = bVal - aVal;
+      int sum = aVal - bVal;
       resultPin.setValue(sum);
     }
 

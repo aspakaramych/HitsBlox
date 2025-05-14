@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../utils/sizes.dart';
 import '../../utils/triangle_painter.dart';
 import '../../viewmodels/assignment_block.dart';
 
@@ -78,23 +79,31 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                 child: GestureDetector(
                   onTap: () => widget.onLeftArrowClick(),
                   child: SizedBox(
-                    width: 15,
-                    height: 15,
-                    child: CustomPaint(painter: TrianglePainter()),
+                    width: 50,
+                    height: 50,
+                    child: SizedBox(
+                      width: 15,
+                      height: 15,
+                      child: CustomPaint(painter: TrianglePainter(Sizes.arrowSize)),
+                    ),
                   ),
                 ),
               ),
 
               /// правая стрелка
               Positioned(
-                right: 15,
+                right: -20,
                 top: 15,
                 child: GestureDetector(
                   onTap: () => widget.onRightArrowClick(),
                   child: SizedBox(
-                    width: 15,
-                    height: 15,
-                    child: CustomPaint(painter: TrianglePainter()),
+                    width: 50,
+                    height: 50,
+                    child: SizedBox(
+                      width: 15,
+                      height: 15,
+                      child: CustomPaint(painter: TrianglePainter(Sizes.arrowSize)),
+                    ),
                   ),
                 ),
               ),
