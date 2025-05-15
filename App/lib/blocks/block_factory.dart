@@ -1,6 +1,7 @@
 import 'package:app/blocks/if_else_block.dart';
 import 'package:app/core/ConsoleService.dart';
 import 'package:app/core/nodes/AddNode.dart';
+import 'package:app/core/nodes/ArrayAsignNode.dart';
 import 'package:app/core/nodes/ConcatNode.dart';
 import 'package:app/core/nodes/DivideNode.dart';
 import 'package:app/core/nodes/EqualsNode.dart';
@@ -73,6 +74,24 @@ class BlockFactory {
         position: assignNode.position,
         blockName: "string",
         node: assignNode,
+    );
+  }
+
+  static createArrayBlock(TransformationController transformationController) {
+    final currUserOffset = UserPositionUtils
+        .getVisibleContentRect(transformationController)
+        .topLeft;
+    final assignNode = ArrayAsignNode(
+      'node_${Randomizer.getRandomInt()}',
+      Offset(currUserOffset.dx + 50, currUserOffset.dy + 50),
+    );
+
+    return AssignmentBlock(
+        position: assignNode.position,
+        color: Colors.pink,
+        blockName: "array",
+        node: assignNode,
+        nodeId: assignNode.id
     );
   }
 

@@ -21,6 +21,7 @@ class BoolAssignNode extends Node implements AssignNode {
   String rawExpression = '';
   final TextEditingController controller = TextEditingController();
 
+
   @override
   final List<Pin> inputs = [];
 

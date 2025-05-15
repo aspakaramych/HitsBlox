@@ -1,3 +1,4 @@
+import 'package:app/core/literals/ArraySizeLiteral.dart';
 import 'package:app/core/pins/Pin.dart';
 import 'package:app/core/abstracts/Command.dart';
 import 'package:app/core/abstracts/Node.dart';
@@ -64,10 +65,16 @@ class IntAssignNode extends Node implements AssignNode{
   Expression parseExpression(String exprStr) {
     exprStr = exprStr.trim();
 
-    if (RegExp(r'^-?\d+$').hasMatch(exprStr)) {
-      return IntLiteral(int.parse(exprStr));
+    if (exprStr.startsWith('[') && exprStr.endsWith(']')) {
+      var sizeStr = exprStr.substring(1, exprStr.length - 1).trim();
+      if (int.tryParse(sizeStr) != null) {
+        return ArraySizeLiteral<int>(int.parse(sizeStr));
+      }
     }
-    else {
+
+    if (int.tryParse(exprStr) != null) {
+      return IntLiteral(int.parse(exprStr));
+    } else {
       return VariableLiteral(exprStr);
     }
   }
