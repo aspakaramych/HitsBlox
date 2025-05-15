@@ -88,10 +88,8 @@ class BlockFactory {
 
     return AssignmentBlock(
         position: assignNode.position,
-        color: Colors.pink,
         blockName: "array",
         node: assignNode,
-        nodeId: assignNode.id
     );
   }
 

@@ -47,7 +47,7 @@ class BoolAssignNode extends Node implements AssignNode {
       var trimmedLine = line.trim();
       if (trimmedLine.isEmpty) continue;
 
-      var match = RegExp(r'^(\w+)\s*=\s*(.+)$').firstMatch(trimmedLine);
+      var match = RegExp(r'^\s*(\w+)\s*=\s*(.+)\s*$').firstMatch(trimmedLine);
       if (match == null) continue;
 
       var variableName = match.group(1)!;

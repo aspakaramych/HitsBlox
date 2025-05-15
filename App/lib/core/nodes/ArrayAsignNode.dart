@@ -13,14 +13,12 @@ import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 
-class ArrayAsignNode extends Node implements AssignNode{
+class ArrayAsignNode extends Node implements AssignNode {
   final List<Command> commands = [];
-
 
   @override
   String rawExpression = '';
   final TextEditingController controller = TextEditingController();
-
 
   @override
   final List<Pin> inputs = [];
@@ -34,9 +32,8 @@ class ArrayAsignNode extends Node implements AssignNode{
   @override
   String get title => "Присвоить (array)";
 
-  ArrayAsignNode(String this.id, Offset position) : super(position){
+  ArrayAsignNode(String this.id, Offset position) : super(position) {}
 
-  }
   @override
   void setAssignmentsFromText(String text) {
     rawExpression = text;
@@ -57,13 +54,13 @@ class ArrayAsignNode extends Node implements AssignNode{
       Expression expression = parseExpression(exprStr, type);
       commands.add(AssignVariableCommand(variable, expression));
 
-      for (var p in outputs){
+      for (var p in outputs) {
         p.setValue(variable);
       }
     }
   }
-  
-  List<String> parseVariable(String exprStr){
+
+  List<String> parseVariable(String exprStr) {
     var newExpr = exprStr.split(' ');
     String type = newExpr[0].trim();
     String varName = newExpr[1].trim();
@@ -73,21 +70,22 @@ class ArrayAsignNode extends Node implements AssignNode{
   Expression parseExpression(String exprStr, String type) {
     exprStr = exprStr.trim();
 
-    if (exprStr.startsWith('{') && exprStr.endsWith('}')){
+    if (exprStr.startsWith('{') && exprStr.endsWith('}')) {
       var inner = exprStr.substring(1, exprStr.length - 1).trim();
       var items = inner.split(',').map((s) => s.trim()).toList();
-      var expressions = items.map((item) {
-        if (RegExp(r'^\d+$').hasMatch(item)) {
-          return IntLiteral(int.parse(item));
-        } else if(item.startsWith('"') && item.endsWith('"')){
-          return StringLiteral(exprStr.substring(1, exprStr.length - 1));
-        } else if(item == 'true' || item == 'false'){
-          return BoolLiteral(exprStr == 'true');
-        } else {
-          return VariableLiteral(item);
-        }
-      }).toList();
-      switch (type){
+      var expressions =
+          items.map((item) {
+            if (RegExp(r'^\d+$').hasMatch(item)) {
+              return IntLiteral(int.parse(item));
+            } else if (item.startsWith('"') && item.endsWith('"')) {
+              return StringLiteral(item.substring(1, item.length - 1));
+            } else if (item == 'true' || item == 'false') {
+              return BoolLiteral(item == 'true');
+            } else {
+              return VariableLiteral(item);
+            }
+          }).toList();
+      switch (type) {
         case "int":
           return ArrayLiteral<int>(expressions);
         case "string":
@@ -99,17 +97,29 @@ class ArrayAsignNode extends Node implements AssignNode{
 
     if (exprStr.startsWith('[') && exprStr.endsWith(']')) {
       var inner = exprStr.substring(1, exprStr.length - 1).trim();
-      var items = inner.split(',').map((s) => s.trim()).toList();
+      var nums = int.parse(inner);
 
-      var expressions = items.map((item) {
-        if (RegExp(r'^\d+$').hasMatch(item)) {
-          return IntLiteral(int.parse(item));
-        } else {
-          return VariableLiteral(item);
+      List<Expression> expressions = [];
+      for (int i = 0; i < nums; i++) {
+        switch (type) {
+          case "int":
+            expressions.add(IntLiteral(0));
+          case "string":
+            expressions.add(StringLiteral(""));
+          case "bool":
+            expressions.add(BoolLiteral(true));
         }
-      }).toList();
+      }
 
-      return ArrayLiteral<int>(expressions.cast<IntLiteral>());
+      switch (type) {
+        case "int":
+          return ArrayLiteral<int>(expressions);
+        case "string":
+          return ArrayLiteral<String>(expressions);
+        case "bool":
+          return ArrayLiteral<bool>(expressions);
+      }
+
     }
     return VariableLiteral(exprStr);
   }
@@ -128,12 +138,14 @@ class ArrayAsignNode extends Node implements AssignNode{
     }
   }
 
+  String strToRaw(String x) => '\r$x';
+
   @override
-  void setText(String text) => rawExpression = text;
+  void setText(String text) => rawExpression = strToRaw(text);
 
   bool areAllInputsReady() {
-    final execIn = inputs.firstWhereOrNull((p) =>
-        p.id.contains('exec_in')) as Pin?;
+    final execIn =
+        inputs.firstWhereOrNull((p) => p.id.contains('exec_in')) as Pin?;
 
     if (execIn == null) {
       return false;
@@ -141,5 +153,4 @@ class ArrayAsignNode extends Node implements AssignNode{
 
     return true;
   }
-
 }
