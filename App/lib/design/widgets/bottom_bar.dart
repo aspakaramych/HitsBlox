@@ -3,6 +3,7 @@ part of 'widgets.dart';
 class BottomBar extends StatelessWidget {
   final VoidCallback onTerminalPressed;
   final VoidCallback onAddPressed;
+  final VoidCallback onSavePressed;
 
   final String shape = "M375 62.1514C375 67.6742 370.523 72.1514 365 72.1514H15C9.47715 72.1514 5 67.6742 5 62.1514V13C5 7.47715 9.47715 3 15 3H141.654C145.577 3 149.056 5.34976 151.162 8.65935C159.324 21.4884 173.668 30 190 30C206.332 30 220.676 21.4884 228.838 8.65935C230.944 5.34976 234.423 3 238.346 3H365C370.523 3 375 7.47715 375 13V62.1514Z";
 
@@ -10,6 +11,7 @@ class BottomBar extends StatelessWidget {
     super.key,
     required this.onTerminalPressed,
     required this.onAddPressed,
+    required this.onSavePressed
   });
 
   @override
@@ -92,7 +94,7 @@ class BottomBar extends StatelessWidget {
                       colorFilter: ColorFilter.mode(
                           Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
                     ),
-                    onPressed: () {},
+                    onPressed: onSavePressed,
                   ),
                   IconButton(
                     icon: SvgPicture.asset(

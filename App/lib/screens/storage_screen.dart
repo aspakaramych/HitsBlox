@@ -56,7 +56,7 @@ class StorageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 40),
-      color: Theme.of(context).colorScheme.surfaceDim,
+      color: Theme.of(context).colorScheme.secondary,
       child: StorageSaves()
     );
   }

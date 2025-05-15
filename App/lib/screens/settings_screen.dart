@@ -84,7 +84,7 @@ class _SettingsScreenState extends State<SettingsScreen>{
               ],
             ),
           ),
-          BottomBar(onTerminalPressed: () {}, onAddPressed: () {})
+          BottomBar(onTerminalPressed: () {}, onAddPressed: () {}, onSavePressed: () {},)
         ],
       ),
     );

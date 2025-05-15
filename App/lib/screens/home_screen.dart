@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       body: Column(
         children: [
           Expanded(
@@ -101,6 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       BottomBar(
                           onTerminalPressed: () {},
                           onAddPressed: () {},
+                          onSavePressed: () {},
                         ),
                     ],
                   ),

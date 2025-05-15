@@ -47,6 +47,7 @@ class _MainScreenState extends State<MainScreen> {
                 BottomBar(
                   onTerminalPressed: () => _showTerminalPanel(context),
                   onAddPressed: () => _toggleAddSection(),
+                  onSavePressed: () => _showTerminalPanel(context)
                 ),
               ],
             ),
