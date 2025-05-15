@@ -27,7 +27,7 @@ class StringAssignNode extends Node implements AssignNode{
   final String id;
 
   @override
-  String get title => "Присвоить";
+  String get title => "Присвоить (string)";
 
   StringAssignNode(String this.id, Offset position) : super(position) {
 

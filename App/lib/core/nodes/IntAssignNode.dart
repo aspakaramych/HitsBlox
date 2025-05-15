@@ -28,7 +28,7 @@ class IntAssignNode extends Node implements AssignNode{
   final String id;
 
   @override
-  String get title => "Присвоить";
+  String get title => "Присвоить (int)";
 
   IntAssignNode(String this.id, Offset position) : super(position) {
 

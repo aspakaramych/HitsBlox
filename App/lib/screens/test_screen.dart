@@ -43,13 +43,7 @@ class _TestScreenState extends State<TestScreen> {
 
   final Map<String, Offset> calibrations = {};
 
-  late NodeGraph nodeGraph = NodeGraph();
-  final ConsoleService consoleService = ConsoleService();
-  late Engine engine = Engine();
-  late VariableRegistry registry = VariableRegistry();
-
   final List<Pair> wiredBlocks = [];
-  final List<Pair> wiredValues = [];
   var temp;
 
   void addAssignmentBlock(AssignmentBlock block) {
@@ -108,7 +102,6 @@ class _TestScreenState extends State<TestScreen> {
     widget.nodeGraph.deleteNode(nodeId);
   }
 
-  //TODO: добавить проверку на null
   void deleteConnection(String nodeId) {
     widget.nodeGraph.disconnect(nodeId);
   }
@@ -306,11 +299,6 @@ class _TestScreenState extends State<TestScreen> {
                 binding.first.nodeId == block.node.id ||
                 binding.second.nodeId == block.node.id,
           );
-          wiredValues.removeWhere(
-            (binding) =>
-                binding.first.nodeId == block.node.id ||
-                binding.second.nodeId == block.node.id,
-          );
           deleteNode(block.nodeId);
           deleteConnection(block.nodeId);
 
@@ -351,11 +339,6 @@ class _TestScreenState extends State<TestScreen> {
             (binding) =>
                 binding.first.nodeId == block.nodeId ||
                 binding.second.nodeId == block.nodeId,
-          );
-          wiredValues.removeWhere(
-            (binding) =>
-                binding.first.nodeId == block.node.id ||
-                binding.second.nodeId == block.node.id,
           );
           deleteNode(block.nodeId);
           deleteConnection(block.nodeId);
@@ -406,11 +389,6 @@ class _TestScreenState extends State<TestScreen> {
                 binding.first.nodeId == block.node.id ||
                 binding.second.nodeId == block.node.id,
           );
-          wiredValues.removeWhere(
-            (binding) =>
-                binding.first.nodeId == block.node.id ||
-                binding.second.nodeId == block.node.id,
-          );
           deleteNode(block.nodeId);
           deleteConnection(block.nodeId);
 
@@ -451,11 +429,6 @@ class _TestScreenState extends State<TestScreen> {
                 (binding) =>
             binding.first.nodeId == block.nodeId ||
                 binding.second.nodeId == block.nodeId,
-          );
-          wiredValues.removeWhere(
-                (binding) =>
-            binding.first.nodeId == block.node.id ||
-                binding.second.nodeId == block.node.id,
           );
           deleteNode(block.nodeId);
           deleteConnection(block.nodeId);

@@ -3,14 +3,13 @@ import 'dart:ui';
 import 'package:app/blocks/positioned_block.dart';
 import 'package:app/core/nodes/AssignNode.dart';
 
+import '../utils/offset_extension.dart';
+
 class AssignmentBlock implements PositionedBlock{
   @override
   Offset position;
-  Color color;
   String blockName;
   AssignNode node;
-  @override
-  String nodeId;
   bool isEditing;
   bool wasEdited;
 
@@ -19,13 +18,38 @@ class AssignmentBlock implements PositionedBlock{
 
   AssignmentBlock({
     required this.position,
-    required this.color,
     required this.blockName,
     required this.node,
-    required this.nodeId,
     this.isEditing = false,
     this.wasEdited = false,
     this.width = 200,
     this.height = 80,
   });
+
+  @override
+  String get nodeId => node.id;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'position': position.toJson(),
+      'node': node.toJson(),
+      'blockName': blockName,
+      'width': width,
+      'height': height,
+      'isEditing': isEditing,
+      'wasEdited': wasEdited,
+    };
+  }
+
+  factory AssignmentBlock.fromJson(Map<String, dynamic> json) {
+    return AssignmentBlock(
+      position: OffsetExtension.fromJson(json['position']),
+      node: AssignNode.fromJson(json['node']),
+      blockName: json['blockName'],
+      width: json['width'],
+      height: json['height'],
+      isEditing: json['isEditing'],
+      wasEdited: json['wasEdited'],
+    );
+  }
 }

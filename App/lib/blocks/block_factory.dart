@@ -38,10 +38,8 @@ class BlockFactory {
 
     return AssignmentBlock(
         position: assignNode.position,
-        color: Colors.blueAccent,
         blockName: "int",
         node: assignNode,
-        nodeId: assignNode.id
     );
   }
 
@@ -57,10 +55,8 @@ class BlockFactory {
 
     return AssignmentBlock(
         position: assignNode.position,
-        color: Colors.deepPurple,
         blockName: "bool",
         node: assignNode,
-        nodeId: assignNode.id
     );
   }
 
@@ -75,10 +71,8 @@ class BlockFactory {
 
     return AssignmentBlock(
         position: assignNode.position,
-        color: Colors.pink,
         blockName: "string",
         node: assignNode,
-        nodeId: assignNode.id
     );
   }
 
@@ -95,10 +89,8 @@ class BlockFactory {
 
     return PrintBlock(
       position: printNode.position,
-      color: Colors.orangeAccent,
       blockName: "print",
       node: printNode,
-      nodeId: printNode.id,
       registry: registry,
       width: 200,
       height: 90,
@@ -117,7 +109,6 @@ class BlockFactory {
     return LogicBlock(
       position: startNode.position,
       node: startNode,
-      color: Colors.green,
       blockName: "start",
       width: 200,
       height: 60,
@@ -139,7 +130,6 @@ class BlockFactory {
     return LogicBlock(
       position: multiplyNode.position,
       node: multiplyNode,
-      color: Colors.deepOrangeAccent,
       blockName: "multiply",
       width: 200,
       height: 80,
@@ -162,7 +152,6 @@ class BlockFactory {
     return LogicBlock(
       position: addictionNode.position,
       node: addictionNode,
-      color: Color.fromARGB(255, 35, 0, 124),
       blockName: "add",
       width: 200,
       height: 80,
@@ -184,7 +173,6 @@ class BlockFactory {
     return LogicBlock(
       position: concatNode.position,
       node: concatNode,
-      color: Color.fromARGB(255, 163, 71, 216),
       blockName: "concat",
       width: 200,
       height: 80,
@@ -207,7 +195,6 @@ class BlockFactory {
     return LogicBlock(
       position: divideNode.position,
       node: divideNode,
-      color: Color.fromARGB(255, 99, 81, 38),
       blockName: "divide",
       width: 200,
       height: 80,
@@ -230,7 +217,6 @@ class BlockFactory {
     return LogicBlock(
       position: subNode.position,
       node: subNode,
-      color: Color.fromARGB(255, 255, 180, 117),
       blockName: "subtract",
       width: 200,
       height: 80,
@@ -252,7 +238,6 @@ class BlockFactory {
     return LogicBlock(
       position: equalsNode.position,
       node: equalsNode,
-      color: Color.fromARGB(255, 255, 180, 117),
       blockName: "equals",
       width: 200,
       height: 80,
@@ -273,7 +258,6 @@ class BlockFactory {
     return LogicBlock(
       position: moreNode.position,
       node: moreNode,
-      color: Color.fromARGB(255, 255, 180, 117),
       blockName: "more",
       width: 200,
       height: 80,
@@ -294,7 +278,6 @@ class BlockFactory {
     return LogicBlock(
       position: lessNode.position,
       node: lessNode,
-      color: Color.fromARGB(255, 255, 180, 117),
       blockName: "less",
       width: 200,
       height: 80,

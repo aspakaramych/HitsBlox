@@ -53,7 +53,7 @@ class _LogicBlockWidgetState extends State<LogicBlockWidget> {
           width: widget.block.width,
           height: widget.block.height,
           decoration: BoxDecoration(
-            color: widget.block.color,
+            color: Colors.grey,
             border: Border.all(color: Colors.black, width: 3),
             borderRadius: BorderRadius.circular(20),
           ),

@@ -34,7 +34,6 @@ class BoolAssignNode extends Node implements AssignNode {
   String get title => "Присвоить (bool)";
 
   BoolAssignNode(String this.id, Offset position) : super(position) {
-
   }
 
   @override

@@ -29,4 +29,30 @@ class IfElseBlock implements PositionedBlock {
 
   @override
   String get nodeId => node.id;
+
+
+  //TODO: реализовать сериализацию
+  // Map<String, dynamic> toJson() {
+  //   return {
+  //     'position': position.toJson(),
+  //     'node': node.toJson(),
+  //     'blockName': blockName,
+  //     'width': width,
+  //     'height': height,
+  //     'isEditing': isEditing,
+  //     'wasEdited': wasEdited,
+  //   };
+  // }
+  //
+  // factory AssignmentBlock.fromJson(Map<String, dynamic> json) {
+  //   return AssignmentBlock(
+  //     position: OffsetExtension.fromJson(json['position']),
+  //     node: AssignNode.fromJson(json['node']),
+  //     blockName: json['blockName'],
+  //     width: json['width'],
+  //     height: json['height'],
+  //     isEditing: json['isEditing'],
+  //     wasEdited: json['wasEdited'],
+  //   );
+  // }
 }
