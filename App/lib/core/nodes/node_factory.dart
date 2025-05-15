@@ -8,12 +8,23 @@ import 'package:app/core/nodes/IfElseNode.dart';
 import 'package:app/core/nodes/LessNode.dart';
 import 'package:app/core/nodes/MoreNode.dart';
 import 'package:app/core/nodes/MultiplyNode.dart';
+import 'package:app/core/nodes/PrintNode.dart';
 import 'package:app/core/nodes/StartNode.dart';
 import 'package:app/core/nodes/SubNode.dart';
 
-class LogicNodeFactory {
+import 'BoolAssignNode.dart';
+import 'IntAssignNode.dart';
+import 'StringAssignNode.dart';
+
+class NodeFactory {
   static createNode(Offset position, String id, String type) {
     switch(type) {
+      case 'Присвоить (int)':
+        return IntAssignNode(id, position);
+      case 'Присвоить (bool)':
+        return BoolAssignNode(id, position);
+      case 'Присвоить (string)':
+        return StringAssignNode(id, position);
       case 'Сложение':
         return AddNode(id, position);
       case 'Конкатенация':

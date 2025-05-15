@@ -17,7 +17,6 @@ import 'package:app/blocks/assignment_block.dart';
 import 'package:app/blocks/logic_block.dart';
 import 'package:app/blocks/position.dart';
 import 'package:app/blocks/print_block.dart';
-import 'package:app/blocks/start_block.dart';
 import 'package:flutter/material.dart';
 
 import '../core/nodes/BoolAssignNode.dart';

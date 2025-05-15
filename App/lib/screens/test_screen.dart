@@ -10,6 +10,7 @@ import 'package:app/core/widgets/if_esle_block_widget.dart';
 import 'package:app/core/widgets/logic_block_widget.dart';
 import 'package:app/core/widgets/print_block_widget.dart';
 import 'package:app/design/widgets/widgets.dart';
+import 'package:app/utils/offset_extension.dart';
 import 'package:app/utils/pair.dart';
 import 'package:app/utils/user_position_utils.dart';
 import 'package:flutter/material.dart';
@@ -29,47 +30,98 @@ class TestScreen extends StatefulWidget {
   late Engine engine = Engine();
   late VariableRegistry registry = VariableRegistry();
 
+  List<AssignmentBlock> assignmentBlocks = [];
+  List<LogicBlock> logicBlocks = [];
+  List<PrintBlock> printBlocks = [];
+  List<IfElseBlock> ifElseBlocks = [];
+
+  Map<String, Offset> calibrations = {};
+
+  List<Pair> wiredBlocks = [];
+
   TestScreen({super.key});
+
+  Map<String, dynamic> saveScreenState() {
+    return {
+      'assignmentBlocks': assignmentBlocks.map((b) => b.toJson()).toList(),
+      'logicBlocks': logicBlocks.map((b) => b.toJson()).toList(),
+      'printBlocks': printBlocks.map((b) => b.toJson()).toList(),
+      'ifElseBlocks': ifElseBlocks.map((b) => b.toJson()).toList(),
+      'wiredBlocks': wiredBlocks.map((p) => p.toJson()).toList(),
+      'calibrations': calibrations.map(
+        (key, value) => MapEntry(key, {'dx': value.dx, 'dy': value.dy}),
+      ),
+      'nodeGraph': nodeGraph.toJson(),
+    };
+  }
+
+  void loadFromJson(Map<String, dynamic> screenJson) {
+    assignmentBlocks =
+        screenJson['assignmentBlocks']
+            .map<AssignmentBlock>((block) => AssignmentBlock.fromJson(block))
+            .toList();
+    logicBlocks =
+        screenJson['logicBlocks']
+            .map<LogicBlock>((block) => LogicBlock.fromJson(block))
+            .toList();
+    // printBlocks =
+    //     screenJson['printBlocks']
+    //         .map<PrintBlock>(
+    //           (block) => PrintBlock.fromJson(block, registry, consoleService),
+    //         )
+    //         .toList();
+    // ifElseBlocks =
+    //     screenJson['ifElseBlocks']
+    //         .map<AssignmentBlock>((block) => IfElseBlock.fromJson(block))
+    //         .toList();
+    // wiredBlocks =
+    //     screenJson['wiredBlocks']
+    //         .map<Pair>((block) => Pair.fromJson(block))
+    //         .toList();
+    calibrations =
+        ((screenJson['calibrations'] as Map<String, dynamic>)?.map((
+              key,
+              value,
+            ) {
+              final dx = value['dx'] as double? ?? 0.0;
+              final dy = value['dy'] as double? ?? 0.0;
+              return MapEntry(key, Offset(dx, dy));
+            }) ??
+            <String, Offset>{});
+    nodeGraph = NodeGraph.fromJson(screenJson['nodeGraph'], consoleService);
+  }
 
   @override
   State<TestScreen> createState() => _TestScreenState();
 }
 
 class _TestScreenState extends State<TestScreen> {
-  final List<AssignmentBlock> assignmentBlocks = [];
-  final List<LogicBlock> logicBlocks = [];
-  final List<PrintBlock> printBlocks = [];
-  final List<IfElseBlock> ifElseBlocks = [];
-
-  final Map<String, Offset> calibrations = {};
-
-  final List<Pair> wiredBlocks = [];
   var temp;
 
   void addAssignmentBlock(AssignmentBlock block) {
     setState(() {
-      assignmentBlocks.add(block);
+      widget.assignmentBlocks.add(block);
       widget.nodeGraph.addNode(block.node as Node);
     });
   }
 
   void addLogicBlock(LogicBlock block) {
     setState(() {
-      logicBlocks.add(block);
+      widget.logicBlocks.add(block);
       widget.nodeGraph.addNode(block.node as Node);
     });
   }
 
   void addIfElseBlock(IfElseBlock block) {
     setState(() {
-      ifElseBlocks.add(block);
+      widget.ifElseBlocks.add(block);
       widget.nodeGraph.addNode(block.node as Node);
     });
   }
 
   void addPrintBlock(PrintBlock block) {
     setState(() {
-      printBlocks.add(block);
+      widget.printBlocks.add(block);
       widget.nodeGraph.addNode(block.node as Node);
     });
   }
@@ -142,8 +194,8 @@ class _TestScreenState extends State<TestScreen> {
         name: "Массив",
         action:
             () => addAssignmentBlock(
-          BlockFactory.createArrayBlock(_transformationController),
-        ),
+              BlockFactory.createArrayBlock(_transformationController),
+            ),
       ),
       Block(
         name: "Вывод",
@@ -158,9 +210,10 @@ class _TestScreenState extends State<TestScreen> {
       ),
       Block(
         name: "Старт",
-        action: () => addLogicBlock(
-          BlockFactory.createStartBlock(_transformationController),
-        ),
+        action:
+            () => addLogicBlock(
+              BlockFactory.createStartBlock(_transformationController),
+            ),
       ),
       Block(
         name: "Умножение",
@@ -259,16 +312,17 @@ class _TestScreenState extends State<TestScreen> {
                     painter: BackgroundPainter(),
                   ),
 
-                  for (var block in assignmentBlocks)
+                  for (var block in widget.assignmentBlocks)
                     _buildAssignmentBlock(block),
 
-                  for (var block in logicBlocks) _buildLogicBlock(block),
+                  for (var block in widget.logicBlocks) _buildLogicBlock(block),
 
-                  for (var block in printBlocks) _buildPrintBlock(block),
+                  for (var block in widget.printBlocks) _buildPrintBlock(block),
 
-                  for (var block in ifElseBlocks) _buildIfElseBlock(block),
+                  for (var block in widget.ifElseBlocks)
+                    _buildIfElseBlock(block),
 
-                  for (var binding in wiredBlocks)
+                  for (var binding in widget.wiredBlocks)
                     CustomPaint(
                       key: ValueKey(
                         '${binding.first.nodeId}-${binding.second.nodeId}',
@@ -276,7 +330,8 @@ class _TestScreenState extends State<TestScreen> {
                       painter: BezierLinePainter(
                         binding.first.position,
                         binding.second.position +
-                            calibrations['${binding.first.nodeId}${binding.second.nodeId}']!,
+                            widget
+                                .calibrations['${binding.first.nodeId}${binding.second.nodeId}']!,
                       ),
                       size: MediaQuery.of(context).size,
                     ),
@@ -300,8 +355,8 @@ class _TestScreenState extends State<TestScreen> {
       },
       deleteNode: () {
         setState(() {
-          assignmentBlocks.remove(block);
-          wiredBlocks.removeWhere(
+          widget.assignmentBlocks.remove(block);
+          widget.wiredBlocks.removeWhere(
             (binding) =>
                 binding.first.nodeId == block.node.id ||
                 binding.second.nodeId == block.node.id,
@@ -321,8 +376,8 @@ class _TestScreenState extends State<TestScreen> {
         setState(() {
           if (temp != null) {
             makeConnection(temp.node as Node, block.node as Node);
-            calibrations["${temp.nodeId}${block.nodeId}"] = Offset(0, 0);
-            wiredBlocks.add(Pair(temp, block));
+            widget.calibrations["${temp.nodeId}${block.nodeId}"] = Offset(0, 0);
+            widget.wiredBlocks.add(Pair(temp, block));
             temp = null;
           }
         });
@@ -341,8 +396,8 @@ class _TestScreenState extends State<TestScreen> {
       block: block,
       deleteNode: () {
         setState(() {
-          logicBlocks.remove(block);
-          wiredBlocks.removeWhere(
+          widget.logicBlocks.remove(block);
+          widget.wiredBlocks.removeWhere(
             (binding) =>
                 binding.first.nodeId == block.nodeId ||
                 binding.second.nodeId == block.nodeId,
@@ -362,11 +417,11 @@ class _TestScreenState extends State<TestScreen> {
         setState(() {
           if (temp != null) {
             makeConnection(temp.node as Node, block.node as Node);
-            calibrations["${temp.nodeId}${block.nodeId}"] = Offset(
+            widget.calibrations["${temp.nodeId}${block.nodeId}"] = Offset(
               0,
               position.dy - 20,
             );
-            wiredBlocks.add(Pair(temp, block));
+            widget.wiredBlocks.add(Pair(temp, block));
             temp = null;
           }
         });
@@ -390,8 +445,8 @@ class _TestScreenState extends State<TestScreen> {
       },
       deleteNode: () {
         setState(() {
-          printBlocks.remove(block);
-          wiredBlocks.removeWhere(
+          widget.printBlocks.remove(block);
+          widget.wiredBlocks.removeWhere(
             (binding) =>
                 binding.first.nodeId == block.node.id ||
                 binding.second.nodeId == block.node.id,
@@ -411,8 +466,8 @@ class _TestScreenState extends State<TestScreen> {
         setState(() {
           if (temp != null) {
             makeConnection(temp.node as Node, block.node as Node);
-            calibrations["${temp.nodeId}${block.nodeId}"] = Offset(0, 0);
-            wiredBlocks.add(Pair(temp, block));
+            widget.calibrations["${temp.nodeId}${block.nodeId}"] = Offset(0, 0);
+            widget.wiredBlocks.add(Pair(temp, block));
             temp = null;
           }
         });
@@ -431,10 +486,10 @@ class _TestScreenState extends State<TestScreen> {
       block: block,
       deleteNode: () {
         setState(() {
-          ifElseBlocks.remove(block);
-          wiredBlocks.removeWhere(
-                (binding) =>
-            binding.first.nodeId == block.nodeId ||
+          widget.ifElseBlocks.remove(block);
+          widget.wiredBlocks.removeWhere(
+            (binding) =>
+                binding.first.nodeId == block.nodeId ||
                 binding.second.nodeId == block.nodeId,
           );
           deleteNode(block.nodeId);
@@ -452,11 +507,11 @@ class _TestScreenState extends State<TestScreen> {
         setState(() {
           if (temp != null) {
             makeConnection(temp.node as Node, block.node as Node);
-            calibrations["${temp.nodeId}${block.nodeId}"] = Offset(
+            widget.calibrations["${temp.nodeId}${block.nodeId}"] = Offset(
               0,
               position.dy - 20,
             );
-            wiredBlocks.add(Pair(temp, block));
+            widget.wiredBlocks.add(Pair(temp, block));
             temp = null;
           }
         });
@@ -471,10 +526,10 @@ class _TestScreenState extends State<TestScreen> {
 
   void deleteKey(String nodeId) {
     var keysToRemove =
-        calibrations.keys.where((key) => key.contains(nodeId)).toList();
+        widget.calibrations.keys.where((key) => key.contains(nodeId)).toList();
 
     for (var key in keysToRemove) {
-      calibrations.remove(key);
+      widget.calibrations.remove(key);
     }
   }
 }

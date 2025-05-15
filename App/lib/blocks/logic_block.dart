@@ -48,8 +48,8 @@ class LogicBlock implements PositionedBlock {
       blockName: json['blockName'],
       width: json['width'],
       height: json['height'],
-      leftArrows: (json['leftArrows'] as List).map((e) => Position.fromJson(e)).toList(),
-      rightArrows: (json['rightArrows'] as List).map((e) => Position.fromJson(e)).toList(),
+      leftArrows: (json['leftArrows'] as List).map((arrow) => Position.fromJson(arrow)).toList(),
+      rightArrows: (json['rightArrows'] as List).map((arrow) => Position.fromJson(arrow)).toList(),
     );
   }
 }

@@ -5,6 +5,9 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'package:app/blocks/block_factory.dart';
+import 'package:app/core/nodes/assignment_node_factory.dart';
+import 'package:app/core/pins/Pin.dart';
 import 'package:app/utils/offset_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -15,7 +18,6 @@ void main() {
       final offset = Offset(10.5, -20.5);
       final json = offset.toJson();
 
-      print(json);
       expect(json, isA<Map<String, double>>());
       expect(json['dx'], equals(10.5));
       expect(json['dy'], equals(-20.5));
@@ -35,6 +37,16 @@ void main() {
       final restored = OffsetExtension.fromJson(json);
 
       expect(restored, equals(original));
+    });
+  });
+
+  group('AssignmentBlock toJson', () {
+    test('AssignmentBlocks toJson should return correct data', () {
+      final position = Offset(10.5, -20.5);
+      final node = AssignmentNodeFactory.createNode(position, "1", "int");
+      final block = BlockFactory.createIntBlock(TransformationController());
+      block.node.inputs.add(Pin(id: "pinid", name: "input", isInput: true));
+      print(block.toJson());
     });
   });
 }

@@ -32,6 +32,11 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
+  void _saveScreen() {
+    print(_testScreen.saveScreenState());
+    _testScreen.loadFromJson(_testScreen.saveScreenState());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -47,7 +52,7 @@ class _MainScreenState extends State<MainScreen> {
                 BottomBar(
                   onTerminalPressed: () => _showTerminalPanel(context),
                   onAddPressed: () => _toggleAddSection(),
-                  onSavePressed: () => _showTerminalPanel(context)
+                  onSavePressed: () => _saveScreen()
                 ),
               ],
             ),

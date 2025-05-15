@@ -10,4 +10,22 @@ class Connection {
     required this.toNodeId,
     required this.toPinId,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'fromNodeId': fromNodeId,
+      'toNodeId': fromPinId,
+      'fromPinId': toNodeId,
+      'toPinId': toPinId,
+    };
+  }
+
+  factory Connection.fromJson(Map<String, dynamic> json) {
+    return Connection(
+        fromNodeId: json['fromNodeId'],
+        fromPinId: json['fromPinId'],
+        toNodeId: json['toNodeId'],
+        toPinId: json['toPinId']
+    );
+  }
 }
