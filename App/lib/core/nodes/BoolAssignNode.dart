@@ -21,6 +21,7 @@ class BoolAssignNode extends Node implements AssignNode {
   String rawExpression = '';
   final TextEditingController controller = TextEditingController();
 
+
   @override
   final List<Pin> inputs = [];
 
@@ -34,7 +35,6 @@ class BoolAssignNode extends Node implements AssignNode {
   String get title => "Присвоить (bool)";
 
   BoolAssignNode(String this.id, Offset position) : super(position) {
-
   }
 
   @override
@@ -47,7 +47,7 @@ class BoolAssignNode extends Node implements AssignNode {
       var trimmedLine = line.trim();
       if (trimmedLine.isEmpty) continue;
 
-      var match = RegExp(r'^(\w+)\s*=\s*(.+)$').firstMatch(trimmedLine);
+      var match = RegExp(r'^\s*(\w+)\s*=\s*(.+)\s*$').firstMatch(trimmedLine);
       if (match == null) continue;
 
       var variableName = match.group(1)!;

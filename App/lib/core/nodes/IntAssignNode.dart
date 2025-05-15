@@ -28,7 +28,7 @@ class IntAssignNode extends Node implements AssignNode{
   final String id;
 
   @override
-  String get title => "Присвоить";
+  String get title => "Присвоить (int)";
 
   IntAssignNode(String this.id, Offset position) : super(position) {
 
@@ -45,7 +45,7 @@ class IntAssignNode extends Node implements AssignNode{
       var trimmedLine = line.trim();
       if (trimmedLine.isEmpty) continue;
 
-      var match = RegExp(r'^\s*(\w+)\s*=\s*(-?\d+)\s*;?$').firstMatch(trimmedLine);
+      var match = RegExp(r'^\s*(\w+)\s*=\s*([+-]?[\d\w]+)\s*$').firstMatch(trimmedLine);
       if (match == null) continue;
 
       var variableName = match.group(1)!;
@@ -64,10 +64,9 @@ class IntAssignNode extends Node implements AssignNode{
   Expression parseExpression(String exprStr) {
     exprStr = exprStr.trim();
 
-    if (RegExp(r'^-?\d+$').hasMatch(exprStr)) {
+    if (int.tryParse(exprStr) != null) {
       return IntLiteral(int.parse(exprStr));
-    }
-    else {
+    } else {
       return VariableLiteral(exprStr);
     }
   }

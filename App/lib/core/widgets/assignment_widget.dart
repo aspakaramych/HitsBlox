@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../utils/sizes.dart';
 import '../../utils/triangle_painter.dart';
-import '../../viewmodels/assignment_block.dart';
+import '../../blocks/assignment_block.dart';
 
 class AssignmentBlockWidget extends StatefulWidget {
   final AssignmentBlock block;
@@ -66,7 +66,7 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
           width: widget.block.width,
           height: widget.block.height,
           decoration: BoxDecoration(
-            color: widget.block.color,
+            color: Colors.grey,
             border: Border.all(color: Colors.black, width: 3),
             borderRadius: BorderRadius.circular(20),
           ),

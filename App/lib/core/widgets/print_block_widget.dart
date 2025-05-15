@@ -1,8 +1,8 @@
-import 'package:app/viewmodels/print_block.dart';
+import 'package:app/blocks/print_block.dart';
 import 'package:flutter/material.dart';
 import '../../utils/sizes.dart';
 import '../../utils/triangle_painter.dart';
-import '../../viewmodels/assignment_block.dart';
+import '../../blocks/assignment_block.dart';
 
 class PrintBlockWidget extends StatefulWidget {
   final PrintBlock block;
@@ -67,7 +67,7 @@ class _PrintBlockWidgetState extends State<PrintBlockWidget> {
           width: widget.block.width,
           height: widget.block.height,
           decoration: BoxDecoration(
-            color: widget.block.color,
+            color: Colors.grey,
             border: Border.all(color: Colors.black, width: 3),
             borderRadius: BorderRadius.circular(20),
           ),

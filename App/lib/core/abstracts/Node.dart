@@ -1,8 +1,10 @@
 
 import 'dart:ui';
 
+import 'package:app/core/nodes/logic_node_factory.dart';
 import 'package:app/core/pins/Pin.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
+import 'package:app/utils/offset_extension.dart';
 
 abstract class Node {
   String get id;
@@ -22,4 +24,29 @@ abstract class Node {
   }
   void addInput(Pin pin) => inputs.add(pin);
   void addOutput(Pin pin) => outputs.add(pin);
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'position': position.toJson(),
+      'title': title,
+      'inputs': inputs.map(pinToJson).toList(),
+      'outputs': outputs.map(pinToJson).toList(),
+    };
+  }
+
+  factory Node.fromJson(Map<String, dynamic> json) {
+    final node = LogicNodeFactory.createNode(
+      OffsetExtension.fromJson(json['position']),
+      json['id'],
+      json['title'],
+    );
+    final inputPins = (json['inputs'] as List).map((p) => pinFromJson(p)).toList();
+    final outputPins = (json['outputs'] as List).map((p) => pinFromJson(p)).toList();
+
+    node.inputs = inputPins;
+    node.outputs = outputPins;
+
+    return node;
+  }
 }

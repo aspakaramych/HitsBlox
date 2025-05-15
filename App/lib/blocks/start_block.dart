@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:app/viewmodels/positioned_block.dart';
+import 'package:app/blocks/positioned_block.dart';
 
 import '../core/nodes/StartNode.dart';
 

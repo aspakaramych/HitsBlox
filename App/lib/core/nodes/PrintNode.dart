@@ -1,3 +1,4 @@
+import 'package:app/utils/offset_extension.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +23,7 @@ class PrintNode extends Node {
   final String id;
 
   @override
-  String get title => "Вывести";
+  String get title => "Распечатать";
 
   PrintNode({
     required this.consoleService,
@@ -69,5 +70,26 @@ class PrintNode extends Node {
     }
 
     return true;
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'position': position.toJson(),
+      'title': title,
+      'inputs': inputs.map(pinToJson).toList(),
+      'outputs': outputs.map(pinToJson).toList(),
+    };
+  }
+
+  factory PrintNode.fromJson(Map<String, dynamic> json, ConsoleService consoleService) {
+    final node = PrintNode(consoleService: consoleService, id: json['title'], position: json['position']);
+    final inputPins = (json['inputs'] as List).map((p) => pinFromJson(p)).toList();
+    final outputPins = (json['outputs'] as List).map((p) => pinFromJson(p)).toList();
+
+    node.inputs = inputPins;
+    node.outputs = outputPins;
+
+    return node;
   }
 }

@@ -11,6 +11,7 @@ void main() {
 class MyApp extends StatelessWidget {
   final textTheme = TextTheme(
     bodyLarge: TextStyle(color: Colors.black),
+
   );
 
   MyApp({super.key});

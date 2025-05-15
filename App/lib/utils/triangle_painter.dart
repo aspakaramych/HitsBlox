@@ -9,7 +9,6 @@ class TrianglePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final path = Path();
-    print(size);
     path.moveTo(0, 0);
     path.lineTo(arrowSize.width, arrowSize.height / 2);
     path.lineTo(0, arrowSize.height);
