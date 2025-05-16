@@ -1,8 +1,22 @@
 import '../blocks/positioned_block.dart';
 
-class Pair<T1 extends PositionedBlock, T2 extends PositionedBlock> {
-  final T1 first;
-  final T2 second;
+class Pair {
+  final PositionedBlock first;
+  final PositionedBlock second;
 
   const Pair(this.first, this.second);
+
+  Map<String, dynamic> toJson() {
+    return {
+      'first': first.toJson(),
+      'second': second.toJson()
+    };
+  }
+
+  factory Pair.fromJson(Map<String, dynamic> json) {
+    return Pair(
+        PositionedBlock.fromJson(json['first']),
+        PositionedBlock.fromJson(json['second'])
+    );
+  }
 }

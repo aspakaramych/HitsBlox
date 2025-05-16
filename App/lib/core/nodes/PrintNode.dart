@@ -83,7 +83,7 @@ class PrintNode extends Node {
   }
 
   factory PrintNode.fromJson(Map<String, dynamic> json, ConsoleService consoleService) {
-    final node = PrintNode(consoleService: consoleService, id: json['title'], position: json['position']);
+    final node = PrintNode(consoleService: consoleService, id: json['title'], position: OffsetExtension.fromJson(json['position']));
     final inputPins = (json['inputs'] as List).map((p) => pinFromJson(p)).toList();
     final outputPins = (json['outputs'] as List).map((p) => pinFromJson(p)).toList();
 
