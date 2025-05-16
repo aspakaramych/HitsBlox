@@ -198,6 +198,14 @@ class _TestScreenState extends State<TestScreen> {
             ),
       ),
       Block(
+          name: "Добавление в массив",
+          action: () => addAssignmentBlock(
+            BlockFactory.createAddArrayBlock(
+              _transformationController
+            ),
+          )
+      ),
+      Block(
         name: "Вывод",
         action:
             () => addPrintBlock(
