@@ -50,5 +50,7 @@ class EqualsNode extends Node{
   @override
   final List<Pin> outputs = [];
 
+  void addInput(Pin pin) => inputs.add(pin);
+  void addOutput(Pin pin) => outputs.add(pin);
 
 }

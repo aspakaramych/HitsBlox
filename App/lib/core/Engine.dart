@@ -2,7 +2,9 @@ import 'dart:collection';
 import 'dart:math';
 
 import 'package:app/core/NodeGraph.dart';
+import 'package:app/core/abstracts/MyTrue.dart';
 import 'package:app/core/abstracts/Node.dart';
+import 'package:app/core/nodes/IfElseNode.dart';
 import 'package:app/core/nodes/PrintNode.dart';
 import 'package:app/core/nodes/StartNode.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
@@ -42,19 +44,22 @@ class Engine {
           progressMade = true;
 
           for (var conn in graph.connections.where((c) => c.fromNodeId == node.id)) {
-            var nextNode = graph.getNodeById(conn.toNodeId);
-            var outputPin = node.outputs.firstWhereOrNull((p) => p.id == conn.fromPinId);
-            var inputPin = nextNode?.inputs.firstWhereOrNull((p) => p.id == conn.toPinId);
+            if ((node is IfElseNode && node.outputs.firstWhere((p) => p.id == conn.fromPinId).getValue() is MyTrue) || (node is !IfElseNode)){
+              var nextNode = graph.getNodeById(conn.toNodeId);
+              var outputPin = node.outputs.firstWhereOrNull((p) => p.id == conn.fromPinId);
+              var inputPin = nextNode?.inputs.firstWhereOrNull((p) => p.id == conn.toPinId);
 
-            if (outputPin != null && inputPin != null) {
-              inputPin.setValue(outputPin.getValue());
-            }
+              if (outputPin != null && inputPin != null) {
+                inputPin.setValue(outputPin.getValue());
+              }
 
-            if (nextNode != null && !executedNodes.contains(nextNode)) {
-              if (!queue.contains(nextNode)) {
-                queue.add(nextNode);
+              if (nextNode != null && !executedNodes.contains(nextNode)) {
+                if (!queue.contains(nextNode)) {
+                  queue.add(nextNode);
+                }
               }
             }
+
           }
         } else {
           nodesToRetry.add(node);
