@@ -1,6 +1,7 @@
 import 'package:app/blocks/if_else_block.dart';
 import 'package:app/core/ConsoleService.dart';
 import 'package:app/core/nodes/AddNode.dart';
+import 'package:app/core/nodes/ArrayAddNode.dart';
 import 'package:app/core/nodes/ArrayAsignNode.dart';
 import 'package:app/core/nodes/ConcatNode.dart';
 import 'package:app/core/nodes/DivideNode.dart';
@@ -17,7 +18,6 @@ import 'package:app/blocks/assignment_block.dart';
 import 'package:app/blocks/logic_block.dart';
 import 'package:app/blocks/position.dart';
 import 'package:app/blocks/print_block.dart';
-import 'package:app/blocks/start_block.dart';
 import 'package:flutter/material.dart';
 
 import '../core/nodes/BoolAssignNode.dart';
@@ -90,6 +90,22 @@ class BlockFactory {
         position: assignNode.position,
         blockName: "array",
         node: assignNode,
+    );
+  }
+
+  static createAddArrayBlock(TransformationController transformationController) {
+    final currUserOffset = UserPositionUtils
+        .getVisibleContentRect(transformationController)
+        .topLeft;
+    final assignNode = ArrayAddNode(
+      'node_${Randomizer.getRandomInt()}',
+      Offset(currUserOffset.dx + 50, currUserOffset.dy + 50),
+    );
+
+    return AssignmentBlock(
+      position: assignNode.position,
+      blockName: "arrayAdd",
+      node: assignNode,
     );
   }
 
