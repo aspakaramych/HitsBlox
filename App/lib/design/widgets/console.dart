@@ -44,7 +44,7 @@ class _ConsoleState extends State<Console> {
             alignment: Alignment.center,
             child: Text(
               "Консоль",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.text),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
             ),
           ),
           SizedBox(height: 10),
@@ -55,7 +55,7 @@ class _ConsoleState extends State<Console> {
                 children: [
                   Text(
                     '>${logs.join('\n>')}',
-                    style: TextStyle(fontFamily: 'monospace', fontSize: 14, color: AppColors.text),
+                    style: TextStyle(fontFamily: 'monospace', fontSize: 14, color: Colors.black),
                   ),
                 ],
               ),

@@ -5,7 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 import 'package:app/design/widgets/widgets.dart';
-import 'package:app/design/theme/colors.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

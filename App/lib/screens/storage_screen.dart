@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:app/screens/main_screen.dart';
 import 'package:app/design/widgets/widgets.dart';
-import 'package:app/design/theme/colors.dart';
 
 class StorageSaves extends StatelessWidget {
   final int itemCount;

@@ -95,7 +95,7 @@ class TestScreen extends StatefulWidget {
   State<TestScreen> createState() => _TestScreenState();
 }
 
-class _TestScreenState extends State<TestScreen> {
+class _TestScreenState extends State<TestScreen> with AutomaticKeepAliveClientMixin {
   var temp;
 
   void addAssignmentBlock(AssignmentBlock block) {
@@ -161,6 +161,7 @@ class _TestScreenState extends State<TestScreen> {
   @override
   void initState() {
     super.initState();
+    super.build(context);
     // initInterpreter();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       UserPositionUtils.centerInitialPosition(
@@ -540,4 +541,7 @@ class _TestScreenState extends State<TestScreen> {
       widget.calibrations.remove(key);
     }
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

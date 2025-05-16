@@ -4,7 +4,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:app/design/widgets/widgets.dart';
-import 'package:app/design/theme/colors.dart';
 
 class SettingsScreen extends StatefulWidget {
   SettingsScreen({super.key});
@@ -18,11 +17,11 @@ class _SettingsScreenState extends State<SettingsScreen>{
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.background,
+      color: Theme.of(context).colorScheme.secondary,
       child: Column(
         children: [
           Container(
-            color: AppColors.primary,
+            color: Theme.of(context).colorScheme.primary,
             height: 100,
             width: double.infinity,
             padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
@@ -32,7 +31,7 @@ class _SettingsScreenState extends State<SettingsScreen>{
                 text: TextSpan(
                   text: "Настройки",
                   style: TextStyle(
-                    color: AppColors.text,
+                    color: Theme.of(context).colorScheme.onSecondary,
                     fontSize: 30,
                     fontFamily: "Roboto",
                   )

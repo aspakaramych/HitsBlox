@@ -1,4 +1,5 @@
 import 'package:app/core/ConsoleService.dart';
+import 'package:app/main.dart';
 import 'package:app/screens/test_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:app/design/widgets/widgets.dart';
@@ -10,9 +11,10 @@ class MainScreen extends StatefulWidget {
   State<MainScreen> createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainScreenState extends State<MainScreen> with AutomaticKeepAliveClientMixin {
   bool _isAddSectionVisible = false;
-  final TestScreen _testScreen = TestScreen();
+  final TestScreen _testScreen = testScreen;
+
 
   void _toggleAddSection() {
     setState(() {
@@ -61,4 +63,9 @@ class _MainScreenState extends State<MainScreen> {
       ],
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
+
+
 }
