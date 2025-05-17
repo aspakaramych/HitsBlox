@@ -11,12 +11,6 @@ class PrintNode extends Node {
   final TextEditingController controller = TextEditingController();
   String rawExpression = '';
 
-  @override
-  final List<Pin> inputs = [];
-
-  @override
-  final List<Pin> outputs = [];
-
   final ConsoleService consoleService;
 
   @override
@@ -72,23 +66,25 @@ class PrintNode extends Node {
     return true;
   }
 
-  Map<String, dynamic> toJson() {
+  static Map<String, dynamic> toJson_(PrintNode node) {
     return {
-      'id': id,
-      'position': position.toJson(),
-      'title': title,
-      'inputs': inputs.map(pinToJson).toList(),
-      'outputs': outputs.map(pinToJson).toList(),
+      'id': node.id,
+      'position': node.position.toJson(),
+      'title': node.title,
+      'rawExpression': node.rawExpression,
+      'inputs': node.inputs.map(pinToJson).toList(),
+      'outputs': node.outputs.map(pinToJson).toList(),
     };
   }
 
   factory PrintNode.fromJson(Map<String, dynamic> json, ConsoleService consoleService) {
-    final node = PrintNode(consoleService: consoleService, id: json['title'], position: OffsetExtension.fromJson(json['position']));
+    final node = PrintNode(consoleService: consoleService, id: json['id'], position: OffsetExtension.fromJson(json['position']));
     final inputPins = (json['inputs'] as List).map((p) => pinFromJson(p)).toList();
     final outputPins = (json['outputs'] as List).map((p) => pinFromJson(p)).toList();
 
     node.inputs = inputPins;
     node.outputs = outputPins;
+    node.rawExpression = json['rawExpression'];
 
     return node;
   }

@@ -59,9 +59,9 @@ class BottomBar extends StatelessWidget {
                           Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
                     ),
                     onPressed: () {
-                      Navigator.pushNamed(
+                      Navigator.push(
                         context,
-                        '/',
+                        MaterialPageRoute(builder: (context) => HomeScreen()),
                       );
                     },
                   ),

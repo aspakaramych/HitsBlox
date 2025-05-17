@@ -332,7 +332,6 @@ class BlockFactory {
     return IfElseBlock(
       position: ifElseNode.position,
       node: ifElseNode,
-      color: Color.fromARGB(255, 47, 44, 44),
       blockName: "if else",
       width: 200,
       height: 80,

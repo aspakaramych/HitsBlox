@@ -10,11 +10,7 @@ import '../abstracts/Command.dart';
 import '../literals/VariableLiteral.dart';
 
 class SubNode extends Node {
-  @override
-  final List<Pin> inputs = [];
 
-  @override
-  final List<Pin> outputs = [];
 
   @override
   final String id;

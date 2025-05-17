@@ -46,9 +46,4 @@ class MoreNode extends Node{
   }
 
 
-  @override
-  final List<Pin> inputs = [];
-
-  @override
-  final List<Pin> outputs = [];
 }

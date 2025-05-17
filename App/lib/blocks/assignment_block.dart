@@ -32,7 +32,7 @@ class AssignmentBlock implements PositionedBlock{
   Map<String, dynamic> toJson() {
     return {
       'position': position.toJson(),
-      'node': node.toJson(),
+      'node': AssignNode.toJson_(node),
       'blockName': blockName,
       'width': width,
       'height': height,

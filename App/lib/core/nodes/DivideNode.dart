@@ -5,11 +5,7 @@ import 'package:app/core/pins/Pin.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 
 class DivideNode extends Node {
-  @override
-  final List<Pin> inputs = [];
 
-  @override
-  final List<Pin> outputs = [];
 
   @override
   final String id;

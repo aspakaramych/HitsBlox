@@ -22,12 +22,6 @@ class ArrayAddNode extends Node implements AssignNode{
   final TextEditingController controller = TextEditingController();
 
   @override
-  final List<Pin> inputs = [];
-
-  @override
-  final List<Pin> outputs = [];
-
-  @override
   final String id;
 
   @override

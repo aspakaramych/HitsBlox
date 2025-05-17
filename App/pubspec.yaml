@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   collection: ^1.19.1
   gesture_zoom_box: ^0.0.4
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   flutter_test:

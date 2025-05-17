@@ -29,7 +29,7 @@ class StorageSaves extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MainScreen()),
+                MaterialPageRoute(builder: (context) => MainScreen(null, screenName: '',)),
               );
             },
             child: Card(
