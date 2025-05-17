@@ -72,13 +72,14 @@ class PrintNode extends Node {
     return true;
   }
 
-  Map<String, dynamic> toJson() {
+  static Map<String, dynamic> toJson_(PrintNode node) {
     return {
-      'id': id,
-      'position': position.toJson(),
-      'title': title,
-      'inputs': inputs.map(pinToJson).toList(),
-      'outputs': outputs.map(pinToJson).toList(),
+      'id': node.id,
+      'position': node.position.toJson(),
+      'title': node.title,
+      'rawExpression': node.rawExpression,
+      'inputs': node.inputs.map(pinToJson).toList(),
+      'outputs': node.outputs.map(pinToJson).toList(),
     };
   }
 
@@ -89,6 +90,7 @@ class PrintNode extends Node {
 
     node.inputs = inputPins;
     node.outputs = outputPins;
+    node.rawExpression = json['rawExpression'];
 
     return node;
   }

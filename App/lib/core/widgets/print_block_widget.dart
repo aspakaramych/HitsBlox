@@ -116,7 +116,6 @@ class _PrintBlockWidgetState extends State<PrintBlockWidget> {
                           keyboardType: TextInputType.text,
                           textInputAction: TextInputAction.done,
                           onSubmitted: (text) {
-                            currText = text;
                             widget.block.node.rawExpression = text;
                             widget.onEditToggle();
                           },
@@ -137,11 +136,11 @@ class _PrintBlockWidgetState extends State<PrintBlockWidget> {
                           spacing: 4,
                           runSpacing: 2,
                           children: [
-                            if (currText != '')
+                            if (widget.block.node.rawExpression != '')
                               SizedBox(
                                 width: 120,
                                 child: Chip(
-                                  label: Text(currText),
+                                  label: Text(widget.block.node.rawExpression),
                                   backgroundColor: Colors.black.withValues(
                                     alpha: 0.3,
                                   ),

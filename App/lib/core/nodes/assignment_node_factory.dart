@@ -14,7 +14,7 @@ class AssignmentNodeFactory {
         return BoolAssignNode(id, position);
       case 'Присвоить (string)':
         return StringAssignNode(id, position);
-      case 'Добавить (array)':
+      case 'Присвоить (array)':
         return ArrayAsignNode(id, position);
     }
   }

@@ -18,6 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../blocks/assignment_block.dart';
 import '../blocks/positioned_block.dart';
+import '../core/Connection.dart';
 import '../core/abstracts/Node.dart';
 import '../core/pins/Pin.dart';
 import '../core/widgets/assignment_widget.dart';
@@ -109,9 +110,21 @@ class TestScreen extends StatefulWidget {
     refillWiredBlocks();
   }
 
+  void refillNodeGraph(Map<String, dynamic> json) {
+    List<Node> nodes = [];
+    List<Connection> connections =
+        json['connections']
+            .map<Connection>((con) => Connection.fromJson(con))
+            .toList();
+
+
+
+    nodeGraph = NodeGraph.from(nodes, connections);
+  }
+
   void refillWiredBlocks() {
     List<Pair> newWiredBlocks = [];
-    for(int i = 0; i < wiredBlocks.length; i++) {
+    for (int i = 0; i < wiredBlocks.length; i++) {
       var oldFirst = wiredBlocks[i].first;
       var oldSecond = wiredBlocks[i].second;
       PositionedBlock? newFirst = findPositionedBlock(oldFirst.nodeId);
@@ -123,23 +136,23 @@ class TestScreen extends StatefulWidget {
   }
 
   PositionedBlock? findPositionedBlock(String nodeId) {
-    for(var block in assignmentBlocks) {
-      if(block.nodeId == nodeId) {
+    for (var block in assignmentBlocks) {
+      if (block.nodeId == nodeId) {
         return block;
       }
     }
-    for(var block in logicBlocks) {
-      if(block.nodeId == nodeId) {
+    for (var block in logicBlocks) {
+      if (block.nodeId == nodeId) {
         return block;
       }
     }
-    for(var block in printBlocks) {
-      if(block.nodeId == nodeId) {
+    for (var block in printBlocks) {
+      if (block.nodeId == nodeId) {
         return block;
       }
     }
-    for(var block in ifElseBlocks) {
-      if(block.nodeId == nodeId) {
+    for (var block in ifElseBlocks) {
+      if (block.nodeId == nodeId) {
         return block;
       }
     }
@@ -165,10 +178,10 @@ class TestScreen extends StatefulWidget {
 
   @override
   State<TestScreen> createState() => _TestScreenState();
-
 }
 
-class _TestScreenState extends State<TestScreen> with AutomaticKeepAliveClientMixin {
+class _TestScreenState extends State<TestScreen>
+    with AutomaticKeepAliveClientMixin {
   var temp;
   var currOutputCalibration;
 
@@ -273,12 +286,11 @@ class _TestScreenState extends State<TestScreen> with AutomaticKeepAliveClientMi
             ),
       ),
       Block(
-          name: "Добавление в массив",
-          action: () => addAssignmentBlock(
-            BlockFactory.createAddArrayBlock(
-              _transformationController
+        name: "Добавление в массив",
+        action:
+            () => addAssignmentBlock(
+              BlockFactory.createAddArrayBlock(_transformationController),
             ),
-          )
       ),
       Block(
         name: "Вывод",
@@ -412,7 +424,8 @@ class _TestScreenState extends State<TestScreen> with AutomaticKeepAliveClientMi
                       ),
                       painter: BezierLinePainter(
                         binding.first.position +
-                            widget.outputCalibrations['${binding.first.nodeId}${binding.second.nodeId}']!,
+                            widget
+                                .outputCalibrations['${binding.first.nodeId}${binding.second.nodeId}']!,
                         binding.second.position +
                             widget
                                 .calibrations['${binding.first.nodeId}${binding.second.nodeId}']!,
@@ -461,10 +474,13 @@ class _TestScreenState extends State<TestScreen> with AutomaticKeepAliveClientMi
           if (temp != null) {
             makeConnection(temp.node as Node, block.node as Node);
             widget.calibrations["${temp.nodeId}${block.nodeId}"] = Offset(0, 0);
-            if(currOutputCalibration != null) {
-              widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] = currOutputCalibration;
+            if (currOutputCalibration != null) {
+              widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] =
+                  currOutputCalibration;
             } else {
-              widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] = Offset(0, 0);;
+              widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] =
+                  Offset(0, 0);
+              ;
             }
             widget.wiredBlocks.add(Pair(temp, block));
             temp = null;
@@ -512,10 +528,13 @@ class _TestScreenState extends State<TestScreen> with AutomaticKeepAliveClientMi
               0,
               position.dy - 20,
             );
-            if(currOutputCalibration != null) {
-              widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] = currOutputCalibration;
+            if (currOutputCalibration != null) {
+              widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] =
+                  currOutputCalibration;
             } else {
-              widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] = Offset(0, 0);;
+              widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] =
+                  Offset(0, 0);
+              ;
             }
             widget.wiredBlocks.add(Pair(temp, block));
             temp = null;
@@ -565,10 +584,13 @@ class _TestScreenState extends State<TestScreen> with AutomaticKeepAliveClientMi
           if (temp != null) {
             makeConnection(temp.node as Node, block.node as Node);
             widget.calibrations["${temp.nodeId}${block.nodeId}"] = Offset(0, 0);
-            if(currOutputCalibration != null) {
-              widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] = currOutputCalibration;
+            if (currOutputCalibration != null) {
+              widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] =
+                  currOutputCalibration;
             } else {
-              widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] = Offset(0, 0);;
+              widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] =
+                  Offset(0, 0);
+              ;
             }
             widget.wiredBlocks.add(Pair(temp, block));
             temp = null;
@@ -616,10 +638,13 @@ class _TestScreenState extends State<TestScreen> with AutomaticKeepAliveClientMi
               0,
               position.dy - 20,
             );
-            if(currOutputCalibration != null) {
-              widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] = currOutputCalibration;
+            if (currOutputCalibration != null) {
+              widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] =
+                  currOutputCalibration;
             } else {
-              widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] = Offset(0, 0);;
+              widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] =
+                  Offset(0, 0);
+              ;
             }
             widget.wiredBlocks.add(Pair(temp, block));
             temp = null;

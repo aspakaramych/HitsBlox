@@ -1,11 +1,12 @@
 import 'dart:ui';
 
+import 'package:app/core/abstracts/Node.dart';
 import 'package:app/utils/offset_extension.dart';
 
 import '../pins/Pin.dart';
 import 'assignment_node_factory.dart';
 
-abstract class AssignNode {
+abstract class AssignNode extends Node{
   String get id;
   String rawExpression = '';
   void setAssignmentsFromText(String text);
@@ -17,12 +18,12 @@ abstract class AssignNode {
 
   String get title;
 
-  AssignNode(this.position);
+  AssignNode(this.position) : super(position);
 
   void addInput(Pin pin) => inputs.add(pin);
   void addOutput(Pin pin) => outputs.add(pin);
 
-  static Map<String, dynamic> toJson(AssignNode node) {
+  static Map<String, dynamic> toJson_(AssignNode node) {
     return {
       'id': node.id,
       'position': node.position.toJson(),
