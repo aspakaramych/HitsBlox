@@ -311,7 +311,7 @@ class _TestScreenState extends State<TestScreen> with AutomaticKeepAliveClientMi
               ),
               color: Colors.white10,
               child: Stack(
-                clipBehavior: Clip.none,
+                // clipBehavior: Clip.none,
                 children: [
                   CustomPaint(
                     size: Size(
@@ -324,9 +324,11 @@ class _TestScreenState extends State<TestScreen> with AutomaticKeepAliveClientMi
                   for (var block in widget.assignmentBlocks)
                     _buildAssignmentBlock(block),
 
-                  for (var block in widget.logicBlocks) _buildLogicBlock(block),
+                  for (var block in widget.logicBlocks)
+                    _buildLogicBlock(block),
 
-                  for (var block in widget.printBlocks) _buildPrintBlock(block),
+                  for (var block in widget.printBlocks)
+                    _buildPrintBlock(block),
 
                   for (var block in widget.ifElseBlocks)
                     _buildIfElseBlock(block),
