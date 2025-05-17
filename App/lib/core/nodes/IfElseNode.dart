@@ -11,11 +11,7 @@ class IfElseNode extends Node {
   @override
   String get title => "Условие";
 
-  @override
-  final List<Pin> inputs = [];
 
-  @override
-  final List<Pin> outputs = [];
 
   IfElseNode(String this.id, Offset position) : super(position) {
   }

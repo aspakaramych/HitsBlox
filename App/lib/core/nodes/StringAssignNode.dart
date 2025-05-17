@@ -17,11 +17,7 @@ class StringAssignNode extends Node implements AssignNode{
   String rawExpression = '';
   final TextEditingController controller = TextEditingController();
 
-  @override
-  final List<Pin> inputs = [];
 
-  @override
-  final List<Pin> outputs = [];
 
   @override
   final String id;

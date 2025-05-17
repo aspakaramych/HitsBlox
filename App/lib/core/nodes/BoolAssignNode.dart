@@ -23,12 +23,6 @@ class BoolAssignNode extends Node implements AssignNode {
 
 
   @override
-  final List<Pin> inputs = [];
-
-  @override
-  final List<Pin> outputs = [];
-
-  @override
   final String id;
 
   @override

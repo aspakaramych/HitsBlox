@@ -1,3 +1,4 @@
+import 'package:app/core/literals/GetArrayValue.dart';
 import 'package:app/core/pins/Pin.dart';
 import 'package:app/core/abstracts/Command.dart';
 import 'package:app/core/abstracts/Node.dart';
@@ -18,11 +19,7 @@ class IntAssignNode extends Node implements AssignNode{
   String rawExpression = '';
   final TextEditingController controller = TextEditingController();
 
-  @override
-  final List<Pin> inputs = [];
 
-  @override
-  final List<Pin> outputs = [];
 
   @override
   final String id;
@@ -45,7 +42,7 @@ class IntAssignNode extends Node implements AssignNode{
       var trimmedLine = line.trim();
       if (trimmedLine.isEmpty) continue;
 
-      var match = RegExp(r'^\s*(\w+)\s*=\s*([+-]?[\d\w]+)\s*$').firstMatch(trimmedLine);
+      var match = RegExp(r'^\s*(\w+)\s*=\s*([+-]?[\d\w$\[\]\s*[^\$$]*\s*$|$)\s*$').firstMatch(trimmedLine);
       if (match == null) continue;
 
       var variableName = match.group(1)!;
@@ -66,11 +63,16 @@ class IntAssignNode extends Node implements AssignNode{
 
     if (int.tryParse(exprStr) != null) {
       return IntLiteral(int.parse(exprStr));
+    } else if (exprStr.contains('[') && exprStr.contains(']')) {
+      try {
+        return GetArrayValue.parse(exprStr);
+      } on FormatException {
+        return VariableLiteral(exprStr);
+      }
     } else {
       return VariableLiteral(exprStr);
     }
   }
-
   @override
   void addInput(Pin pin) => inputs.add(pin);
 

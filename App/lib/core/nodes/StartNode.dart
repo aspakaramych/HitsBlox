@@ -5,10 +5,7 @@ import 'package:app/core/abstracts/Node.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 
 class StartNode extends Node {
-  @override
-  final List<Pin> inputs = [];
-  @override
-  final List<Pin> outputs = [];
+
 
   @override
   final String id;
