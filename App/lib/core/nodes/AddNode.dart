@@ -11,11 +11,6 @@ import '../literals/VariableLiteral.dart';
 
 class AddNode extends Node {
   @override
-  final List<Pin> inputs= [];
-  @override
-  final List<Pin> outputs = [];
-
-  @override
   final String id;
   @override
   String get title => "Сложение";

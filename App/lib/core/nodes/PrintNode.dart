@@ -11,12 +11,6 @@ class PrintNode extends Node {
   final TextEditingController controller = TextEditingController();
   String rawExpression = '';
 
-  @override
-  final List<Pin> _inputs = [];
-
-  @override
-  final List<Pin> _outputs = [];
-
   final ConsoleService consoleService;
 
   @override

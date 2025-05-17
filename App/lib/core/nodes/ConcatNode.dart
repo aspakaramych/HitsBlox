@@ -11,12 +11,6 @@ import '../literals/VariableLiteral.dart';
 
 class ConcatNode extends Node {
   @override
-  final List<Pin> inputs = [];
-
-  @override
-  final List<Pin> outputs = [];
-
-  @override
   final String id;
 
   @override
