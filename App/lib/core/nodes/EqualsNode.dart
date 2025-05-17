@@ -16,6 +16,7 @@ class EqualsNode extends Node{
 
   @override
   Future<void> execute(VariableRegistry registry) async {
+    clearOutputs();
     var aPin = inputs[0];
     var bPin = inputs[1];
     var resultPin = outputs[0];
@@ -46,5 +47,10 @@ class EqualsNode extends Node{
 
   void addInput(Pin pin) => inputs.add(pin);
   void addOutput(Pin pin) => outputs.add(pin);
+  void clearOutputs(){
+    for (var p in outputs){
+      p.setValue(null);
+    };
+  }
 
 }

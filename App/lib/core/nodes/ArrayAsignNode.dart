@@ -127,6 +127,7 @@ class ArrayAsignNode extends Node implements AssignNode {
 
   @override
   Future<void> execute(VariableRegistry registry) async {
+    clearOutputs();
     setAssignmentsFromText(rawExpression);
     for (var cmd in commands) {
       await cmd.execute(registry);
@@ -147,5 +148,10 @@ class ArrayAsignNode extends Node implements AssignNode {
     }
 
     return true;
+  }
+  void clearOutputs(){
+    for (var p in outputs){
+      p.setValue(null);
+    };
   }
 }

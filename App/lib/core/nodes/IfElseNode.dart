@@ -35,6 +35,7 @@ class IfElseNode extends Node {
       }
       if (pin.getValue() == true && pin.getValue() is bool){
         if (!flag){
+          flag = true;
           outputs[i].setValue(MyTrue());
         }
       } else{
