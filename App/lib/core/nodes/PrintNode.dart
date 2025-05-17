@@ -12,10 +12,10 @@ class PrintNode extends Node {
   String rawExpression = '';
 
   @override
-  final List<Pin> inputs = [];
+  final List<Pin> _inputs = [];
 
   @override
-  final List<Pin> outputs = [];
+  final List<Pin> _outputs = [];
 
   final ConsoleService consoleService;
 
@@ -83,7 +83,7 @@ class PrintNode extends Node {
   }
 
   factory PrintNode.fromJson(Map<String, dynamic> json, ConsoleService consoleService) {
-    final node = PrintNode(consoleService: consoleService, id: json['title'], position: OffsetExtension.fromJson(json['position']));
+    final node = PrintNode(consoleService: consoleService, id: json['id'], position: OffsetExtension.fromJson(json['position']));
     final inputPins = (json['inputs'] as List).map((p) => pinFromJson(p)).toList();
     final outputPins = (json['outputs'] as List).map((p) => pinFromJson(p)).toList();
 

@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:app/utils/offset_extension.dart';
 
+import '../core/abstracts/Node.dart';
+
 class PositionedBlock {
   final Offset position;
   final String nodeId;
@@ -9,10 +11,10 @@ class PositionedBlock {
 
   PositionedBlock(this.position, this.nodeId);
 
-  Map<String, dynamic> toJson() {
+  static Map<String, dynamic> toJson(PositionedBlock block) {
     return {
-      'position': position.toJson(),
-      'nodeId': nodeId
+      'position': block.position.toJson(),
+      'nodeId': block.nodeId
     };
   }
 

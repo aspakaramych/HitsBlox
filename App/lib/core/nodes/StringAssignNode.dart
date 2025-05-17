@@ -18,10 +18,10 @@ class StringAssignNode extends Node implements AssignNode{
   final TextEditingController controller = TextEditingController();
 
   @override
-  final List<Pin> inputs = [];
+  final List<Pin> _inputs = [];
 
   @override
-  final List<Pin> outputs = [];
+  final List<Pin> _outputs = [];
 
   @override
   final String id;
@@ -76,6 +76,7 @@ class StringAssignNode extends Node implements AssignNode{
       await cmd.execute(registry);
     }
   }
+  @override
   bool areAllInputsReady() {
     final execIn = inputs.firstWhereOrNull((p) => p.id.contains('exec_in')) as Pin?;
 

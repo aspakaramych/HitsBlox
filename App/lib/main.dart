@@ -1,5 +1,4 @@
-import 'package:app/screens/home_screen.dart';
-import 'package:app/screens/settings_screen.dart';
+
 import 'package:app/screens/test_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:app/screens/main_screen.dart';
@@ -28,8 +27,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'HITsBlocks',
       theme: MaterialTheme(textTheme).light(),
-      onGenerateRoute: router.onGenerateRoute,
-      initialRoute: '/',
+      home: MainScreen(screenName: '',)
     );
   }
 

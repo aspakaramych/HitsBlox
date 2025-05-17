@@ -133,7 +133,7 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                           keyboardType: TextInputType.text,
                           textInputAction: TextInputAction.done,
                           onSubmitted: (text) {
-                            currText = text;
+                            widget.block.node.rawExpression = text;
                             widget.block.node.setText(text);
                             widget.onEditToggle();
                           },
@@ -154,11 +154,11 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                           spacing: 4,
                           runSpacing: 2,
                           children: [
-                            if(currText != '')
+                            if(widget.block.node.rawExpression  != '')
                               SizedBox(
                                 width: 100,
                                 child: Chip(
-                                  label: Text(currText),
+                                  label: Text(widget.block.node.rawExpression ),
                                   backgroundColor: Colors.black.withValues(
                                     alpha: 0.3,
                                   ),

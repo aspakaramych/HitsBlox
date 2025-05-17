@@ -14,8 +14,8 @@ class Connection {
   Map<String, dynamic> toJson() {
     return {
       'fromNodeId': fromNodeId,
-      'toNodeId': fromPinId,
-      'fromPinId': toNodeId,
+      'toNodeId': toNodeId,
+      'fromPinId': fromPinId,
       'toPinId': toPinId,
     };
   }

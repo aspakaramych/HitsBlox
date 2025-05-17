@@ -10,7 +10,7 @@ class IfElseBlockWidget extends StatefulWidget {
   final Function() deleteNode;
   final Function(Offset) onPositionChanged;
   final Function(Offset) onLeftArrowClick;
-  final Function() onRightArrowClick;
+  final Function(Offset) onRightArrowClick;
 
   const IfElseBlockWidget({
     super.key,
@@ -66,7 +66,7 @@ class _IfElseBlockWidgetState extends State<IfElseBlockWidget> {
           width: widget.block.width,
           height: widget.block.height,
           decoration: BoxDecoration(
-            color: widget.block.color,
+            color: Colors.grey,
             border: Border.all(color: Colors.black, width: 3),
             borderRadius: BorderRadius.circular(20),
           ),
@@ -102,7 +102,7 @@ class _IfElseBlockWidgetState extends State<IfElseBlockWidget> {
                   right: 0,
                   top: widget.block.rightArrows[i].position.dy,
                   child: GestureDetector(
-                    onTap: () => widget.onRightArrowClick(),
+                    onTap: () => widget.onRightArrowClick(widget.block.rightArrows[i].position),
                     child: SizedBox(
                       width: 30,
                       height: 30,

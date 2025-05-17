@@ -3,12 +3,12 @@ import 'dart:ui';
 import 'package:app/core/abstracts/Node.dart';
 import 'package:app/blocks/position.dart';
 import 'package:app/blocks/positioned_block.dart';
+import 'package:app/utils/offset_extension.dart';
 
 class IfElseBlock implements PositionedBlock {
   @override
   Offset position;
   Node node;
-  Color color;
   String blockName;
   List<Position> leftArrows;
   List<Position> rightArrows;
@@ -19,7 +19,6 @@ class IfElseBlock implements PositionedBlock {
   IfElseBlock({
     required this.position,
     required this.node,
-    required this.color,
     required this.blockName,
     required this.width,
     required this.height,
@@ -30,28 +29,27 @@ class IfElseBlock implements PositionedBlock {
   @override
   String get nodeId => node.id;
 
-  //TODO: реализовать сериализацию
   Map<String, dynamic> toJson() {
     return {
-      // 'position': position.toJson(),
-      // 'node': node.toJson(),
-      // 'blockName': blockName,
-      // 'width': width,
-      // 'height': height,
-      // 'isEditing': isEditing,
-      // 'wasEdited': wasEdited,
+      'position': position.toJson(),
+      'node': node.toJson(),
+      'blockName': blockName,
+      'width': width,
+      'height': height,
+      'leftArrows': leftArrows.map((l) => l.toJson()).toList(),
+      'rightArrows': rightArrows.map((r) => r.toJson()).toList(),
     };
   }
 
-  // factory AssignmentBlock.fromJson(Map<String, dynamic> json) {
-  //   return AssignmentBlock(
-  //     position: OffsetExtension.fromJson(json['position']),
-  //     node: AssignNode.fromJson(json['node']),
-  //     blockName: json['blockName'],
-  //     width: json['width'],
-  //     height: json['height'],
-  //     isEditing: json['isEditing'],
-  //     wasEdited: json['wasEdited'],
-  //   );
-  // }
+  factory IfElseBlock.fromJson(Map<String, dynamic> json) {
+    return IfElseBlock(
+      position: OffsetExtension.fromJson(json['position']),
+      node: Node.fromJson(json['node']),
+      blockName: json['blockName'],
+      width: json['width'],
+      height: json['height'],
+      leftArrows: (json['leftArrows'] as List).map((arrow) => Position.fromJson(arrow)).toList(),
+      rightArrows: (json['rightArrows'] as List).map((arrow) => Position.fromJson(arrow)).toList(),
+    );
+  }
 }

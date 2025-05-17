@@ -11,7 +11,7 @@ class AppRouter {
 
   AppRouter() {
     homeScreen = HomeScreen();
-    mainScreen = MainScreen();
+    mainScreen = MainScreen(screenName: '',);
     settingsScreen = SettingsScreen();
   }
 

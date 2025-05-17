@@ -8,8 +8,8 @@ class Pair {
 
   Map<String, dynamic> toJson() {
     return {
-      'first': first.toJson(),
-      'second': second.toJson()
+      'first': PositionedBlock.toJson(first),
+      'second': PositionedBlock.toJson(second)
     };
   }
 
