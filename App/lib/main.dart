@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'HITsBlocks',
       theme: MaterialTheme(textTheme).light(),
-      home: MainScreen(screenName: '',)
+      home: MainScreen(null, screenName: '',)
     );
   }
 

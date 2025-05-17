@@ -28,10 +28,10 @@ class TestScreen extends StatefulWidget {
   String saveName = '';
   List<Block> blocks = [];
 
-  late NodeGraph nodeGraph = NodeGraph();
-  final ConsoleService consoleService = ConsoleService();
-  late Engine engine = Engine();
-  late VariableRegistry registry = VariableRegistry();
+  NodeGraph nodeGraph = NodeGraph();
+  ConsoleService consoleService = ConsoleService();
+  Engine engine = Engine();
+  VariableRegistry registry = VariableRegistry();
 
   List<AssignmentBlock> assignmentBlocks = [];
   List<LogicBlock> logicBlocks = [];
@@ -146,8 +146,26 @@ class TestScreen extends StatefulWidget {
     return null;
   }
 
+  void clear() {
+    nodeGraph = NodeGraph();
+    consoleService = ConsoleService();
+    engine = Engine();
+    registry = VariableRegistry();
+
+    assignmentBlocks = [];
+    logicBlocks = [];
+    printBlocks = [];
+    ifElseBlocks = [];
+
+    calibrations = {};
+    outputCalibrations = {};
+
+    wiredBlocks = [];
+  }
+
   @override
   State<TestScreen> createState() => _TestScreenState();
+
 }
 
 class _TestScreenState extends State<TestScreen> with AutomaticKeepAliveClientMixin {

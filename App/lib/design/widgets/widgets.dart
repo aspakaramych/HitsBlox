@@ -1,5 +1,7 @@
 library;
 
+import 'dart:convert';
+
 import 'package:app/core/NodeGraph.dart';
 import 'package:app/core/literals/VariableLiteral.dart';
 import 'package:app/core/registry/VariableRegistry.dart';

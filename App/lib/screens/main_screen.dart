@@ -8,25 +8,27 @@ import 'package:app/design/widgets/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MainScreen extends StatefulWidget {
+  final savedState;
   String screenName;
 
-  MainScreen({super.key, required this.screenName});
-
+  MainScreen(this.savedState, {super.key, required this.screenName});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> with AutomaticKeepAliveClientMixin {
+class _MainScreenState extends State<MainScreen>
+    with AutomaticKeepAliveClientMixin {
   bool _isAddSectionVisible = false;
   final TestScreen _testScreen = testScreen;
-
 
   @override
   void initState() {
     super.initState();
-    if(widget.screenName != '') {
-      _loadScreen(widget.screenName);
+    if (widget.savedState != null) {
+      _testScreen.loadFromJson(widget.savedState);
+    } else {
+      _testScreen.clear();
     }
   }
 
@@ -43,7 +45,7 @@ class _MainScreenState extends State<MainScreen> with AutomaticKeepAliveClientMi
         borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
       ),
       builder: (context) {
-        return Console(consoleService: _testScreen.consoleService,);
+        return Console(consoleService: _testScreen.consoleService);
       },
     );
   }
@@ -51,7 +53,7 @@ class _MainScreenState extends State<MainScreen> with AutomaticKeepAliveClientMi
   Future<void> _saveScreen() async {
     final prefs = await SharedPreferences.getInstance();
     final jsonString = jsonEncode(_testScreen.saveScreenState());
-    if(widget.screenName.isEmpty) {
+    if (widget.screenName.isEmpty) {
       var saveName = await showSaveDialog(context);
       if (saveName == null || saveName.trim().isEmpty) return;
       widget.screenName = saveName;
@@ -59,18 +61,7 @@ class _MainScreenState extends State<MainScreen> with AutomaticKeepAliveClientMi
 
     prefs.setString(widget.screenName, jsonString);
 
-     // _testScreen.loadFromJson(_testScreen.saveScreenState());
-  }
-
-  Future<Map<String, dynamic>?> _loadScreen (String screenName) async {
-    final prefs = await SharedPreferences.getInstance();
-    final jsonString = prefs.getString(screenName);
-
-    final savedState = jsonDecode(jsonString!) as Map<String, dynamic>;
-    _testScreen.loadFromJson(savedState);
-    if (mounted) {
-      setState(() {});
-    }
+    // _testScreen.loadFromJson(_testScreen.saveScreenState());
   }
 
   Future<String?> showSaveDialog(BuildContext context) async {
@@ -119,13 +110,21 @@ class _MainScreenState extends State<MainScreen> with AutomaticKeepAliveClientMi
           children: [
             Column(
               children: [
-                TopBar(play: _testScreen.engine, nodeGraph: _testScreen.nodeGraph, registry: _testScreen.registry,),
+                TopBar(
+                  play: _testScreen.engine,
+                  nodeGraph: _testScreen.nodeGraph,
+                  registry: _testScreen.registry,
+                ),
                 Expanded(child: Center()),
-                if (_isAddSectionVisible) SizedBox(height: 400, child: BlocksList(blocks: _testScreen.blocks)),
+                if (_isAddSectionVisible)
+                  SizedBox(
+                    height: 400,
+                    child: BlocksList(blocks: _testScreen.blocks),
+                  ),
                 BottomBar(
                   onTerminalPressed: () => _showTerminalPanel(context),
                   onAddPressed: () => _toggleAddSection(),
-                  onSavePressed: () => _saveScreen()
+                  onSavePressed: () => _saveScreen(),
                 ),
               ],
             ),
@@ -137,6 +136,4 @@ class _MainScreenState extends State<MainScreen> with AutomaticKeepAliveClientMi
 
   @override
   bool get wantKeepAlive => true;
-
-
 }

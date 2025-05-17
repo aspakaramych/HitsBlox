@@ -23,8 +23,27 @@ class _GridSavesState extends State<GridSaves> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       keys = prefs.getKeys().toList();
+      keys.add("Новое сохранение");
       itemCount = keys.length;
     });
+  }
+
+  Future<void> _deleteSave(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(key);
+
+    setState(() {
+      keys.remove(key);
+      itemCount = keys.length;
+    });
+  }
+
+  Future<Map<String, dynamic>?> _loadScreen(String screenName) async {
+    final prefs = await SharedPreferences.getInstance();
+    final jsonString = prefs.getString(screenName);
+
+    final savedState = jsonDecode(jsonString!) as Map<String, dynamic>;
+    return savedState;
   }
 
   @override
@@ -42,30 +61,60 @@ class _GridSavesState extends State<GridSaves> {
         itemCount: itemCount,
         itemBuilder: (BuildContext context, int index) {
           final String key = keys[index];
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MainScreen(screenName: key),
-                ),
-              );
-            },
-            child: Card(
-              color: Theme.of(context).colorScheme.primaryFixed,
-              elevation: 3,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(25),
-              ),
-              child: Center(
-                child: Text(
-                  'Сохранение $key',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onPrimaryFixed,
+          return Stack(
+            children: [
+              GestureDetector(
+                onTap: () async {
+                  var savedState = null;
+                  if(key != "Новое сохранение") {
+                    savedState = await _loadScreen(key);
+                  }
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => key != "Новое сохранение"
+                          ? MainScreen(savedState, screenName: key)
+                          : MainScreen(null, screenName: ''),
+                    ),
+                  );
+                },
+                child: Card(
+                  color: Theme.of(context).colorScheme.primaryFixed,
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  child: Center(
+                    child: Text(
+                      '$key',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimaryFixed,
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
+              if (key != "Новое сохранение")
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: GestureDetector(
+                    onTap: () => _deleteSave(key),
+                    child: Container(
+                      padding: EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: Colors.red.withOpacity(0.8),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.close,
+                        size: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+            ],
           );
         },
       ),
