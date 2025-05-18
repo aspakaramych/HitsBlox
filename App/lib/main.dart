@@ -5,10 +5,20 @@ import 'package:app/utils/util.dart';
 import 'package:flutter/material.dart';
 import 'package:app/screens/main_screen.dart';
 import 'package:app/design/theme/app_theme.dart';
+import 'package:flutter/services.dart';
 
 import 'design/AppRouter.dart';
 
 TestScreen testScreen = TestScreen();
+
+void hideStatusBar() {
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+}
+
+void showStatusBar() {
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+      overlays: [SystemUiOverlay.top]);
+}
 
 void main() {
   runApp(MyApp());

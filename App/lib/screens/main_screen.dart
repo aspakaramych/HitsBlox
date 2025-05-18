@@ -6,6 +6,7 @@ import 'package:app/screens/test_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:app/design/widgets/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/services.dart';
 
 class MainScreen extends StatefulWidget {
   final savedState;
@@ -103,17 +104,26 @@ class _MainScreenState extends State<MainScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    if (MediaQuery.of(context).orientation == Orientation.landscape) {
+      hideStatusBar();
+    } else {
+      showStatusBar();
+    }
+    if (MediaQuery.of(context).orientation == Orientation.portrait) {
+      return Stack(
       children: [
         _testScreen,
         Stack(
           children: [
             Column(
               children: [
-                TopBar(
-                  play: _testScreen.engine,
-                  nodeGraph: _testScreen.nodeGraph,
-                  registry: _testScreen.registry,
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: HorizontalTopBar(
+                    play: _testScreen.engine,
+                    nodeGraph: _testScreen.nodeGraph,
+                    registry: _testScreen.registry,
+                  ),
                 ),
                 Expanded(child: Center()),
                 if (_isAddSectionVisible)
@@ -121,7 +131,7 @@ class _MainScreenState extends State<MainScreen>
                     height: 400,
                     child: BlocksList(blocks: _testScreen.blocks),
                   ),
-                BottomBar(
+                HorizontalBottomBar(
                   onTerminalPressed: () => _showTerminalPanel(context),
                   onAddPressed: () => _toggleAddSection(),
                   onSavePressed: () => _saveScreen(),
@@ -132,6 +142,40 @@ class _MainScreenState extends State<MainScreen>
         ),
       ],
     );
+    } else {
+      return Stack(
+        children: [
+          _testScreen,
+          Stack(
+            children: [
+              Row(
+                children: [
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: VerticalTopBar(
+                      play: _testScreen.engine,
+                      nodeGraph: _testScreen.nodeGraph,
+                      registry: _testScreen.registry,
+                    ),
+                  ),
+                  Expanded(child: Center()),
+                  if (_isAddSectionVisible)
+                    SizedBox(
+                      height: 400,
+                      child: BlocksList(blocks: _testScreen.blocks),
+                    ),
+                  VerticalBottomBar(
+                    onTerminalPressed: () => _showTerminalPanel(context),
+                    onAddPressed: () => _toggleAddSection(),
+                    onSavePressed: () => _saveScreen(),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      );
+    }
   }
 
   @override

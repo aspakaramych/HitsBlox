@@ -17,8 +17,10 @@ import 'package:app/core/Engine.dart';
 
 import '../../core/ConsoleService.dart';
 
-part 'bottom_bar.dart';
-part 'top_bar.dart';
+part 'horizontal_bottom_bar.dart';
+part 'vertical_bottom_bar.dart';
+part 'horizontal_top_bar.dart';
+part 'vertical_top_bar.dart';
 part 'console.dart';
 part 'list_blocks.dart';
 part 'saves_grid.dart';
