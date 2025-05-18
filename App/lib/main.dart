@@ -15,12 +15,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-
-  final textTheme = TextTheme(
-    bodyLarge: TextStyle(color: Colors.black),
-  );
-
-
   final router = AppRouter();
 
   MyApp({super.key});

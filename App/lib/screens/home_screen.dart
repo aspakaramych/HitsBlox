@@ -96,7 +96,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       Expanded(
                         child: Align(alignment:Alignment.bottomCenter, child: Container(margin: EdgeInsets.symmetric(horizontal: 40), child: GridSaves())),
                       ),
-                      Container(margin: EdgeInsets.symmetric(vertical: 0), child: SvgPicture.asset("lib/design/assets/icons/scroll.svg", colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.onSecondary, BlendMode.srcIn),)),
+                      BouncingIcon(),
+                      // Container(margin: EdgeInsets.symmetric(vertical: 0), child: SvgPicture.asset("lib/design/assets/icons/scroll.svg", colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.onSecondary, BlendMode.srcIn),)),
                       BottomBar(
                           onTerminalPressed: () {},
                           onAddPressed: () {},

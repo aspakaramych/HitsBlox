@@ -17,7 +17,7 @@ class BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 156,
+      height: 175,
       color: Colors.transparent,
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       width: double.infinity,
@@ -31,12 +31,12 @@ class BottomBar extends StatelessWidget {
             clipBehavior: Clip.none,
             shape: BoxShape.rectangle,
             child: Container(
-              // padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: CustomPaint(
                 painter: BottomBarShadowPainter(shape),
                 child: SizedBox(
                   height: 80,
-                  width: MediaQuery.of(context).size.width + 40,
+                  // width: MediaQuery.of(context).size.width + 40,
+                  width: 370,
                 ),
               ),
             ),
@@ -44,74 +44,77 @@ class BottomBar extends StatelessWidget {
 
           ClipPath(
             clipper: CustomSvgClipper(shape),
-            child: Container(
-              color: Theme.of(context).colorScheme.primaryFixed,
-              padding: EdgeInsets.all(10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  IconButton(
-                    icon: SvgPicture.asset(
-                      'lib/design/assets/icons/home.svg',
-                      width: 40,
-                      height: 40,
-                      colorFilter: ColorFilter.mode(
-                          Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()),
-                      );
-                    },
-                  ),
-                  IconButton(
-                    icon: SvgPicture.asset(
-                      'lib/design/assets/icons/terminal.svg',
-                      width: 40,
-                      height: 40,
-                      colorFilter: ColorFilter.mode(
-                          Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
-                    ),
-                    onPressed: onTerminalPressed,
-                  ),
-                  // IconButton(
-                  //   icon: SvgPicture.asset(
-                  //     'lib/design/assets/icons/add.svg',
-                  //     width: 40,
-                  //     height: 40,
-                  //     colorFilter: ColorFilter.mode(
-                  //         Colors.black, BlendMode.srcIn),
-                  //   ),
-                  //   onPressed: onAddPressed,
-                  // ),
-                  SizedBox(width: 40,),
-                  IconButton(
-                    icon: SvgPicture.asset(
-                      'lib/design/assets/icons/download.svg',
-                      width: 40,
-                      height: 40,
-                      colorFilter: ColorFilter.mode(
-                          Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
-                    ),
-                    onPressed: onSavePressed,
-                  ),
-                  IconButton(
-                    icon: SvgPicture.asset(
-                      'lib/design/assets/icons/settings.svg',
-                      width: 40,
-                      height: 40,
-                      colorFilter: ColorFilter.mode(
-                          Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
-                    ),
-                    onPressed: () =>
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 370),
+              child: Container(
+                color: Theme.of(context).colorScheme.primaryFixed,
+                padding: EdgeInsets.all(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    IconButton(
+                      icon: SvgPicture.asset(
+                        'lib/design/assets/icons/home.svg',
+                        width: 40,
+                        height: 40,
+                        colorFilter: ColorFilter.mode(
+                            Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
+                      ),
+                      onPressed: () {
                         Navigator.push(
                           context,
-                          PageRouteBuilder(pageBuilder: (context, animation,
-                              secondaryAnimation) => SettingsScreen()),
-                        ),
-                  ),
-                ],
+                          MaterialPageRoute(builder: (context) => HomeScreen()),
+                        );
+                      },
+                    ),
+                    IconButton(
+                      icon: SvgPicture.asset(
+                        'lib/design/assets/icons/terminal.svg',
+                        width: 40,
+                        height: 40,
+                        colorFilter: ColorFilter.mode(
+                            Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
+                      ),
+                      onPressed: onTerminalPressed,
+                    ),
+                    // IconButton(
+                    //   icon: SvgPicture.asset(
+                    //     'lib/design/assets/icons/add.svg',
+                    //     width: 40,
+                    //     height: 40,
+                    //     colorFilter: ColorFilter.mode(
+                    //         Colors.black, BlendMode.srcIn),
+                    //   ),
+                    //   onPressed: onAddPressed,
+                    // ),
+                    SizedBox(width: 40,),
+                    IconButton(
+                      icon: SvgPicture.asset(
+                        'lib/design/assets/icons/download.svg',
+                        width: 40,
+                        height: 40,
+                        colorFilter: ColorFilter.mode(
+                            Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
+                      ),
+                      onPressed: onSavePressed,
+                    ),
+                    IconButton(
+                      icon: SvgPicture.asset(
+                        'lib/design/assets/icons/settings.svg',
+                        width: 40,
+                        height: 40,
+                        colorFilter: ColorFilter.mode(
+                            Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
+                      ),
+                      onPressed: () =>
+                          Navigator.push(
+                            context,
+                            PageRouteBuilder(pageBuilder: (context, animation,
+                                secondaryAnimation) => SettingsScreen()),
+                          ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -129,8 +132,8 @@ class BottomBar extends StatelessWidget {
                 child: IconButton(
                   icon: SvgPicture.asset(
                     'lib/design/assets/icons/add.svg',
-                    width: 40,
-                    height: 40,
+                    width: 55,
+                    height: 55,
                     colorFilter:
                     ColorFilter.mode(Theme.of(context).colorScheme.onPrimary, BlendMode.srcIn),
                   ),
