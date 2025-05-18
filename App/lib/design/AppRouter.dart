@@ -18,13 +18,13 @@ class AppRouter {
   Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => homeScreen);
+        return PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) => homeScreen);
       case '/edit':
-        return MaterialPageRoute(builder: (_) => mainScreen);
+        return PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) => mainScreen);
       case '/settings':
-        return MaterialPageRoute(builder: (_) => settingsScreen);
+        return PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) => settingsScreen);
       default:
-        return MaterialPageRoute(builder: (_) => homeScreen);
+        return PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) => homeScreen);
     }
   }
 }
