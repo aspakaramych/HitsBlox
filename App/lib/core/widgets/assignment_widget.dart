@@ -133,14 +133,11 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(0),
-                        child: RichText(
-                          text: TextSpan(
-                            text: widget.block.blockName,
-                            style: theme.textTheme.headlineSmall
-                          )
-                        ),
+                      child: RichText(
+                        text: TextSpan(
+                          text: widget.block.blockName,
+                          style: theme.textTheme.headlineSmall
+                        )
                       ),
                     ),
                     if (widget.block.isEditing)

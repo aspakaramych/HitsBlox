@@ -332,12 +332,12 @@ class BlockFactory {
     return IfElseBlock(
       position: ifElseNode.position,
       node: ifElseNode,
-      blockName: "if else",
+      blockName: "conditional",
       width: 200,
-      height: 80,
+      height: 100,
       leftArrows: List.of(
-          [Position(Offset(15, 15), false)]),
-      rightArrows: List.of([Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
+          [Position(Offset(15, 40), false)]),
+      rightArrows: List.of([Position(Offset(15, 40), false), Position(Offset(15, 70), false)]),
     );
   }
 }
