@@ -58,102 +58,153 @@ class _PrintBlockWidgetState extends State<PrintBlockWidget> {
             if (widget.block.wasEdited) {
               return;
             }
-            widget.block.height += 30;
+            // widget.block.height += 30;
             widget.block.wasEdited = true;
           });
         },
-        onDoubleTap: () => widget.deleteNode(),
-        child: Container(
-          width: widget.block.width,
-          height: widget.block.height,
-          decoration: BoxDecoration(
-            color: Colors.grey,
-            border: Border.all(color: Colors.black, width: 3),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Stack(
-            children: [
-              /// левая стрелка
-              Positioned(
-                left: 15,
-                top: 15,
-                child: GestureDetector(
-                  onTap: () => widget.onLeftArrowClick(),
-                  child: SizedBox(
-                    width: 30,
-                    height: 30,
-                    child: SizedBox(
-                      width: 15,
-                      height: 15,
-                      child: CustomPaint(painter: TrianglePainter(Sizes.arrowSize, Theme.of(context).colorScheme.onPrimaryContainer)),
+        onLongPress: () => widget.deleteNode(),
+        child: Material(
+          elevation: 15,
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          child: Container(
+            width: widget.block.width,
+            height: widget.block.height,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.secondaryContainer,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Stack(
+              children: [
+                Positioned(
+                  bottom: 0,
+                  child: Container(
+                    width: widget.block.width,
+                    height: widget.block.height - 30,
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Theme.of(context).colorScheme.shadow.withOpacity(0.2),
+                            spreadRadius: 0,
+                            blurRadius: 5,
+                            offset: Offset(0, -5),)
+                        ]
                     ),
                   ),
                 ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        widget.block.blockName,
-                        style: theme.textTheme.labelSmall,
-                        textAlign: TextAlign.center,
+                /// левая стрелка
+                Positioned(
+                  left: 15,
+                  top: 50,
+                  child: GestureDetector(
+                    onTap: () => widget.onLeftArrowClick(),
+                    child: SizedBox(
+                      width: 30,
+                      height: 30,
+                      child: SizedBox(
+                        width: 15,
+                        height: 15,
+                        child: CustomPaint(painter: TrianglePainter(Sizes.arrowSize, Theme.of(context).colorScheme.onPrimaryContainer)),
                       ),
                     ),
                   ),
-                  if (widget.block.isEditing)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                      child: SizedBox(
-                        width: 100,
-                        child: TextField(
-                          controller: TextEditingController(
-                            text: widget.block.node.rawExpression,
-                          ),
-                          maxLines: 1,
-                          keyboardType: TextInputType.text,
-                          textInputAction: TextInputAction.done,
-                          onSubmitted: (text) {
-                            widget.block.node.rawExpression = text;
-                            widget.onEditToggle();
-                          },
-                          decoration: const InputDecoration(
-                            hintText: '{value} or text',
-                            border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.all(4),
-                          ),
-                          style: theme.textTheme.labelSmall,
-                        ),
-                      ),
-                    ),
-                  if (!widget.block.isEditing)
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                     Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8.0, top: 4.0),
-                        child: Wrap(
-                          spacing: 4,
-                          runSpacing: 2,
-                          children: [
-                            if (widget.block.node.rawExpression != '')
-                              SizedBox(
-                                width: 120,
-                                child: Chip(
-                                  label: Text(widget.block.node.rawExpression),
-                                  backgroundColor: Colors.black.withValues(
-                                    alpha: 0.3,
-                                  ),
-                                  labelStyle: theme.textTheme.labelSmall,
-                                ),
-                              ),
-                          ],
-                        ),
+                      child: Text(
+                        widget.block.blockName,
+                        style: theme.textTheme.headlineSmall,
+                        textAlign: TextAlign.center,
                       ),
                     ),
-                ],
-              ),
-            ],
+                    Expanded(child: Center()),
+                    if (widget.block.isEditing)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            // color: Theme.of(context).colorScheme.secondaryContainer,
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                            color: Colors.transparent,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Theme.of(context).colorScheme.shadow.withOpacity(0.2),
+                              ),
+                              BoxShadow(
+                                color: Theme.of(context).colorScheme.secondaryContainer,
+                                spreadRadius: -2.0,
+                                blurRadius: 2.0,
+                              ),
+                            ],
+                          ),
+                          child: TextField(
+                            controller: TextEditingController(
+                              text: widget.block.node.rawExpression,
+                            ),
+                            maxLines: 1,
+                            keyboardType: TextInputType.text,
+                            textInputAction: TextInputAction.done,
+                            onSubmitted: (text) {
+                              widget.block.node.rawExpression = text;
+                              widget.onEditToggle();
+                            },
+                            decoration: const InputDecoration(
+                              hintText: '{value} or text',
+                              contentPadding: EdgeInsets.all(6),
+                              enabledBorder: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              disabledBorder: InputBorder.none,
+                            ),
+                            style: theme.textTheme.labelLarge,
+                          ),
+                        ),
+                      ),
+                    if (!widget.block.isEditing)
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                          child: Wrap(
+                            spacing: 4,
+                            runSpacing: 2,
+                            children: [
+                              if (widget.block.node.rawExpression != '')
+                                SizedBox(
+                                  width: 120,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      // color: Theme.of(context).colorScheme.secondaryContainer,
+                                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                                      color: Colors.transparent,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Theme.of(context).colorScheme.shadow.withOpacity(0.2),
+                                        ),
+                                        BoxShadow(
+                                          color: Theme.of(context).colorScheme.secondaryContainer,
+                                          spreadRadius: -2.0,
+                                          blurRadius: 2.0,
+                                        ),
+                                      ],
+                                    ),
+                                    child: Chip(
+                                      label: Text(widget.block.node.rawExpression),
+                                      backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+                                      labelStyle: theme.textTheme.labelLarge,
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    Expanded(child: Center()),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

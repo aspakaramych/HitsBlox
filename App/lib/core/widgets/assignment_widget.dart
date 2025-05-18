@@ -57,7 +57,7 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
             if (widget.block.wasEdited) {
               return;
             }
-            widget.block.height += 30;
+            // widget.block.height += 30;
             widget.block.wasEdited = true;
           });
         },
@@ -139,9 +139,10 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                         )
                       ),
                     ),
+                    Expanded(child: Center()),
                     if (widget.block.isEditing)
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 15),
+                        padding: const EdgeInsets.symmetric(horizontal: 40.0),
                         child: SizedBox(
                           // width: 135,
                           child: Container(
@@ -189,7 +190,7 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                     if (!widget.block.isEditing)
                       Center(
                         child: Padding(
-                          padding: const EdgeInsets.only(top: 15.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 40.0),
                           child: Wrap(
                             spacing: 2,
                             runSpacing: 2,
@@ -224,6 +225,7 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                           ),
                         ),
                       ),
+                    Expanded(child: Center()),
                   ],
                 ),
               ],
