@@ -126,7 +126,7 @@ class BlockFactory {
       node: printNode,
       registry: registry,
       width: 200,
-      height: 90,
+      height: 133,
     );
   }
 
@@ -144,7 +144,7 @@ class BlockFactory {
       node: startNode,
       blockName: "start",
       width: 200,
-      height: 60,
+      height: 133,
       leftArrows: [],
       rightArrows: List.of([Position(Offset(15, 15), false)]),
     );
@@ -165,10 +165,10 @@ class BlockFactory {
       node: multiplyNode,
       blockName: "multiply",
       width: 200,
-      height: 80,
+      height: 100,
       leftArrows: List.of(
-          [Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
-      rightArrows: List.of([Position(Offset(15, 15), false)]),
+          [Position(Offset(15, 40), false), Position(Offset(15, 70), false)]),
+      rightArrows: List.of([Position(Offset(15, 40), false)]),
     );
   }
 
@@ -187,10 +187,10 @@ class BlockFactory {
       node: addictionNode,
       blockName: "add",
       width: 200,
-      height: 80,
+      height: 100,
       leftArrows: List.of(
-          [Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
-      rightArrows: List.of([Position(Offset(15, 15), false)]),
+          [Position(Offset(15, 40), false), Position(Offset(15, 70), false)]),
+      rightArrows: List.of([Position(Offset(15, 40), false)]),
     );
   }
 
@@ -208,10 +208,10 @@ class BlockFactory {
       node: concatNode,
       blockName: "concat",
       width: 200,
-      height: 80,
+      height: 100,
       leftArrows: List.of(
-          [Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
-      rightArrows: List.of([Position(Offset(15, 15), false)]),
+          [Position(Offset(15, 40), false), Position(Offset(15, 70), false)]),
+      rightArrows: List.of([Position(Offset(15, 40), false)]),
     );
   }
 
@@ -230,10 +230,10 @@ class BlockFactory {
       node: divideNode,
       blockName: "divide",
       width: 200,
-      height: 80,
+      height: 100,
       leftArrows: List.of(
-          [Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
-      rightArrows: List.of([Position(Offset(15, 15), false)]),
+          [Position(Offset(15, 40), false), Position(Offset(15, 70), false)]),
+      rightArrows: List.of([Position(Offset(15, 40), false)]),
     );
   }
 
@@ -252,10 +252,10 @@ class BlockFactory {
       node: subNode,
       blockName: "subtract",
       width: 200,
-      height: 80,
+      height: 100,
       leftArrows: List.of(
-          [Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
-      rightArrows: List.of([Position(Offset(15, 15), false)]),
+          [Position(Offset(15, 40), false), Position(Offset(15, 70), false)]),
+      rightArrows: List.of([Position(Offset(15, 40), false)]),
     );
   }
 
@@ -273,10 +273,10 @@ class BlockFactory {
       node: equalsNode,
       blockName: "equals",
       width: 200,
-      height: 80,
+      height: 100,
       leftArrows: List.of(
-          [Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
-      rightArrows: List.of([Position(Offset(15, 15), false)]),
+          [Position(Offset(15, 40), false), Position(Offset(15, 70), false)]),
+      rightArrows: List.of([Position(Offset(15, 40), false)]),
     );
   }
   static createMoreBlock(TransformationController transformationController) {
@@ -293,10 +293,10 @@ class BlockFactory {
       node: moreNode,
       blockName: "more",
       width: 200,
-      height: 80,
+      height: 100,
       leftArrows: List.of(
-          [Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
-      rightArrows: List.of([Position(Offset(15, 15), false)]),
+          [Position(Offset(15, 40), false), Position(Offset(15, 70), false)]),
+      rightArrows: List.of([Position(Offset(15, 40), false)]),
     );
   }
   static createLessBlock(TransformationController transformationController) {
@@ -313,10 +313,10 @@ class BlockFactory {
       node: lessNode,
       blockName: "less",
       width: 200,
-      height: 80,
+      height: 100,
       leftArrows: List.of(
-          [Position(Offset(15, 15), false), Position(Offset(15, 45), false)]),
-      rightArrows: List.of([Position(Offset(15, 15), false)]),
+          [Position(Offset(15, 40), false), Position(Offset(15, 70), false)]),
+      rightArrows: List.of([Position(Offset(15, 40), false)]),
     );
   }
 

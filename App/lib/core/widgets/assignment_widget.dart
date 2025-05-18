@@ -82,7 +82,6 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                     height: widget.block.height - 30,
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.primaryContainer,
-                      // border: Border.all(color: Colors.black, width: 3),
                       borderRadius: BorderRadius.circular(15),
                       boxShadow: [
                         BoxShadow(
