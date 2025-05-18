@@ -24,6 +24,7 @@ class ConcatNode extends Node {
 
   @override
   Future<void> execute(VariableRegistry registry) async {
+    clearOutputs();
     var aPin = inputs[0];
     var bPin = inputs[1];
     var resultPin = outputs[0];
@@ -55,5 +56,10 @@ class ConcatNode extends Node {
       }
     }
     return true;
+  }
+  void clearOutputs(){
+    for (var p in outputs){
+      p.setValue(null);
+    };
   }
 }

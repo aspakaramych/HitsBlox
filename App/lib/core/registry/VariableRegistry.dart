@@ -10,6 +10,9 @@ class VariableRegistry{
     }
     return null;
   }
+  void Clear(){
+    _variables.clear();
+  }
 
   List<String> getAllVars() => _variables.keys.toList();
 }

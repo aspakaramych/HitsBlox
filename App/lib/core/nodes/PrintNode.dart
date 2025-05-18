@@ -49,6 +49,7 @@ class PrintNode extends Node {
   }
   @override
   Future<void> execute(VariableRegistry registry) async {
+    clearOutputs();
     var parsedText = parseInput(rawExpression, registry);
     if (parsedText == "" && inputs[0].value != null){
       consoleService.log(inputs[0].value.toString());
@@ -87,5 +88,10 @@ class PrintNode extends Node {
     node.rawExpression = json['rawExpression'];
 
     return node;
+  }
+  void clearOutputs(){
+    for (var p in outputs){
+      p.setValue(null);
+    };
   }
 }

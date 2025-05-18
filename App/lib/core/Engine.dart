@@ -19,6 +19,7 @@ class Engine {
   Future<void> run(NodeGraph nodeGraph, VariableRegistry variableRegistry) async {
     this.graph = nodeGraph;
     this.registry = variableRegistry;
+    registry.Clear();
 
     final Queue<Node> queue = Queue();
     final Set<Node> executedNodes = Set();
