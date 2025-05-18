@@ -23,7 +23,7 @@ class AssignmentBlock implements PositionedBlock{
     this.isEditing = false,
     this.wasEdited = false,
     this.width = 200,
-    this.height = 80,
+    this.height = 100,
   });
 
   @override

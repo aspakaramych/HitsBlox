@@ -85,7 +85,7 @@ class _PrintBlockWidgetState extends State<PrintBlockWidget> {
                     child: SizedBox(
                       width: 15,
                       height: 15,
-                      child: CustomPaint(painter: TrianglePainter(Sizes.arrowSize)),
+                      child: CustomPaint(painter: TrianglePainter(Sizes.arrowSize, Theme.of(context).colorScheme.onPrimaryContainer)),
                     ),
                   ),
                 ),

@@ -61,7 +61,7 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
             widget.block.wasEdited = true;
           });
         },
-        onDoubleTap: () => widget.deleteNode(),
+        onLongPress: () => widget.deleteNode(),
         child: Material(
           elevation: 15,
           borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -79,7 +79,7 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                   bottom: 0,
                   child: Container(
                     width: widget.block.width,
-                    height: widget.block.height - 23,
+                    height: widget.block.height - 30,
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.primaryContainer,
                       // border: Border.all(color: Colors.black, width: 3),
@@ -87,9 +87,9 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                       boxShadow: [
                         BoxShadow(
                           color: Theme.of(context).colorScheme.shadow.withOpacity(0.2),
-                          spreadRadius: 2,
-                          blurRadius: 8,
-                          offset: Offset(0, -1),)
+                          spreadRadius: 0,
+                          blurRadius: 5,
+                          offset: Offset(0, -5),)
                       ]
                     ),
                   ),
@@ -97,7 +97,7 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                 /// левая стрелка
                 Positioned(
                   left: 15,
-                  top: 40,
+                  top: 55,
                   child: GestureDetector(
                     onTap: () => widget.onLeftArrowClick(),
                     child: SizedBox(
@@ -106,7 +106,7 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                       child: SizedBox(
                         width: 15,
                         height: 15,
-                        child: CustomPaint(painter: TrianglePainter(Sizes.arrowSize)),
+                        child: CustomPaint(painter: TrianglePainter(Sizes.arrowSize, Theme.of(context).colorScheme.onPrimaryContainer)),
                       ),
                     ),
                   ),
@@ -115,7 +115,7 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                 /// правая стрелка
                 Positioned(
                   right: -20,
-                  top: 40,
+                  top: 55,
                   child: GestureDetector(
                     onTap: () => widget.onRightArrowClick(),
                     child: SizedBox(
@@ -124,7 +124,7 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                       child: SizedBox(
                         width: 15,
                         height: 15,
-                        child: CustomPaint(painter: TrianglePainter(Sizes.arrowSize)),
+                        child: CustomPaint(painter: TrianglePainter(Sizes.arrowSize, Theme.of(context).colorScheme.onPrimaryContainer)),
                       ),
                     ),
                   ),
@@ -138,7 +138,7 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                         child: RichText(
                           text: TextSpan(
                             text: widget.block.blockName,
-                            style: theme.textTheme.titleMedium
+                            style: theme.textTheme.headlineSmall
                           )
                         ),
                       ),
@@ -180,19 +180,22 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                                 hintText: 'a={value};',
                                 //border: OutlineInputBorder(),
                                 contentPadding: EdgeInsets.all(6),
+                                enabledBorder: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
                               ),
-                              style: theme.textTheme.labelSmall,
+                              style: theme.textTheme.labelLarge,
                             ),
                           ),
                         ),
                       ),
-                    // TODO: сделать так, чтобы поле ввода и "показа" были одинаковыми
+                    // TODO: один клик по тексту - и должна открываться клавиатура
                     if (!widget.block.isEditing)
                       Center(
                         child: Padding(
-                          padding: const EdgeInsets.only(top: 10.0),
+                          padding: const EdgeInsets.only(top: 15.0),
                           child: Wrap(
-                            spacing: 4,
+                            spacing: 2,
                             runSpacing: 2,
                             children: [
                               if(currText != '')
@@ -217,7 +220,7 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                                     child: Chip(
                                       label: Text(currText),
                                       backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-                                      labelStyle: theme.textTheme.labelSmall,
+                                      labelStyle: theme.textTheme.labelLarge,
                                     ),
                                   ),
                                 ),

@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class TrianglePainter extends CustomPainter {
 
   Size arrowSize;
+  Color color;
 
-  TrianglePainter(this.arrowSize);
+  TrianglePainter(this.arrowSize, this.color);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -17,7 +19,7 @@ class TrianglePainter extends CustomPainter {
     canvas.drawPath(
       path,
       Paint()
-        ..color = Color.fromARGB(255, 243, 243, 243)
+        ..color = color
         ..style = PaintingStyle.fill,
     );
   }

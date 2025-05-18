@@ -89,7 +89,7 @@ class _IfElseBlockWidgetState extends State<IfElseBlockWidget> {
                         width: 15,
                         height: 15,
                         child: CustomPaint(
-                          painter: TrianglePainter(Sizes.arrowSize),
+                          painter: TrianglePainter(Sizes.arrowSize, Theme.of(context).colorScheme.onPrimaryContainer),
                         ),
                       ),
                     ),
@@ -110,7 +110,7 @@ class _IfElseBlockWidgetState extends State<IfElseBlockWidget> {
                         width: 15,
                         height: 15,
                         child: CustomPaint(
-                          painter: TrianglePainter(Sizes.arrowSize),
+                          painter: TrianglePainter(Sizes.arrowSize, Theme.of(context).colorScheme.onPrimaryContainer),
                         ),
                       ),
                     ),

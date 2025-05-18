@@ -72,7 +72,7 @@ class _LogicBlockWidgetState extends State<LogicBlockWidget> {
                       child: SizedBox(
                         width: 15,
                         height: 15,
-                        child: CustomPaint(painter: TrianglePainter(Sizes.arrowSize)),
+                        child: CustomPaint(painter: TrianglePainter(Sizes.arrowSize, Theme.of(context).colorScheme.onPrimaryContainer)),
                       ),
                     ),
                   ),
@@ -90,7 +90,7 @@ class _LogicBlockWidgetState extends State<LogicBlockWidget> {
                       child: SizedBox(
                         width: 15,
                         height: 15,
-                        child: CustomPaint(painter: TrianglePainter(Sizes.arrowSize)),
+                        child: CustomPaint(painter: TrianglePainter(Sizes.arrowSize, Theme.of(context).colorScheme.onPrimaryContainer)),
                       ),
                     ),
                   ),
