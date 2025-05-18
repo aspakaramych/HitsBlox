@@ -8,7 +8,7 @@ import 'package:app/design/widgets/widgets.dart';
 class StorageSaves extends StatelessWidget {
   final int itemCount;
 
-  const StorageSaves({super.key, this.itemCount = 10});
+  const StorageSaves({super.key, this.itemCount = 3});
 
   @override
   Widget build(BuildContext context) {
