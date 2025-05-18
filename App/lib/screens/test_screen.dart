@@ -6,7 +6,7 @@ import 'package:app/core/ConsoleService.dart';
 import 'package:app/core/Engine.dart';
 import 'package:app/core/NodeGraph.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
-import 'package:app/core/widgets/if_esle_block_widget.dart';
+import 'package:app/core/widgets/if_else_block_widget.dart';
 import 'package:app/core/widgets/logic_block_widget.dart';
 import 'package:app/core/widgets/print_block_widget.dart';
 import 'package:app/design/widgets/widgets.dart';

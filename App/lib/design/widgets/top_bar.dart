@@ -49,7 +49,7 @@ class TopBar extends StatelessWidget {
                     'lib/design/assets/icons/play.svg',
                     width: 40,
                     height: 40,
-                    colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcIn),
+                    colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
                   ),
                 ),
                 ElevatedButton(
