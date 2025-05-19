@@ -24,7 +24,7 @@ abstract class Node {
   }
   void addInput(Pin pin) {
     var oldPin = inputs.indexWhere((p) => p.id == "empty");
-    if (oldPin > 0 && oldPin != null){
+    if (oldPin >= 0 && oldPin != null){
       inputs[oldPin] = pin;
       return;
     }
@@ -34,7 +34,7 @@ abstract class Node {
 
   void addOutput(Pin pin) {
     var oldPin = outputs.indexWhere((p) => p.id == "empty");
-    if (oldPin > 0 && oldPin != null){
+    if (oldPin >= 0 && oldPin != null){
       outputs[oldPin] = pin;
       return;
     }
