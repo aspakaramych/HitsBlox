@@ -40,12 +40,12 @@ class _IfElseBlockWidgetState extends State<IfElseBlockWidget> {
 
     void expandBlock() {
       setState(() {
-        widget.block.height += 30;
+        widget.block.height += 40;
         widget.block.leftArrows.add(
-          Position(Offset(widget.block.leftArrows[widget.block.leftArrows.length - 1].position.dx, widget.block.leftArrows[widget.block.leftArrows.length - 1].position.dy + 30), false),
+          Position(Offset(widget.block.leftArrows[widget.block.leftArrows.length - 1].position.dx, widget.block.leftArrows[widget.block.leftArrows.length - 1].position.dy + 40), false),
         );
         widget.block.rightArrows.add(
-          Position(Offset(widget.block.rightArrows[widget.block.rightArrows.length - 1].position.dx, widget.block.rightArrows[widget.block.leftArrows.length - 1].position.dy + 30), false),
+          Position(Offset(widget.block.rightArrows[widget.block.rightArrows.length - 1].position.dx, widget.block.rightArrows[widget.block.leftArrows.length - 1].position.dy + 40), false),
         );
       });
     }
@@ -162,7 +162,7 @@ class _IfElseBlockWidgetState extends State<IfElseBlockWidget> {
                       ),
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 40,
                       child:
                       Center(
                         child: Text(
@@ -173,7 +173,7 @@ class _IfElseBlockWidgetState extends State<IfElseBlockWidget> {
                     ),
                     for (int i = 0; i < widget.block.leftArrows.length - 1; i++)
                       SizedBox(
-                        height: 30,
+                        height: 40,
                         child:
                           Center(
                             child: Text(
@@ -183,7 +183,7 @@ class _IfElseBlockWidgetState extends State<IfElseBlockWidget> {
                           ),
                       ),
                     SizedBox(
-                      height: 30,
+                      height: 40,
                       child:
                       Center(
                         child: Text(

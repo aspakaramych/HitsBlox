@@ -10,8 +10,8 @@ class BezierLinePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final path = Path();
 
-    Offset startCopy = start + const Offset(200, 30);
-    Offset endCopy = end + const Offset(0, 30);
+    Offset startCopy = start;
+    Offset endCopy = end;
 
     final controlPoint1 = Offset(startCopy.dx + 50, startCopy.dy);
     final controlPoint2 = Offset(endCopy.dx - 50, endCopy.dy);

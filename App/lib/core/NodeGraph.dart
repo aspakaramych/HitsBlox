@@ -89,7 +89,7 @@ class NodeGraph {
   static List<Node> getNodesFromJson(Map<String, dynamic> json, ConsoleService consoleService) {
     List<Node> newNodes = [];
     for(var node in json['nodes']) {
-      if(node['title'].contains('Присвоить')) {
+      if(node['title'].contains('Присвоить') || node['title'].contains('Добавить')) {
         newNodes.add(AssignNode.fromJson(node));
       } else if(node['title'] == "Распечатать") {
         newNodes.add(PrintNode.fromJson(node, consoleService));

@@ -11,8 +11,8 @@ class BackgroundPainter extends CustomPainter {
     mainBackground.addRect(Rect.fromLTRB(0, 0, width, height));
     paint.color = Colors.white12;
 
-    final heightLine = height ~/ 40; // вот такое целочисленное деление (~delenye) :D
-    final widthLine = width ~/ 55;
+    final heightLine = 80;
+    final widthLine = 80;
 
     for (int i = 1; i < height; i++) {
       if (i % heightLine == 0) {

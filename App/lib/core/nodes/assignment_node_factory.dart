@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:app/core/nodes/ArrayAddNode.dart';
 import 'package:app/core/nodes/ArrayAsignNode.dart';
 import 'package:app/core/nodes/BoolAssignNode.dart';
 import 'package:app/core/nodes/IntAssignNode.dart';
@@ -16,6 +17,8 @@ class AssignmentNodeFactory {
         return StringAssignNode(id, position);
       case 'Присвоить (array)':
         return ArrayAsignNode(id, position);
+      case 'Добавить (array)':
+        return ArrayAddNode(id, position);
     }
   }
 }

@@ -334,10 +334,10 @@ class BlockFactory {
       node: ifElseNode,
       blockName: "conditional",
       width: 200,
-      height: 100,
+      height: 120,
       leftArrows: List.of(
           [Position(Offset(15, 40), false)]),
-      rightArrows: List.of([Position(Offset(15, 40), false), Position(Offset(15, 70), false)]),
+      rightArrows: List.of([Position(Offset(15, 40), false), Position(Offset(15, 80), false)]),
     );
   }
 }

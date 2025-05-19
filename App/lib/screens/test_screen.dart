@@ -78,10 +78,10 @@ class TestScreen extends StatefulWidget {
               (block) => PrintBlock.fromJson(block, registry, consoleService),
             )
             .toList();
-    // ifElseBlocks =
-    //     screenJson['ifElseBlocks']
-    //         .map<AssignmentBlock>((block) => IfElseBlock.fromJson(block))
-    //         .toList();
+    ifElseBlocks =
+        screenJson['ifElseBlocks']
+            .map<IfElseBlock>((block) => IfElseBlock.fromJson(block))
+            .toList();
     wiredBlocks =
         screenJson['wiredBlocks']
             .map<Pair>((block) => Pair.fromJson(block))
@@ -116,8 +116,6 @@ class TestScreen extends StatefulWidget {
         json['connections']
             .map<Connection>((con) => Connection.fromJson(con))
             .toList();
-
-
 
     nodeGraph = NodeGraph.from(nodes, connections);
   }
@@ -393,7 +391,7 @@ class _TestScreenState extends State<TestScreen>
             child: Container(
               constraints: BoxConstraints(
                 minWidth: constraints.maxWidth * 10,
-                minHeight: constraints.maxHeight * 3,
+                minHeight: constraints.maxHeight * 10,
               ),
               color: Colors.white10,
               child: Stack(
@@ -402,7 +400,7 @@ class _TestScreenState extends State<TestScreen>
                   CustomPaint(
                     size: Size(
                       constraints.maxWidth * 10,
-                      constraints.maxHeight * 3,
+                      constraints.maxHeight * 10,
                     ),
                     painter: BackgroundPainter(),
                   ),
@@ -410,11 +408,9 @@ class _TestScreenState extends State<TestScreen>
                   for (var block in widget.assignmentBlocks)
                     _buildAssignmentBlock(block),
 
-                  for (var block in widget.logicBlocks)
-                    _buildLogicBlock(block),
+                  for (var block in widget.logicBlocks) _buildLogicBlock(block),
 
-                  for (var block in widget.printBlocks)
-                    _buildPrintBlock(block),
+                  for (var block in widget.printBlocks) _buildPrintBlock(block),
 
                   for (var block in widget.ifElseBlocks)
                     _buildIfElseBlock(block),
@@ -460,6 +456,14 @@ class _TestScreenState extends State<TestScreen>
                 binding.first.nodeId == block.node.id ||
                 binding.second.nodeId == block.node.id,
           );
+
+          widget.calibrations.removeWhere(
+            (key, value) => key.contains(block.nodeId),
+          );
+          widget.outputCalibrations.removeWhere(
+            (key, value) => key.contains(block.nodeId),
+          );
+
           deleteNode(block.nodeId);
           deleteConnection(block.nodeId);
 
@@ -474,61 +478,28 @@ class _TestScreenState extends State<TestScreen>
       onLeftArrowClick: () {
         setState(() {
           if (temp != null) {
-            makeConnection(temp.node as Node, block.node as Node);
-            widget.calibrations["${temp.nodeId}${block.nodeId}"] = Offset(0, 0);
-            if (currOutputCalibration != null) {
-              widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] =
-                  currOutputCalibration;
-            } else {
-              widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] =
-                  Offset(0, 0);
-              ;
-            }
-            widget.wiredBlocks.add(Pair(temp, block));
-            temp = null;
-            currOutputCalibration = null;
-          }
-        });
-      },
-      onRightArrowClick: () {
-        setState(() {
-          temp = block;
-          currOutputCalibration = null;
-        });
-      },
-    );
-  }
-
-  Widget _buildLogicBlock(LogicBlock block) {
-    return LogicBlockWidget(
-      key: ValueKey(block.nodeId),
-      block: block,
-      deleteNode: () {
-        setState(() {
-          widget.logicBlocks.remove(block);
-          widget.wiredBlocks.removeWhere(
-            (binding) =>
+            if (widget.calibrations.containsKey(
+              "${temp.nodeId}${block.nodeId}",
+            )) {
+              widget.wiredBlocks.removeWhere(
+                    (binding) =>
                 binding.first.nodeId == block.nodeId ||
-                binding.second.nodeId == block.nodeId,
-          );
-          deleteNode(block.nodeId);
-          deleteConnection(block.nodeId);
+                    binding.second.nodeId == block.nodeId,
+              );
+              deleteNode(block.nodeId);
+              deleteConnection(block.nodeId);
 
-          deleteKey(block.nodeId);
-        });
-      },
-      onPositionChanged: (newPosition) {
-        setState(() {
-          block.position = newPosition;
-        });
-      },
-      onLeftArrowClick: (position) {
-        setState(() {
-          if (temp != null) {
+              widget.calibrations.remove("${temp.nodeId}${block.nodeId}");
+              widget.outputCalibrations.remove("${temp.nodeId}${block.nodeId}");
+
+              temp = null;
+              return;
+            }
+
             makeConnection(temp.node as Node, block.node as Node);
             widget.calibrations["${temp.nodeId}${block.nodeId}"] = Offset(
               0,
-              position.dy - 20,
+              60,
             );
             if (currOutputCalibration != null) {
               widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] =
@@ -547,7 +518,88 @@ class _TestScreenState extends State<TestScreen>
       onRightArrowClick: () {
         setState(() {
           temp = block;
-          currOutputCalibration = null;
+          currOutputCalibration = Offset(block.width, block.height / 2 + 15);
+        });
+      },
+    );
+  }
+
+  Widget _buildLogicBlock(LogicBlock block) {
+    return LogicBlockWidget(
+      key: ValueKey(block.nodeId),
+      block: block,
+      deleteNode: () {
+        setState(() {
+          widget.logicBlocks.remove(block);
+          widget.wiredBlocks.removeWhere(
+            (binding) =>
+                binding.first.nodeId == block.nodeId ||
+                binding.second.nodeId == block.nodeId,
+          );
+
+          widget.calibrations.removeWhere(
+            (key, value) => key.contains(block.nodeId),
+          );
+          widget.outputCalibrations.removeWhere(
+            (key, value) => key.contains(block.nodeId),
+          );
+
+          deleteNode(block.nodeId);
+          deleteConnection(block.nodeId);
+
+          deleteKey(block.nodeId);
+        });
+      },
+      onPositionChanged: (newPosition) {
+        setState(() {
+          block.position = newPosition;
+        });
+      },
+      onLeftArrowClick: (position) {
+        setState(() {
+          if (temp != null) {
+            if (widget.calibrations.containsKey(
+              "${temp.nodeId}${block.nodeId}",
+            )) {
+              widget.wiredBlocks.removeWhere(
+                (binding) =>
+                    binding.first.nodeId == block.nodeId ||
+                    binding.second.nodeId == block.nodeId,
+              );
+              deleteNode(block.nodeId);
+              deleteConnection(block.nodeId);
+
+              widget.calibrations.remove("${temp.nodeId}${block.nodeId}");
+              widget.outputCalibrations.remove("${temp.nodeId}${block.nodeId}");
+
+              temp = null;
+              return;
+            }
+            makeConnection(temp.node as Node, block.node as Node);
+            widget.calibrations["${temp.nodeId}${block.nodeId}"] = Offset(
+              0,
+              position.dy + 10,
+            );
+
+            if (currOutputCalibration != null) {
+              widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] =
+                  currOutputCalibration;
+            } else {
+              widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] =
+                  Offset(0, 0);
+            }
+
+            widget.wiredBlocks.add(Pair(temp, block));
+
+            temp = null;
+            currOutputCalibration = null;
+          }
+        });
+      },
+      onRightArrowClick: () {
+        setState(() {
+          temp = block;
+          currOutputCalibration = Offset(block.width, block.height / 2 + 15);
         });
       },
     );
@@ -570,6 +622,14 @@ class _TestScreenState extends State<TestScreen>
                 binding.first.nodeId == block.node.id ||
                 binding.second.nodeId == block.node.id,
           );
+
+          widget.calibrations.removeWhere(
+            (key, value) => key.contains(block.nodeId),
+          );
+          widget.outputCalibrations.removeWhere(
+            (key, value) => key.contains(block.nodeId),
+          );
+
           deleteNode(block.nodeId);
           deleteConnection(block.nodeId);
 
@@ -584,15 +644,31 @@ class _TestScreenState extends State<TestScreen>
       onLeftArrowClick: () {
         setState(() {
           if (temp != null) {
+            if (widget.calibrations.containsKey(
+              "${temp.nodeId}${block.nodeId}",
+            )) {
+              widget.wiredBlocks.removeWhere(
+                (binding) =>
+                    binding.first.nodeId == block.nodeId ||
+                    binding.second.nodeId == block.nodeId,
+              );
+              deleteNode(block.nodeId);
+              deleteConnection(block.nodeId);
+
+              widget.calibrations.remove("${temp.nodeId}${block.nodeId}");
+              widget.outputCalibrations.remove("${temp.nodeId}${block.nodeId}");
+
+              temp = null;
+              return;
+            }
             makeConnection(temp.node as Node, block.node as Node);
-            widget.calibrations["${temp.nodeId}${block.nodeId}"] = Offset(0, 0);
+            widget.calibrations["${temp.nodeId}${block.nodeId}"] = Offset(0, block.height/2 + 15);
             if (currOutputCalibration != null) {
               widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] =
                   currOutputCalibration;
             } else {
               widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] =
                   Offset(0, 0);
-              ;
             }
             widget.wiredBlocks.add(Pair(temp, block));
             temp = null;
@@ -621,6 +697,14 @@ class _TestScreenState extends State<TestScreen>
                 binding.first.nodeId == block.nodeId ||
                 binding.second.nodeId == block.nodeId,
           );
+
+          widget.calibrations.removeWhere(
+            (key, value) => key.contains(block.nodeId),
+          );
+          widget.outputCalibrations.removeWhere(
+            (key, value) => key.contains(block.nodeId),
+          );
+
           deleteNode(block.nodeId);
           deleteConnection(block.nodeId);
 
@@ -635,11 +719,27 @@ class _TestScreenState extends State<TestScreen>
       onLeftArrowClick: (position) {
         setState(() {
           if (temp != null) {
+            if (widget.calibrations.containsKey(
+              "${temp.nodeId}${block.nodeId}",
+            )) {
+              widget.wiredBlocks.removeWhere(
+                (binding) =>
+                    binding.first.nodeId == block.nodeId ||
+                    binding.second.nodeId == block.nodeId,
+              );
+              deleteNode(block.nodeId);
+              deleteConnection(block.nodeId);
+
+              widget.calibrations.remove("${temp.nodeId}${block.nodeId}");
+              widget.outputCalibrations.remove("${temp.nodeId}${block.nodeId}");
+
+              temp = null;
+              return;
+            }
             makeConnection(temp.node as Node, block.node as Node);
-            widget.calibrations["${temp.nodeId}${block.nodeId}"] = Offset(
-              0,
-              position.dy - 20,
-            );
+            widget.calibrations["${temp.nodeId}${block.nodeId}"] =
+                Offset(0, position.dy + 5);
+
             if (currOutputCalibration != null) {
               widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] =
                   currOutputCalibration;
@@ -657,7 +757,7 @@ class _TestScreenState extends State<TestScreen>
       onRightArrowClick: (position) {
         setState(() {
           temp = block;
-          currOutputCalibration = Offset(0, position.dy - 20);
+          currOutputCalibration = Offset(block.width, position.dy + 10);
         });
       },
     );
