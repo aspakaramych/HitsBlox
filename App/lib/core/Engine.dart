@@ -8,6 +8,7 @@ import 'package:app/core/abstracts/Node.dart';
 import 'package:app/core/nodes/IfElseNode.dart';
 import 'package:app/core/nodes/PrintNode.dart';
 import 'package:app/core/nodes/StartNode.dart';
+import 'package:app/core/nodes/WhileNode.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:collection/collection.dart';
 
@@ -56,7 +57,7 @@ class Engine {
           progressMade = true;
 
           for (var conn in graph.connections.where((c) => c.fromNodeId == node.id)) {
-            if ((node is IfElseNode && node.outputs.firstWhere((p) => p.id == conn.fromPinId).getValue() is MyTrue) || (node is !IfElseNode)){
+            if ((((node is IfElseNode) || (node is WhileNode)) && node.outputs.firstWhere((p) => p.id == conn.fromPinId).getValue() is MyTrue) || (node is !IfElseNode)){
               var nextNode = graph.getNodeById(conn.toNodeId);
               var outputPin = node.outputs.firstWhereOrNull((p) => p.id == conn.fromPinId);
               var inputPin = nextNode?.inputs.firstWhereOrNull((p) => p.id == conn.toPinId);
