@@ -36,7 +36,7 @@ class VerticalTopBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ElevatedButton(
-                onPressed: () => play.run(nodeGraph, registry, consoleService),
+                onPressed: () => play.run(nodeGraph, registry, consoleService, context),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
                   maximumSize: Size(40, 40),

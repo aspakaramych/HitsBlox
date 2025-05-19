@@ -57,6 +57,25 @@ class NodeGraph {
     }
   }
 
+  void deleteConnectionBetweenNodes(String firstNode, String secondNode, Node first, Node second) {
+    var connection = connections.firstWhereOrNull(
+          (conn) => conn.fromNodeId == firstNode && conn.toNodeId == secondNode,
+    );
+
+    first.outputs.removeWhere((pin) => pin.id == connection?.fromPinId);
+    second.inputs.removeWhere((pin) => pin.id == connection?.toPinId);
+
+    connections.removeWhere(
+          (conn) => conn.fromNodeId == firstNode && conn.toNodeId == secondNode,
+    );
+    if (connection != null) {
+      var nodeFrom = getNodeById(connection.fromNodeId);
+      nodeFrom?.outputs.removeWhere((p) => p.id == connection.fromPinId);
+      var nodeTo = getNodeById(connection.toNodeId);
+      nodeTo?.inputs.removeWhere((p) => p.id == connection.toPinId);
+    }
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'nodes': nodes.map((node) => serializeToJson(node)).toList(),

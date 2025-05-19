@@ -53,12 +53,12 @@ class _MainScreenState extends State<MainScreen>
 
   Future<void> _saveScreen() async {
     final prefs = await SharedPreferences.getInstance();
-    final jsonString = jsonEncode(_testScreen.saveScreenState());
     if (widget.screenName.isEmpty) {
       var saveName = await showSaveDialog(context);
       if (saveName == null || saveName.trim().isEmpty) return;
       widget.screenName = saveName;
     }
+    final jsonString = jsonEncode(_testScreen.saveScreenState());
 
     prefs.setString(widget.screenName, jsonString);
 

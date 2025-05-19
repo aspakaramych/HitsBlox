@@ -9,7 +9,11 @@ import 'package:app/core/nodes/IfElseNode.dart';
 import 'package:app/core/nodes/PrintNode.dart';
 import 'package:app/core/nodes/StartNode.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
+import 'package:app/core/widgets/program_processing_toast_widget.dart';
 import 'package:collection/collection.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:toastify/toastify.dart';
 
 class Engine {
   late NodeGraph graph;
@@ -17,7 +21,7 @@ class Engine {
 
   Engine();
 
-  Future<void> run(NodeGraph nodeGraph, VariableRegistry variableRegistry, ConsoleService console) async {
+  Future<void> run(NodeGraph nodeGraph, VariableRegistry variableRegistry, ConsoleService console, BuildContext context) async {
     this.graph = nodeGraph;
     this.registry = variableRegistry;
     registry.Clear();
@@ -31,6 +35,7 @@ class Engine {
     }
     if (queue.isEmpty){
       console.log("Отсутствует start node");
+      _showErrorToast(context, "Отсутствует блок start");
       return;
     }
 
@@ -50,6 +55,7 @@ class Engine {
           }
           catch(ex){
             console.log(ex.toString());
+            _showErrorToast(context, ex.toString());
             return;
           }
           executedNodes.add(node);
@@ -89,5 +95,35 @@ class Engine {
 
       await Future<void>.delayed(Duration(milliseconds: 100));
     }
+
+    showToast(
+      context,
+      Toast(
+        // title: 'title',
+        // description: 'description'
+        child: ProgramProcessingToast(
+          title: 'Successful running',
+          description: 'Check the console',
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+        ),
+      ),
+    );
+  }
+
+  void _showErrorToast(BuildContext context, String errorMessage) {
+    showToast(
+      context,
+      Toast(
+        // title: 'title',
+        // description: 'description'
+        child: ProgramProcessingToast(
+          title: 'Error',
+          description: errorMessage,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+        ),
+      ),
+    );
   }
 }

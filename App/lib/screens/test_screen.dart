@@ -212,8 +212,8 @@ class _TestScreenState extends State<TestScreen>
   }
 
   void makeConnection(Node first, Node second) {
-    String newOutputPinId = 'exec_out_${first.outputs.length + 1}';
-    String newInputPinId = 'exec_in_${second.inputs.length + 1}';
+    String newOutputPinId = 'exec_out_${Randomizer.getRandomInt()}';
+    String newInputPinId = 'exec_in_${Randomizer.getRandomInt()}';
 
     final outputPin = Pin(
       id: newOutputPinId,
@@ -229,8 +229,8 @@ class _TestScreenState extends State<TestScreen>
       isExecutionPin: true,
     );
 
-    first.addOutput(outputPin);
-    second.addInput(inputPin);
+    widget.nodeGraph.nodes.firstWhere((n) => n.id == first.id).addOutput(outputPin);
+    widget.nodeGraph.nodes.firstWhere((n) => n.id == second.id).addInput(inputPin);
 
     widget.nodeGraph.connect(first.id, outputPin.id, second.id, inputPin.id);
   }
@@ -241,6 +241,10 @@ class _TestScreenState extends State<TestScreen>
 
   void deleteConnection(String nodeId) {
     widget.nodeGraph.disconnect(nodeId);
+  }
+
+  void deleteConnectionBetween(String firstNode, String secondNode, Node first, Node second) {
+    widget.nodeGraph.deleteConnectionBetweenNodes(firstNode, secondNode, first, second);
   }
 
   @override
@@ -490,11 +494,11 @@ class _TestScreenState extends State<TestScreen>
             )) {
               widget.wiredBlocks.removeWhere(
                     (binding) =>
-                binding.first.nodeId == block.nodeId ||
+                binding.first.nodeId == temp.nodeId &&
                     binding.second.nodeId == block.nodeId,
               );
-              deleteNode(block.nodeId);
-              deleteConnection(block.nodeId);
+
+              deleteConnectionBetween(temp.nodeId, block.nodeId, temp.node, block.node);
 
               widget.calibrations.remove("${temp.nodeId}${block.nodeId}");
               widget.outputCalibrations.remove("${temp.nodeId}${block.nodeId}");
@@ -569,12 +573,12 @@ class _TestScreenState extends State<TestScreen>
               "${temp.nodeId}${block.nodeId}",
             )) {
               widget.wiredBlocks.removeWhere(
-                (binding) =>
-                    binding.first.nodeId == block.nodeId ||
+                    (binding) =>
+                binding.first.nodeId == temp.nodeId &&
                     binding.second.nodeId == block.nodeId,
               );
-              deleteNode(block.nodeId);
-              deleteConnection(block.nodeId);
+
+              deleteConnectionBetween(temp.nodeId, block.nodeId, temp.node, block.node);
 
               widget.calibrations.remove("${temp.nodeId}${block.nodeId}");
               widget.outputCalibrations.remove("${temp.nodeId}${block.nodeId}");
@@ -582,6 +586,7 @@ class _TestScreenState extends State<TestScreen>
               temp = null;
               return;
             }
+
             makeConnection(temp.node as Node, block.node as Node);
             widget.calibrations["${temp.nodeId}${block.nodeId}"] = Offset(
               0,
@@ -655,12 +660,12 @@ class _TestScreenState extends State<TestScreen>
               "${temp.nodeId}${block.nodeId}",
             )) {
               widget.wiredBlocks.removeWhere(
-                (binding) =>
-                    binding.first.nodeId == block.nodeId ||
+                    (binding) =>
+                binding.first.nodeId == temp.nodeId &&
                     binding.second.nodeId == block.nodeId,
               );
-              deleteNode(block.nodeId);
-              deleteConnection(block.nodeId);
+
+              deleteConnectionBetween(temp.nodeId, block.nodeId, temp.node, block.node);
 
               widget.calibrations.remove("${temp.nodeId}${block.nodeId}");
               widget.outputCalibrations.remove("${temp.nodeId}${block.nodeId}");
@@ -730,12 +735,12 @@ class _TestScreenState extends State<TestScreen>
               "${temp.nodeId}${block.nodeId}",
             )) {
               widget.wiredBlocks.removeWhere(
-                (binding) =>
-                    binding.first.nodeId == block.nodeId ||
+                    (binding) =>
+                binding.first.nodeId == temp.nodeId &&
                     binding.second.nodeId == block.nodeId,
               );
-              deleteNode(block.nodeId);
-              deleteConnection(block.nodeId);
+
+              deleteConnectionBetween(temp.nodeId, block.nodeId, temp.node, block.node);
 
               widget.calibrations.remove("${temp.nodeId}${block.nodeId}");
               widget.outputCalibrations.remove("${temp.nodeId}${block.nodeId}");

@@ -38,7 +38,10 @@ class IfElseNode extends Node {
           flag = true;
           outputs[i].setValue(MyTrue());
         }
-      } else{
+      } else if (pin.getValue() == false && pin.getValue() is bool){
+        continue;
+    }
+      else{
         throw Exception("Вы ввели не bool ");
       }
     }
