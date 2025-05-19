@@ -323,6 +323,13 @@ class _TestScreenState extends State<TestScreen>
             ),
       ),
       Block(
+        name: "Остаток от деления",
+        action:
+            () => addLogicBlock(
+          BlockFactory.createModBlock(_transformationController),
+        ),
+      ),
+      Block(
         name: "Вычитание",
         action:
             () => addLogicBlock(

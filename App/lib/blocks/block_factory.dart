@@ -8,6 +8,7 @@ import 'package:app/core/nodes/DivideNode.dart';
 import 'package:app/core/nodes/EqualsNode.dart';
 import 'package:app/core/nodes/IfElseNode.dart';
 import 'package:app/core/nodes/LessNode.dart';
+import 'package:app/core/nodes/ModNode.dart';
 import 'package:app/core/nodes/MoreNode.dart';
 import 'package:app/core/nodes/MultiplyNode.dart';
 import 'package:app/core/nodes/PrintNode.dart';
@@ -229,6 +230,28 @@ class BlockFactory {
       position: divideNode.position,
       node: divideNode,
       blockName: "divide",
+      width: 120,
+      height: 120,
+      leftArrows: List.of(
+          [Position(Offset(15, 45), false), Position(Offset(15, 90), false)]),
+      rightArrows: List.of([Position(Offset(15, 65), false)]),
+    );
+  }
+
+  static createModBlock(
+      TransformationController transformationController) {
+    final currUserOffset = UserPositionUtils
+        .getVisibleContentRect(transformationController)
+        .topLeft;
+    final modNode = ModNode(
+      'node_${Randomizer.getRandomInt()}',
+      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+    );
+
+    return LogicBlock(
+      position: modNode.position,
+      node: modNode,
+      blockName: "mod",
       width: 120,
       height: 120,
       leftArrows: List.of(
