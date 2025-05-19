@@ -4,8 +4,9 @@ class VerticalTopBar extends StatelessWidget {
   final Engine play;
   final VariableRegistry registry;
   final NodeGraph nodeGraph;
+  final ConsoleService consoleService;
 
-  const VerticalTopBar({super.key, required this.play, required this.nodeGraph, required this.registry});
+  const VerticalTopBar({super.key, required this.play, required this.nodeGraph, required this.registry, required this.consoleService});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,7 @@ class VerticalTopBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ElevatedButton(
-                onPressed: () => play.run(nodeGraph, registry),
+                onPressed: () => play.run(nodeGraph, registry, consoleService),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
                   maximumSize: Size(40, 40),
