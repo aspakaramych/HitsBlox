@@ -22,25 +22,24 @@ class WhileNode extends Node {
 
   WhileNode(String this.id, Offset position) : super(position) {}
 
-  (String, String, String) setAssignmentsFromText(String text) {
+  List<String> setAssignmentsFromText(String text) {
     rawExpression = text;
 
-    var lines = text.split(';');
-    for (var line in lines) {
+    var line = text;
+
       var trimmedLine = line.trim();
-      if (trimmedLine.isEmpty) continue;
+      if (trimmedLine.isEmpty) return [];
 
       var match = RegExp(
         r'^\s*([a-zA-Z_]\w*(?:$\s*[^\$$]+\s*$)?)\s*([=<>!]=?|>=|<=|!=)\s*([a-zA-Z_]\w*(?:$\s*[^\$$]+\s*$)?|[-+]?\d+|"(.*?)"|true|false)\s*$',
       ).firstMatch(trimmedLine);
-      if (match == null) continue;
+      if (match == null) return [];
 
       var leftExpr = match.group(1)!;
       var operator = match.group(2)!;
       var rightExpr = match.group(3)!;
-      return (leftExpr, operator, rightExpr);
+      return [leftExpr, operator, rightExpr];
 
-    }
   }
 
   Expression parseExpression(String exprStr) {
@@ -62,7 +61,13 @@ class WhileNode extends Node {
   @override
   Future<void> execute(VariableRegistry registry) async {
     clearOutputs();
-    var leftExpr, operator, rightExpr = parseExpression(rawExpression);
+    var express = setAssignmentsFromText(rawExpression);
+    if (express == []){
+      throw Exception("Ввели пустое условие");
+    }
+    var leftExpr = express[0];
+    var operator = express[1];
+    var rightExpr = express[2];
     var expressionLeft = parseExpression(leftExpr);
     var expressionRight = parseExpression(rightExpr);
     if (operator != "==" || operator != ">" || operator != "<" || operator != "!="){
@@ -93,9 +98,7 @@ class WhileNode extends Node {
     outputs[1].setValue(MyTrue());
   }
 
-  void addInput(Pin pin) => inputs.add(pin);
 
-  void addOutput(Pin pin) => outputs.add(pin);
 
   String strToRaw(String x) => '\r$x';
 

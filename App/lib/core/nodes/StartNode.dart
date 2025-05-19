@@ -15,10 +15,7 @@ class StartNode extends Node {
   StartNode(String this.id, Offset position) : super(position) {
 
   }
-  @override
-  void addInput(Pin pin) => inputs.add(pin);
-  @override
-  void addOutput(Pin pin) => outputs.add(pin);
+
 
   @override
   bool areAllInputsReady() => true;

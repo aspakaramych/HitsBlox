@@ -76,12 +76,6 @@ class ArrayAddNode extends Node implements AssignNode{
   }
 
   @override
-  void addInput(Pin pin) => inputs.add(pin);
-
-  @override
-  void addOutput(Pin pin) => outputs.add(pin);
-
-  @override
   Future<void> execute(VariableRegistry registry) async {
     clearOutputs();
     setAssignmentsFromText(rawExpression);

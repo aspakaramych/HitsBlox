@@ -71,10 +71,7 @@ class StringAssignNode extends Node implements AssignNode{
     }
     return VariableLiteral(exprStr);
   }
-  @override
-  void addInput(Pin pin) => inputs.add(pin);
-  @override
-  void addOutput(Pin pin) => outputs.add(pin);
+
 
   @override
   Future<void> execute(VariableRegistry registry) async {

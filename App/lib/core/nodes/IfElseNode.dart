@@ -49,9 +49,6 @@ class IfElseNode extends Node {
       this.outputs[outputs.length-1].setValue(MyTrue());
     }
   }
-  void addInput(Pin pin) => inputs.add(pin);
-
-  void addOutput(Pin pin) => outputs.add(pin);
   void clearOutputs(){
     for (var p in outputs){
       p.setValue(null);

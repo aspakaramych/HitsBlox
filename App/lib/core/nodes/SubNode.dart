@@ -20,9 +20,6 @@ class SubNode extends Node {
 
   SubNode(String this.id, Offset position) : super(position) {}
 
-  void addInput(Pin pin) => inputs.add(pin);
-
-  void addOutput(Pin pin) => outputs.add(pin);
 
   @override
   Future<void> execute(VariableRegistry registry) async {

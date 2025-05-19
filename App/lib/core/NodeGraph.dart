@@ -1,6 +1,7 @@
 import 'package:app/core/Connection.dart';
 import 'package:app/core/ConsoleService.dart';
 import 'package:app/core/abstracts/Node.dart';
+import 'package:app/core/pins/EmptyPin.dart';
 import 'package:collection/collection.dart';
 
 import 'nodes/AssignNode.dart';
@@ -62,17 +63,22 @@ class NodeGraph {
           (conn) => conn.fromNodeId == firstNode && conn.toNodeId == secondNode,
     );
 
-    first.outputs.removeWhere((pin) => pin.id == connection?.fromPinId);
-    second.inputs.removeWhere((pin) => pin.id == connection?.toPinId);
+
 
     connections.removeWhere(
           (conn) => conn.fromNodeId == firstNode && conn.toNodeId == secondNode,
     );
     if (connection != null) {
       var nodeFrom = getNodeById(connection.fromNodeId);
-      nodeFrom?.outputs.removeWhere((p) => p.id == connection.fromPinId);
+      final indexFrom = nodeFrom?.outputs.indexWhere((p) => p.id == connection.fromPinId);
+      if (indexFrom != null && indexFrom >= 0) {
+        nodeFrom?.outputs[indexFrom] = EmptyPin();
+      }
       var nodeTo = getNodeById(connection.toNodeId);
-      nodeTo?.inputs.removeWhere((p) => p.id == connection.toPinId);
+      final indexTo = nodeTo?.inputs.indexWhere((p) => p.id == connection.toPinId);
+      if (indexTo != null && indexTo >= 0) {
+        nodeFrom?.outputs[indexTo] = EmptyPin();
+      }
     }
   }
 
