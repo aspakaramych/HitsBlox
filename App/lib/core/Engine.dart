@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'dart:math';
 
+import 'package:app/core/ConsoleService.dart';
 import 'package:app/core/NodeGraph.dart';
 import 'package:app/core/abstracts/MyTrue.dart';
 import 'package:app/core/abstracts/Node.dart';
@@ -16,7 +17,7 @@ class Engine {
 
   Engine();
 
-  Future<void> run(NodeGraph nodeGraph, VariableRegistry variableRegistry) async {
+  Future<void> run(NodeGraph nodeGraph, VariableRegistry variableRegistry, ConsoleService console) async {
     this.graph = nodeGraph;
     this.registry = variableRegistry;
     registry.Clear();
@@ -40,7 +41,13 @@ class Engine {
 
         if (node.areAllInputsReady()) {
           print('Выполняю нод: ${node.title}');
-          await node.execute(registry);
+          try{
+            await node.execute(registry);
+          }
+          catch(ex){
+            console.log(ex.toString());
+            return;
+          }
           executedNodes.add(node);
           progressMade = true;
 

@@ -40,7 +40,7 @@ class DivideNode extends Node {
 
       if (aVal == null || bVal == null) return;
       if (bVal == 0) {
-        throw Exception("NullDivideError");
+        throw Exception("На ноль делить нельзя");
       }
 
       int sum = aVal ~/ bVal;

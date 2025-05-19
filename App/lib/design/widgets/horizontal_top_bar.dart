@@ -4,8 +4,9 @@ class HorizontalTopBar extends StatelessWidget {
   final Engine play;
   final VariableRegistry registry;
   final NodeGraph nodeGraph;
+  final ConsoleService consoleService;
 
-  const HorizontalTopBar({super.key, required this.play, required this.nodeGraph, required this.registry});
+  const HorizontalTopBar({super.key, required this.play, required this.nodeGraph, required this.registry, required this.consoleService});
 
   @override
   Widget build(BuildContext context) {
