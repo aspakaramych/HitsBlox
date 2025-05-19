@@ -77,7 +77,7 @@ class NodeGraph {
       var nodeTo = getNodeById(connection.toNodeId);
       final indexTo = nodeTo?.inputs.indexWhere((p) => p.id == connection.toPinId);
       if (indexTo != null && indexTo >= 0) {
-        nodeFrom?.outputs[indexTo] = EmptyPin();
+        nodeTo?.inputs[indexTo] = EmptyPin();
       }
     }
   }
