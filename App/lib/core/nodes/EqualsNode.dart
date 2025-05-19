@@ -41,8 +41,12 @@ class EqualsNode extends Node{
       if (aVal is List<dynamic> || bVal is List<dynamic>) {
         throw Exception("Нельзя сравнивать массивы");
       }
-      bool znac = aVal == bVal;
-      resultPin.setValue(znac);
+      if ((aVal is int && bVal is int) || ((aVal is String && bVal is String)) || (aVal is bool && bVal is bool)){
+        bool znac = aVal == bVal;
+        resultPin.setValue(znac);
+        return;
+      }
+      throw Exception("Не совместимые типы данных для сравнения");
     }
   }
 
