@@ -373,6 +373,13 @@
             </list>
           </value>
         </entry>
+        <entry key="toastify">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/toastify-0.0.2/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="typed_data">
           <value>
             <list>
@@ -495,6 +502,7 @@
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/string_scanner-1.4.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/term_glyph-1.2.2/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/test_api-0.7.4/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/toastify-0.0.2/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/typed_data-1.4.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/vector_graphics-1.1.18/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/vector_graphics_codec-1.1.13/lib" />
