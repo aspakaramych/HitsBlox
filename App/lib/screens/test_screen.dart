@@ -180,6 +180,7 @@ class TestScreen extends StatefulWidget {
     logicBlocks = [];
     printBlocks = [];
     ifElseBlocks = [];
+    whileBlocks = [];
 
     calibrations = {};
     outputCalibrations = {};
