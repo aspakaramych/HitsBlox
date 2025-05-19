@@ -1,6 +1,7 @@
 import 'package:app/core/Connection.dart';
 import 'package:app/core/ConsoleService.dart';
 import 'package:app/core/abstracts/Node.dart';
+import 'package:app/core/nodes/WhileNode.dart';
 import 'package:app/core/pins/EmptyPin.dart';
 import 'package:collection/collection.dart';
 
@@ -90,6 +91,9 @@ class NodeGraph {
   }
 
   static Map<String, dynamic> serializeToJson(Node node) {
+    if(node is WhileNode) {
+      return WhileNode.toJson_(node);
+    }
     if(node is AssignNode) {
       return AssignNode.toJson_(node);
     } else if (node is PrintNode) {
@@ -114,7 +118,9 @@ class NodeGraph {
   static List<Node> getNodesFromJson(Map<String, dynamic> json, ConsoleService consoleService) {
     List<Node> newNodes = [];
     for(var node in json['nodes']) {
-      if(node['title'].contains('Присвоить') || node['title'].contains('Добавить')) {
+      if(node['title'].contains('while')) {
+        newNodes.add(WhileNode.fromJson(node));
+      } else if(node['title'].contains('Присвоить') || node['title'].contains('Добавить')) {
         newNodes.add(AssignNode.fromJson(node));
       } else if(node['title'] == "Распечатать") {
         newNodes.add(PrintNode.fromJson(node, consoleService));

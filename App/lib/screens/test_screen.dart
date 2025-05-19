@@ -49,12 +49,13 @@ class TestScreen extends StatefulWidget {
 
   TestScreen({super.key});
 
-  Map<String, dynamic> saveScreenState() { //TODO
+  Map<String, dynamic> saveScreenState() {
     return {
       'assignmentBlocks': assignmentBlocks.map((b) => b.toJson()).toList(),
       'logicBlocks': logicBlocks.map((b) => b.toJson()).toList(),
       'printBlocks': printBlocks.map((b) => b.toJson()).toList(),
       'ifElseBlocks': ifElseBlocks.map((b) => b.toJson()).toList(),
+      'whileBlocks': whileBlocks.map((b) => b.toJson()).toList(),
       'wiredBlocks': wiredBlocks.map((p) => p.toJson()).toList(),
       'calibrations': calibrations.map(
         (key, value) => MapEntry(key, {'dx': value.dx, 'dy': value.dy}),
@@ -66,7 +67,7 @@ class TestScreen extends StatefulWidget {
     };
   }
 
-  void loadFromJson(Map<String, dynamic> screenJson) { //TODO
+  void loadFromJson(Map<String, dynamic> screenJson) {
     assignmentBlocks =
         screenJson['assignmentBlocks']
             .map<AssignmentBlock>((block) => AssignmentBlock.fromJson(block))
@@ -84,6 +85,10 @@ class TestScreen extends StatefulWidget {
     ifElseBlocks =
         screenJson['ifElseBlocks']
             .map<IfElseBlock>((block) => IfElseBlock.fromJson(block))
+            .toList();
+    whileBlocks =
+        screenJson['whileBlocks']
+            .map<WhileBlock>((block) => WhileBlock.fromJson(block))
             .toList();
     wiredBlocks =
         screenJson['wiredBlocks']
@@ -153,6 +158,11 @@ class TestScreen extends StatefulWidget {
       }
     }
     for (var block in ifElseBlocks) {
+      if (block.nodeId == nodeId) {
+        return block;
+      }
+    }
+    for (var block in whileBlocks) {
       if (block.nodeId == nodeId) {
         return block;
       }
@@ -442,6 +452,9 @@ class _TestScreenState extends State<TestScreen>
 
                   for (var block in widget.ifElseBlocks)
                     _buildIfElseBlock(block),
+
+                  for (var block in widget.whileBlocks)
+                    _buildWhileBlock(block),
 
                   for (var binding in widget.wiredBlocks)
                     CustomPaint(
@@ -850,7 +863,7 @@ class _TestScreenState extends State<TestScreen>
             }
             makeConnection(temp.node as Node, block.node as Node);
             widget.calibrations["${temp.nodeId}${block.nodeId}"] =
-                Offset(0, 15);
+                Offset(0, 55);
 
             if (currOutputCalibration != null) {
               widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] =

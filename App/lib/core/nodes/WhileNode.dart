@@ -10,6 +10,8 @@ import 'package:app/core/pins/Pin.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../utils/offset_extension.dart';
+
 class WhileNode extends Node {
   @override
   final String id;
@@ -109,5 +111,30 @@ class WhileNode extends Node {
       p.setValue(null);
     }
     ;
+  }
+
+  static Map<String, dynamic> toJson_(WhileNode node) {
+    return {
+      'id': node.id,
+      'position': node.position.toJson(),
+      'title': node.title,
+      'rawExpression': node.rawExpression,
+      'inputs': node.inputs.map(pinToJson).toList(),
+      'outputs': node.outputs.map(pinToJson).toList(),
+    };
+  }
+
+  factory WhileNode.fromJson(Map<String, dynamic> json) {
+    final node = WhileNode(json['id'], OffsetExtension.fromJson(json['position']));
+
+    final inputPins = (json['inputs'] as List).map((p) => pinFromJson(p)).toList();
+    final outputPins = (json['outputs'] as List).map((p) => pinFromJson(p)).toList();
+    final rawExpression = json['rawExpression'];
+
+    node.inputs = inputPins;
+    node.outputs = outputPins;
+    node.rawExpression = rawExpression;
+
+    return node;
   }
 }

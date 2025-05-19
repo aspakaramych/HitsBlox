@@ -97,7 +97,7 @@ class _WhileBlockWidgetState extends State<WhileBlockWidget> {
                 /// левая стрелка
                 Positioned(
                   left: 15,
-                  top: 55,
+                  top: 45,
                   child: GestureDetector(
                     onTap: () => widget.onLeftArrowClick(),
                     child: SizedBox(
@@ -115,9 +115,9 @@ class _WhileBlockWidgetState extends State<WhileBlockWidget> {
                 /// правая стрелка
                 Positioned(
                   right: -20,
-                  top: 55,
+                  top: 45,
                   child: GestureDetector(
-                    onTap: () => widget.onRightArrowClick(Offset(0, 55)),
+                    onTap: () => widget.onRightArrowClick(Offset(0, 45)),
                     child: SizedBox(
                       width: 50,
                       height: 50,
