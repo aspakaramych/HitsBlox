@@ -20,8 +20,6 @@ abstract class AssignNode extends Node{
 
   AssignNode(this.position) : super(position);
 
-  void addInput(Pin pin) => inputs.add(pin);
-  void addOutput(Pin pin) => outputs.add(pin);
 
   static Map<String, dynamic> toJson_(AssignNode node) {
     return {

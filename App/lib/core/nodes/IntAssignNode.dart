@@ -73,11 +73,7 @@ class IntAssignNode extends Node implements AssignNode{
       return VariableLiteral(exprStr);
     }
   }
-  @override
-  void addInput(Pin pin) => inputs.add(pin);
 
-  @override
-  void addOutput(Pin pin) => outputs.add(pin);
 
   @override
   void setText(String text) => rawExpression = text;

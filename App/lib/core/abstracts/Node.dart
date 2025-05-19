@@ -22,8 +22,24 @@ abstract class Node {
     return inputs.every((pin) =>
     !pin.isInput || pin.isExecutionPin || !pin.isRequired || pin.getValue() != null);
   }
-  void addInput(Pin pin) => inputs.add(pin);
-  void addOutput(Pin pin) => outputs.add(pin);
+  void addInput(Pin pin) {
+    var oldPin = inputs.indexWhere((p) => p.id == "empty");
+    if (oldPin > 0 && oldPin != null){
+      inputs[oldPin] = pin;
+      return;
+    }
+    inputs.add(pin);
+  }
+
+
+  void addOutput(Pin pin) {
+    var oldPin = outputs.indexWhere((p) => p.id == "empty");
+    if (oldPin > 0 && oldPin != null){
+      outputs[oldPin] = pin;
+      return;
+    }
+    outputs.add(pin);
+  }
 
   Map<String, dynamic> toJson() {
     return {

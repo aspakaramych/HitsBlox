@@ -26,10 +26,6 @@ class PrintNode extends Node {
   }) : super(position) {
 
   }
-  @override
-  void addInput(Pin pin) => inputs.add(pin);
-  @override
-  void addOutput(Pin pin) => outputs.add(pin);
 
   String parseInput(String text, VariableRegistry registry) {
     var result = text;
