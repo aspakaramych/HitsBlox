@@ -29,6 +29,10 @@ class Engine {
     for (var node in graph.nodes.where((n) => n is StartNode)) {
       queue.add(node);
     }
+    if (queue.isEmpty){
+      console.log("Отсутствует start node");
+      return;
+    }
 
     while (queue.isNotEmpty || nodesToRetry.isNotEmpty) {
       final List<Node> currentBatch = queue.toList();

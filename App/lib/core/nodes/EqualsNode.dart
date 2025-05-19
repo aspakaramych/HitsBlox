@@ -38,7 +38,9 @@ class EqualsNode extends Node{
 
 
       if (aVal == null || bVal == null) return;
-
+      if (aVal is List<dynamic> || bVal is List<dynamic>) {
+        throw Exception("Нельзя сравнивать массивы");
+      }
       bool znac = aVal == bVal;
       resultPin.setValue(znac);
     }

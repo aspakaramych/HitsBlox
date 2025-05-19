@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:app/core/literals/GetArrayValue.dart';
 import 'package:app/core/literals/VariableLiteral.dart';
 import 'package:app/core/nodes/AssignNode.dart';
 import 'package:collection/collection.dart';
@@ -61,6 +62,12 @@ class BoolAssignNode extends Node implements AssignNode {
 
     if (exprStr == 'true' || exprStr == 'false') {
       return BoolLiteral(exprStr == 'true');
+    } else if (exprStr.contains('[') && exprStr.contains(']')) {
+      try {
+        return GetArrayValue.parse(exprStr);
+      } on FormatException {
+        return VariableLiteral(exprStr);
+      }
     }
     else{
       return VariableLiteral(exprStr);

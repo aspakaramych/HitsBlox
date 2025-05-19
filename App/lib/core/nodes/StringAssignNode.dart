@@ -1,3 +1,4 @@
+import 'package:app/core/literals/GetArrayValue.dart';
 import 'package:app/core/pins/Pin.dart';
 import 'package:app/core/abstracts/Command.dart';
 import 'package:app/core/abstracts/Node.dart';
@@ -61,6 +62,12 @@ class StringAssignNode extends Node implements AssignNode{
     exprStr = exprStr.trim();
     if (exprStr.startsWith('"') && exprStr.endsWith('"')) {
       return StringLiteral(exprStr.substring(1, exprStr.length - 1));
+    }else if (exprStr.contains('[') && exprStr.contains(']')) {
+      try {
+        return GetArrayValue.parse(exprStr);
+      } on FormatException {
+        return VariableLiteral(exprStr);
+      }
     }
     return VariableLiteral(exprStr);
   }

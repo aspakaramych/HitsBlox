@@ -36,7 +36,7 @@ class HorizontalTopBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ElevatedButton(
-                onPressed: () => play.run(nodeGraph, registry),
+                onPressed: () => play.run(nodeGraph, registry, consoleService),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
                   maximumSize: Size(40, 40),
