@@ -81,8 +81,8 @@ class _StorageSavesState extends State<StorageSaves> {
                   }
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => key != "Новое сохранение"
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) => key != "Новое сохранение"
                           ? MainScreen(savedState, screenName: key)
                           : MainScreen(null, screenName: ''),
                     ),
@@ -138,7 +138,7 @@ class StorageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 40),
+      padding: EdgeInsets.symmetric(horizontal: 20),
       color: Theme.of(context).colorScheme.secondary,
       child: StorageSaves()
     );

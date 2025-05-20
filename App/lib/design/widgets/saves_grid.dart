@@ -23,7 +23,12 @@ class _GridSavesState extends State<GridSaves> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       keys = prefs.getKeys().toList();
-      keys.insert(3, "Новое сохранение");
+      if (keys.length >= 4) {
+        keys.insert(3, "Новое сохранение");
+      }
+      else {
+        keys.add("Новое сохранение");
+      }
       itemCount = min(4, keys.length);
     });
   }
@@ -33,7 +38,14 @@ class _GridSavesState extends State<GridSaves> {
     await prefs.remove(key);
 
     setState(() {
+      keys.remove("Новое сохранение");
       keys.remove(key);
+      if (keys.length >= 4) {
+        keys.insert(3, "Новое сохранение");
+      }
+      else {
+        keys.add("Новое сохранение");
+      }
       itemCount = min(4, keys.length);
     });
   }
@@ -71,28 +83,48 @@ class _GridSavesState extends State<GridSaves> {
                   }
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => key != "Новое сохранение"
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) => key != "Новое сохранение"
                           ? MainScreen(savedState, screenName: key)
                           : MainScreen(null, screenName: ''),
                     ),
                   );
                 },
-                child: Card(
-                  color: Theme.of(context).colorScheme.primaryFixed,
-                  elevation: 3,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  child: Center(
-                    child: Text(
-                      '$key',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onPrimaryFixed,
+                child: Stack(
+                  children: [
+                    if(key != "Новое сохранение")
+                    Card(
+                    color: Theme.of(context).colorScheme.primaryFixed,
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    child: Center(
+                      child: Text(
+                        '$key',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onPrimaryFixed,
+                        ),
                       ),
                     ),
-                  ),
-                ),
+                  )
+                    else if(key == "Новое сохранение")
+                      Card(
+                        color: Theme.of(context).colorScheme.secondaryContainer,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        child: Center(
+                            child: SvgPicture.asset(
+                              'lib/design/assets/icons/add.svg',
+                              width: 40,
+                              height: 40,
+                              colorFilter: ColorFilter.mode(
+                                  Theme.of(context).colorScheme.onSecondaryContainer, BlendMode.srcIn),)
+                        ),
+                      ),
+          ])
               ),
               if (key != "Новое сохранение")
                 Positioned(
