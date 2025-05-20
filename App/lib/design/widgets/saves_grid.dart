@@ -86,7 +86,7 @@ class _GridSavesState extends State<GridSaves> {
                     PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) => key != "Новое сохранение"
                           ? MainScreen(savedState, screenName: key)
-                          : MainScreen(null, screenName: ''),
+                          : MainScreen('create_new_screen', screenName: ''),
                     ),
                   );
                 },
