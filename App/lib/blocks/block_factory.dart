@@ -1,5 +1,6 @@
 import 'package:app/blocks/comment_block.dart';
 import 'package:app/blocks/if_else_block.dart';
+import 'package:app/blocks/swap_block.dart';
 import 'package:app/blocks/while_block.dart';
 import 'package:app/core/ConsoleService.dart';
 import 'package:app/core/nodes/AddNode.dart';
@@ -17,6 +18,7 @@ import 'package:app/core/nodes/MultiplyNode.dart';
 import 'package:app/core/nodes/PrintNode.dart';
 import 'package:app/core/nodes/StartNode.dart';
 import 'package:app/core/nodes/SubNode.dart';
+import 'package:app/core/nodes/SwapNode.dart';
 import 'package:app/core/nodes/WhileNode.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:app/blocks/assignment_block.dart';
@@ -469,6 +471,25 @@ class BlockFactory {
       blockName: "comment",
       width: 220,
       height: 150,
+    );
+  }
+
+  static createSwapBlock(TransformationController transformationController) {
+    final currUserOffset =
+        UserPositionUtils.getVisibleContentRect(
+          transformationController,
+        ).topLeft;
+    final swapNode = SwapNode(
+      'node_${Randomizer.getRandomInt()}',
+      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+    );
+
+    return SwapBlock(
+      position: swapNode.position,
+      node: swapNode,
+      blockName: "swap",
+      width: 220,
+      height: 200,
     );
   }
 }

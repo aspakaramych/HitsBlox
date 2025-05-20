@@ -24,7 +24,7 @@ class SwapNode extends Node {
   final String id;
 
   @override
-  String get title => "Поменять местами";
+  String get title => "Swap";
 
   SwapNode(String this.id, Offset position) : super(position) {
   }

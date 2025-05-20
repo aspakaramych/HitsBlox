@@ -7,6 +7,7 @@ import 'package:collection/collection.dart';
 
 import 'nodes/AssignNode.dart';
 import 'nodes/PrintNode.dart';
+import 'nodes/SwapNode.dart';
 
 class NodeGraph {
   List<Node> nodes = [];
@@ -93,9 +94,10 @@ class NodeGraph {
   static Map<String, dynamic> serializeToJson(Node node) {
     if(node is WhileNode) {
       return WhileNode.toJson_(node);
-    }
-    if(node is AssignNode) {
+    } else if(node is AssignNode) {
       return AssignNode.toJson_(node);
+    }  else if(node is SwapNode) {
+      return SwapNode.toJson_(node);
     } else if (node is PrintNode) {
       return PrintNode.toJson_(node);
     } else {
@@ -120,6 +122,8 @@ class NodeGraph {
     for(var node in json['nodes']) {
       if(node['title'].contains('while')) {
         newNodes.add(WhileNode.fromJson(node));
+      } else if(node['title'] == "Swap") {
+        newNodes.add(SwapNode.fromJson(node));
       } else if(node['title'].contains('Присвоить') || node['title'].contains('Добавить')) {
         newNodes.add(AssignNode.fromJson(node));
       } else if(node['title'] == "Распечатать") {
