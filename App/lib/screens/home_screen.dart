@@ -100,8 +100,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       // Container(margin: EdgeInsets.symmetric(vertical: 0), child: SvgPicture.asset("lib/design/assets/icons/scroll.svg", colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.onSecondary, BlendMode.srcIn),)),
                       HorizontalBottomBar(
                           onTerminalPressed: () {},
-                          onAddPressed: () {},
+                          onAddPressed: () {Navigator.pushNamed(context, '/edit');},
                           onSavePressed: () {},
+                          iconButton: 'lib/design/assets/icons/right.svg',
                         ),
                     ],
                   ),

@@ -53,42 +53,6 @@ class VerticalBottomBar extends StatelessWidget {
                   children: [
                     IconButton(
                       icon: SvgPicture.asset(
-                        'lib/design/assets/icons/home.svg',
-                        width: 40,
-                        height: 40,
-                        colorFilter: ColorFilter.mode(
-                            Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => HomeScreen()),
-                        );
-                      },
-                    ),
-                    IconButton(
-                      icon: SvgPicture.asset(
-                        'lib/design/assets/icons/terminal.svg',
-                        width: 40,
-                        height: 40,
-                        colorFilter: ColorFilter.mode(
-                            Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
-                      ),
-                      onPressed: onTerminalPressed,
-                    ),
-                    SizedBox(width: 40,),
-                    IconButton(
-                      icon: SvgPicture.asset(
-                        'lib/design/assets/icons/download.svg',
-                        width: 40,
-                        height: 40,
-                        colorFilter: ColorFilter.mode(
-                            Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
-                      ),
-                      onPressed: onSavePressed,
-                    ),
-                    IconButton(
-                      icon: SvgPicture.asset(
                         'lib/design/assets/icons/settings.svg',
                         width: 40,
                         height: 40,
@@ -101,6 +65,42 @@ class VerticalBottomBar extends StatelessWidget {
                             PageRouteBuilder(pageBuilder: (context, animation,
                                 secondaryAnimation) => SettingsScreen()),
                           ),
+                    ),
+                    IconButton(
+                      icon: SvgPicture.asset(
+                        'lib/design/assets/icons/download.svg',
+                        width: 40,
+                        height: 40,
+                        colorFilter: ColorFilter.mode(
+                            Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
+                      ),
+                      onPressed: onSavePressed,
+                    ),
+                    SizedBox(width: 40,),
+                    IconButton(
+                      icon: SvgPicture.asset(
+                        'lib/design/assets/icons/terminal.svg',
+                        width: 40,
+                        height: 40,
+                        colorFilter: ColorFilter.mode(
+                            Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
+                      ),
+                      onPressed: onTerminalPressed,
+                    ),
+                    IconButton(
+                      icon: SvgPicture.asset(
+                        'lib/design/assets/icons/home.svg',
+                        width: 40,
+                        height: 40,
+                        colorFilter: ColorFilter.mode(
+                            Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => HomeScreen()),
+                        );
+                      },
                     ),
                   ],
                 ),

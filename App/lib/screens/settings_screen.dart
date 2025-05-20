@@ -83,7 +83,12 @@ class _SettingsScreenState extends State<SettingsScreen>{
               ],
             ),
           ),
-          HorizontalBottomBar(onTerminalPressed: () {}, onAddPressed: () {}, onSavePressed: () {},)
+          HorizontalBottomBar(
+            onTerminalPressed: () {},
+            onAddPressed: () {Navigator.pushNamed(context, "/edit");},
+            onSavePressed: () {},
+            iconButton: 'lib/design/assets/icons/left.svg',
+          )
         ],
       ),
     );

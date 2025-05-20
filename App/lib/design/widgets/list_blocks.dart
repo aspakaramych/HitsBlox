@@ -82,6 +82,7 @@ class _BlocksListState extends State<BlocksList> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 300,
       padding: EdgeInsets.all(16),
       child: BlocksGrid(blocks: widget.blocks),
     );

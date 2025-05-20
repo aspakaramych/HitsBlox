@@ -36,6 +36,22 @@ class VerticalTopBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  maximumSize: Size(40, 40),
+                  minimumSize: Size(40, 40),
+                  elevation: 0,
+                  padding: EdgeInsets.zero,
+                ),
+                child: SvgPicture.asset(
+                  'lib/design/assets/icons/debug.svg',
+                  width: 40,
+                  height: 40,
+                  colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
+                ),
+              ),
+              ElevatedButton(
                 onPressed: () => play.run(nodeGraph, registry, consoleService, context),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
@@ -51,22 +67,6 @@ class VerticalTopBar extends StatelessWidget {
                   colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
                 ),
               ),
-              ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.transparent,
-                  maximumSize: Size(40, 40),
-                  minimumSize: Size(40, 40),
-                  elevation: 0,
-                  padding: EdgeInsets.zero,
-                ),
-                child: SvgPicture.asset(
-                  'lib/design/assets/icons/debug.svg',
-                  width: 40,
-                  height: 40,
-                  colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
-                ),
-              )
             ],
           ),
         ),
