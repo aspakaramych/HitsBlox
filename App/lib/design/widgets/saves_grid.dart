@@ -23,8 +23,8 @@ class _GridSavesState extends State<GridSaves> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       keys = prefs.getKeys().toList();
-      keys.add("Новое сохранение");
-      itemCount = keys.length;
+      keys.insert(3, "Новое сохранение");
+      itemCount = min(4, keys.length);
     });
   }
 
@@ -34,7 +34,7 @@ class _GridSavesState extends State<GridSaves> {
 
     setState(() {
       keys.remove(key);
-      itemCount = keys.length;
+      itemCount = min(4, keys.length);
     });
   }
 
