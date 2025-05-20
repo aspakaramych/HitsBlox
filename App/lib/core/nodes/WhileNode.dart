@@ -72,32 +72,33 @@ class WhileNode extends Node {
     var rightExpr = express[2];
     var expressionLeft = parseExpression(leftExpr);
     var expressionRight = parseExpression(rightExpr);
-    if (operator != "==" || operator != ">" || operator != "<" || operator != "!="){
-      throw Exception("неизвестный оператор в while");
+    if (operator == "==" || operator == ">" || operator == "<" || operator == "!="){
+      switch (operator){
+        case "==":
+          if (expressionLeft.evaluate(registry) == expressionRight.evaluate(registry)){
+            outputs[0].setValue(MyTrue());
+            return;
+          }
+        case ">":
+          if (expressionLeft.evaluate(registry) > expressionRight.evaluate(registry)){
+            outputs[0].setValue(MyTrue());
+            return;
+          }
+        case "<":
+          if (expressionLeft.evaluate(registry) < expressionRight.evaluate(registry)){
+            outputs[0].setValue(MyTrue());
+            return;
+          }
+        case "!=":
+          if (expressionLeft.evaluate(registry) != expressionRight.evaluate(registry)){
+            outputs[0].setValue(MyTrue());
+            return;
+          }
+      }
+      outputs[1].setValue(MyTrue());
+      return;
     }
-    switch (operator){
-      case "==":
-        if (expressionLeft.evaluate(registry) == expressionRight.evaluate(registry)){
-          outputs[0].setValue(MyTrue());
-          return;
-        }
-      case ">":
-        if (expressionLeft.evaluate(registry) > expressionRight.evaluate(registry)){
-          outputs[0].setValue(MyTrue());
-          return;
-        }
-      case "<":
-        if (expressionLeft.evaluate(registry) < expressionRight.evaluate(registry)){
-          outputs[0].setValue(MyTrue());
-          return;
-        }
-      case "!=":
-        if (expressionLeft.evaluate(registry) != expressionRight.evaluate(registry)){
-          outputs[0].setValue(MyTrue());
-          return;
-        }
-    }
-    outputs[1].setValue(MyTrue());
+    throw Exception("неизвестный оператор в while");
   }
 
 

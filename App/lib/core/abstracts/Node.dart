@@ -65,4 +65,14 @@ abstract class Node {
 
     return node;
   }
+  void clearOutputs(){
+    for (var p in outputs){
+      p.setValue(null);
+    }
+  }
+  void clearInputs(){
+    for (var p in inputs){
+      p.setValue(null);
+    }
+  }
 }

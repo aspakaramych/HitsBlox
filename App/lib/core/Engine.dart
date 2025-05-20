@@ -30,6 +30,8 @@ class Engine {
     final Queue<Node> queue = Queue();
     final Set<Node> executedNodes = Set();
     final List<Node> nodesToRetry = [];
+    nodeGraph.nodes.map((el) => el.clearOutputs());
+    nodeGraph.nodes.map((el) => el.clearInputs());
 
     for (var node in graph.nodes.where((n) => n is StartNode)) {
       queue.add(node);
@@ -63,7 +65,10 @@ class Engine {
           progressMade = true;
 
           for (var conn in graph.connections.where((c) => c.fromNodeId == node.id)) {
-            if ((((node is IfElseNode) || (node is WhileNode)) && node.outputs.firstWhere((p) => p.id == conn.fromPinId).getValue() is MyTrue) || (node is !IfElseNode)){
+            var cond1 = (node is IfElseNode && node.outputs.firstWhere((p) => p.id == conn.fromPinId).getValue() is MyTrue);
+            var cond2 = (node is WhileNode && node.outputs.firstWhere((p) => p.id == conn.fromPinId).getValue() is MyTrue);
+            var cond3 = (node is !IfElseNode && node is !WhileNode);
+            if (cond1 || cond2 || cond3){
               var nextNode = graph.getNodeById(conn.toNodeId);
               var outputPin = node.outputs.firstWhereOrNull((p) => p.id == conn.fromPinId);
               var inputPin = nextNode?.inputs.firstWhereOrNull((p) => p.id == conn.toPinId);
