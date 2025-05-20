@@ -19,11 +19,13 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../blocks/assignment_block.dart';
+import '../blocks/comment_block.dart';
 import '../blocks/positioned_block.dart';
 import '../core/Connection.dart';
 import '../core/abstracts/Node.dart';
 import '../core/pins/Pin.dart';
 import '../core/widgets/assignment_widget.dart';
+import '../core/widgets/comment_block_widget.dart';
 import '../utils/background_painter.dart';
 import '../utils/bezier_line_painter.dart';
 
@@ -41,6 +43,7 @@ class TestScreen extends StatefulWidget {
   List<PrintBlock> printBlocks = [];
   List<IfElseBlock> ifElseBlocks = [];
   List<WhileBlock> whileBlocks = [];
+  List<CommentBlock> commentBlocks = [];
 
   Map<String, Offset> calibrations = {};
   Map<String, Offset> outputCalibrations = {};
@@ -56,6 +59,7 @@ class TestScreen extends StatefulWidget {
       'printBlocks': printBlocks.map((b) => b.toJson()).toList(),
       'ifElseBlocks': ifElseBlocks.map((b) => b.toJson()).toList(),
       'whileBlocks': whileBlocks.map((b) => b.toJson()).toList(),
+      'commentBlocks': commentBlocks.map((b) => b.toJson()).toList(),
       'wiredBlocks': wiredBlocks.map((p) => p.toJson()).toList(),
       'calibrations': calibrations.map(
         (key, value) => MapEntry(key, {'dx': value.dx, 'dy': value.dy}),
@@ -89,6 +93,10 @@ class TestScreen extends StatefulWidget {
     whileBlocks =
         screenJson['whileBlocks']
             .map<WhileBlock>((block) => WhileBlock.fromJson(block))
+            .toList();
+    commentBlocks =
+        screenJson['commentBlocks']
+            .map<CommentBlock>((block) => CommentBlock.fromJson(block))
             .toList();
     wiredBlocks =
         screenJson['wiredBlocks']
@@ -181,6 +189,7 @@ class TestScreen extends StatefulWidget {
     printBlocks = [];
     ifElseBlocks = [];
     whileBlocks = [];
+    commentBlocks = [];
 
     calibrations = {};
     outputCalibrations = {};
@@ -221,6 +230,13 @@ class _TestScreenState extends State<TestScreen>
   void addWhileBlock(WhileBlock block) {
     setState(() {
       widget.whileBlocks.add(block);
+      widget.nodeGraph.addNode(block.node as Node);
+    });
+  }
+
+  void addCommentBlock(CommentBlock block) {
+    setState(() {
+      widget.commentBlocks.add(block);
       widget.nodeGraph.addNode(block.node as Node);
     });
   }
@@ -410,6 +426,13 @@ class _TestScreenState extends State<TestScreen>
               BlockFactory.createWhileBlock(_transformationController),
             ),
       ),
+      Block(
+        name: "Комментарий",
+        action:
+            () => addCommentBlock(
+              BlockFactory.createCommentBlock(_transformationController),
+            ),
+      ),
     ];
   }
 
@@ -456,6 +479,9 @@ class _TestScreenState extends State<TestScreen>
 
                   for (var block in widget.whileBlocks)
                     _buildWhileBlock(block),
+
+                  for (var block in widget.commentBlocks)
+                    _buildCommentBlock(block),
 
                   for (var binding in widget.wiredBlocks)
                     CustomPaint(
@@ -884,6 +910,30 @@ class _TestScreenState extends State<TestScreen>
         setState(() {
           temp = block;
           currOutputCalibration = Offset(block.width, position.dy + 10);
+        });
+      },
+    );
+  }
+
+  Widget _buildCommentBlock(CommentBlock block) {
+    return CommentBlockWidget(
+      key: ValueKey(block.nodeId),
+      block: block,
+      onEditToggle: () {
+        setState(() {
+          block.isEditing = !block.isEditing;
+        });
+      },
+      deleteNode: () {
+        setState(() {
+          widget.commentBlocks.remove(block);
+
+          deleteKey(block.nodeId);
+        });
+      },
+      onPositionChanged: (newPosition) {
+        setState(() {
+          block.position = newPosition;
         });
       },
     );

@@ -1,3 +1,4 @@
+import 'package:app/blocks/comment_block.dart';
 import 'package:app/blocks/if_else_block.dart';
 import 'package:app/blocks/while_block.dart';
 import 'package:app/core/ConsoleService.dart';
@@ -431,6 +432,25 @@ class BlockFactory {
       blockName: "while",
       width: 200,
       height: 120,
+    );
+  }
+
+  static createCommentBlock(TransformationController transformationController) {
+    final currUserOffset =
+        UserPositionUtils.getVisibleContentRect(
+          transformationController,
+        ).topLeft;
+    final stringNode = StringAssignNode(
+      'node_${Randomizer.getRandomInt()}',
+      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+    );
+
+    return CommentBlock(
+      position: stringNode.position,
+      node: stringNode,
+      blockName: "comment",
+      width: 220,
+      height: 150,
     );
   }
 }
