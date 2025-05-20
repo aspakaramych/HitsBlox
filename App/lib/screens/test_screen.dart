@@ -755,7 +755,7 @@ class _TestScreenState extends State<TestScreen>
       onRightArrowClick: () {
         setState(() {
           temp = block;
-          currOutputCalibration = null;
+          currOutputCalibration = Offset(block.width, block.height / 2 + 15);
         });
       },
     );

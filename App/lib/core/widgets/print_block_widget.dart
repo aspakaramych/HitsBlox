@@ -110,6 +110,25 @@ class _PrintBlockWidgetState extends State<PrintBlockWidget> {
                     ),
                   ),
                 ),
+
+                /// правая стрелка
+                Positioned(
+                  right: -20,
+                  top: 45,
+                  child: GestureDetector(
+                    onTap: () => widget.onRightArrowClick(),
+                    child: SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: SizedBox(
+                        width: 15,
+                        height: 15,
+                        child: CustomPaint(painter: TrianglePainter(Sizes.arrowSize, Theme.of(context).colorScheme.onPrimaryContainer)),
+                      ),
+                    ),
+                  ),
+                ),
+
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
