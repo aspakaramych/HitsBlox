@@ -36,7 +36,11 @@ class _ConsoleState extends State<Console> {
     final logs = _consoleService.logs;
 
     return Container(
-      color: Theme.of(context).colorScheme.surfaceDim,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.outlineVariant,
+        borderRadius: BorderRadius.all(Radius.circular(15))
+      ),
+      margin: EdgeInsets.symmetric(horizontal: 20),
       padding: EdgeInsets.all(16),
       child: Column(
         children: [
@@ -44,7 +48,7 @@ class _ConsoleState extends State<Console> {
             alignment: Alignment.center,
             child: Text(
               "Консоль",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
           ),
           SizedBox(height: 10),
@@ -55,7 +59,7 @@ class _ConsoleState extends State<Console> {
                 children: [
                   Text(
                     '>${logs.join('\n>')}',
-                    style: TextStyle(fontFamily: 'monospace', fontSize: 14, color: Colors.black),
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ],
               ),

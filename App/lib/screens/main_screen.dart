@@ -45,6 +45,7 @@ class _MainScreenState extends State<MainScreen>
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
       ),
+      backgroundColor: Colors.transparent,
       builder: (context) {
         return Console(consoleService: _testScreen.consoleService);
       },
