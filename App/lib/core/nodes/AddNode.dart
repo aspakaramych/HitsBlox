@@ -58,6 +58,6 @@ class AddNode extends Node {
   void clearOutputs(){
     for (var p in outputs){
       p.setValue(null);
-    };
+    }
   }
 }

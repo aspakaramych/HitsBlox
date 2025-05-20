@@ -42,8 +42,18 @@ class IntAssignNode extends Node implements AssignNode{
       var trimmedLine = line.trim();
       if (trimmedLine.isEmpty) continue;
 
-      var match = RegExp(r'^\s*(\w+)\s*=\s*([+-]?[\d\w$\[\]\s*[^\$$]*\s*$|$)\s*$').firstMatch(trimmedLine);
-      if (match == null) continue;
+      var match = RegExp(r'^\s*(\w+)\s*=\s*([+-]?[\d\w$\[\]\s*[^\$$]*\s*$|$)?\s*$').firstMatch(trimmedLine);
+      if (match == null) {
+        int pVal;
+        for (var p in inputs){
+          pVal = p.getValue();
+          if (pVal is int){
+            commands.add(AssignVariableCommand<int>(trimmedLine, IntLiteral(pVal)));
+            break;
+          }
+        }
+        continue;
+      }
 
       var variableName = match.group(1)!;
       var exprStr = match.group(2)!;

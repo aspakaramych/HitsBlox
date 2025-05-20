@@ -2,6 +2,7 @@ import 'package:app/blocks/block_factory.dart';
 import 'package:app/blocks/if_else_block.dart';
 import 'package:app/blocks/logic_block.dart';
 import 'package:app/blocks/print_block.dart';
+import 'package:app/blocks/swap_block.dart';
 import 'package:app/blocks/while_block.dart';
 import 'package:app/core/ConsoleService.dart';
 import 'package:app/core/Engine.dart';
@@ -10,6 +11,7 @@ import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:app/core/widgets/if_else_block_widget.dart';
 import 'package:app/core/widgets/logic_block_widget.dart';
 import 'package:app/core/widgets/print_block_widget.dart';
+import 'package:app/core/widgets/swap_block_widget.dart';
 import 'package:app/core/widgets/while_block_widget.dart';
 import 'package:app/design/widgets/widgets.dart';
 import 'package:app/utils/Randomizer.dart';
@@ -43,6 +45,7 @@ class TestScreen extends StatefulWidget {
   List<PrintBlock> printBlocks = [];
   List<IfElseBlock> ifElseBlocks = [];
   List<WhileBlock> whileBlocks = [];
+  List<SwapBlock> swapBlocks = [];
   List<CommentBlock> commentBlocks = [];
 
   Map<String, Offset> calibrations = {};
@@ -59,6 +62,7 @@ class TestScreen extends StatefulWidget {
       'printBlocks': printBlocks.map((b) => b.toJson()).toList(),
       'ifElseBlocks': ifElseBlocks.map((b) => b.toJson()).toList(),
       'whileBlocks': whileBlocks.map((b) => b.toJson()).toList(),
+      'swapBlocks': swapBlocks.map((b) => b.toJson()).toList(),
       'commentBlocks': commentBlocks.map((b) => b.toJson()).toList(),
       'wiredBlocks': wiredBlocks.map((p) => p.toJson()).toList(),
       'calibrations': calibrations.map(
@@ -93,6 +97,10 @@ class TestScreen extends StatefulWidget {
     whileBlocks =
         screenJson['whileBlocks']
             .map<WhileBlock>((block) => WhileBlock.fromJson(block))
+            .toList();
+    swapBlocks =
+        screenJson['swapBlocks']
+            .map<SwapBlock>((block) => SwapBlock.fromJson(block))
             .toList();
     commentBlocks =
         screenJson['commentBlocks']
@@ -175,6 +183,11 @@ class TestScreen extends StatefulWidget {
         return block;
       }
     }
+    for (var block in swapBlocks) {
+      if (block.nodeId == nodeId) {
+        return block;
+      }
+    }
     return null;
   }
 
@@ -189,6 +202,7 @@ class TestScreen extends StatefulWidget {
     printBlocks = [];
     ifElseBlocks = [];
     whileBlocks = [];
+    swapBlocks = [];
     commentBlocks = [];
 
     calibrations = {};
@@ -230,6 +244,13 @@ class _TestScreenState extends State<TestScreen>
   void addWhileBlock(WhileBlock block) {
     setState(() {
       widget.whileBlocks.add(block);
+      widget.nodeGraph.addNode(block.node as Node);
+    });
+  }
+
+  void addSwapBlock(SwapBlock block) {
+    setState(() {
+      widget.swapBlocks.add(block);
       widget.nodeGraph.addNode(block.node as Node);
     });
   }
@@ -357,6 +378,13 @@ class _TestScreenState extends State<TestScreen>
             ),
       ),
       Block(
+        name: "Swap",
+        action:
+            () => addSwapBlock(
+              BlockFactory.createSwapBlock(_transformationController),
+            ),
+      ),
+      Block(
         name: "Деление",
         action:
             () => addLogicBlock(
@@ -383,6 +411,13 @@ class _TestScreenState extends State<TestScreen>
             () => addLogicBlock(
               BlockFactory.createAddictionBlock(_transformationController),
             ),
+      ),
+      Block(
+        name: "Инкремент",
+        action:
+            () => addAssignmentBlock(
+          BlockFactory.createIncrementBlock(_transformationController),
+        ),
       ),
       Block(
         name: "Конкатенация",
@@ -479,6 +514,9 @@ class _TestScreenState extends State<TestScreen>
 
                   for (var block in widget.whileBlocks)
                     _buildWhileBlock(block),
+
+                  for (var block in widget.swapBlocks)
+                    _buildSwapBlock(block),
 
                   for (var block in widget.commentBlocks)
                     _buildCommentBlock(block),
@@ -748,7 +786,7 @@ class _TestScreenState extends State<TestScreen>
       onRightArrowClick: () {
         setState(() {
           temp = block;
-          currOutputCalibration = null;
+          currOutputCalibration = Offset(block.width, block.height / 2 + 15);
         });
       },
     );
@@ -934,6 +972,91 @@ class _TestScreenState extends State<TestScreen>
       onPositionChanged: (newPosition) {
         setState(() {
           block.position = newPosition;
+        });
+      },
+    );
+  }
+
+  Widget _buildSwapBlock(SwapBlock block) {
+    return SwapBlockWidget(
+      key: ValueKey(block.node.id),
+      block: block,
+      onEditToggle: () {
+        setState(() {
+          block.isEditing = !block.isEditing;
+        });
+      },
+      deleteNode: () {
+        setState(() {
+          widget.swapBlocks.remove(block);
+          widget.wiredBlocks.removeWhere(
+                (binding) =>
+            binding.first.nodeId == block.node.id ||
+                binding.second.nodeId == block.node.id,
+          );
+
+          widget.calibrations.removeWhere(
+                (key, value) => key.contains(block.nodeId),
+          );
+          widget.outputCalibrations.removeWhere(
+                (key, value) => key.contains(block.nodeId),
+          );
+
+          deleteNode(block.nodeId);
+          deleteConnection(block.nodeId);
+
+          deleteKey(block.nodeId);
+        });
+      },
+      onPositionChanged: (newPosition) {
+        setState(() {
+          block.position = newPosition;
+        });
+      },
+      onLeftArrowClick: () {
+        setState(() {
+          if (temp != null) {
+            if (widget.calibrations.containsKey(
+              "${temp.nodeId}${block.nodeId}",
+            )) {
+              widget.wiredBlocks.removeWhere(
+                    (binding) =>
+                binding.first.nodeId == temp.nodeId &&
+                    binding.second.nodeId == block.nodeId,
+              );
+
+              deleteConnectionBetween(temp.nodeId, block.nodeId, temp.node, block.node);
+
+              widget.calibrations.remove("${temp.nodeId}${block.nodeId}");
+              widget.outputCalibrations.remove("${temp.nodeId}${block.nodeId}");
+
+              temp = null;
+              return;
+            }
+
+            makeConnection(temp.node as Node, block.node as Node);
+            widget.calibrations["${temp.nodeId}${block.nodeId}"] = Offset(
+              0,
+              60,
+            );
+            if (currOutputCalibration != null) {
+              widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] =
+                  currOutputCalibration;
+            } else {
+              widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] =
+                  Offset(0, 0);
+              ;
+            }
+            widget.wiredBlocks.add(Pair(temp, block));
+            temp = null;
+            currOutputCalibration = null;
+          }
+        });
+      },
+      onRightArrowClick: () {
+        setState(() {
+          temp = block;
+          currOutputCalibration = Offset(block.width, 60);
         });
       },
     );

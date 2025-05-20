@@ -1,5 +1,6 @@
 import 'package:app/blocks/comment_block.dart';
 import 'package:app/blocks/if_else_block.dart';
+import 'package:app/blocks/swap_block.dart';
 import 'package:app/blocks/while_block.dart';
 import 'package:app/core/ConsoleService.dart';
 import 'package:app/core/nodes/AddNode.dart';
@@ -9,6 +10,7 @@ import 'package:app/core/nodes/ConcatNode.dart';
 import 'package:app/core/nodes/DivideNode.dart';
 import 'package:app/core/nodes/EqualsNode.dart';
 import 'package:app/core/nodes/IfElseNode.dart';
+import 'package:app/core/nodes/IncrementNode.dart';
 import 'package:app/core/nodes/LessNode.dart';
 import 'package:app/core/nodes/ModNode.dart';
 import 'package:app/core/nodes/MoreNode.dart';
@@ -16,6 +18,7 @@ import 'package:app/core/nodes/MultiplyNode.dart';
 import 'package:app/core/nodes/PrintNode.dart';
 import 'package:app/core/nodes/StartNode.dart';
 import 'package:app/core/nodes/SubNode.dart';
+import 'package:app/core/nodes/SwapNode.dart';
 import 'package:app/core/nodes/WhileNode.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:app/blocks/assignment_block.dart';
@@ -270,6 +273,23 @@ class BlockFactory {
     );
   }
 
+  static createIncrementBlock(TransformationController transformationController) {
+    final currUserOffset =
+        UserPositionUtils.getVisibleContentRect(
+          transformationController,
+        ).topLeft;
+    final assignNode = IncrementNode(
+      'node_${Randomizer.getRandomInt()}',
+      Offset(currUserOffset.dx + 50, currUserOffset.dy + 50),
+    );
+
+    return AssignmentBlock(
+      position: assignNode.position,
+      blockName: "increment",
+      node: assignNode,
+    );
+  }
+
   static createModBlock(TransformationController transformationController) {
     final currUserOffset =
         UserPositionUtils.getVisibleContentRect(
@@ -451,6 +471,25 @@ class BlockFactory {
       blockName: "comment",
       width: 220,
       height: 150,
+    );
+  }
+
+  static createSwapBlock(TransformationController transformationController) {
+    final currUserOffset =
+        UserPositionUtils.getVisibleContentRect(
+          transformationController,
+        ).topLeft;
+    final swapNode = SwapNode(
+      'node_${Randomizer.getRandomInt()}',
+      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+    );
+
+    return SwapBlock(
+      position: swapNode.position,
+      node: swapNode,
+      blockName: "swap",
+      width: 220,
+      height: 200,
     );
   }
 }
