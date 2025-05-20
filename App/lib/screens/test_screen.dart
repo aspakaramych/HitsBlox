@@ -385,6 +385,13 @@ class _TestScreenState extends State<TestScreen>
             ),
       ),
       Block(
+        name: "Инкремент",
+        action:
+            () => addAssignmentBlock(
+          BlockFactory.createIncrementBlock(_transformationController),
+        ),
+      ),
+      Block(
         name: "Конкатенация",
         action:
             () => addLogicBlock(

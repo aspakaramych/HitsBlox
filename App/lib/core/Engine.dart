@@ -49,7 +49,7 @@ class Engine {
       bool progressMade = false;
 
       for (var node in currentBatch) {
-        if (executedNodes.contains(node)) continue;
+        //if (executedNodes.contains(node)) continue;
 
         if (node.areAllInputsReady()) {
           print('Выполняю нод: ${node.title}');
@@ -77,7 +77,7 @@ class Engine {
                 inputPin.setValue(outputPin.getValue());
               }
 
-              if (nextNode != null && !executedNodes.contains(nextNode)) {
+              if (nextNode != null) {
                 if (!queue.contains(nextNode)) {
                   queue.add(nextNode);
                 }

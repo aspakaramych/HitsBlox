@@ -9,6 +9,7 @@ import 'package:app/core/nodes/ConcatNode.dart';
 import 'package:app/core/nodes/DivideNode.dart';
 import 'package:app/core/nodes/EqualsNode.dart';
 import 'package:app/core/nodes/IfElseNode.dart';
+import 'package:app/core/nodes/IncrementNode.dart';
 import 'package:app/core/nodes/LessNode.dart';
 import 'package:app/core/nodes/ModNode.dart';
 import 'package:app/core/nodes/MoreNode.dart';
@@ -267,6 +268,23 @@ class BlockFactory {
         Position(Offset(15, 90), false),
       ]),
       rightArrows: List.of([Position(Offset(15, 65), false)]),
+    );
+  }
+
+  static createIncrementBlock(TransformationController transformationController) {
+    final currUserOffset =
+        UserPositionUtils.getVisibleContentRect(
+          transformationController,
+        ).topLeft;
+    final assignNode = IncrementNode(
+      'node_${Randomizer.getRandomInt()}',
+      Offset(currUserOffset.dx + 50, currUserOffset.dy + 50),
+    );
+
+    return AssignmentBlock(
+      position: assignNode.position,
+      blockName: "increment",
+      node: assignNode,
     );
   }
 
