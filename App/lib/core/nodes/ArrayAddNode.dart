@@ -30,7 +30,7 @@ class ArrayAddNode extends Node implements AssignNode{
   ArrayAddNode(String this.id, Offset position) : super(position) {}
 
   @override
-    void setAssignmentsFromText(String text) {
+    void setAssignmentsFromText(String text, VariableRegistry registry) {
       rawExpression = text;
       commands.clear();
 
@@ -78,7 +78,7 @@ class ArrayAddNode extends Node implements AssignNode{
   @override
   Future<void> execute(VariableRegistry registry) async {
     clearOutputs();
-    setAssignmentsFromText(rawExpression);
+    setAssignmentsFromText(rawExpression, registry);
     for (var cmd in commands) {
       await cmd.execute(registry);
     }

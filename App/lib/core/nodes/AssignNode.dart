@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:app/core/abstracts/Node.dart';
+import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:app/utils/offset_extension.dart';
 
 import '../pins/Pin.dart';
@@ -9,7 +10,7 @@ import 'assignment_node_factory.dart';
 abstract class AssignNode extends Node{
   String get id;
   String rawExpression = '';
-  void setAssignmentsFromText(String text);
+  void setAssignmentsFromText(String text, VariableRegistry registry);
   void setText(String text);
   List<Pin> outputs = [];
   List<Pin> inputs = [];

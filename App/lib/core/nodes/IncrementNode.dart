@@ -29,7 +29,7 @@ class IncrementNode extends Node implements AssignNode{
   }
 
   @override
-  List<String> setAssignmentsFromText(String text) {
+  List<String> setAssignmentsFromText(String text, VariableRegistry registry) {
     rawExpression = text;
     commands.clear();
 
@@ -52,7 +52,7 @@ class IncrementNode extends Node implements AssignNode{
   @override
   Future<void> execute(VariableRegistry registry) async {
     clearOutputs();
-    var express = setAssignmentsFromText(rawExpression);
+    var express = setAssignmentsFromText(rawExpression, registry);
     if (express == []){
       throw Exception("Ввели пустой или нерпавильный инкремент");
     }

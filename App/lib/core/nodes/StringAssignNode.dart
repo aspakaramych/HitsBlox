@@ -34,7 +34,7 @@ class StringAssignNode extends Node implements AssignNode{
 
   }
 
-  void setAssignmentsFromText(String text) {
+  void setAssignmentsFromText(String text, VariableRegistry registry) {
     rawExpression = text;
     commands.clear();
 
@@ -49,7 +49,7 @@ class StringAssignNode extends Node implements AssignNode{
       var variableName = match.group(1)!;
       var exprStr = match.group(2)!;
 
-      Expression expression = parseExpression(exprStr);
+      Expression expression = parseExpression(exprStr, registry);
       commands.add(AssignVariableCommand<String>(variableName, expression));
       for (var p in outputs){
         p.setValue(variableName);
@@ -57,14 +57,14 @@ class StringAssignNode extends Node implements AssignNode{
     }
   }
 
-  Expression parseExpression(String exprStr) {
+  Expression parseExpression(String exprStr, VariableRegistry registry) {
 
     exprStr = exprStr.trim();
     if (exprStr.startsWith('"') && exprStr.endsWith('"')) {
       return StringLiteral(exprStr.substring(1, exprStr.length - 1));
     }else if (exprStr.contains('[') && exprStr.contains(']')) {
       try {
-        return GetArrayValue.parse(exprStr);
+        return GetArrayValue.parse(exprStr, registry);
       } on FormatException {
         return VariableLiteral(exprStr);
       }
@@ -76,7 +76,7 @@ class StringAssignNode extends Node implements AssignNode{
   @override
   Future<void> execute(VariableRegistry registry) async {
     clearOutputs();
-    setAssignmentsFromText(rawExpression);
+    setAssignmentsFromText(rawExpression, registry);
     for (var cmd in commands) {
       await cmd.execute(registry);
     }
