@@ -105,11 +105,10 @@ class Engine {
     showToast(
       context,
       Toast(
-        // title: 'title',
-        // description: 'description'
+        lifeTime: Duration(seconds: 1),
         child: ProgramProcessingToast(
           title: 'Successful running',
-          description: 'Check the console',
+          description: 'The program was completed successfully',
           backgroundColor: Colors.green,
           textColor: Colors.white,
         ),
@@ -121,8 +120,7 @@ class Engine {
     showToast(
       context,
       Toast(
-        // title: 'title',
-        // description: 'description'
+        lifeTime: Duration(seconds: 1),
         child: ProgramProcessingToast(
           title: 'Error',
           description: errorMessage,

@@ -1,12 +1,10 @@
 import 'dart:convert';
 
-import 'package:app/core/ConsoleService.dart';
+import 'package:app/design/widgets/widgets.dart';
 import 'package:app/main.dart';
 import 'package:app/screens/test_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:app/design/widgets/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/services.dart';
 
 class MainScreen extends StatefulWidget {
   final savedState;
@@ -26,10 +24,10 @@ class _MainScreenState extends State<MainScreen>
   @override
   void initState() {
     super.initState();
-    if (widget.savedState != null) {
-      _testScreen.loadFromJson(widget.savedState);
-    } else {
+    if (widget.savedState == "create_new_screen") {
       _testScreen.clear();
+    } else if (widget.savedState != null) {
+      _testScreen.loadFromJson(widget.savedState);
     }
   }
 
@@ -64,6 +62,13 @@ class _MainScreenState extends State<MainScreen>
     prefs.setString(widget.screenName, jsonString);
 
     // _testScreen.loadFromJson(_testScreen.saveScreenState());
+  }
+
+  void printFull(String text) {
+    final pattern = RegExp(r'.{1,1024}');
+    for (final match in pattern.allMatches(text)) {
+      print(match.group(0));
+    }
   }
 
   Future<String?> showSaveDialog(BuildContext context) async {
