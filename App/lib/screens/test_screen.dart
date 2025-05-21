@@ -130,21 +130,44 @@ class TestScreen extends StatefulWidget {
               return MapEntry(key, Offset(dx, dy));
             }) ??
             <String, Offset>{});
-    nodeGraph = NodeGraph.fromJson(screenJson['nodeGraph'], consoleService);
-    refillWiredBlocks();
+    _refillNodeGraph(screenJson['nodeGraph']);
+    _refillWiredBlocks();
   }
 
-  void refillNodeGraph(Map<String, dynamic> json) {
-    List<Node> nodes = [];
+  void _refillNodeGraph(Map<String, dynamic> json) {
     List<Connection> connections =
         json['connections']
             .map<Connection>((con) => Connection.fromJson(con))
             .toList();
 
-    nodeGraph = NodeGraph.from(nodes, connections);
+    nodeGraph = NodeGraph.from(_refillNodes(), connections);
   }
 
-  void refillWiredBlocks() {
+  List<Node> _refillNodes() {
+    List<Node> nodes = [];
+
+    for (var block in assignmentBlocks) {
+      nodes.add(block.node);
+    }
+    for (var block in logicBlocks) {
+      nodes.add(block.node);
+    }
+    for (var block in printBlocks) {
+      nodes.add(block.node);
+    }
+    for (var block in ifElseBlocks) {
+      nodes.add(block.node);
+    }
+    for (var block in whileBlocks) {
+      nodes.add(block.node);
+    }
+    for (var block in swapBlocks) {
+      nodes.add(block.node);
+    }
+    return nodes;
+  }
+
+  void _refillWiredBlocks() {
     List<Pair> newWiredBlocks = [];
     for (int i = 0; i < wiredBlocks.length; i++) {
       var oldFirst = wiredBlocks[i].first;

@@ -1,18 +1,15 @@
 import 'dart:collection';
-import 'dart:math';
 
 import 'package:app/core/ConsoleService.dart';
 import 'package:app/core/NodeGraph.dart';
 import 'package:app/core/abstracts/MyTrue.dart';
 import 'package:app/core/abstracts/Node.dart';
 import 'package:app/core/nodes/IfElseNode.dart';
-import 'package:app/core/nodes/PrintNode.dart';
 import 'package:app/core/nodes/StartNode.dart';
 import 'package:app/core/nodes/WhileNode.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:app/core/widgets/program_processing_toast_widget.dart';
 import 'package:collection/collection.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:toastify/toastify.dart';
 

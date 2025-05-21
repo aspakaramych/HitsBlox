@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:app/design/widgets/widgets.dart';
 import 'package:app/main.dart';
@@ -60,6 +61,8 @@ class _MainScreenState extends State<MainScreen>
     final jsonString = jsonEncode(_testScreen.saveScreenState());
 
     prefs.setString(widget.screenName, jsonString);
+
+    log(jsonString);
 
     // _testScreen.loadFromJson(_testScreen.saveScreenState());
   }
