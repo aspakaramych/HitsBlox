@@ -28,7 +28,6 @@ Future<void> main() async {
 
   await _saveScreen("print sample", jsonEncode(SamplesForLoading.getPrintSample()));
 
-
   runApp(MyApp());
 }
 

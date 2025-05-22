@@ -1,9 +1,9 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:app/design/widgets/widgets.dart';
 import 'package:app/main.dart';
 import 'package:app/screens/test_screen.dart';
+import 'package:app/utils/serialization_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -26,9 +26,9 @@ class _MainScreenState extends State<MainScreen>
   void initState() {
     super.initState();
     if (widget.savedState == "create_new_screen") {
-      _testScreen.clear();
+      SerializationUtils.clear(_testScreen);
     } else if (widget.savedState != null) {
-      _testScreen.loadFromJson(widget.savedState);
+      SerializationUtils.loadFromJson(widget.savedState, _testScreen);
     }
   }
 
@@ -58,20 +58,13 @@ class _MainScreenState extends State<MainScreen>
       if (saveName == null || saveName.trim().isEmpty) return;
       widget.screenName = saveName;
     }
-    final jsonString = jsonEncode(_testScreen.saveScreenState());
+    final jsonString = jsonEncode(SerializationUtils.saveScreenState(_testScreen));
 
     prefs.setString(widget.screenName, jsonString);
 
-    log(jsonString);
+    // log(jsonString);
 
     // _testScreen.loadFromJson(_testScreen.saveScreenState());
-  }
-
-  void printFull(String text) {
-    final pattern = RegExp(r'.{1,1024}');
-    for (final match in pattern.allMatches(text)) {
-      print(match.group(0));
-    }
   }
 
   Future<String?> showSaveDialog(BuildContext context) async {
