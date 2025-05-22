@@ -33,7 +33,7 @@ class BoolAssignNode extends Node implements AssignNode {
   }
 
   @override
-  void setAssignmentsFromText(String text) {
+  void setAssignmentsFromText(String text, VariableRegistry registry) {
     rawExpression = text;
     commands.clear();
 
@@ -48,7 +48,7 @@ class BoolAssignNode extends Node implements AssignNode {
       var variableName = match.group(1)!;
       var exprStr = match.group(2)!;
 
-      Expression expression = parseExpression(exprStr);
+      Expression expression = parseExpression(exprStr, registry);
 
       commands.add(AssignVariableCommand<bool>(variableName, expression));
       for (var p in outputs){
@@ -57,14 +57,14 @@ class BoolAssignNode extends Node implements AssignNode {
     }
   }
 
-  Expression parseExpression(String exprStr) {
+  Expression parseExpression(String exprStr, VariableRegistry registry) {
     exprStr = exprStr.trim();
 
     if (exprStr == 'true' || exprStr == 'false') {
       return BoolLiteral(exprStr == 'true');
     } else if (exprStr.contains('[') && exprStr.contains(']')) {
       try {
-        return GetArrayValue.parse(exprStr);
+        return GetArrayValue.parse(exprStr, registry);
       } on FormatException {
         return VariableLiteral(exprStr);
       }
@@ -77,7 +77,7 @@ class BoolAssignNode extends Node implements AssignNode {
   @override
   Future<void> execute(VariableRegistry registry) async {
     clearOutputs();
-    setAssignmentsFromText(rawExpression);
+    setAssignmentsFromText(rawExpression, registry);
     for (var cmd in commands) {
       await cmd.execute(registry);
     }

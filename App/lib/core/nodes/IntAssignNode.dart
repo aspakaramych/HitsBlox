@@ -32,7 +32,7 @@ class IntAssignNode extends Node implements AssignNode{
   }
 
   @override
-  void setAssignmentsFromText(String text) {
+  void setAssignmentsFromText(String text, VariableRegistry registry) {
     rawExpression = text;
     commands.clear();
 
@@ -58,7 +58,7 @@ class IntAssignNode extends Node implements AssignNode{
       var variableName = match.group(1)!;
       var exprStr = match.group(2)!;
 
-      Expression expression = parseExpression(exprStr);
+      Expression expression = parseExpression(exprStr, registry);
       commands.add(AssignVariableCommand<int>(variableName, expression));
 
 
@@ -68,14 +68,14 @@ class IntAssignNode extends Node implements AssignNode{
     }
   }
 
-  Expression parseExpression(String exprStr) {
+  Expression parseExpression(String exprStr, VariableRegistry registry) {
     exprStr = exprStr.trim();
 
     if (int.tryParse(exprStr) != null) {
       return IntLiteral(int.parse(exprStr));
     } else if (exprStr.contains('[') && exprStr.contains(']')) {
       try {
-        return GetArrayValue.parse(exprStr);
+        return GetArrayValue.parse(exprStr, registry);
       } on FormatException {
         return VariableLiteral(exprStr);
       }
@@ -91,7 +91,7 @@ class IntAssignNode extends Node implements AssignNode{
   @override
   Future<void> execute(VariableRegistry registry) async {
     clearOutputs();
-    setAssignmentsFromText(rawExpression);
+    setAssignmentsFromText(rawExpression, registry);
     for (var cmd in commands) {
       await cmd.execute(registry);
     }

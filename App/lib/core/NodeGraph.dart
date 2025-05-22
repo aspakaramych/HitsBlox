@@ -124,7 +124,7 @@ class NodeGraph {
         newNodes.add(WhileNode.fromJson(node));
       } else if(node['title'] == "Swap") {
         newNodes.add(SwapNode.fromJson(node));
-      } else if(node['title'].contains('Присвоить') || node['title'].contains('Добавить')) {
+      } else if(node['title'].contains('Присвоить') || node['title'].contains('Добавить') || node['title'] == "Инкремент") {
         newNodes.add(AssignNode.fromJson(node));
       } else if(node['title'] == "Распечатать") {
         newNodes.add(PrintNode.fromJson(node, consoleService));

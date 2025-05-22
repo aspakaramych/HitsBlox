@@ -1,6 +1,12 @@
 import 'dart:ui';
 
+import 'package:app/core/abstracts/Expression.dart';
 import 'package:app/core/abstracts/Node.dart';
+import 'package:app/core/literals/BoolLiteral.dart';
+import 'package:app/core/literals/IntLiteral.dart';
+import 'package:app/core/literals/StringLiteral.dart';
+import 'package:app/core/literals/VariableLiteral.dart';
+import 'package:app/core/models/commands/SwapCommand.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:app/utils/offset_extension.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,17 +14,10 @@ import 'package:flutter/cupertino.dart';
 import '../pins/Pin.dart';
 
 class SwapNode extends Node {
-
   String rawExpressionFirst = '';
-  String rawExpressionSecond= '';
+  String rawExpressionSecond = '';
 
   final TextEditingController controller = TextEditingController();
-
-  @override
-  final List<Pin> _inputs = [];
-
-  @override
-  final List<Pin> _outputs = [];
 
   @override
   final String id;
@@ -26,14 +25,36 @@ class SwapNode extends Node {
   @override
   String get title => "Swap";
 
-  SwapNode(String this.id, Offset position) : super(position) {
+  SwapNode(String this.id, Offset position) : super(position) {}
+
+  List<String> setAssignmentsFromText(String text) {
+    var line = text.trim();
+    var match = RegExp(
+      r'^([a-zA-Z_]\w*)\[([^\]]+)\]$',
+    ).firstMatch(line);
+    if (match == null) return [];
+    var varName = match.group(1)!;
+    var idxMatch = match.group(2)!;
+    return [varName, idxMatch];
   }
 
-
   @override
-  Future<void> execute(VariableRegistry registry) {
-    // TODO: implement execute
-    throw UnimplementedError();
+  Future<void> execute(VariableRegistry registry) async {
+    List<String> first = setAssignmentsFromText(rawExpressionFirst);
+    List<String> second = setAssignmentsFromText(rawExpressionSecond);
+    var val1 = registry.getValue(first[1]) is int
+        ? registry.getValue(first[1])
+        : int.tryParse(first[1]);
+    var val2 = registry.getValue(second[1]) is int
+        ? registry.getValue(second[1])
+        : int.tryParse(second[1]);
+    var command = SwapCommand(
+      first[0],
+      val1,
+      second[0],
+      val2,
+    );
+    command.execute(registry);
   }
 
   static Map<String, dynamic> toJson_(SwapNode node) {
@@ -49,10 +70,15 @@ class SwapNode extends Node {
   }
 
   factory SwapNode.fromJson(Map<String, dynamic> json) {
-    final node = SwapNode(json['id'], OffsetExtension.fromJson(json['position']));
+    final node = SwapNode(
+      json['id'],
+      OffsetExtension.fromJson(json['position']),
+    );
 
-    final inputPins = (json['inputs'] as List).map((p) => pinFromJson(p)).toList();
-    final outputPins = (json['outputs'] as List).map((p) => pinFromJson(p)).toList();
+    final inputPins =
+        (json['inputs'] as List).map((p) => pinFromJson(p)).toList();
+    final outputPins =
+        (json['outputs'] as List).map((p) => pinFromJson(p)).toList();
 
     node.inputs = inputPins;
     node.outputs = outputPins;

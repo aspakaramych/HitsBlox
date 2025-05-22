@@ -7,8 +7,8 @@ class GetArrayValue implements Expression {
 
   GetArrayValue(this.arrayName, this.index);
 
-  factory GetArrayValue.parse(String exprStr) {
-    final RegExp arrayRegex = RegExp(r'(\w+)\[(\d+)\]');
+  factory GetArrayValue.parse(String exprStr, VariableRegistry registry) {
+    final RegExp arrayRegex = RegExp(r'(\w+)\[((\d+)|(\w+))\]');
     final match = arrayRegex.firstMatch(exprStr.trim());
     if (match != null) {
       final arrayName = match.group(1)!;
@@ -16,6 +16,9 @@ class GetArrayValue implements Expression {
       final index = int.tryParse(indexStr);
       if (index != null) {
         return GetArrayValue(arrayName, index);
+      }
+      if (registry.getValue(indexStr) is int){
+        return GetArrayValue(arrayName, registry.getValue(indexStr));
       }
     }
     throw FormatException('Некорректный формат массива: $exprStr');

@@ -44,14 +44,14 @@ class WhileNode extends Node {
 
   }
 
-  Expression parseExpression(String exprStr) {
+  Expression parseExpression(String exprStr, VariableRegistry registry) {
     exprStr = exprStr.trim();
 
     if (int.tryParse(exprStr) != null) {
       return IntLiteral(int.parse(exprStr));
     } else if (exprStr.contains('[') && exprStr.contains(']')) {
       try {
-        return GetArrayValue.parse(exprStr);
+        return GetArrayValue.parse(exprStr, registry);
       } on FormatException {
         return VariableLiteral(exprStr);
       }
@@ -70,8 +70,8 @@ class WhileNode extends Node {
     var leftExpr = express[0];
     var operator = express[1];
     var rightExpr = express[2];
-    var expressionLeft = parseExpression(leftExpr);
-    var expressionRight = parseExpression(rightExpr);
+    var expressionLeft = parseExpression(leftExpr, registry);
+    var expressionRight = parseExpression(rightExpr, registry);
     if (operator == "==" || operator == ">" || operator == "<" || operator == "!="){
       switch (operator){
         case "==":
