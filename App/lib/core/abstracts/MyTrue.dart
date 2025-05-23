@@ -3,4 +3,7 @@ class MyTrue{
   MyTrue(){
 
   }
+
+  @override
+  String toString() => "";
 }

@@ -116,6 +116,14 @@ class Engine {
       el.clearInputs();
     });
 
+    for (var node in graph.nodes){
+      if (node.inputs.length == 0 && node is !StartNode){
+        console.log("Ноды должны быть соединены со стартом");
+        _showErrorToast(context, "Ноды должны быть соединены со стартом");
+        return;
+      }
+    }
+
     for (var node in graph.nodes.where((n) => n is StartNode)) {
       queue.add(QueueItem(node, currentGlobalContext));
     }
