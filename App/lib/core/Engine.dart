@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 import 'package:app/core/ConsoleService.dart';
 import 'package:app/core/NodeGraph.dart';
@@ -97,8 +98,23 @@ class QueueItem {
 class Engine {
   late NodeGraph graph;
   late VariableRegistry registry;
+  bool _debugMode = false;
+  Completer<void>? _debugCompleter;
 
   Engine();
+
+  void setDebugMode(bool enable){
+    _debugMode = enable;
+    if (!_debugMode){
+      _debugCompleter?.complete();
+      _debugCompleter = null;
+    }
+  }
+
+  void next(){
+    _debugCompleter?.complete();
+    _debugCompleter = null;
+  }
 
   Future<void> run(NodeGraph nodeGraph, VariableRegistry variableRegistry, ConsoleService console, BuildContext context) async {
     this.graph = nodeGraph;
@@ -106,7 +122,6 @@ class Engine {
     registry.Clear();
 
     final Queue<QueueItem> queue = Queue();
-
     ExecutionContext currentGlobalContext = ExecutionContext.global();
 
     final Map<String, int> whileNodeTotalIterations = {};
@@ -136,6 +151,14 @@ class Engine {
     bool progressMadeInThisIteration;
 
     while (queue.isNotEmpty) {
+      if (_debugMode){
+        _debugCompleter = Completer<void>();
+        console.clear();
+        var register = registry.toString();
+        console.log(register);
+        await _debugCompleter!.future;
+      }
+
       final List<QueueItem> currentBatch = queue.toList();
       queue.clear();
 
@@ -218,8 +241,10 @@ class Engine {
         _showErrorToast(context, "Программа заблокирована: не все узлы могут быть выполнены.");
         break;
       }
+      if (!_debugMode){
+        await Future<void>.delayed(Duration(milliseconds: 100));
+      }
 
-      await Future<void>.delayed(Duration(milliseconds: 100));
     }
 
     if (queue.isEmpty) {
@@ -237,6 +262,8 @@ class Engine {
       );
     }
   }
+
+
 
   void _showErrorToast(BuildContext context, String errorMessage) {
     showToast(
