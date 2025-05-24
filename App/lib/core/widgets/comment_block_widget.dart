@@ -51,7 +51,6 @@ class _CommentBlockWidgetState extends State<CommentBlockWidget> {
             if (widget.block.wasEdited) {
               return;
             }
-            // widget.block.height += 30;
             widget.block.wasEdited = true;
           });
         },
@@ -60,124 +59,58 @@ class _CommentBlockWidgetState extends State<CommentBlockWidget> {
           elevation: 15,
           borderRadius: BorderRadius.all(Radius.circular(15)),
           child: Container(
+            padding: EdgeInsets.all(10),
             width: widget.block.width,
             height: widget.block.height,
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.secondaryContainer,
-              // border: Border.all(color: Colors.black, width: 3),
+              color: Theme.of(context).colorScheme.outlineVariant,
               borderRadius: BorderRadius.circular(15),
             ),
-            child: Stack(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Positioned(
-                  bottom: 0,
-                  child: Container(
-                    width: widget.block.width,
-                    height: widget.block.height - 30,
-                    decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Theme.of(context).colorScheme.shadow.withOpacity(0.2),
-                            spreadRadius: 0,
-                            blurRadius: 5,
-                            offset: Offset(0, -5),)
-                        ]
+                if (widget.block.isEditing)
+                  SizedBox(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                        color: Colors.transparent,
+                      ),
+                      child: TextField(
+                        controller: TextEditingController(
+                          text: widget.block.node.rawExpression,
+                        ),
+                        maxLines: 5,
+                        keyboardType: TextInputType.multiline,
+                        textInputAction: TextInputAction.done,
+                        onSubmitted: (text) {
+                          widget.block.node.rawExpression = text;
+                          widget.onEditToggle();
+                        },
+                        decoration: const InputDecoration(
+                          hintText: 'your comment',
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
+                        ),
+                        style: theme.textTheme.labelLarge,
+                      ),
                     ),
                   ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(child: Center()),
-                    if (widget.block.isEditing)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                        child: SizedBox(
-                          // width: 135,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              // color: Theme.of(context).colorScheme.secondaryContainer,
-                              borderRadius: BorderRadius.all(Radius.circular(15)),
-                              color: Colors.transparent,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Theme.of(context).colorScheme.shadow.withOpacity(0.2),
-                                ),
-                                BoxShadow(
-                                  color: Theme.of(context).colorScheme.secondaryContainer,
-                                  spreadRadius: -2.0,
-                                  blurRadius: 2.0,
-                                ),
-                              ],
-                            ),
-                            child: TextField(
-                              controller: TextEditingController(
-                                text: widget.block.node.rawExpression,
-                              ),
-                              maxLines: 1,
-                              keyboardType: TextInputType.text,
-                              textInputAction: TextInputAction.done,
-                              onSubmitted: (text) {
-                                widget.block.node.rawExpression = text;
-                                widget.onEditToggle();
-                              },
-                              decoration: const InputDecoration(
-                                hintText: 'your comment',
-                                //border: OutlineInputBorder(),
-                                contentPadding: EdgeInsets.all(6),
-                                enabledBorder: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                disabledBorder: InputBorder.none,
-                              ),
-                              style: theme.textTheme.labelLarge,
-                            ),
-                          ),
-                        ),
+                // TODO: один клик по тексту - и должна открываться клавиатура
+                if (!widget.block.isEditing)
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                    child: Text(
+                        widget.block.node.rawExpression.isEmpty ? "your comment" : widget.block.node.rawExpression,
+                        softWrap: true,
+                        maxLines: 6,
+                        overflow: TextOverflow.visible,
+                        style: theme.textTheme.labelLarge,
                       ),
-                    // TODO: один клик по тексту - и должна открываться клавиатура
-                    if (!widget.block.isEditing)
-                      Center(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                          child: Wrap(
-                            spacing: 2,
-                            runSpacing: 2,
-                            children: [
-                              if(widget.block.node.rawExpression != '')
-                                SizedBox(
-                                  width: 100,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      // color: Theme.of(context).colorScheme.secondaryContainer,
-                                      borderRadius: BorderRadius.all(Radius.circular(15)),
-                                      color: Colors.transparent,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Theme.of(context).colorScheme.shadow.withOpacity(0.2),
-                                        ),
-                                        BoxShadow(
-                                          color: Theme.of(context).colorScheme.secondaryContainer,
-                                          spreadRadius: -2.0,
-                                          blurRadius: 2.0,
-                                        ),
-                                      ],
-                                    ),
-                                    child: Chip(
-                                      label: Text(widget.block.node.rawExpression,),
-                                      backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-                                      labelStyle: theme.textTheme.labelLarge,
-                                    ),
-                                  ),
-                                ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    Expanded(child: Center()),
-                  ],
-                ),
+                  ),
               ],
             ),
           ),
