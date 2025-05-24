@@ -27,7 +27,7 @@ class LengthNode extends Node implements AssignNode{
       throw Exception("Вы не передали переменную");
     }
     var input = registry.getValue(inputs[0].getValue());
-    if (input is !List || input is !String){
+    if (input is bool && input is int){
       throw Exception("Вы передали не массив или строку");
     }
     registry.setValue(rawExpression, input.length);

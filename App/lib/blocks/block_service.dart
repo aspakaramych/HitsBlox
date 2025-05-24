@@ -98,6 +98,13 @@ class BlockService {
         ),
       ),
       Block(
+        name: "Получение длины массива",
+        action:
+            () => addAssignmentBlock(
+          BlockFactory.createLengthBlock(_transformationController),
+        ),
+      ),
+      Block(
         name: "Вывод",
         action:
             () => addPrintBlock(
