@@ -11,6 +11,7 @@ import 'package:app/core/nodes/DivideNode.dart';
 import 'package:app/core/nodes/EqualsNode.dart';
 import 'package:app/core/nodes/IfElseNode.dart';
 import 'package:app/core/nodes/IncrementNode.dart';
+import 'package:app/core/nodes/LengthNode.dart';
 import 'package:app/core/nodes/LessNode.dart';
 import 'package:app/core/nodes/ModNode.dart';
 import 'package:app/core/nodes/MoreNode.dart';
@@ -121,6 +122,23 @@ class BlockFactory {
     return AssignmentBlock(
       position: assignNode.position,
       blockName: "arrayAdd",
+      node: assignNode,
+    );
+  }
+
+  static createLengthBlock(TransformationController transformationController) {
+    final currUserOffset =
+        UserPositionUtils.getVisibleContentRect(
+          transformationController,
+        ).topLeft;
+    final assignNode = LengthNode(
+      'node_${Randomizer.getRandomInt()}',
+      Offset(currUserOffset.dx + 50, currUserOffset.dy + 50),
+    );
+
+    return AssignmentBlock(
+      position: assignNode.position,
+      blockName: "length",
       node: assignNode,
     );
   }
