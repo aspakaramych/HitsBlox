@@ -63,53 +63,36 @@ class _CommentBlockWidgetState extends State<CommentBlockWidget> {
             width: widget.block.width,
             height: widget.block.height,
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.outlineVariant,
+              color: Theme.of(context).colorScheme.secondaryContainer,
               borderRadius: BorderRadius.circular(15),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                if (widget.block.isEditing)
-                  SizedBox(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                        color: Colors.transparent,
-                      ),
-                      child: TextField(
-                        controller: TextEditingController(
-                          text: widget.block.node.rawExpression,
-                        ),
-                        maxLines: 5,
-                        keyboardType: TextInputType.multiline,
-                        textInputAction: TextInputAction.done,
-                        onSubmitted: (text) {
-                          widget.block.node.rawExpression = text;
-                          widget.onEditToggle();
-                        },
-                        decoration: const InputDecoration(
-                          hintText: 'your comment',
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          disabledBorder: InputBorder.none,
-                        ),
-                        style: theme.textTheme.labelLarge,
-                      ),
-                    ),
-                  ),
-                // TODO: один клик по тексту - и должна открываться клавиатура
-                if (!widget.block.isEditing)
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(15)),
+                      color: Colors.transparent,
                     ),
-                    child: Text(
-                        widget.block.node.rawExpression.isEmpty ? "your comment" : widget.block.node.rawExpression,
-                        softWrap: true,
-                        maxLines: 6,
-                        overflow: TextOverflow.visible,
-                        style: theme.textTheme.labelLarge,
+                    child: TextField(
+                      controller: TextEditingController(
+                        text: widget.block.node.rawExpression,
                       ),
+                      maxLines: 5,
+                      keyboardType: TextInputType.multiline,
+                      textInputAction: TextInputAction.done,
+                      onSubmitted: (text) {
+                        widget.block.node.rawExpression = text;
+                        widget.onEditToggle();
+                      },
+                      decoration: const InputDecoration(
+                        hintText: 'your comment',
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                      ),
+                      style: theme.textTheme.labelLarge,
+                    ),
                   ),
               ],
             ),
