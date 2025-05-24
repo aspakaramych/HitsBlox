@@ -41,6 +41,7 @@ class MyApp extends StatelessWidget {
     final brightness = View.of(context).platformDispatcher.platformBrightness;
     TextTheme textTheme = createTextTheme(context, "Inter Tight", "Inter");
     MaterialTheme theme = MaterialTheme(textTheme);
+    hideStatusBar();
 
     return MaterialApp(
       title: 'HITsBlocks',

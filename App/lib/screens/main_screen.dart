@@ -106,11 +106,12 @@ class _MainScreenState extends State<MainScreen>
 
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.of(context).orientation == Orientation.landscape) {
-      hideStatusBar();
-    } else {
-      showStatusBar();
-    }
+    // if (MediaQuery.of(context).orientation == Orientation.landscape) {
+    //   hideStatusBar();
+    // } else {
+    //   showStatusBar();
+    // }
+    // hideStatusBar();
     if (MediaQuery.of(context).orientation == Orientation.portrait) {
       return Stack(
       children: [
