@@ -5,6 +5,7 @@ import 'package:app/core/nodes/ArrayAsignNode.dart';
 import 'package:app/core/nodes/BoolAssignNode.dart';
 import 'package:app/core/nodes/IncrementNode.dart';
 import 'package:app/core/nodes/IntAssignNode.dart';
+import 'package:app/core/nodes/LengthNode.dart';
 import 'package:app/core/nodes/StringAssignNode.dart';
 
 class AssignmentNodeFactory {
@@ -22,6 +23,8 @@ class AssignmentNodeFactory {
         return ArrayAddNode(id, position);
       case 'Инкремент':
         return IncrementNode(id, position);
+      case 'Получение длины массива':
+        return LengthNode(id, position);
     }
   }
 }
