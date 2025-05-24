@@ -129,6 +129,8 @@ class _MainScreenState extends State<MainScreen>
                   ),
                 ),
                 Expanded(child: Center()),
+                Align(alignment: Alignment.centerRight, child: DebugBar()),
+                Expanded(child: Center()),
                 if (_isAddSectionVisible)
                   SizedBox(
                     height: 400,
@@ -162,6 +164,8 @@ class _MainScreenState extends State<MainScreen>
                         consoleService: _testScreen.consoleService,
                     ),
                   ),
+                  Expanded(child: Center()),
+                  Align(alignment: Alignment.topCenter, child: DebugBar()),
                   Expanded(child: Center()),
                   if (_isAddSectionVisible)
                     SizedBox(
