@@ -1,9 +1,9 @@
 part of "widgets.dart";
 
-
-
 class DebugBar extends StatelessWidget {
-  const DebugBar({super.key});
+  final VoidCallback onNextPressed;
+  final VoidCallback onStopPressed;
+  const DebugBar({super.key, required this.onNextPressed, required this.onStopPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +23,12 @@ class DebugBar extends StatelessWidget {
             children: [
               CustomIconButton(
                   pic: 'lib/design/assets/icons/next.svg',
-                  function: () {},
+                  function: onNextPressed,
                   color: Theme.of(context).colorScheme.onPrimaryFixed
               ),
               CustomIconButton(
                   pic: 'lib/design/assets/icons/stop.svg',
-                  function: () {},
+                  function: onStopPressed,
                   color: Theme.of(context).colorScheme.onPrimaryFixed
               ),
             ],

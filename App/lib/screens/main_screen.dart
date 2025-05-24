@@ -130,7 +130,7 @@ class _MainScreenState extends State<MainScreen>
                   ),
                 ),
                 Expanded(child: Center()),
-                Align(alignment: Alignment.centerRight, child: DebugBar()),
+                Align(alignment: Alignment.centerRight, child: DebugBar(onNextPressed: () {  }, onStopPressed: () {  },)),
                 Expanded(child: Center()),
                 if (_isAddSectionVisible)
                   SizedBox(
@@ -166,7 +166,7 @@ class _MainScreenState extends State<MainScreen>
                     ),
                   ),
                   Expanded(child: Center()),
-                  Align(alignment: Alignment.topCenter, child: DebugBar()),
+                  Align(alignment: Alignment.topCenter, child: DebugBar(onNextPressed: _testScreen.engine.next, onStopPressed: () {  },)),
                   Expanded(child: Center()),
                   if (_isAddSectionVisible)
                     SizedBox(

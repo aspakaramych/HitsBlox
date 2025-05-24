@@ -53,7 +53,7 @@ class HorizontalTopBar extends StatelessWidget {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {play.setDebugMode(true);},
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
                   maximumSize: Size(40, 40),
