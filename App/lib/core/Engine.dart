@@ -111,6 +111,10 @@ class Engine {
     }
   }
 
+  bool getDebugMode(){
+    return _debugMode;
+  }
+
   void next(){
     _debugCompleter?.complete();
     _debugCompleter = null;
