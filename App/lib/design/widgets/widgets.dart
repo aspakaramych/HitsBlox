@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:app/core/NodeGraph.dart';
+import 'package:app/core/debug_console_service.dart';
 import 'package:app/core/literals/VariableLiteral.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:app/screens/home_screen.dart';

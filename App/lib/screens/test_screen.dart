@@ -6,6 +6,7 @@ import 'package:app/blocks/while_block.dart';
 import 'package:app/core/ConsoleService.dart';
 import 'package:app/core/Engine.dart';
 import 'package:app/core/NodeGraph.dart';
+import 'package:app/core/debug_console_service.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:app/core/widgets/widget_builder.dart';
 import 'package:app/design/widgets/widgets.dart';
@@ -28,6 +29,7 @@ class TestScreen extends StatefulWidget {
 
   NodeGraph nodeGraph = NodeGraph();
   ConsoleService consoleService = ConsoleService();
+  DebugConsoleService debugConsoleService = DebugConsoleService();
   Engine engine = Engine();
   VariableRegistry registry = VariableRegistry();
 

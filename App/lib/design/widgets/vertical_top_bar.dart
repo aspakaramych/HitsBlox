@@ -5,8 +5,16 @@ class VerticalTopBar extends StatelessWidget {
   final VariableRegistry registry;
   final NodeGraph nodeGraph;
   final ConsoleService consoleService;
+  final DebugConsoleService debugConsoleService;
 
-  const VerticalTopBar({super.key, required this.play, required this.nodeGraph, required this.registry, required this.consoleService});
+  const VerticalTopBar({
+    super.key,
+    required this.play,
+    required this.nodeGraph,
+    required this.registry,
+    required this.consoleService,
+    required this.debugConsoleService,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -48,11 +56,16 @@ class VerticalTopBar extends StatelessWidget {
                   'lib/design/assets/icons/debug.svg',
                   width: 40,
                   height: 40,
-                  colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
+                  colorFilter: ColorFilter.mode(
+                    Theme.of(context).colorScheme.onPrimaryFixed,
+                    BlendMode.srcIn,
+                  ),
                 ),
               ),
               ElevatedButton(
-                onPressed: () => play.run(nodeGraph, registry, consoleService, context),
+                onPressed:
+                    () =>
+                        play.run(nodeGraph, registry, consoleService, debugConsoleService, context),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
                   maximumSize: Size(40, 40),
@@ -64,7 +77,10 @@ class VerticalTopBar extends StatelessWidget {
                   'lib/design/assets/icons/play.svg',
                   width: 40,
                   height: 40,
-                  colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
+                  colorFilter: ColorFilter.mode(
+                    Theme.of(context).colorScheme.onPrimaryFixed,
+                    BlendMode.srcIn,
+                  ),
                 ),
               ),
             ],
