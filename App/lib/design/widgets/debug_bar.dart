@@ -3,12 +3,13 @@ part of "widgets.dart";
 class DebugBar extends StatelessWidget {
   final VoidCallback onNextPressed;
   final VoidCallback onStopPressed;
-  const DebugBar({super.key, required this.onNextPressed, required this.onStopPressed});
+  final VoidCallback onMenuPressed;
+  const DebugBar({super.key, required this.onNextPressed, required this.onStopPressed, required this.onMenuPressed});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 115,
+      height: 170,
       margin: EdgeInsets.symmetric(horizontal: 20),
       child: Material(
         color: Colors.transparent,
@@ -31,6 +32,10 @@ class DebugBar extends StatelessWidget {
                   function: onStopPressed,
                   color: Theme.of(context).colorScheme.onPrimaryFixed
               ),
+              CustomIconButton(
+                  pic: 'lib/design/assets/icons/bug-folder.svg',
+                  function: onMenuPressed,
+                  color: Theme.of(context).colorScheme.onPrimaryFixed)
             ],
           ),
         ),
