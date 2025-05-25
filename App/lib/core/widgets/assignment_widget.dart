@@ -48,7 +48,7 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
       controller: TextEditingController(
         text: widget.block.node.rawExpression,
       ),
-      maxLines: 1,
+      // maxLines: 1,
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.done,
       onSubmitted: (text) {
@@ -136,7 +136,7 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                                   borderRadius: BorderRadius.all(Radius.circular(15)),
                                 ),
                                 child: Container(
-                                  padding: EdgeInsets.all(10),
+                                  padding: EdgeInsets.all(5),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.all(Radius.circular(15)),
                                     color: Colors.transparent,
