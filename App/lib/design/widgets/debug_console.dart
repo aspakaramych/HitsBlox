@@ -1,5 +1,4 @@
-import 'package:app/core/debug_console_service.dart';
-import 'package:flutter/material.dart';
+part of "widgets.dart";
 
 class DebugConsole extends StatefulWidget {
 
@@ -34,52 +33,41 @@ class _DebugConsoleState extends State<DebugConsole> {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.bottomRight,
-      child: Container(
-        width: MediaQuery
-            .of(context)
-            .size
-            .width * 0.4,
-        height: MediaQuery
-            .of(context)
-            .size
-            .height * 0.3,
-        color: Colors.grey,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment.center,
-                child: Text(
-                  "Переменные",
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .headlineSmall,
-                ),
-              ),
-              SizedBox(height: 10),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: ListView(
-                    children: [
-                      Text(
-                        '>${logs.join('\n>')}',
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .bodyLarge,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+    return Container(
+      padding: EdgeInsets.all(10),
+      width: 370,
+      height: MediaQuery
+          .of(context)
+          .size
+          .height * 0.3,
+      color: Theme.of(context).colorScheme.outline,
+      child: Column(
+        children: [
+          Text(
+            "Переменные",
+            style: Theme
+                .of(context)
+                .textTheme
+                .headlineSmall,
+            textAlign: TextAlign.center,
           ),
-        ),
+          Expanded(
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: ListView(
+                children: [
+                  Text(
+                    '>${logs.join('\n>')}',
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .bodyLarge,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

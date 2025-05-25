@@ -1,19 +1,13 @@
 part of 'widgets.dart';
 
 class HorizontalTopBar extends StatelessWidget {
-  final Engine play;
-  final VariableRegistry registry;
-  final NodeGraph nodeGraph;
-  final ConsoleService consoleService;
-  final DebugConsoleService debugConsoleService;
+  final VoidCallback debug;
+  final VoidCallback play;
 
   const HorizontalTopBar({
     super.key,
     required this.play,
-    required this.nodeGraph,
-    required this.registry,
-    required this.consoleService,
-    required this.debugConsoleService,
+    required this.debug,
   });
 
   @override
@@ -22,7 +16,6 @@ class HorizontalTopBar extends StatelessWidget {
       width: 150,
       height: 70,
       margin: EdgeInsets.only(top: 20, right: 20),
-      // padding: EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.secondaryContainer,
         borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -32,9 +25,6 @@ class HorizontalTopBar extends StatelessWidget {
         elevation: 2,
         borderRadius: BorderRadius.all(Radius.circular(15)),
         child: Container(
-          // width: 150,
-          // height: 70,
-          // margin: EdgeInsets.only(top: 60, right: 20),
           padding: EdgeInsets.symmetric(horizontal: 15),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.secondaryContainer,
@@ -44,10 +34,7 @@ class HorizontalTopBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ElevatedButton(
-                onPressed: () {
-                  play.setDebugMode(false);
-                  play.run(nodeGraph, registry, consoleService, debugConsoleService, context);
-                },
+                onPressed: play,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
                   maximumSize: Size(40, 40),
@@ -63,10 +50,7 @@ class HorizontalTopBar extends StatelessWidget {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {
-                  play.setDebugMode(true);
-                  play.run(nodeGraph, registry, consoleService, debugConsoleService, context);
-                },
+                onPressed: debug,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
                   maximumSize: Size(40, 40),
