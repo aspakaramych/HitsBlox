@@ -1,19 +1,13 @@
 part of 'widgets.dart';
 
 class VerticalTopBar extends StatelessWidget {
-  final Engine play;
-  final VariableRegistry registry;
-  final NodeGraph nodeGraph;
-  final ConsoleService consoleService;
-  final DebugConsoleService debugConsoleService;
+  final VoidCallback play;
+  final VoidCallback debug;
 
   const VerticalTopBar({
     super.key,
     required this.play,
-    required this.nodeGraph,
-    required this.registry,
-    required this.consoleService,
-    required this.debugConsoleService,
+    required this.debug,
   });
 
   @override
@@ -22,7 +16,6 @@ class VerticalTopBar extends StatelessWidget {
       width: 70,
       height: 150,
       margin: EdgeInsets.only(top: 20, left: 20),
-      // padding: EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.secondaryContainer,
         borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -32,9 +25,6 @@ class VerticalTopBar extends StatelessWidget {
         elevation: 2,
         borderRadius: BorderRadius.all(Radius.circular(15)),
         child: Container(
-          // width: 150,
-          // height: 70,
-          // margin: EdgeInsets.only(top: 60, right: 20),
           padding: EdgeInsets.symmetric(vertical: 15),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.secondaryContainer,
@@ -44,7 +34,7 @@ class VerticalTopBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ElevatedButton(
-                onPressed: () {},
+                onPressed: debug,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
                   maximumSize: Size(40, 40),
@@ -60,9 +50,7 @@ class VerticalTopBar extends StatelessWidget {
                 ),
               ),
               ElevatedButton(
-                onPressed:
-                    () =>
-                        play.run(nodeGraph, registry, consoleService, debugConsoleService, context),
+                onPressed: play,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
                   maximumSize: Size(40, 40),
