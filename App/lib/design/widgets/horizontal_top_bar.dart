@@ -37,7 +37,7 @@ class HorizontalTopBar extends StatelessWidget {
           // margin: EdgeInsets.only(top: 60, right: 20),
           padding: EdgeInsets.symmetric(horizontal: 15),
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.primaryFixed,
+            color: Theme.of(context).colorScheme.secondaryContainer,
             borderRadius: BorderRadius.all(Radius.circular(15)),
           ),
           child: Row(

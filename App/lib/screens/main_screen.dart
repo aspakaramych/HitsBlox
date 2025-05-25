@@ -5,6 +5,7 @@ import 'package:app/main.dart';
 import 'package:app/screens/test_screen.dart';
 import 'package:app/utils/serialization_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../design/widgets/debug_console.dart';
@@ -160,7 +161,7 @@ class _MainScreenState extends State<MainScreen>
                   Expanded(child: Center()),
                   Align(
                     alignment: Alignment.centerRight,
-                    child: DebugBar(
+                    child: VerticalDebugBar(
                       onNextPressed: () {
                         _testScreen.engine.next();
                       },
@@ -225,7 +226,7 @@ class _MainScreenState extends State<MainScreen>
                   Expanded(child: Center()),
                   Align(
                     alignment: Alignment.topCenter,
-                    child: DebugBar(
+                    child: HorizontalDebugBar(
                       onNextPressed: () {
                         _testScreen.engine.next();
                       },
