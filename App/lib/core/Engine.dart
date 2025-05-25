@@ -117,6 +117,34 @@ class Engine {
   }
 
   Future<void> run(NodeGraph nodeGraph, VariableRegistry variableRegistry, ConsoleService console, BuildContext context) async {
+    if (_debugMode){
+      showToast(
+        context,
+        Toast(
+          lifeTime: Duration(seconds: 1),
+          child: ProgramProcessingToast(
+            title: 'Program is running in debug mode',
+            description: 'Debug mode is enable',
+            backgroundColor: Colors.grey,
+            textColor: Colors.white,
+          ),
+        ),
+      );
+    }
+    else{
+      showToast(
+        context,
+        Toast(
+          lifeTime: Duration(seconds: 3),
+          child: ProgramProcessingToast(
+            title: 'Program running',
+            description: 'Program is running, wait next message',
+            backgroundColor: Colors.grey,
+            textColor: Colors.grey,
+          ),
+        ),
+      );
+    }
     this.graph = nodeGraph;
     this.registry = variableRegistry;
     registry.Clear();
@@ -154,8 +182,8 @@ class Engine {
       if (_debugMode){
         _debugCompleter = Completer<void>();
         console.clear();
-        var register = registry.toString();
-        console.log(register);
+        var registerStr = registry.toString();
+        console.log(registerStr);
         await _debugCompleter!.future;
       }
 
