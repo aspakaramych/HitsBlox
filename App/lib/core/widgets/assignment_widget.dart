@@ -48,7 +48,6 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
       controller: TextEditingController(
         text: widget.block.node.rawExpression,
       ),
-      // maxLines: 1,
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.done,
       onSubmitted: (text) {
