@@ -31,10 +31,24 @@ Future<void> main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  final router = AppRouter();
+class MyApp extends StatefulWidget {
 
   MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool isDarkMode = true;
+
+  void toggleTheme() {
+    setState(() {
+      isDarkMode = !isDarkMode;
+    });
+  }
+
+  late var router = AppRouter(() {toggleTheme();});
 
   @override
   Widget build(BuildContext context) {
@@ -45,12 +59,11 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'HITsBlocks',
-      theme: theme.lightMediumContrast(),
+      theme: (isDarkMode) ? theme.dark() : theme.light(),
       onGenerateRoute: router.onGenerateRoute,
       initialRoute: '/',
     );
   }
-
 }
 
 Future<void> _saveScreen(String name, String jsonString) async {

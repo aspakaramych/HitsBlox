@@ -94,20 +94,18 @@ class _GridSavesState extends State<GridSaves> {
                   children: [
                     if(key != "Новое сохранение")
                     Card(
-                    color: Theme.of(context).colorScheme.primaryFixed,
-                    elevation: 3,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    child: Center(
-                      child: Text(
-                        '$key',
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.onPrimaryFixed,
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      child: Center(
+                        child: Text(
+                          '$key',
+                          style: Theme.of(context).textTheme.titleLarge
                         ),
                       ),
-                    ),
-                  )
+                    )
                     else if(key == "Новое сохранение")
                       Card(
                         color: Theme.of(context).colorScheme.secondaryContainer,
@@ -135,13 +133,13 @@ class _GridSavesState extends State<GridSaves> {
                     child: Container(
                       padding: EdgeInsets.all(4),
                       decoration: BoxDecoration(
-                        color: Colors.red.withOpacity(0.8),
+                        color: Theme.of(context).colorScheme.errorContainer,
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
                         Icons.close,
                         size: 20,
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.onErrorContainer,
                       ),
                     ),
                   ),

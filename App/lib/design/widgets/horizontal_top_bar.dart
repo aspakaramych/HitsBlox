@@ -5,19 +5,26 @@ class HorizontalTopBar extends StatelessWidget {
   final VariableRegistry registry;
   final NodeGraph nodeGraph;
   final ConsoleService consoleService;
+  final DebugConsoleService debugConsoleService;
 
-
-  const HorizontalTopBar({super.key, required this.play, required this.nodeGraph, required this.registry, required this.consoleService});
+  const HorizontalTopBar({
+    super.key,
+    required this.play,
+    required this.nodeGraph,
+    required this.registry,
+    required this.consoleService,
+    required this.debugConsoleService,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 150,
       height: 70,
-      margin: EdgeInsets.only(top: 60, right: 20),
+      margin: EdgeInsets.only(top: 20, right: 20),
       // padding: EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primaryFixed,
+        color: Theme.of(context).colorScheme.secondaryContainer,
         borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
       child: Material(
@@ -37,7 +44,10 @@ class HorizontalTopBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ElevatedButton(
-                onPressed: () {play.setDebugMode(false); play.run(nodeGraph, registry, consoleService, context);},
+                onPressed: () {
+                  play.setDebugMode(false);
+                  play.run(nodeGraph, registry, consoleService, debugConsoleService, context);
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
                   maximumSize: Size(40, 40),
@@ -49,11 +59,14 @@ class HorizontalTopBar extends StatelessWidget {
                   'lib/design/assets/icons/play.svg',
                   width: 40,
                   height: 40,
-                  colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
+                  colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.onSecondaryContainer, BlendMode.srcIn),
                 ),
               ),
               ElevatedButton(
-                onPressed: () {play.setDebugMode(true); play.run(nodeGraph, registry, consoleService, context);},
+                onPressed: () {
+                  play.setDebugMode(true);
+                  play.run(nodeGraph, registry, consoleService, debugConsoleService, context);
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
                   maximumSize: Size(40, 40),
@@ -65,9 +78,9 @@ class HorizontalTopBar extends StatelessWidget {
                   'lib/design/assets/icons/debug.svg',
                   width: 40,
                   height: 40,
-                  colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
+                  colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.onSecondaryContainer, BlendMode.srcIn),
                 ),
-              )
+              ),
             ],
           ),
         ),

@@ -4,6 +4,7 @@ import 'package:app/core/ConsoleService.dart';
 import 'package:app/core/NodeGraph.dart';
 import 'package:app/core/abstracts/MyTrue.dart';
 import 'package:app/core/abstracts/Node.dart';
+import 'package:app/core/debug_console_service.dart';
 import 'package:app/core/nodes/IfElseNode.dart';
 import 'package:app/core/nodes/StartNode.dart';
 import 'package:app/core/nodes/WhileNode.dart';
@@ -120,7 +121,12 @@ class Engine {
     _debugCompleter = null;
   }
 
-  Future<void> run(NodeGraph nodeGraph, VariableRegistry variableRegistry, ConsoleService console, BuildContext context) async {
+  Future<void> run(
+      NodeGraph nodeGraph,
+      VariableRegistry variableRegistry,
+      ConsoleService console,
+      DebugConsoleService debugConsoleService,
+      BuildContext context) async {
     if (_debugMode){
       showToast(
         context,
@@ -187,7 +193,8 @@ class Engine {
         _debugCompleter = Completer<void>();
         console.clear();
         var registerStr = registry.toString();
-        console.log(registerStr);
+        debugConsoleService.clear();
+        debugConsoleService.log(registerStr);
         await _debugCompleter!.future;
       }
 

@@ -7,6 +7,8 @@ import 'package:app/utils/serialization_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../design/widgets/debug_console.dart';
+
 class MainScreen extends StatefulWidget {
   final savedState;
   String screenName;
@@ -18,18 +20,32 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen>
-    with AutomaticKeepAliveClientMixin {
+    with SingleTickerProviderStateMixin {
   bool _isAddSectionVisible = false;
   final TestScreen _testScreen = testScreen;
+  bool _isDebugConsoleOpen = false;
+
+  late AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(microseconds: 300),
+    );
     if (widget.savedState == "create_new_screen") {
       SerializationUtils.clear(_testScreen);
     } else if (widget.savedState != null) {
       SerializationUtils.loadFromJson(widget.savedState, _testScreen);
     }
+    SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   void _toggleAddSection() {
@@ -51,6 +67,15 @@ class _MainScreenState extends State<MainScreen>
     );
   }
 
+  void _toggleDebugConsole() {
+    if (_isDebugConsoleOpen) {
+      _controller.reverse();
+    } else {
+      _controller.forward();
+    }
+    _isDebugConsoleOpen = !_isDebugConsoleOpen;
+  }
+
   Future<void> _saveScreen() async {
     final prefs = await SharedPreferences.getInstance();
     if (widget.screenName.isEmpty) {
@@ -58,7 +83,9 @@ class _MainScreenState extends State<MainScreen>
       if (saveName == null || saveName.trim().isEmpty) return;
       widget.screenName = saveName;
     }
-    final jsonString = jsonEncode(SerializationUtils.saveScreenState(_testScreen));
+    final jsonString = jsonEncode(
+      SerializationUtils.saveScreenState(_testScreen),
+    );
 
     prefs.setString(widget.screenName, jsonString);
 
@@ -114,40 +141,69 @@ class _MainScreenState extends State<MainScreen>
     // hideStatusBar();
     if (MediaQuery.of(context).orientation == Orientation.portrait) {
       return Stack(
-      children: [
-        _testScreen,
-        Stack(
-          children: [
-            Column(
-              children: [
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: HorizontalTopBar(
-                    play: _testScreen.engine,
-                    nodeGraph: _testScreen.nodeGraph,
-                    registry: _testScreen.registry,
-                    consoleService: _testScreen.consoleService,
+        children: [
+          _testScreen,
+          Stack(
+            children: [
+              Column(
+                children: [
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: HorizontalTopBar(
+                      play: _testScreen.engine,
+                      nodeGraph: _testScreen.nodeGraph,
+                      registry: _testScreen.registry,
+                      consoleService: _testScreen.consoleService,
+                      debugConsoleService: _testScreen.debugConsoleService,
+                    ),
                   ),
-                ),
-                Expanded(child: Center()),
-                Align(alignment: Alignment.centerRight, child: DebugBar(onNextPressed: () { _testScreen.engine.next(); }, onStopPressed: () { _testScreen.engine.setDebugMode(false);  },)),
-                Expanded(child: Center()),
-                if (_isAddSectionVisible)
-                  SizedBox(
-                    height: 400,
-                    child: BlocksList(blocks: _testScreen.blocks),
+                  Expanded(child: Center()),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: DebugBar(
+                      onNextPressed: () {
+                        _testScreen.engine.next();
+                      },
+                      onStopPressed: () {
+                        _testScreen.engine.setDebugMode(false);
+                      },
+                      onMenuPressed: () {
+                        _toggleDebugConsole();
+                      },
+                    ),
                   ),
-                HorizontalBottomBar(
-                  onTerminalPressed: () => _showTerminalPanel(context),
-                  onAddPressed: () => _toggleAddSection(),
-                  onSavePressed: () => _saveScreen(),
+                  Expanded(child: Center()),
+                  if (_isAddSectionVisible)
+                    SizedBox(
+                      height: 400,
+                      child: BlocksList(blocks: _testScreen.blocks),
+                    ),
+                  HorizontalBottomBar(
+                    onTerminalPressed: () => _showTerminalPanel(context),
+                    onAddPressed: () => _toggleAddSection(),
+                    onSavePressed: () => _saveScreen(),
+                  ),
+                ],
+              ),
+              SlideTransition(
+                position: Tween<Offset>(
+                  begin: Offset(
+                    MediaQuery.of(context).size.width * 0.7 / 100,
+                    0,
+                  ),
+                  end: Offset.zero,
+                ).animate(
+                  CurvedAnimation(parent: _controller, curve: Curves.easeOut),
                 ),
-              ],
-            ),
-          ],
-        ),
-      ],
-    );
+                child: DebugConsole(
+                  onClose: _toggleDebugConsole,
+                  debugConsoleService: _testScreen.debugConsoleService,
+                ),
+              ),
+            ],
+          ),
+        ],
+      );
     } else {
       return Stack(
         children: [
@@ -162,11 +218,25 @@ class _MainScreenState extends State<MainScreen>
                       play: _testScreen.engine,
                       nodeGraph: _testScreen.nodeGraph,
                       registry: _testScreen.registry,
-                        consoleService: _testScreen.consoleService,
+                      consoleService: _testScreen.consoleService,
+                      debugConsoleService: _testScreen.debugConsoleService,
                     ),
                   ),
                   Expanded(child: Center()),
-                  Align(alignment: Alignment.topCenter, child: DebugBar(onNextPressed: _testScreen.engine.next, onStopPressed: () {  },)),
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: DebugBar(
+                      onNextPressed: () {
+                        _testScreen.engine.next();
+                      },
+                      onStopPressed: () {
+                        _testScreen.engine.setDebugMode(false);
+                      },
+                      onMenuPressed: () {
+                        _toggleDebugConsole();
+                      },
+                    ),
+                  ),
                   Expanded(child: Center()),
                   if (_isAddSectionVisible)
                     SizedBox(
@@ -179,6 +249,24 @@ class _MainScreenState extends State<MainScreen>
                     onSavePressed: () => _saveScreen(),
                   ),
                 ],
+              ),
+              SlideTransition(
+                position: Tween<Offset>(
+                  begin: Offset(
+                    MediaQuery.of(context).size.width * 0.7 / 100,
+                    0,
+                  ),
+                  end: Offset.zero,
+                ).animate(
+                  CurvedAnimation(
+                    parent: _controller,
+                    curve: Curves.easeOut,
+                  ),
+                ),
+                child: DebugConsole(
+                  onClose: _toggleDebugConsole,
+                  debugConsoleService: _testScreen.debugConsoleService,
+                ),
               ),
             ],
           ),

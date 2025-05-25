@@ -123,10 +123,10 @@ class _IfElseBlockWidgetState extends State<IfElseBlockWidget> {
                     height: 30,
                     width: 30,
                     child: FloatingActionButton(
-                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                      backgroundColor: Theme.of(context).colorScheme.primary,
                       shape: CircleBorder(),
                       onPressed: () => expandBlock(),
-                      child: const Icon(Icons.add),
+                      child: Icon(Icons.add, color: Theme.of(context).colorScheme.onPrimary),
                     ),
                   )
                 ),

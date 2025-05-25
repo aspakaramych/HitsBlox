@@ -50,7 +50,7 @@ class _BouncingIconState extends State<BouncingIcon>
       child: SvgPicture.asset(
         "lib/design/assets/icons/scroll.svg",
         colorFilter: ColorFilter.mode(
-          Theme.of(context).colorScheme.onSecondary,
+          Theme.of(context).colorScheme.onSurface,
           BlendMode.srcIn,
         ),
       ),

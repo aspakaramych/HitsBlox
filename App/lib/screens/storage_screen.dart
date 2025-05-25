@@ -89,20 +89,18 @@ class _StorageSavesState extends State<StorageSaves> {
                   );
                 },
                 child: Card(
-                  color: Theme.of(context).colorScheme.primaryFixed,
-                  elevation: 3,
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  elevation: 5,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25),
                   ),
                   child: Center(
                     child: Text(
-                      '$key',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onPrimaryFixed,
-                      ),
+                        '$key',
+                        style: Theme.of(context).textTheme.titleLarge
                     ),
                   ),
-                ),
+                )
               ),
               if (key != "Новое сохранение")
                 Positioned(
@@ -113,13 +111,13 @@ class _StorageSavesState extends State<StorageSaves> {
                     child: Container(
                       padding: EdgeInsets.all(4),
                       decoration: BoxDecoration(
-                        color: Colors.red.withOpacity(0.8),
+                        color: Theme.of(context).colorScheme.errorContainer,
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
                         Icons.close,
                         size: 20,
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.onErrorContainer,
                       ),
                     ),
                   ),
@@ -139,7 +137,7 @@ class StorageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20),
-      color: Theme.of(context).colorScheme.secondary,
+      color: Theme.of(context).colorScheme.surfaceDim,
       child: StorageSaves()
     );
   }

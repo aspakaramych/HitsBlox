@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:app/core/NodeGraph.dart';
+import 'package:app/core/debug_console_service.dart';
 import 'package:app/core/literals/VariableLiteral.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:app/screens/home_screen.dart';
@@ -26,5 +27,6 @@ part 'console.dart';
 part 'list_blocks.dart';
 part 'saves_grid.dart';
 part 'bouncing_scroll.dart';
-part 'debug_bar.dart';
+part 'vertical_debug_bar.dart';
+part 'horizontal_debug_bar.dart';
 part 'custom_icon_button.dart';

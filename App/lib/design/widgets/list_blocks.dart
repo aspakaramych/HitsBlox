@@ -24,11 +24,7 @@ class _BlockCardState extends State<BlockCard> {
       child: Card(
         // padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         margin: EdgeInsets.symmetric(horizontal: 5),
-        // decoration: BoxDecoration(
-        //   color: AppColors.primary,
-        //   borderRadius: BorderRadius.all(Radius.circular(25)),
-        // ),
-        color: Theme.of(context).colorScheme.primaryFixedDim,
+        color: Theme.of(context).colorScheme.primaryContainer,
         child: Center(
           child: RichText(
             text: TextSpan(
@@ -82,7 +78,7 @@ class _BlocksListState extends State<BlocksList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 300,
+      width: 370,
       padding: EdgeInsets.all(16),
       child: BlocksGrid(blocks: widget.blocks),
     );
