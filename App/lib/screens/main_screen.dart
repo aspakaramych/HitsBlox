@@ -8,8 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../design/widgets/debug_console.dart';
-
 class MainScreen extends StatefulWidget {
   final savedState;
   String screenName;
@@ -134,18 +132,26 @@ class _MainScreenState extends State<MainScreen>
 
   @override
   Widget build(BuildContext context) {
-    // if (MediaQuery.of(context).orientation == Orientation.landscape) {
-    //   hideStatusBar();
-    // } else {
-    //   showStatusBar();
-    // }
-    // hideStatusBar();
     if (MediaQuery.of(context).orientation == Orientation.portrait) {
       return Stack(
         children: [
           _testScreen,
           Stack(
             children: [
+              Align(
+                alignment: Alignment.centerRight,
+                child: VerticalDebugBar(
+                  onNextPressed: () {
+                    _testScreen.engine.next();
+                  },
+                  onStopPressed: () {
+                    _testScreen.engine.setDebugMode(false);
+                  },
+                  onMenuPressed: () {
+                    _toggleDebugConsole();
+                  },
+                ),
+              ),
               Column(
                 children: [
                   Align(
@@ -156,21 +162,6 @@ class _MainScreenState extends State<MainScreen>
                       registry: _testScreen.registry,
                       consoleService: _testScreen.consoleService,
                       debugConsoleService: _testScreen.debugConsoleService,
-                    ),
-                  ),
-                  Expanded(child: Center()),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: VerticalDebugBar(
-                      onNextPressed: () {
-                        _testScreen.engine.next();
-                      },
-                      onStopPressed: () {
-                        _testScreen.engine.setDebugMode(false);
-                      },
-                      onMenuPressed: () {
-                        _toggleDebugConsole();
-                      },
                     ),
                   ),
                   Expanded(child: Center()),
@@ -211,6 +202,20 @@ class _MainScreenState extends State<MainScreen>
           _testScreen,
           Stack(
             children: [
+              Align(
+                alignment: Alignment.topCenter,
+                child: HorizontalDebugBar(
+                  onNextPressed: () {
+                    _testScreen.engine.next();
+                  },
+                  onStopPressed: () {
+                    _testScreen.engine.setDebugMode(false);
+                  },
+                  onMenuPressed: () {
+                    _toggleDebugConsole();
+                  },
+                ),
+              ),
               Row(
                 children: [
                   Align(
@@ -221,21 +226,6 @@ class _MainScreenState extends State<MainScreen>
                       registry: _testScreen.registry,
                       consoleService: _testScreen.consoleService,
                       debugConsoleService: _testScreen.debugConsoleService,
-                    ),
-                  ),
-                  Expanded(child: Center()),
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: HorizontalDebugBar(
-                      onNextPressed: () {
-                        _testScreen.engine.next();
-                      },
-                      onStopPressed: () {
-                        _testScreen.engine.setDebugMode(false);
-                      },
-                      onMenuPressed: () {
-                        _toggleDebugConsole();
-                      },
                     ),
                   ),
                   Expanded(child: Center()),

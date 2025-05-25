@@ -30,3 +30,4 @@ part 'bouncing_scroll.dart';
 part 'vertical_debug_bar.dart';
 part 'horizontal_debug_bar.dart';
 part 'custom_icon_button.dart';
+part 'debug_console.dart';

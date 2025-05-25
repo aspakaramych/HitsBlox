@@ -1,5 +1,4 @@
-import 'package:app/core/debug_console_service.dart';
-import 'package:flutter/material.dart';
+part of "widgets.dart";
 
 class DebugConsole extends StatefulWidget {
 
