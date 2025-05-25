@@ -15,4 +15,9 @@ class VariableRegistry{
   }
 
   List<String> getAllVars() => _variables.keys.toList();
+
+  @override
+  String toString() {
+    return _variables.toString();
+  }
 }

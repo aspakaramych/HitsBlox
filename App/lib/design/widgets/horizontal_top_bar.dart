@@ -37,7 +37,7 @@ class HorizontalTopBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ElevatedButton(
-                onPressed: () => play.run(nodeGraph, registry, consoleService, context),
+                onPressed: () {play.setDebugMode(false); play.run(nodeGraph, registry, consoleService, context);},
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
                   maximumSize: Size(40, 40),
@@ -53,7 +53,7 @@ class HorizontalTopBar extends StatelessWidget {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {play.setDebugMode(true);},
+                onPressed: () {play.setDebugMode(true); play.run(nodeGraph, registry, consoleService, context);},
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
                   maximumSize: Size(40, 40),

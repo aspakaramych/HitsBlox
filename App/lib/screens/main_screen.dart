@@ -130,7 +130,7 @@ class _MainScreenState extends State<MainScreen>
                   ),
                 ),
                 Expanded(child: Center()),
-                Align(alignment: Alignment.centerRight, child: DebugBar(onNextPressed: () {  }, onStopPressed: () {  },)),
+                Align(alignment: Alignment.centerRight, child: DebugBar(onNextPressed: () { _testScreen.engine.next(); }, onStopPressed: () { _testScreen.engine.setDebugMode(false);  },)),
                 Expanded(child: Center()),
                 if (_isAddSectionVisible)
                   SizedBox(
