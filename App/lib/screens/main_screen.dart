@@ -39,6 +39,7 @@ class _MainScreenState extends State<MainScreen>
     } else if (widget.savedState != null) {
       SerializationUtils.loadFromJson(widget.savedState, _testScreen);
     }
+    SystemChrome.setPreferredOrientations(DeviceOrientation.values);
   }
 
   @override

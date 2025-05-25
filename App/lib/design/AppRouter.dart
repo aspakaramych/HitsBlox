@@ -8,11 +8,12 @@ class AppRouter {
   late final Widget homeScreen;
   late final Widget mainScreen;
   late final Widget settingsScreen;
+  final VoidCallback toggleTheme;
 
-  AppRouter() {
+  AppRouter(this.toggleTheme) {
     homeScreen = HomeScreen();
     mainScreen = MainScreen(null, screenName: '',);
-    settingsScreen = SettingsScreen();
+    settingsScreen = SettingsScreen(toggleTheme: toggleTheme,);
   }
 
   Route<dynamic> onGenerateRoute(RouteSettings settings) {

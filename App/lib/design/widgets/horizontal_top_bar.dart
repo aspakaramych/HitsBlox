@@ -21,10 +21,10 @@ class HorizontalTopBar extends StatelessWidget {
     return Container(
       width: 150,
       height: 70,
-      margin: EdgeInsets.only(top: 60, right: 20),
+      margin: EdgeInsets.only(top: 20, right: 20),
       // padding: EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primaryFixed,
+        color: Theme.of(context).colorScheme.secondaryContainer,
         borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
       child: Material(
@@ -59,10 +59,7 @@ class HorizontalTopBar extends StatelessWidget {
                   'lib/design/assets/icons/play.svg',
                   width: 40,
                   height: 40,
-                  colorFilter: ColorFilter.mode(
-                    Theme.of(context).colorScheme.onPrimaryFixed,
-                    BlendMode.srcIn,
-                  ),
+                  colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.onSecondaryContainer, BlendMode.srcIn),
                 ),
               ),
               ElevatedButton(
@@ -81,10 +78,7 @@ class HorizontalTopBar extends StatelessWidget {
                   'lib/design/assets/icons/debug.svg',
                   width: 40,
                   height: 40,
-                  colorFilter: ColorFilter.mode(
-                    Theme.of(context).colorScheme.onPrimaryFixed,
-                    BlendMode.srcIn,
-                  ),
+                  colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.onSecondaryContainer, BlendMode.srcIn),
                 ),
               ),
             ],

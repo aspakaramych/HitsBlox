@@ -46,7 +46,7 @@ class VerticalBottomBar extends StatelessWidget {
             child: ConstrainedBox(
               constraints: BoxConstraints(maxHeight: 370),
               child: Container(
-                color: Theme.of(context).colorScheme.primaryFixed,
+                color: Theme.of(context).colorScheme.secondaryContainer,
                 padding: EdgeInsets.all(10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -57,13 +57,12 @@ class VerticalBottomBar extends StatelessWidget {
                         width: 40,
                         height: 40,
                         colorFilter: ColorFilter.mode(
-                            Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
+                            Theme.of(context).colorScheme.onSecondaryContainer, BlendMode.srcIn),
                       ),
                       onPressed: () =>
-                          Navigator.push(
+                          Navigator.pushNamed(
                             context,
-                            PageRouteBuilder(pageBuilder: (context, animation,
-                                secondaryAnimation) => SettingsScreen()),
+                            '/settings',
                           ),
                     ),
                     IconButton(
@@ -72,7 +71,7 @@ class VerticalBottomBar extends StatelessWidget {
                         width: 40,
                         height: 40,
                         colorFilter: ColorFilter.mode(
-                            Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
+                            Theme.of(context).colorScheme.onSecondaryContainer, BlendMode.srcIn),
                       ),
                       onPressed: onSavePressed,
                     ),
@@ -83,7 +82,7 @@ class VerticalBottomBar extends StatelessWidget {
                         width: 40,
                         height: 40,
                         colorFilter: ColorFilter.mode(
-                            Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
+                            Theme.of(context).colorScheme.onSecondaryContainer, BlendMode.srcIn),
                       ),
                       onPressed: onTerminalPressed,
                     ),
@@ -93,12 +92,12 @@ class VerticalBottomBar extends StatelessWidget {
                         width: 40,
                         height: 40,
                         colorFilter: ColorFilter.mode(
-                            Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
+                            Theme.of(context).colorScheme.onSecondaryContainer, BlendMode.srcIn),
                       ),
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushNamed(
                           context,
-                          MaterialPageRoute(builder: (context) => HomeScreen()),
+                          '/home',
                         );
                       },
                     ),
@@ -115,7 +114,7 @@ class VerticalBottomBar extends StatelessWidget {
               borderRadius: BorderRadius.circular(50),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Theme.of(context).colorScheme.primaryContainer,
                   borderRadius: BorderRadius.circular(50),
                 ),
                 child: IconButton(
@@ -124,7 +123,7 @@ class VerticalBottomBar extends StatelessWidget {
                     width: 55,
                     height: 55,
                     colorFilter:
-                    ColorFilter.mode(Theme.of(context).colorScheme.onPrimary, BlendMode.srcIn),
+                    ColorFilter.mode(Theme.of(context).colorScheme.onPrimaryContainer, BlendMode.srcIn),
                   ),
                   onPressed: onAddPressed,
                 ),
