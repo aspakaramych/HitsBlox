@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class BackgroundPainter extends CustomPainter {
+  final BuildContext context;
+
+  BackgroundPainter({super.repaint, required this.context});
+
   @override
   void paint(Canvas canvas, Size size) {
     final height = size.height;
@@ -9,7 +13,7 @@ class BackgroundPainter extends CustomPainter {
 
     Path mainBackground = Path();
     mainBackground.addRect(Rect.fromLTRB(0, 0, width, height));
-    paint.color = Colors.white12;
+    paint.color = Theme.of(context).colorScheme.outlineVariant;
 
     final heightLine = 80;
     final widthLine = 80;

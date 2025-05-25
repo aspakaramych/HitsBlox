@@ -5,6 +5,7 @@ import 'package:app/main.dart';
 import 'package:app/screens/test_screen.dart';
 import 'package:app/utils/serialization_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MainScreen extends StatefulWidget {
@@ -30,6 +31,7 @@ class _MainScreenState extends State<MainScreen>
     } else if (widget.savedState != null) {
       SerializationUtils.loadFromJson(widget.savedState, _testScreen);
     }
+    SystemChrome.setPreferredOrientations(DeviceOrientation.values);
   }
 
   void _toggleAddSection() {
@@ -130,11 +132,11 @@ class _MainScreenState extends State<MainScreen>
                   ),
                 ),
                 Expanded(child: Center()),
-                Align(alignment: Alignment.centerRight, child: DebugBar(onNextPressed: () { _testScreen.engine.next(); }, onStopPressed: () { _testScreen.engine.setDebugMode(false);  }, onMenuPressed: () {  }, )),
+                Align(alignment: Alignment.centerRight, child: VerticalDebugBar(onNextPressed: () { _testScreen.engine.next(); }, onStopPressed: () { _testScreen.engine.setDebugMode(false);  }, onMenuPressed: () {  }, )),
                 Expanded(child: Center()),
                 if (_isAddSectionVisible)
                   SizedBox(
-                    height: 400,
+                    height: 300,
                     child: BlocksList(blocks: _testScreen.blocks),
                   ),
                 HorizontalBottomBar(
@@ -166,7 +168,7 @@ class _MainScreenState extends State<MainScreen>
                     ),
                   ),
                   Expanded(child: Center()),
-                  Align(alignment: Alignment.topCenter, child: DebugBar(onNextPressed: () { _testScreen.engine.next(); }, onStopPressed: () { _testScreen.engine.setDebugMode(false);  }, onMenuPressed: () {  }, )),
+                  Align(alignment: Alignment.topCenter, child: HorizontalDebugBar(onNextPressed: () { _testScreen.engine.next(); }, onStopPressed: () { _testScreen.engine.setDebugMode(false);  }, onMenuPressed: () {  }, )),
                   Expanded(child: Center()),
                   if (_isAddSectionVisible)
                     SizedBox(

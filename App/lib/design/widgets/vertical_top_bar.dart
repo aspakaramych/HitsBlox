@@ -16,7 +16,7 @@ class VerticalTopBar extends StatelessWidget {
       margin: EdgeInsets.only(top: 20, left: 20),
       // padding: EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primaryFixed,
+        color: Theme.of(context).colorScheme.secondaryContainer,
         borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
       child: Material(
@@ -29,7 +29,7 @@ class VerticalTopBar extends StatelessWidget {
           // margin: EdgeInsets.only(top: 60, right: 20),
           padding: EdgeInsets.symmetric(vertical: 15),
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.primaryFixed,
+            color: Theme.of(context).colorScheme.secondaryContainer,
             borderRadius: BorderRadius.all(Radius.circular(15)),
           ),
           child: Column(
@@ -48,7 +48,7 @@ class VerticalTopBar extends StatelessWidget {
                   'lib/design/assets/icons/debug.svg',
                   width: 40,
                   height: 40,
-                  colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
+                  colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.onSecondaryContainer, BlendMode.srcIn),
                 ),
               ),
               ElevatedButton(
@@ -64,7 +64,7 @@ class VerticalTopBar extends StatelessWidget {
                   'lib/design/assets/icons/play.svg',
                   width: 40,
                   height: 40,
-                  colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
+                  colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.onSecondaryContainer, BlendMode.srcIn),
                 ),
               ),
             ],

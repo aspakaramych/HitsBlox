@@ -142,7 +142,7 @@ class _TestScreenState extends State<TestScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: LayoutBuilder(
         builder: (context, constraints) {
           return InteractiveViewer(
@@ -164,7 +164,7 @@ class _TestScreenState extends State<TestScreen>
                       constraints.maxWidth * 10,
                       constraints.maxHeight * 10,
                     ),
-                    painter: BackgroundPainter(),
+                    painter: BackgroundPainter(context: context),
                   ),
 
                   for (var block in widget.assignmentBlocks)

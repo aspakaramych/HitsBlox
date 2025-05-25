@@ -49,7 +49,7 @@ class HorizontalBottomBar extends StatelessWidget {
             child: ConstrainedBox(
               constraints: BoxConstraints(maxWidth: 370),
               child: Container(
-                color: Theme.of(context).colorScheme.primaryFixed,
+                color: Theme.of(context).colorScheme.secondaryContainer,
                 padding: EdgeInsets.all(10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -60,7 +60,7 @@ class HorizontalBottomBar extends StatelessWidget {
                         width: 40,
                         height: 40,
                         colorFilter: ColorFilter.mode(
-                            Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
+                            Theme.of(context).colorScheme.onSecondaryContainer, BlendMode.srcIn),
                       ),
                       onPressed: () {
                         Navigator.pushNamed(
@@ -75,7 +75,7 @@ class HorizontalBottomBar extends StatelessWidget {
                         width: 40,
                         height: 40,
                         colorFilter: ColorFilter.mode(
-                            Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
+                            Theme.of(context).colorScheme.onSecondaryContainer, BlendMode.srcIn),
                       ),
                       onPressed: onTerminalPressed,
                     ),
@@ -96,7 +96,7 @@ class HorizontalBottomBar extends StatelessWidget {
                         width: 40,
                         height: 40,
                         colorFilter: ColorFilter.mode(
-                            Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
+                            Theme.of(context).colorScheme.onSecondaryContainer, BlendMode.srcIn),
                       ),
                       onPressed: onSavePressed,
                     ),
@@ -106,7 +106,7 @@ class HorizontalBottomBar extends StatelessWidget {
                         width: 40,
                         height: 40,
                         colorFilter: ColorFilter.mode(
-                            Theme.of(context).colorScheme.onPrimaryFixed, BlendMode.srcIn),
+                            Theme.of(context).colorScheme.onSecondaryContainer, BlendMode.srcIn),
                       ),
                       onPressed: () =>
                           Navigator.pushNamed(
@@ -127,7 +127,7 @@ class HorizontalBottomBar extends StatelessWidget {
               borderRadius: BorderRadius.circular(50),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Theme.of(context).colorScheme.primaryContainer,
                   borderRadius: BorderRadius.circular(50),
                 ),
                 child: IconButton(
@@ -136,7 +136,7 @@ class HorizontalBottomBar extends StatelessWidget {
                     width: 55,
                     height: 55,
                     colorFilter:
-                    ColorFilter.mode(Theme.of(context).colorScheme.onPrimary, BlendMode.srcIn),
+                    ColorFilter.mode(Theme.of(context).colorScheme.onPrimaryContainer, BlendMode.srcIn),
                   ),
                   onPressed: onAddPressed,
                 ),

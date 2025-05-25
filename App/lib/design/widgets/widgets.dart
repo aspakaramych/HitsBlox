@@ -26,5 +26,6 @@ part 'console.dart';
 part 'list_blocks.dart';
 part 'saves_grid.dart';
 part 'bouncing_scroll.dart';
-part 'debug_bar.dart';
+part 'vertical_debug_bar.dart';
+part 'horizontal_debug_bar.dart';
 part 'custom_icon_button.dart';
