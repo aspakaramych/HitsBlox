@@ -18,6 +18,10 @@ class VariableRegistry{
 
   @override
   String toString() {
-    return _variables.toString();
+    var output = "";
+    for (var el in _variables.entries){
+      output += el.key + ": " + el.value.toString() + "\n" + ">";
+    }
+    return output;
   }
 }

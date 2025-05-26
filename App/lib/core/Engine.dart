@@ -101,8 +101,13 @@ class Engine {
   late VariableRegistry registry;
   bool _debugMode = false;
   Completer<void>? _debugCompleter;
+  Node? _curNode;
 
   Engine();
+
+  Node? getCurNode(){
+    return _curNode;
+  }
 
   void setDebugMode(bool enable){
     _debugMode = enable;
@@ -189,15 +194,6 @@ class Engine {
     bool progressMadeInThisIteration;
 
     while (queue.isNotEmpty) {
-      if (_debugMode){
-        _debugCompleter = Completer<void>();
-        console.clear();
-        var registerStr = registry.toString();
-        debugConsoleService.clear();
-        debugConsoleService.log(registerStr);
-        await _debugCompleter!.future;
-      }
-
       final List<QueueItem> currentBatch = queue.toList();
       queue.clear();
 
@@ -205,6 +201,16 @@ class Engine {
 
       for (var item in currentBatch) {
         final Node node = item.node;
+        if (_debugMode){
+          _debugCompleter = Completer<void>();
+          console.clear();
+          var registerStr = registry.toString();
+          debugConsoleService.clear();
+          debugConsoleService.log(registerStr);
+          _curNode = node;
+          print(_curNode);
+          await _debugCompleter!.future;
+        }
         final ExecutionContext nodeExecutionContext = item.context;
         final ExecutionLevel currentLevel = nodeExecutionContext.currentLevel;
         if (currentLevel.executedNodes.contains(node)) {
