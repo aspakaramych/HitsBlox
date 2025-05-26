@@ -177,10 +177,12 @@ class _MainScreenState extends State<MainScreen>
                     alignment: Alignment.centerRight,
                     child: HorizontalTopBar(
                       play: () {
+                        _testScreen.consoleService.clear();
                         _testScreen.engine.setDebugMode(false);
                         _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, context);
                       },
                       debug: () {
+                        _testScreen.consoleService.clear();
                         _toggleDebugMode();
                         _testScreen.engine.setDebugMode(true);
                         _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, context);
