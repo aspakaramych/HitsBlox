@@ -79,16 +79,6 @@ class HorizontalBottomBar extends StatelessWidget {
                       ),
                       onPressed: onTerminalPressed,
                     ),
-                    // IconButton(
-                    //   icon: SvgPicture.asset(
-                    //     'lib/design/assets/icons/add.svg',
-                    //     width: 40,
-                    //     height: 40,
-                    //     colorFilter: ColorFilter.mode(
-                    //         Colors.black, BlendMode.srcIn),
-                    //   ),
-                    //   onPressed: onAddPressed,
-                    // ),
                     SizedBox(width: 40,),
                     IconButton(
                       icon: SvgPicture.asset(

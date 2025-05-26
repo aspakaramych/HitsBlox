@@ -33,41 +33,48 @@ class _DebugConsoleState extends State<DebugConsole> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      width: 370,
-      height: MediaQuery
-          .of(context)
-          .size
-          .height * 0.3,
-      color: Theme.of(context).colorScheme.outline,
-      child: Column(
-        children: [
-          Text(
-            "Переменные",
-            style: Theme
-                .of(context)
-                .textTheme
-                .headlineSmall,
-            textAlign: TextAlign.center,
-          ),
-          Expanded(
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: ListView(
-                children: [
-                  Text(
-                    '>${logs.join('\n>')}',
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .bodyLarge,
-                  ),
-                ],
+    return Material(
+      elevation: 2,
+      borderRadius: BorderRadius.all(Radius.circular(15)),
+      child: Container(
+        padding: EdgeInsets.all(10),
+        width: 250,
+        height: MediaQuery
+            .of(context)
+            .size
+            .height * 0.3,
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.secondaryContainer,
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+        ),
+        child: Column(
+          children: [
+            Text(
+              "Переменные",
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .headlineSmall,
+              textAlign: TextAlign.center,
+            ),
+            Expanded(
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: ListView(
+                  children: [
+                    Text(
+                      '>${logs.join('\n>')}',
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .bodyLarge,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

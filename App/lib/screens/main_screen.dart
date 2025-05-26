@@ -69,12 +69,9 @@ class _MainScreenState extends State<MainScreen>
   }
 
   void _toggleDebugConsole() {
-    if (_isDebugConsoleOpen) {
-      _controller.reverse();
-    } else {
-      _controller.forward();
-    }
-    _isDebugConsoleOpen = !_isDebugConsoleOpen;
+    setState(() {
+      _isDebugConsoleOpen = !_isDebugConsoleOpen;
+    });
   }
 
   void _toggleDebugMode() {
@@ -146,6 +143,17 @@ class _MainScreenState extends State<MainScreen>
           _testScreen,
           Stack(
             children: [
+              if (_isDebugConsoleOpen)
+                Positioned(
+                  height: 200,
+                  top: 115,
+                  right: 20,
+                  child:
+                  DebugConsole(
+                    onClose: _toggleDebugConsole,
+                    debugConsoleService: _testScreen.debugConsoleService,
+                  ),
+                ),
               if (_testScreen.engine.getDebugMode())
               Align(
                 alignment: Alignment.centerRight,
@@ -154,6 +162,7 @@ class _MainScreenState extends State<MainScreen>
                     _testScreen.engine.next();
                   },
                   onStopPressed: () {
+                    _toggleDebugConsole();
                     _toggleDebugMode();
                     _testScreen.engine.setDebugMode(false);
                   },
@@ -185,26 +194,12 @@ class _MainScreenState extends State<MainScreen>
                       child: BlocksTabs(blocks: _testScreen.blocks),
                     ),
                   HorizontalBottomBar(
+                    iconButton: !_isAddSectionVisible ? 'lib/design/assets/icons/add.svg' : 'lib/design/assets/icons/down.svg',
                     onTerminalPressed: () => _showTerminalPanel(context),
                     onAddPressed: () => _toggleAddSection(),
                     onSavePressed: () => _saveScreen(),
                   ),
                 ],
-              ),
-              SlideTransition(
-                position: Tween<Offset>(
-                  begin: Offset(
-                    MediaQuery.of(context).size.width * 0.7 / 100,
-                    0,
-                  ),
-                  end: Offset.zero,
-                ).animate(
-                  CurvedAnimation(parent: _controller, curve: Curves.easeOut),
-                ),
-                child: DebugConsole(
-                  onClose: _toggleDebugConsole,
-                  debugConsoleService: _testScreen.debugConsoleService,
-                ),
               ),
             ],
           ),
@@ -216,6 +211,17 @@ class _MainScreenState extends State<MainScreen>
           _testScreen,
           Stack(
             children: [
+              if (_isDebugConsoleOpen)
+                Positioned(
+                  height: 200,
+                  top: 180,
+                  left: 20,
+                  child:
+                  DebugConsole(
+                    onClose: _toggleDebugConsole,
+                    debugConsoleService: _testScreen.debugConsoleService,
+                  ),
+                ),
               if (_testScreen.engine.getDebugMode())
               Align(
                 alignment: Alignment.topCenter,
@@ -224,6 +230,7 @@ class _MainScreenState extends State<MainScreen>
                     _testScreen.engine.next();
                   },
                   onStopPressed: () {
+                    _toggleDebugConsole();
                     _toggleDebugMode();
                     _testScreen.engine.setDebugMode(false);
                   },
@@ -251,33 +258,16 @@ class _MainScreenState extends State<MainScreen>
                   Expanded(child: Center()),
                   if (_isAddSectionVisible)
                     SizedBox(
-                      height: 400,
+                      height: 360,
                       child: BlocksTabs(blocks: _testScreen.blocks),
                     ),
                   VerticalBottomBar(
+                    iconButton: !_isAddSectionVisible ? 'lib/design/assets/icons/add.svg' : 'lib/design/assets/icons/right.svg',
                     onTerminalPressed: () => _showTerminalPanel(context),
                     onAddPressed: () => _toggleAddSection(),
                     onSavePressed: () => _saveScreen(),
                   ),
                 ],
-              ),
-              SlideTransition(
-                position: Tween<Offset>(
-                  begin: Offset(
-                    MediaQuery.of(context).size.width * 0.7 / 100,
-                    0,
-                  ),
-                  end: Offset.zero,
-                ).animate(
-                  CurvedAnimation(
-                    parent: _controller,
-                    curve: Curves.easeOut,
-                  ),
-                ),
-                child: DebugConsole(
-                  onClose: _toggleDebugConsole,
-                  debugConsoleService: _testScreen.debugConsoleService,
-                ),
               ),
             ],
           ),
