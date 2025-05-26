@@ -60,166 +60,196 @@ class BlockService {
       refreshUI();
   }
 
-  List<Block> getBlocks(TransformationController _transformationController) {
-    return [
-      Block(
-        name: "Целочисленная переменная",
-        action:
-            () => addAssignmentBlock(
-          BlockFactory.createIntBlock(_transformationController),
+  Map<String, List<Block>> getBlocks(TransformationController _transformationController) {
+    return {
+      'Переменные': [
+        Block(
+          name: "int",
+          action:
+              () =>
+              addAssignmentBlock(
+                BlockFactory.createIntBlock(_transformationController),
+              ),
         ),
+        Block(
+          name: "bool",
+          action:
+              () =>
+              addAssignmentBlock(
+                BlockFactory.createBoolBlock(_transformationController),
+              ),
+        ),
+        Block(
+          name: "string",
+          action:
+              () =>
+              addAssignmentBlock(
+                BlockFactory.createStringBlock(_transformationController),
+              ),
+        ),
+        Block(
+          name: "array",
+          action:
+              () =>
+              addAssignmentBlock(
+                BlockFactory.createArrayBlock(_transformationController),
+              ),
+        ),
+      ],
+      "Функции" : [
+      Block(
+        name: "arrrayAdd",
+        action:
+            () =>
+            addAssignmentBlock(
+              BlockFactory.createAddArrayBlock(_transformationController),
+            ),
       ),
       Block(
-        name: "Булева переменная",
+        name: "length",
         action:
-            () => addAssignmentBlock(
-          BlockFactory.createBoolBlock(_transformationController),
-        ),
+            () =>
+            addAssignmentBlock(
+              BlockFactory.createLengthBlock(_transformationController),
+            ),
       ),
       Block(
-        name: "Строковая переменная",
+        name: "multiply",
         action:
-            () => addAssignmentBlock(
-          BlockFactory.createStringBlock(_transformationController),
-        ),
+            () =>
+            addLogicBlock(
+              BlockFactory.createMultiplyBlock(_transformationController),
+            ),
       ),
       Block(
-        name: "Массив",
+        name: "swap",
         action:
-            () => addAssignmentBlock(
-          BlockFactory.createArrayBlock(_transformationController),
-        ),
+            () =>
+            addSwapBlock(
+              BlockFactory.createSwapBlock(_transformationController),
+            ),
       ),
       Block(
-        name: "Добавление в массив",
+        name: "divide",
         action:
-            () => addAssignmentBlock(
-          BlockFactory.createAddArrayBlock(_transformationController),
-        ),
+            () =>
+            addLogicBlock(
+              BlockFactory.createDivisionBlock(_transformationController),
+            ),
       ),
       Block(
-        name: "Получение длины массива",
+        name: "mod",
         action:
-            () => addAssignmentBlock(
-          BlockFactory.createLengthBlock(_transformationController),
-        ),
+            () =>
+            addLogicBlock(
+              BlockFactory.createModBlock(_transformationController),
+            ),
       ),
       Block(
-        name: "Вывод",
+        name: "subtract",
         action:
-            () => addPrintBlock(
-          BlockFactory.createPrintBlock(
-            _transformationController,
-            widget.consoleService,
-            widget.registry,
-          ),
-        ),
+            () =>
+            addLogicBlock(
+              BlockFactory.createSubtractBlock(_transformationController),
+            ),
       ),
       Block(
-        name: "Старт",
+        name: "add",
         action:
-            () => addLogicBlock(
-          BlockFactory.createStartBlock(_transformationController),
-        ),
+            () =>
+            addLogicBlock(
+              BlockFactory.createAddictionBlock(_transformationController),
+            ),
       ),
       Block(
-        name: "Умножение",
+        name: "increment",
         action:
-            () => addLogicBlock(
-          BlockFactory.createMultiplyBlock(_transformationController),
-        ),
+            () =>
+            addAssignmentBlock(
+              BlockFactory.createIncrementBlock(_transformationController),
+            ),
       ),
       Block(
-        name: "Swap",
+        name: "concat",
         action:
-            () => addSwapBlock(
-          BlockFactory.createSwapBlock(_transformationController),
-        ),
+            () =>
+            addLogicBlock(
+              BlockFactory.createConcatBlock(_transformationController),
+            ),
+      ),
+      ],
+      'Логические операторы' : [
+      Block(
+        name: "equal",
+        action:
+            () =>
+            addLogicBlock(
+              BlockFactory.createEqualsBlock(_transformationController),
+            ),
       ),
       Block(
-        name: "Деление",
+        name: "more",
         action:
-            () => addLogicBlock(
-          BlockFactory.createDivisionBlock(_transformationController),
-        ),
+            () =>
+            addLogicBlock(
+              BlockFactory.createMoreBlock(_transformationController),
+            ),
       ),
       Block(
-        name: "Остаток от деления",
+        name: "less",
         action:
-            () => addLogicBlock(
-          BlockFactory.createModBlock(_transformationController),
-        ),
+            () =>
+            addLogicBlock(
+              BlockFactory.createLessBlock(_transformationController),
+            ),
+      ),
+      ],
+      'Другое' : [
+      Block(
+        name: "start",
+        action:
+            () =>
+            addLogicBlock(
+              BlockFactory.createStartBlock(_transformationController),
+            ),
       ),
       Block(
-        name: "Вычитание",
+        name: "print",
         action:
-            () => addLogicBlock(
-          BlockFactory.createSubtractBlock(_transformationController),
-        ),
+            () =>
+            addPrintBlock(
+              BlockFactory.createPrintBlock(
+                _transformationController,
+                widget.consoleService,
+                widget.registry,
+              ),
+            ),
       ),
       Block(
-        name: "Сложение",
+        name: "conditional",
         action:
-            () => addLogicBlock(
-          BlockFactory.createAddictionBlock(_transformationController),
-        ),
+            () =>
+            addIfElseBlock(
+              BlockFactory.createIfElseBlock(_transformationController),
+            ),
       ),
       Block(
-        name: "Инкремент",
+        name: "while",
         action:
-            () => addAssignmentBlock(
-          BlockFactory.createIncrementBlock(_transformationController),
-        ),
+            () =>
+            addWhileBlock(
+              BlockFactory.createWhileBlock(_transformationController),
+            ),
       ),
       Block(
-        name: "Конкатенация",
+        name: "comment",
         action:
-            () => addLogicBlock(
-          BlockFactory.createConcatBlock(_transformationController),
-        ),
+            () =>
+            addCommentBlock(
+              BlockFactory.createCommentBlock(_transformationController),
+            ),
       ),
-      Block(
-        name: "Эквивалентность",
-        action:
-            () => addLogicBlock(
-          BlockFactory.createEqualsBlock(_transformationController),
-        ),
-      ),
-      Block(
-        name: "Больше",
-        action:
-            () => addLogicBlock(
-          BlockFactory.createMoreBlock(_transformationController),
-        ),
-      ),
-      Block(
-        name: "Меньше",
-        action:
-            () => addLogicBlock(
-          BlockFactory.createLessBlock(_transformationController),
-        ),
-      ),
-      Block(
-        name: "Условие",
-        action:
-            () => addIfElseBlock(
-          BlockFactory.createIfElseBlock(_transformationController),
-        ),
-      ),
-      Block(
-        name: "While",
-        action:
-            () => addWhileBlock(
-          BlockFactory.createWhileBlock(_transformationController),
-        ),
-      ),
-      Block(
-        name: "Комментарий",
-        action:
-            () => addCommentBlock(
-          BlockFactory.createCommentBlock(_transformationController),
-        ),
-      ),
-    ];
+      ]
+    };
   }
 }

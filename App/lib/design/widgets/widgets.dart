@@ -24,7 +24,7 @@ part 'vertical_bottom_bar.dart';
 part 'horizontal_top_bar.dart';
 part 'vertical_top_bar.dart';
 part 'console.dart';
-part 'list_blocks.dart';
+part 'tab_blocks.dart';
 part 'saves_grid.dart';
 part 'bouncing_scroll.dart';
 part 'vertical_debug_bar.dart';

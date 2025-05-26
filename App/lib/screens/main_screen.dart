@@ -182,7 +182,7 @@ class _MainScreenState extends State<MainScreen>
                   if (_isAddSectionVisible)
                     SizedBox(
                       height: 400,
-                      child: BlocksList(blocks: _testScreen.blocks),
+                      child: BlocksTabs(blocks: _testScreen.blocks),
                     ),
                   HorizontalBottomBar(
                     onTerminalPressed: () => _showTerminalPanel(context),
@@ -252,7 +252,7 @@ class _MainScreenState extends State<MainScreen>
                   if (_isAddSectionVisible)
                     SizedBox(
                       height: 400,
-                      child: BlocksList(blocks: _testScreen.blocks),
+                      child: BlocksTabs(blocks: _testScreen.blocks),
                     ),
                   VerticalBottomBar(
                     onTerminalPressed: () => _showTerminalPanel(context),

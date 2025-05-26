@@ -16,6 +16,7 @@ TestScreen testScreen = TestScreen();
 
 void hideStatusBar() {
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  //SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 }
 
 void showStatusBar() {

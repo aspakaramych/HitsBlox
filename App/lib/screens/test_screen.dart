@@ -25,7 +25,7 @@ import '../utils/bezier_line_painter.dart';
 
 class TestScreen extends StatefulWidget {
   String saveName = '';
-  List<Block> blocks = [];
+  Map<String, List<Block>> blocks = {};
 
   NodeGraph nodeGraph = NodeGraph();
   ConsoleService consoleService = ConsoleService();
