@@ -70,7 +70,7 @@ class ArrayAsignNode extends Node implements AssignNode {
       var items = inner.split(',').map((s) => s.trim()).toList();
       var expressions =
           items.map((item) {
-            if (RegExp(r'^\d+$').hasMatch(item)) {
+            if (RegExp(r'^(-)?\d+$').hasMatch(item)) {
               return IntLiteral(int.parse(item));
             } else if (item.startsWith('"') && item.endsWith('"')) {
               return StringLiteral(item.substring(1, item.length - 1));
