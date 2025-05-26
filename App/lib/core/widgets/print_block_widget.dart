@@ -6,6 +6,7 @@ import '../../utils/triangle_painter.dart';
 
 class PrintBlockWidget extends StatefulWidget {
   final PrintBlock block;
+  final bool mark;
   final VoidCallback onEditToggle;
   final Function() deleteNode;
   final Function(Offset) onPositionChanged;
@@ -15,6 +16,7 @@ class PrintBlockWidget extends StatefulWidget {
   const PrintBlockWidget({
     super.key,
     required this.block,
+    required this.mark,
     required this.onEditToggle,
     required this.deleteNode,
     required this.onPositionChanged,
@@ -90,6 +92,10 @@ class _PrintBlockWidgetState extends State<PrintBlockWidget> {
                         decoration: BoxDecoration(
                             color: Theme.of(context).colorScheme.primaryContainer,
                             borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              color: (widget.mark) ? Colors.red : Theme.of(context).colorScheme.primaryContainer,
+                              width: 2,
+                            ),
                             boxShadow: [
                               BoxShadow(
                                 color: Theme.of(context).colorScheme.shadow.withOpacity(0.2),
@@ -169,7 +175,7 @@ class _PrintBlockWidgetState extends State<PrintBlockWidget> {
                 /// правая стрелка
                 Positioned(
                   right: -20,
-                  top: 45,
+                  top: 50,
                   child: GestureDetector(
                     onTap: () => widget.onRightArrowClick(),
                     child: SizedBox(

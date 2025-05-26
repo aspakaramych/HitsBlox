@@ -15,6 +15,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:toastify/toastify.dart';
 
+import '../utils/selected_block_service.dart';
+
 class ExecutionLevel {
   final Set<Node> executedNodes;
   final int iteration;
@@ -131,6 +133,7 @@ class Engine {
       VariableRegistry variableRegistry,
       ConsoleService console,
       DebugConsoleService debugConsoleService,
+      SelectedBlockService selectedBlockService,
       BuildContext context) async {
     if (_debugMode){
       showToast(
@@ -150,7 +153,7 @@ class Engine {
       showToast(
         context,
         Toast(
-          lifeTime: Duration(seconds: 3),
+          lifeTime: Duration(seconds: 1),
           child: ProgramProcessingToast(
             title: 'Program running',
             description: 'Program is running, wait next message',
@@ -208,7 +211,8 @@ class Engine {
           debugConsoleService.clear();
           debugConsoleService.log(registerStr);
           _curNode = node;
-          print(_curNode);
+          selectedBlockService.add(_curNode!);
+          // print(_curNode);
           await _debugCompleter!.future;
         }
         final ExecutionContext nodeExecutionContext = item.context;
@@ -305,10 +309,9 @@ class Engine {
           ),
         ),
       );
+      selectedBlockService.clear();
     }
   }
-
-
 
   void _showErrorToast(BuildContext context, String errorMessage) {
     showToast(

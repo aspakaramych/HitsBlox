@@ -3,9 +3,11 @@ import 'package:flutter/rendering.dart';
 import '../../utils/sizes.dart';
 import '../../utils/triangle_painter.dart';
 import '../../blocks/assignment_block.dart';
+import '../abstracts/Node.dart';
 
 class AssignmentBlockWidget extends StatefulWidget {
   final AssignmentBlock block;
+  final bool mark;
   final VoidCallback onEditToggle;
   final Function() deleteNode;
   final Function(Offset) onPositionChanged;
@@ -15,6 +17,7 @@ class AssignmentBlockWidget extends StatefulWidget {
   const AssignmentBlockWidget({
     super.key,
     required this.block,
+    required this.mark,
     required this.onEditToggle,
     required this.deleteNode,
     required this.onPositionChanged,
@@ -54,9 +57,9 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
         widget.block.node.rawExpression = text;
         widget.onEditToggle();
       },
-      decoration: const InputDecoration(
-        hintText: 'a={value};',
-        contentPadding: EdgeInsets.all(6),
+      decoration: InputDecoration(
+        hintText: (widget.block.blockName != 'array') ? 'a=value;' : 'type a = [size]',
+        contentPadding: const EdgeInsets.all(6),
         enabledBorder: InputBorder.none,
         focusedBorder: InputBorder.none,
         disabledBorder: InputBorder.none,
@@ -118,6 +121,10 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                           decoration: BoxDecoration(
                             color: Theme.of(context).colorScheme.primaryContainer,
                             borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              color: (widget.mark) ? Colors.red : Theme.of(context).colorScheme.primaryContainer,
+                              width: 2,
+                            ),
                             boxShadow: [
                               BoxShadow(
                                 color: Theme.of(context).colorScheme.shadow.withOpacity(0.2),

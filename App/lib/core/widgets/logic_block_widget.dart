@@ -6,6 +6,7 @@ import '../../utils/triangle_painter.dart';
 
 class LogicBlockWidget extends StatefulWidget {
   final LogicBlock block;
+  final bool mark;
   final Function() deleteNode;
   final Function(Offset) onPositionChanged;
   final Function(Offset) onLeftArrowClick;
@@ -14,6 +15,7 @@ class LogicBlockWidget extends StatefulWidget {
   const LogicBlockWidget({
     super.key,
     required this.block,
+    required this.mark,
     required this.deleteNode,
     required this.onPositionChanged,
     required this.onLeftArrowClick,
@@ -69,6 +71,10 @@ class _LogicBlockWidgetState extends State<LogicBlockWidget> {
                     decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.primaryContainer,
                         borderRadius: BorderRadius.circular(15),
+                        border: Border.all(
+                          color: (widget.mark) ? Colors.red : Theme.of(context).colorScheme.primaryContainer,
+                          width: 2,
+                        ),
                         boxShadow: [
                           BoxShadow(
                             color: Theme.of(context).colorScheme.shadow.withOpacity(0.2),

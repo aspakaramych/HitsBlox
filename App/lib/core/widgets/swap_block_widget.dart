@@ -6,6 +6,7 @@ import '../../utils/triangle_painter.dart';
 
 class SwapBlockWidget extends StatefulWidget {
   final SwapBlock block;
+  final bool mark;
   final VoidCallback onEditToggle;
   final Function() deleteNode;
   final Function(Offset) onPositionChanged;
@@ -15,6 +16,7 @@ class SwapBlockWidget extends StatefulWidget {
   const SwapBlockWidget({
     super.key,
     required this.block,
+    required this.mark,
     required this.onEditToggle,
     required this.deleteNode,
     required this.onPositionChanged,
@@ -89,6 +91,10 @@ class _SwapBlockWidgetState extends State<SwapBlockWidget> {
                         decoration: BoxDecoration(
                             color: Theme.of(context).colorScheme.primaryContainer,
                             borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              color: (widget.mark) ? Colors.red : Theme.of(context).colorScheme.primaryContainer,
+                              width: 2,
+                            ),
                             boxShadow: [
                               BoxShadow(
                                 color: Theme.of(context).colorScheme.shadow.withOpacity(0.2),

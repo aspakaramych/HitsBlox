@@ -45,6 +45,7 @@ class TestScreenWidgetBuilder {
     return AssignmentBlockWidget(
       key: ValueKey(block.node.id),
       block: block,
+      mark: (widget.selectedBlockService.activeNodeIds.contains(block.nodeId)),
       onEditToggle: () {
         block.isEditing = !block.isEditing;
         refreshUI();
@@ -130,6 +131,7 @@ class TestScreenWidgetBuilder {
     return LogicBlockWidget(
       key: ValueKey(block.nodeId),
       block: block,
+      mark: (widget.selectedBlockService.activeNodeIds.contains(block.nodeId)),
       deleteNode: () {
         widget.logicBlocks.remove(block);
         widget.wiredBlocks.removeWhere(
@@ -216,6 +218,7 @@ class TestScreenWidgetBuilder {
     return PrintBlockWidget(
       key: ValueKey(block.node.id),
       block: block,
+      mark: (widget.selectedBlockService.activeNodeIds.contains(block.nodeId)),
       onEditToggle: () {
         block.isEditing = !block.isEditing;
         refreshUI();
@@ -302,6 +305,7 @@ class TestScreenWidgetBuilder {
     return IfElseBlockWidget(
       key: ValueKey(block.nodeId),
       block: block,
+      mark: (widget.selectedBlockService.activeNodeIds.contains(block.nodeId)),
       deleteNode: () {
         widget.ifElseBlocks.remove(block);
         widget.wiredBlocks.removeWhere(
@@ -386,6 +390,7 @@ class TestScreenWidgetBuilder {
     return WhileBlockWidget(
       key: ValueKey(block.nodeId),
       block: block,
+      mark: (widget.selectedBlockService.activeNodeIds.contains(block.nodeId)),
       onEditToggle: () {
         block.isEditing = !block.isEditing;
         refreshUI();
@@ -492,6 +497,7 @@ class TestScreenWidgetBuilder {
     return SwapBlockWidget(
       key: ValueKey(block.node.id),
       block: block,
+      mark: (widget.selectedBlockService.activeNodeIds.contains(block.nodeId)),
       onEditToggle: () {
         block.isEditing = !block.isEditing;
         refreshUI();

@@ -7,6 +7,7 @@ import '../../utils/triangle_painter.dart';
 
 class IfElseBlockWidget extends StatefulWidget {
   final IfElseBlock block;
+  final bool mark;
   final Function() deleteNode;
   final Function(Offset) onPositionChanged;
   final Function(Offset) onLeftArrowClick;
@@ -15,6 +16,7 @@ class IfElseBlockWidget extends StatefulWidget {
   const IfElseBlockWidget({
     super.key,
     required this.block,
+    required this.mark,
     required this.deleteNode,
     required this.onPositionChanged,
     required this.onLeftArrowClick,
@@ -83,6 +85,10 @@ class _IfElseBlockWidgetState extends State<IfElseBlockWidget> {
                         color: Theme.of(context).colorScheme.primaryContainer,
                         // border: Border.all(color: Colors.black, width: 3),
                         borderRadius: BorderRadius.circular(15),
+                        border: Border.all(
+                          color: (widget.mark) ? Colors.red : Theme.of(context).colorScheme.primaryContainer,
+                          width: 2,
+                        ),
                         boxShadow: [
                           BoxShadow(
                             color: Theme.of(context).colorScheme.shadow.withOpacity(0.2),
