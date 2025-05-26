@@ -146,9 +146,9 @@ class _TestScreenState extends State<TestScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      body: LayoutBuilder(
+    return Container(
+      color: Theme.of(context).colorScheme.surface,
+      child: LayoutBuilder(
         builder: (context, constraints) {
           return InteractiveViewer(
             transformationController: _transformationController,
@@ -160,7 +160,7 @@ class _TestScreenState extends State<TestScreen>
                 minWidth: constraints.maxWidth * 10,
                 minHeight: constraints.maxHeight * 10,
               ),
-              color: Colors.white10,
+              color: Theme.of(context).colorScheme.surface,
               child: Stack(
                 // clipBehavior: Clip.none,
                 children: [

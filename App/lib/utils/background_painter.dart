@@ -13,7 +13,7 @@ class BackgroundPainter extends CustomPainter {
 
     Path mainBackground = Path();
     mainBackground.addRect(Rect.fromLTRB(0, 0, width, height));
-    paint.color = Theme.of(context).colorScheme.outlineVariant;
+    paint.color = Theme.of(context).colorScheme.surfaceContainer;
 
     final heightLine = 80;
     final widthLine = 80;

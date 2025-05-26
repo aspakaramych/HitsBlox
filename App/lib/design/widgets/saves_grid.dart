@@ -93,25 +93,29 @@ class _GridSavesState extends State<GridSaves> {
                 child: Stack(
                   children: [
                     if(key != "Новое сохранение")
-                    Card(
-                      color: Theme.of(context).colorScheme.primaryContainer,
+                    Material(
                       elevation: 5,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      child: Center(
-                        child: Text(
-                          '$key',
-                          style: Theme.of(context).textTheme.titleLarge
+                      borderRadius: BorderRadius.all(Radius.circular(25)),
+                      child: Container(
+                        padding: EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primaryContainer,
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        child: Center(
+                          child: Text(
+                            '$key',
+                            // maxLines: 1,
+                            style: Theme.of(context).textTheme.titleLarge
+                          ),
                         ),
                       ),
                     )
                     else if(key == "Новое сохранение")
-                      Card(
-                        color: Theme.of(context).colorScheme.secondaryContainer,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.secondaryContainer,
+                          borderRadius: BorderRadius.all(Radius.circular(25))
                         ),
                         child: Center(
                             child: SvgPicture.asset(
