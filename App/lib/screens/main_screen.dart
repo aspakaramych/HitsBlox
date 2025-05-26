@@ -190,11 +190,29 @@ class _MainScreenState extends State<MainScreen>
                     ),
                   ),
                   Expanded(child: Center()),
-                  if (_isAddSectionVisible)
-                    SizedBox(
-                      height: 400,
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 500),
+                    transitionBuilder: (child, animation) {
+                      final curvedAnimation = CurvedAnimation(
+                        parent: animation,
+                        curve: Curves.easeOutCubic,
+                      );
+                      return SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(0, 2),
+                          end: Offset.zero,
+                          ).animate(curvedAnimation),
+                        child: child,
+                      );
+                    },
+                    child: _isAddSectionVisible
+                    ? SizedBox(
+                      key: const ValueKey('BlocksTabs'),
+                      height: 360,
                       child: BlocksTabs(blocks: _testScreen.blocks),
-                    ),
+                    )
+                        : const SizedBox.shrink(),
+                  ),
                   HorizontalBottomBar(
                     iconButton: !_isAddSectionVisible ? 'lib/design/assets/icons/add.svg' : 'lib/design/assets/icons/down.svg',
                     onTerminalPressed: () => _showTerminalPanel(context),
@@ -258,11 +276,29 @@ class _MainScreenState extends State<MainScreen>
                     ),
                   ),
                   Expanded(child: Center()),
-                  if (_isAddSectionVisible)
-                    SizedBox(
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 500),
+                    transitionBuilder: (child, animation) {
+                      final curvedAnimation = CurvedAnimation(
+                        parent: animation,
+                        curve: Curves.easeOutCubic,
+                      );
+                      return SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(2, 0),
+                          end: Offset.zero,
+                        ).animate(curvedAnimation),
+                        child: child,
+                      );
+                    },
+                    child: _isAddSectionVisible
+                        ? SizedBox(
+                      key: const ValueKey('BlocksTabs'),
                       height: 360,
                       child: BlocksTabs(blocks: _testScreen.blocks),
-                    ),
+                    )
+                        : const SizedBox.shrink(),
+                  ),
                   VerticalBottomBar(
                     iconButton: !_isAddSectionVisible ? 'lib/design/assets/icons/add.svg' : 'lib/design/assets/icons/right.svg',
                     onTerminalPressed: () => _showTerminalPanel(context),
