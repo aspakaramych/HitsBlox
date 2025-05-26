@@ -12,6 +12,7 @@ import 'package:app/core/widgets/widget_builder.dart';
 import 'package:app/design/widgets/widgets.dart';
 import 'package:app/utils/Randomizer.dart';
 import 'package:app/utils/pair.dart';
+import 'package:app/utils/selected_block_service.dart';
 import 'package:app/utils/user_position_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -30,6 +31,7 @@ class TestScreen extends StatefulWidget {
   NodeGraph nodeGraph = NodeGraph();
   ConsoleService consoleService = ConsoleService();
   DebugConsoleService debugConsoleService = DebugConsoleService();
+  SelectedBlockService selectedBlockService = SelectedBlockService();
   Engine engine = Engine();
   VariableRegistry registry = VariableRegistry();
 
@@ -139,6 +141,7 @@ class _TestScreenState extends State<TestScreen>
     _blockService = BlockService(widget, refreshUI);
     _widgetBuilder = TestScreenWidgetBuilder(widget, refreshUI, deleteNode, deleteConnection, deleteConnectionBetween, deleteCalibrations, makeConnection, temp, currOutputCalibration);
     widget.blocks = _blockService.getBlocks(_transformationController);
+    widget.selectedBlockService.addListener(refreshUI);
   }
 
   @override

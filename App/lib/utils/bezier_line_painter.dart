@@ -28,7 +28,7 @@ class BezierLinePainter extends CustomPainter {
 
     final paint = Paint()
       ..color = Colors.blue
-      ..strokeWidth = 3
+      ..strokeWidth = 4
       ..style = PaintingStyle.stroke;
 
     canvas.drawPath(path, paint);
