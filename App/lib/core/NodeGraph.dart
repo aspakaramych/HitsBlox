@@ -46,26 +46,22 @@ class NodeGraph {
   }
 
   void disconnect(String nodeId) {
-    var connection = connections.firstWhereOrNull(
-      (conn) => conn.fromNodeId == nodeId || conn.toNodeId == nodeId,
-    );
-    connections.removeWhere(
-      (conn) => conn.fromNodeId == nodeId || conn.toNodeId == nodeId,
-    );
-    if (connection != null) {
-      var nodeFrom = getNodeById(connection.fromNodeId);
-      nodeFrom?.outputs.removeWhere((p) => p.id == connection.fromPinId);
-      var nodeTo = getNodeById(connection.toNodeId);
-      nodeTo?.inputs.removeWhere((p) => p.id == connection.toPinId);
+    for (var connection in connections){
+      if (connection.toNodeId == nodeId || connection.fromNodeId == nodeId){
+
+        var nodeFrom = getNodeById(connection.fromNodeId);
+        nodeFrom?.outputs.removeWhere((p) => p.id == connection.fromPinId);
+        var nodeTo = getNodeById(connection.toNodeId);
+        nodeTo?.inputs.removeWhere((p) => p.id == connection.toPinId);
+      }
     }
+    connections.removeWhere((conn) => conn.fromNodeId == nodeId || conn.toNodeId == nodeId);
   }
 
   void deleteConnectionBetweenNodes(String firstNode, String secondNode, Node first, Node second) {
     var connection = connections.firstWhereOrNull(
           (conn) => conn.fromNodeId == firstNode && conn.toNodeId == secondNode,
     );
-
-
 
     connections.removeWhere(
           (conn) => conn.fromNodeId == firstNode && conn.toNodeId == secondNode,

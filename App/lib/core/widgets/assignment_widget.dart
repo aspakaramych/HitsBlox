@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+
+import '../../blocks/assignment_block.dart';
 import '../../utils/sizes.dart';
 import '../../utils/triangle_painter.dart';
-import '../../blocks/assignment_block.dart';
-import '../abstracts/Node.dart';
 
 class AssignmentBlockWidget extends StatefulWidget {
   final AssignmentBlock block;
@@ -11,7 +10,7 @@ class AssignmentBlockWidget extends StatefulWidget {
   final VoidCallback onEditToggle;
   final Function() deleteNode;
   final Function(Offset) onPositionChanged;
-  final Function() onLeftArrowClick;
+  final Function(int) onLeftArrowClick;
   final Function() onRightArrowClick;
 
   const AssignmentBlockWidget({
@@ -187,7 +186,7 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                     left: 15,
                     top: 55,
                     child: GestureDetector(
-                      onTap: () => widget.onLeftArrowClick(),
+                      onTap: () => widget.onLeftArrowClick(0),
                       child: SizedBox(
                         width: 50,
                         height: 50,

@@ -9,7 +9,7 @@ class LogicBlockWidget extends StatefulWidget {
   final bool mark;
   final Function() deleteNode;
   final Function(Offset) onPositionChanged;
-  final Function(Offset) onLeftArrowClick;
+  final Function(Offset, int) onLeftArrowClick;
   final Function() onRightArrowClick;
 
   const LogicBlockWidget({
@@ -91,7 +91,7 @@ class _LogicBlockWidgetState extends State<LogicBlockWidget> {
                     left: widget.block.leftArrows[i].position.dx,
                     top: widget.block.leftArrows[i].position.dy,
                     child: GestureDetector(
-                      onTap: () => widget.onLeftArrowClick(widget.block.leftArrows[i].position),
+                      onTap: () => widget.onLeftArrowClick(widget.block.leftArrows[i].position, i),
                       child: SizedBox(
                         width: 30,
                         height: 30,

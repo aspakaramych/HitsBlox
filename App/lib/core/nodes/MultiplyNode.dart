@@ -8,6 +8,7 @@ import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:collection/collection.dart';
 import '../abstracts/Command.dart';
 import '../literals/VariableLiteral.dart';
+import '../pins/EmptyPin.dart';
 
 class MultiplyNode extends Node {
 
@@ -17,7 +18,10 @@ class MultiplyNode extends Node {
   @override
   String get title => "Умножение";
 
-  MultiplyNode(String this.id, Offset position) : super(position) {}
+  MultiplyNode(String this.id, Offset position) : super(position) {
+    inputs.add(EmptyPin());
+    inputs.add(EmptyPin());
+  }
 
 
   @override
