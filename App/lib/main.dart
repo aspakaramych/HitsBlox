@@ -8,9 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:app/screens/main_screen.dart';
 import 'package:app/design/theme/app_theme.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'design/AppRouter.dart';
+
+import 'package:app/utils/hints_notifier.dart';
 
 TestScreen testScreen = TestScreen();
 
@@ -29,28 +32,39 @@ Future<void> main() async {
 
   await _saveScreen("print sample", jsonEncode(SamplesForLoading.getPrintSample()));
   await _saveScreen("bubble sort sample", jsonEncode(SamplesForLoading.getBubbleSortSample()));
+  final prefs = await SharedPreferences.getInstance();
+  final initialIsDarkMode = prefs.getBool('9d6b82da-eaec-4634-8bdb-743f029cb961') ?? true;
 
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => HintsNotifier(false),
+    child: MyApp(initialIsDarkMode: initialIsDarkMode,)));
 }
 
 class MyApp extends StatefulWidget {
+  final bool initialIsDarkMode;
 
-  MyApp({super.key});
+  MyApp({super.key, required this.initialIsDarkMode});
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  bool isDarkMode = true;
+  late bool isDarkMode = widget.initialIsDarkMode;
 
   void toggleTheme() {
     setState(() {
       isDarkMode = !isDarkMode;
+      _saveThemePreference(isDarkMode);
     });
   }
 
-  late var router = AppRouter(() {toggleTheme();});
+  Future<void> _saveThemePreference(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('9d6b82da-eaec-4634-8bdb-743f029cb961', value);
+  }
+
+  late var router = AppRouter(() {toggleTheme();}, isDarkMode);
 
   @override
   Widget build(BuildContext context) {

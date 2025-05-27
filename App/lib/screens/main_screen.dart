@@ -92,7 +92,6 @@ class _MainScreenState extends State<MainScreen>
     );
 
     prefs.setString(widget.screenName, jsonString);
-
     // log(jsonString);
 
     // _testScreen.loadFromJson(_testScreen.saveScreenState());

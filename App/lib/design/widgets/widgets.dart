@@ -16,6 +16,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_drawing/path_drawing.dart';
 import 'package:app/core/Engine.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/ConsoleService.dart';
 
@@ -31,3 +32,4 @@ part 'vertical_debug_bar.dart';
 part 'horizontal_debug_bar.dart';
 part 'custom_icon_button.dart';
 part 'debug_console.dart';
+part 'about_section.dart';

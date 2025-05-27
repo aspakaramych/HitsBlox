@@ -1,0 +1,30 @@
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class HintsNotifier with ChangeNotifier {
+  bool _areHintsEnabled;
+
+  HintsNotifier(this._areHintsEnabled) {
+    _loadHintsPreference();
+  }
+
+  bool get areHintsEnabled => _areHintsEnabled;
+
+  void toggleHints() {
+    _areHintsEnabled = !_areHintsEnabled;
+    _saveHintsPreference(_areHintsEnabled);
+    notifyListeners();
+  }
+
+  Future<void> _loadHintsPreference() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    _areHintsEnabled = prefs.getBool('areHintsEnabled') ?? false;
+    notifyListeners();
+  }
+
+  Future<void> _saveHintsPreference(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('areHintsEnabled', value); //TODO: заменить на guid
+  }
+}

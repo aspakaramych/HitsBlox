@@ -9,11 +9,12 @@ class AppRouter {
   late final Widget mainScreen;
   late final Widget settingsScreen;
   final VoidCallback toggleTheme;
+  final bool isDarkMode;
 
-  AppRouter(this.toggleTheme) {
+  AppRouter(this.toggleTheme, this.isDarkMode) {
     homeScreen = HomeScreen();
     mainScreen = MainScreen(null, screenName: '',);
-    settingsScreen = SettingsScreen(toggleTheme: toggleTheme,);
+    settingsScreen = SettingsScreen(toggleTheme: toggleTheme, isDarkMode: isDarkMode);
   }
 
   Route<dynamic> onGenerateRoute(RouteSettings settings) {

@@ -23,6 +23,7 @@ class _GridSavesState extends State<GridSaves> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       keys = prefs.getKeys().toList();
+      keys.remove('9d6b82da-eaec-4634-8bdb-743f029cb961');
       if (keys.length >= 4) {
         keys.insert(3, "Новое сохранение");
       }

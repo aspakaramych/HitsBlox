@@ -33,6 +33,7 @@ class _StorageSavesState extends State<StorageSaves> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       keys = prefs.getKeys().toList();
+      keys.remove('9d6b82da-eaec-4634-8bdb-743f029cb961');
       itemCount = keys.length;
     });
   }
