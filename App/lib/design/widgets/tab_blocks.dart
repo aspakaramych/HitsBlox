@@ -17,7 +17,7 @@ class BlockCard extends StatefulWidget {
 }
 
 class _BlockCardState extends State<BlockCard> {
-
+  final ShowHelpToast showHelpToast = ShowHelpToast();
   @override
   Widget build(BuildContext context) {
     late var hintsNotifier = Provider.of<HintsNotifier>(context, listen: false);
@@ -25,7 +25,14 @@ class _BlockCardState extends State<BlockCard> {
       onTap: () {
         widget.item.action();
         if (hintsNotifier.areHintsEnabled) {
-          print("aaaa");
+          switch (widget.item.name){
+            case "conditional":
+              showHelpToast.showIfElseToast(context);
+              return;
+            case "while":
+              showHelpToast.showWhileToast(context);
+              return;
+          }
         }
       },
       child: Material(
