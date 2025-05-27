@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import 'package:app/core/nodes/node_factory.dart';
+import 'package:app/core/pins/EmptyPin.dart';
 import 'package:app/core/pins/Pin.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:app/utils/offset_extension.dart';
@@ -32,6 +33,13 @@ abstract class Node {
   }
 
   void addInputOnIndex(Pin pin, int index) {
+    if(index + 1 > inputs.length) {
+      int diff = (index + 1) - inputs.length;
+      while(diff > 0) {
+        inputs.add(EmptyPin());
+        diff--;
+      }
+    }
     inputs[index] = pin;
   }
 
@@ -43,6 +51,17 @@ abstract class Node {
       return;
     }
     outputs.add(pin);
+  }
+
+  void addOutputOnIndex(Pin pin, int index) {
+    if(index + 1 > outputs.length) {
+      int diff = (index + 1) - outputs.length;
+      while(diff > 0) {
+        outputs.add(EmptyPin());
+        diff--;
+      }
+    }
+    outputs[index] = pin;
   }
 
   Map<String, dynamic> toJson() {
