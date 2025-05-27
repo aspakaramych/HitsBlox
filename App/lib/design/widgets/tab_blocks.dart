@@ -17,10 +17,17 @@ class BlockCard extends StatefulWidget {
 }
 
 class _BlockCardState extends State<BlockCard> {
+
   @override
   Widget build(BuildContext context) {
+    late var hintsNotifier = Provider.of<HintsNotifier>(context, listen: false);
     return GestureDetector(
-      onTap: widget.item.action,
+      onTap: () {
+        widget.item.action();
+        if (hintsNotifier.areHintsEnabled) {
+          print("aaaa");
+        }
+      },
       child: Material(
         borderRadius: BorderRadius.all(Radius.circular(15)),
         elevation: 5,

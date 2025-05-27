@@ -141,10 +141,13 @@ class StorageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      color: Theme.of(context).colorScheme.surfaceDim,
-      child: StorageSaves()
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: 370),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        color: Theme.of(context).colorScheme.surfaceDim,
+        child: StorageSaves(),
+      ),
     );
   }
 }

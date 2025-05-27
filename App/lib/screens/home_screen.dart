@@ -99,7 +99,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       Expanded(
-                        child: Align(alignment:Alignment.bottomCenter, child: Container(margin: EdgeInsets.symmetric(horizontal: 20), child: GridSaves())),
+                        child: Align(
+                            alignment: Alignment.bottomCenter,
+                            child: ConstrainedBox(
+                              constraints: BoxConstraints(maxWidth: 370),
+                              child: Container(
+                                  margin: EdgeInsets.symmetric(horizontal: 20),
+                                  child: GridSaves()
+                              ),
+                            )
+                        ),
                       ),
                       BouncingIcon(),
                       // Container(margin: EdgeInsets.symmetric(vertical: 0), child: SvgPicture.asset("lib/design/assets/icons/scroll.svg", colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.onSecondary, BlendMode.srcIn),)),
