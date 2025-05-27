@@ -31,6 +31,10 @@ abstract class Node {
     inputs.add(pin);
   }
 
+  void addInputOnIndex(Pin pin, int index) {
+    inputs[index] = pin;
+  }
+
 
   void addOutput(Pin pin) {
     var oldPin = outputs.indexWhere((p) => p.id == "empty");

@@ -8,6 +8,7 @@ import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:collection/collection.dart';
 import '../abstracts/Command.dart';
 import '../literals/VariableLiteral.dart';
+import '../pins/EmptyPin.dart';
 
 class ConcatNode extends Node {
   @override
@@ -16,7 +17,10 @@ class ConcatNode extends Node {
   @override
   String get title => "Конкатенация";
 
-  ConcatNode(String this.id, Offset position) : super(position) {}
+  ConcatNode(String this.id, Offset position) : super(position) {
+    inputs.add(EmptyPin());
+    inputs.add(EmptyPin());
+  }
 
 
   @override

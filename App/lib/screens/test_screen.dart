@@ -64,7 +64,7 @@ class _TestScreenState extends State<TestScreen>
   late BlockService _blockService;
   late TestScreenWidgetBuilder _widgetBuilder;
 
-  void makeConnection(Node first, Node second) {
+  void makeConnection(Node first, Node second, int index, bool isLogicBlock) {
     String newOutputPinId = 'exec_out_${Randomizer.getRandomInt()}';
     String newInputPinId = 'exec_in_${Randomizer.getRandomInt()}';
 
@@ -85,9 +85,15 @@ class _TestScreenState extends State<TestScreen>
     widget.nodeGraph.nodes
         .firstWhere((n) => n.id == first.id)
         .addOutput(outputPin);
-    widget.nodeGraph.nodes
-        .firstWhere((n) => n.id == second.id)
-        .addInput(inputPin);
+    if(isLogicBlock) {
+      widget.nodeGraph.nodes
+          .firstWhere((n) => n.id == second.id)
+          .addInputOnIndex(inputPin, index);
+    } else {
+      widget.nodeGraph.nodes
+          .firstWhere((n) => n.id == second.id)
+          .addInput(inputPin);
+    }
 
     widget.nodeGraph.connect(first.id, outputPin.id, second.id, inputPin.id);
   }

@@ -10,7 +10,7 @@ class PrintBlockWidget extends StatefulWidget {
   final VoidCallback onEditToggle;
   final Function() deleteNode;
   final Function(Offset) onPositionChanged;
-  final Function() onLeftArrowClick;
+  final Function(int) onLeftArrowClick;
   final Function() onRightArrowClick;
 
   const PrintBlockWidget({
@@ -159,7 +159,7 @@ class _PrintBlockWidgetState extends State<PrintBlockWidget> {
                   left: 15,
                   top: 50,
                   child: GestureDetector(
-                    onTap: () => widget.onLeftArrowClick(),
+                    onTap: () => widget.onLeftArrowClick(0),
                     child: SizedBox(
                       width: 30,
                       height: 30,

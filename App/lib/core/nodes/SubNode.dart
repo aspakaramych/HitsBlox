@@ -8,6 +8,7 @@ import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:collection/collection.dart';
 import '../abstracts/Command.dart';
 import '../literals/VariableLiteral.dart';
+import '../pins/EmptyPin.dart';
 
 class SubNode extends Node {
 
@@ -18,7 +19,10 @@ class SubNode extends Node {
   @override
   String get title => "Вычитание";
 
-  SubNode(String this.id, Offset position) : super(position) {}
+  SubNode(String this.id, Offset position) : super(position) {
+    inputs.add(EmptyPin());
+    inputs.add(EmptyPin());
+  }
 
 
   @override

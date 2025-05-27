@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:app/core/pins/EmptyPin.dart';
 import 'package:app/core/pins/Pin.dart';
 import 'package:app/core/abstracts/Node.dart';
 import 'package:app/core/models/BinaryOperations.dart';
@@ -16,7 +17,8 @@ class AddNode extends Node {
   String get title => "Сложение";
 
   AddNode(String this.id, Offset position) : super(position) {
-
+    inputs.add(EmptyPin());
+    inputs.add(EmptyPin());
   }
 
 

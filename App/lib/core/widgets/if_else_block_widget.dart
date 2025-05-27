@@ -10,7 +10,7 @@ class IfElseBlockWidget extends StatefulWidget {
   final bool mark;
   final Function() deleteNode;
   final Function(Offset) onPositionChanged;
-  final Function(Offset) onLeftArrowClick;
+  final Function(Offset, int) onLeftArrowClick;
   final Function(Offset) onRightArrowClick;
 
   const IfElseBlockWidget({
@@ -108,6 +108,7 @@ class _IfElseBlockWidgetState extends State<IfElseBlockWidget> {
                       onTap:
                           () => widget.onLeftArrowClick(
                             widget.block.leftArrows[i].position,
+                            i
                           ),
                       child: SizedBox(
                         width: 30,

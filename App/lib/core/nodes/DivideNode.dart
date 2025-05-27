@@ -4,6 +4,8 @@ import 'package:app/core/abstracts/Node.dart';
 import 'package:app/core/pins/Pin.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 
+import '../pins/EmptyPin.dart';
+
 class DivideNode extends Node {
 
 
@@ -13,7 +15,10 @@ class DivideNode extends Node {
   @override
   String get title => "Деление";
 
-  DivideNode(String this.id, Offset position) : super(position) {}
+  DivideNode(String this.id, Offset position) : super(position) {
+    inputs.add(EmptyPin());
+    inputs.add(EmptyPin());
+  }
 
 
   @override

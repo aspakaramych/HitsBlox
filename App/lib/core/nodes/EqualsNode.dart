@@ -4,6 +4,8 @@ import 'package:app/core/abstracts/Node.dart';
 import 'package:app/core/pins/Pin.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 
+import '../pins/EmptyPin.dart';
+
 class EqualsNode extends Node{
   @override
   final String id;
@@ -11,7 +13,8 @@ class EqualsNode extends Node{
   String get title => "Эквивалентность";
 
   EqualsNode(String this.id, Offset position) : super(position){
-
+    inputs.add(EmptyPin());
+    inputs.add(EmptyPin());
   }
 
   @override
