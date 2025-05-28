@@ -1,18 +1,16 @@
 import 'dart:ui';
 
-import 'package:app/core/abstracts/Node.dart';
-import 'package:app/core/pins/Pin.dart';
-import 'package:app/core/registry/VariableRegistry.dart';
-
+import '../abstracts/Node.dart';
 import '../pins/EmptyPin.dart';
+import '../registry/VariableRegistry.dart';
 
-class MoreNode extends Node{
+class GreaterOrEqualNode extends Node{
   @override
   final String id;
   @override
-  String get title => ">";
+  String get title => ">=";
 
-  MoreNode(String this.id, Offset position) : super(position){
+  GreaterOrEqualNode(String this.id, Offset position) : super(position){
     inputs.add(EmptyPin());
     inputs.add(EmptyPin());
   }
@@ -42,16 +40,10 @@ class MoreNode extends Node{
 
       if (aVal == null || bVal == null) return;
       if (aVal is int && bVal is int){
-        bool znac = aVal > bVal;
+        bool znac = aVal >= bVal;
         resultPin.setValue(znac);
         return;
       }
     }
   }
-  void clearOutputs(){
-    for (var p in outputs){
-      p.setValue(null);
-    }
-  }
-
 }

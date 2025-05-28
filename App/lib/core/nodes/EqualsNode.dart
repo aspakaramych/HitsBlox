@@ -10,7 +10,7 @@ class EqualsNode extends Node{
   @override
   final String id;
   @override
-  String get title => "Эквивалентность";
+  String get title => "==";
 
   EqualsNode(String this.id, Offset position) : super(position){
     inputs.add(EmptyPin());

@@ -32,6 +32,9 @@ class _BlockCardState extends State<BlockCard> {
             case "while":
               showHelpToast.showWhileToast(context);
               return;
+            case "int":
+              showHelpToast.showIntToast(context);
+              return;
           }
         }
       },

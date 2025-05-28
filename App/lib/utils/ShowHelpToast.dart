@@ -20,7 +20,18 @@ class ShowHelpToast{
       lifeTime: Duration(seconds: 10),
       child: ProgramProcessingToast(
         title: 'WhileCreated',
-        description: 'Чтобы зациклить, подключите выходной пин из тела цикла ко входному в while(обязательно заполните все выходные пины while) ',
+        description: 'Чтобы зациклить, подключите выходной пин из тела цикла ко входному в while(обязательно заполните все выходные пины while)',
+        backgroundColor: Colors.grey,
+        textColor: Colors.grey,
+      ),
+    ));
+  }
+  void showIntToast(BuildContext context){
+    showToast(context, Toast(
+      lifeTime: Duration(seconds: 10),
+      child: ProgramProcessingToast(
+        title: 'IntAssignCreated',
+        description: 'Сначала напишите название переменной, через равно число, элемент массива или арифмитическое выражение, в конце поставьте ; (a = 12, b = a[i], a = 45 * 5 + b[i])',
         backgroundColor: Colors.grey,
         textColor: Colors.grey,
       ),
