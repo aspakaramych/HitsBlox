@@ -1,8 +1,15 @@
+import 'package:app/core/nodes/ArrayAddNode.dart';
+import 'package:app/core/nodes/IntAssignNode.dart';
+import 'package:app/core/nodes/StringAssignNode.dart';
 import 'package:flutter/material.dart';
 
 import '../../blocks/assignment_block.dart';
 import '../../utils/sizes.dart';
 import '../../utils/triangle_painter.dart';
+import '../../blocks/assignment_block.dart';
+import '../abstracts/Node.dart';
+import '../nodes/ArrayAsignNode.dart';
+import '../nodes/BoolAssignNode.dart';
 
 class AssignmentBlockWidget extends StatefulWidget {
   final AssignmentBlock block;
@@ -45,6 +52,47 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
     return arr;
   }
 
+  bool Validate(String text) {
+    return true;
+    if (widget.block.node is IntAssignNode) {
+      var reg = RegExp(r"(^\s*([a-zA-Z_][a-zA-Z0-9_]*)(\s*=\s*(.+?)\s*)?;$)"); //TODO: при желании дописать регулярки, но как будто велик шанс, что она всё сломает, сейчас они самые базовые вещи проверяют
+      if (!reg.hasMatch(text)) {
+        return false;
+      }
+    }
+    if (widget.block.node is BoolAssignNode) {
+      var reg = RegExp(r"(^\s*([a-zA-Z_][a-zA-Z0-9_]*)(\s*=\s*(.+?)\s*)?;$)");
+      if (!reg.hasMatch(text)) {
+        return false;
+      }
+    }
+    if (widget.block.node is ArrayAddNode) {
+      var reg = RegExp(r"^\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*\[\s*([^\]]+?)\s*\]\s*=\s*(.+?)\s*;?$");
+      if (!reg.hasMatch(text)) {
+        return false;
+      }
+    }
+    if (widget.block.node is ArrayAsignNode) {
+      var reg = RegExp(r"^\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*\[\s*([^\]]+?)\s*\]\s*=\s*(.+?)\s*;?$");
+      if (!reg.hasMatch(text)) {
+        return false;
+      }
+    }
+    if (widget.block.node is StringAssignNode) {
+      var reg = RegExp(r"(^\s*([a-zA-Z_][a-zA-Z0-9_]*)(\s*=\s*(.+?)\s*)?;$)");
+      if (!reg.hasMatch(text)) {
+        return false;
+      }
+    }
+    if (widget.block.node is StringAssignNode) {
+      var reg = RegExp(r"(^\s*([a-zA-Z_][a-zA-Z0-9_]*)(\s*=\s*(.+?)\s*)?;$)");
+      if (!reg.hasMatch(text)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   Widget buildActiveInputField() {
     return TextField(
       controller: TextEditingController(
@@ -52,6 +100,7 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
       ),
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.done,
+      maxLines: null,
       onSubmitted: (text) {
         widget.block.node.rawExpression = text;
         widget.onEditToggle();
@@ -150,7 +199,7 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                                         color: Theme.of(context).colorScheme.shadow.withOpacity(0.2),
                                       ),
                                       BoxShadow(
-                                        color: Theme.of(context).colorScheme.secondaryContainer,
+                                        color: (Validate(widget.block.node.rawExpression)) ? Theme.of(context).colorScheme.secondaryContainer : Theme.of(context).colorScheme.errorContainer,
                                         spreadRadius: -4.0,
                                         blurRadius: 4.0,
                                       ),
