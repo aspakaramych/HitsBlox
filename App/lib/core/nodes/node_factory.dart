@@ -4,8 +4,10 @@ import 'package:app/core/nodes/AddNode.dart';
 import 'package:app/core/nodes/ConcatNode.dart';
 import 'package:app/core/nodes/DivideNode.dart';
 import 'package:app/core/nodes/EqualsNode.dart';
+import 'package:app/core/nodes/GreaterOrEqualNode.dart';
 import 'package:app/core/nodes/IfElseNode.dart';
 import 'package:app/core/nodes/LessNode.dart';
+import 'package:app/core/nodes/LessOrEqualNode.dart';
 import 'package:app/core/nodes/ModNode.dart';
 import 'package:app/core/nodes/MoreNode.dart';
 import 'package:app/core/nodes/MultiplyNode.dart';
@@ -48,6 +50,10 @@ class NodeFactory {
         return SubNode(id, position);
       case 'Остаток от деления':
         return ModNode(id, position);
+      case '>=':
+        return GreaterOrEqualNode(id, position);
+      case '<=':
+        return LessOrEqualNode(id, position);
     }
   }
 }

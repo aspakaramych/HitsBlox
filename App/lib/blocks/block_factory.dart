@@ -9,10 +9,12 @@ import 'package:app/core/nodes/ArrayAsignNode.dart';
 import 'package:app/core/nodes/ConcatNode.dart';
 import 'package:app/core/nodes/DivideNode.dart';
 import 'package:app/core/nodes/EqualsNode.dart';
+import 'package:app/core/nodes/GreaterOrEqualNode.dart';
 import 'package:app/core/nodes/IfElseNode.dart';
 import 'package:app/core/nodes/IncrementNode.dart';
 import 'package:app/core/nodes/LengthNode.dart';
 import 'package:app/core/nodes/LessNode.dart';
+import 'package:app/core/nodes/LessOrEqualNode.dart';
 import 'package:app/core/nodes/ModNode.dart';
 import 'package:app/core/nodes/MoreNode.dart';
 import 'package:app/core/nodes/MultiplyNode.dart';
@@ -406,6 +408,30 @@ class BlockFactory {
     );
   }
 
+  static createGreaterOrEqualsBlock(TransformationController transformationController) {
+    final currUserOffset =
+        UserPositionUtils.getVisibleContentRect(
+          transformationController,
+        ).topLeft;
+    final greaterOrEqualNode = GreaterOrEqualNode(
+      'node_${Randomizer.getRandomInt()}',
+      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+    );
+
+    return LogicBlock(
+      position: greaterOrEqualNode.position,
+      node: greaterOrEqualNode,
+      blockName: ">=",
+      width: 120,
+      height: 120,
+      leftArrows: List.of([
+        Position(Offset(15, 45), false),
+        Position(Offset(15, 90), false),
+      ]),
+      rightArrows: List.of([Position(Offset(15, 65), false)]),
+    );
+  }
+
   static createLessBlock(TransformationController transformationController) {
     final currUserOffset =
         UserPositionUtils.getVisibleContentRect(
@@ -420,6 +446,30 @@ class BlockFactory {
       position: lessNode.position,
       node: lessNode,
       blockName: "less",
+      width: 120,
+      height: 120,
+      leftArrows: List.of([
+        Position(Offset(15, 45), false),
+        Position(Offset(15, 90), false),
+      ]),
+      rightArrows: List.of([Position(Offset(15, 65), false)]),
+    );
+  }
+
+  static createLessOrEqualsBlock(TransformationController transformationController) {
+    final currUserOffset =
+        UserPositionUtils.getVisibleContentRect(
+          transformationController,
+        ).topLeft;
+    final lessNodeOrEqualNode = LessOrEqualNode(
+      'node_${Randomizer.getRandomInt()}',
+      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+    );
+
+    return LogicBlock(
+      position: lessNodeOrEqualNode.position,
+      node: lessNodeOrEqualNode,
+      blockName: "<=",
       width: 120,
       height: 120,
       leftArrows: List.of([
