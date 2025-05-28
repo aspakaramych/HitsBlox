@@ -98,7 +98,7 @@ class BlockService {
       ],
       "Функции" : [
       Block(
-        name: "arrrayAdd",
+        name: "arrayAdd",
         action:
             () =>
             addAssignmentBlock(

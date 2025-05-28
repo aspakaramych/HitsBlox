@@ -35,6 +35,18 @@ class _BlockCardState extends State<BlockCard> {
             case "int":
               showHelpToast.showIntToast(context);
               return;
+            case "string":
+              showHelpToast.showStringToast(context);
+              return;
+            case "bool":
+              showHelpToast.showBoolToast(context);
+              return;
+            case "array":
+              showHelpToast.showArrayToast(context);
+              return;
+            case "arrayAdd":
+              showHelpToast.showArrayAddToast(context);
+              return;
           }
         }
       },
