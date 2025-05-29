@@ -39,3 +39,4 @@ part 'horizontal_debug_bar.dart';
 part 'custom_icon_button.dart';
 part 'debug_console.dart';
 part 'about_section.dart';
+part 'deletion_alert.dart';

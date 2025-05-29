@@ -111,21 +111,16 @@ class _StorageSavesState extends State<StorageSaves> {
               ),
               if (key != "Новое сохранение")
                 Positioned(
-                  top: 8,
-                  right: 8,
+                  bottom: 20,
+                  right: 20,
                   child: GestureDetector(
-                    onTap: () => _deleteSave(key),
-                    child: Container(
-                      padding: EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.errorContainer,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.close,
-                        size: 20,
-                        color: Theme.of(context).colorScheme.onErrorContainer,
-                      ),
+                    onTap: () => showDeleteConfirmationDialog(context, key, _deleteSave),
+                    child: SvgPicture.asset(
+                      'lib/design/assets/icons/trash.svg',
+                      width: 20,
+                      height: 20,
+                      colorFilter:
+                      ColorFilter.mode(Theme.of(context).colorScheme.error, BlendMode.srcIn),
                     ),
                   ),
                 ),
