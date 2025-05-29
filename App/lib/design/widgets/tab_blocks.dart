@@ -17,38 +17,14 @@ class BlockCard extends StatefulWidget {
 }
 
 class _BlockCardState extends State<BlockCard> {
-  final ShowHelpToast showHelpToast = ShowHelpToast();
   @override
   Widget build(BuildContext context) {
+    final ToastService toastService = ToastService();
     late var hintsNotifier = Provider.of<HintsNotifier>(context, listen: false);
     return GestureDetector(
       onTap: () {
         widget.item.action();
-        if (hintsNotifier.areHintsEnabled) {
-          switch (widget.item.name){
-            case "conditional":
-              showHelpToast.showIfElseToast(context);
-              return;
-            case "while":
-              showHelpToast.showWhileToast(context);
-              return;
-            case "int":
-              showHelpToast.showIntToast(context);
-              return;
-            case "string":
-              showHelpToast.showStringToast(context);
-              return;
-            case "bool":
-              showHelpToast.showBoolToast(context);
-              return;
-            case "array":
-              showHelpToast.showArrayToast(context);
-              return;
-            case "arrayAdd":
-              showHelpToast.showArrayAddToast(context);
-              return;
-          }
-        }
+        toastService.Show(context, widget.item.name, hintsNotifier.areHintsEnabled);
       },
       child: Material(
         borderRadius: BorderRadius.all(Radius.circular(15)),

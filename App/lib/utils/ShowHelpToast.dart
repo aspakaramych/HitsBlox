@@ -114,4 +114,109 @@ class ShowHelpToast {
       ),
     );
   }
+  void showLengthToast(BuildContext context) {
+    showToast(
+      context,
+      Toast(
+        lifeTime: Duration(seconds: 10),
+        child: ProgramProcessingToast(
+          title: 'LengthCreated',
+          description:
+          'На вход соедините блок с массивом, внутри напишите название переменной, значение которой будет длинной массива',
+          backgroundColor: Colors.grey,
+          textColor: Colors.grey,
+        ),
+      ),
+    );
+  }
+  void showBinToast(BuildContext context) {
+    showToast(
+      context,
+      Toast(
+        lifeTime: Duration(seconds: 10),
+        child: ProgramProcessingToast(
+          title: 'OperationsCreated',
+          description:
+          'На вход подается 2 числа \nВерхний треугольник - a \nНижний треугольник - b',
+          backgroundColor: Colors.grey,
+          textColor: Colors.grey,
+        ),
+      ),
+    );
+  }
+  void showSwapToast(BuildContext context) {
+    showToast(
+      context,
+      Toast(
+        lifeTime: Duration(seconds: 10),
+        child: ProgramProcessingToast(
+          title: 'SwapCreated',
+          description:
+          'В поля пишутся переменные или массивы с индексами',
+          backgroundColor: Colors.grey,
+          textColor: Colors.grey,
+        ),
+      ),
+    );
+  }
+  void showIncrementToast(BuildContext context) {
+    showToast(
+      context,
+      Toast(
+        lifeTime: Duration(seconds: 10),
+        child: ProgramProcessingToast(
+          title: 'IncrementCreated',
+          description:
+          'Напишите переменную, после неё:\n++ если хотите увеличить на 1\n-- если хотите уменьшить на 1',
+          backgroundColor: Colors.grey,
+          textColor: Colors.grey,
+        ),
+      ),
+    );
+  }
+  void showConcatToast(BuildContext context) {
+    showToast(
+      context,
+      Toast(
+        lifeTime: Duration(seconds: 10),
+        child: ProgramProcessingToast(
+          title: 'ConcatCreated',
+          description:
+          'На вход подается 2 строки \nВерхний треугольник - a \nНижний треугольник - b',
+          backgroundColor: Colors.grey,
+          textColor: Colors.grey,
+        ),
+      ),
+    );
+  }
+  void showLogicToast(BuildContext context) {
+    showToast(
+      context,
+      Toast(
+        lifeTime: Duration(seconds: 10),
+        child: ProgramProcessingToast(
+          title: 'LogicCreated',
+          description:
+          'На вход подается 2 числа или bool значения \nВерхний треугольник - a \nНижний треугольник - b',
+          backgroundColor: Colors.grey,
+          textColor: Colors.grey,
+        ),
+      ),
+    );
+  }
+  void showPrintToast(BuildContext context) {
+    showToast(
+      context,
+      Toast(
+        lifeTime: Duration(seconds: 10),
+        child: ProgramProcessingToast(
+          title: 'PrintCreated',
+          description:
+          'Если хотите вывести значение переменной, напишите ее в {}({a})',
+          backgroundColor: Colors.grey,
+          textColor: Colors.grey,
+        ),
+      ),
+    );
+  }
 }

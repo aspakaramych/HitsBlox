@@ -12,6 +12,7 @@ import 'package:app/screens/main_screen.dart';
 import 'package:app/screens/settings_screen.dart';
 import 'package:app/screens/test_screen.dart';
 import 'package:app/utils/ShowHelpToast.dart';
+import 'package:app/utils/toast_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +20,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_drawing/path_drawing.dart';
 import 'package:app/core/Engine.dart';
+import 'package:toastify/toastify.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/ConsoleService.dart';

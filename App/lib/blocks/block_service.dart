@@ -96,7 +96,7 @@ class BlockService {
       ],
       "Функции": [
         Block(
-          name: "arrrayAdd",
+          name: "arrayAdd",
           action:
               () => addAssignmentBlock(
                 BlockFactory.createAddArrayBlock(_transformationController),
@@ -168,21 +168,21 @@ class BlockService {
       ],
       'Логические операторы': [
         Block(
-          name: "equal",
+          name: "==",
           action:
               () => addLogicBlock(
                 BlockFactory.createEqualsBlock(_transformationController),
               ),
         ),
         Block(
-          name: "more",
+          name: ">",
           action:
               () => addLogicBlock(
                 BlockFactory.createMoreBlock(_transformationController),
               ),
         ),
         Block(
-          name: "less",
+          name: "<",
           action:
               () => addLogicBlock(
                 BlockFactory.createLessBlock(_transformationController),
