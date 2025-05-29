@@ -101,10 +101,11 @@ class _SettingsScreenState extends State<SettingsScreen>{
               ),
             ),
             HorizontalBottomBar(
-              onTerminalPressed: () {},
+              onTerminalPressed: null,
               onAddPressed: () {Navigator.pushNamed(context, "/edit");},
-              onSavePressed: () {},
+              onSavePressed: null,
               iconButton: 'lib/design/assets/icons/left.svg',
+              activeButton: "settings",
             )
           ],
         ),
