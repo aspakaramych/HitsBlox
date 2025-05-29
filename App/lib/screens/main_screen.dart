@@ -163,7 +163,9 @@ class _MainScreenState extends State<MainScreen>
                   },
                   onStopPressed: () {
                     _toggleDebugConsole();
-                    _toggleDebugMode();
+                    setState(() {
+                      _isDebugConsoleOpen = false;
+                    });
                     _testScreen.engine.setDebugMode(false);
                   },
                   onMenuPressed: () {
