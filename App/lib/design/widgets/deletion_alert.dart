@@ -31,8 +31,17 @@ void showDeleteConfirmationDialog(BuildContext context, String fileName, Future<
     },
   ).then((confirmed) {
     if (confirmed != null && confirmed) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Файл удалён!')),
+      showToast(
+        context,
+        Toast(
+          lifeTime: Duration(seconds: 1),
+          child: CustomToast(
+            title: 'Удаляем..',
+            description: "Сохранение удалено!",
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+          ),
+        ),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(

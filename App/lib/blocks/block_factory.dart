@@ -46,7 +46,7 @@ class BlockFactory {
         ).topLeft;
     final assignNode = IntAssignNode(
       'node_${Randomizer.getRandomInt()}',
-      Offset(currUserOffset.dx + 50, currUserOffset.dy + 50),
+      Offset(currUserOffset.dx + 100, currUserOffset.dy + 100),
     );
 
     return AssignmentBlock(
@@ -65,7 +65,7 @@ class BlockFactory {
         ).topLeft;
     final assignNode = BoolAssignNode(
       'node_${Randomizer.getRandomInt()}',
-      Offset(currUserOffset.dx + 50, currUserOffset.dy + 50),
+      Offset(currUserOffset.dx + 100, currUserOffset.dy + 100),
     );
 
     return AssignmentBlock(
@@ -82,7 +82,7 @@ class BlockFactory {
         ).topLeft;
     final assignNode = StringAssignNode(
       'node_${Randomizer.getRandomInt()}',
-      Offset(currUserOffset.dx + 50, currUserOffset.dy + 50),
+      Offset(currUserOffset.dx + 100, currUserOffset.dy + 100),
     );
 
     return AssignmentBlock(
@@ -99,7 +99,7 @@ class BlockFactory {
         ).topLeft;
     final assignNode = ArrayAsignNode(
       'node_${Randomizer.getRandomInt()}',
-      Offset(currUserOffset.dx + 50, currUserOffset.dy + 50),
+      Offset(currUserOffset.dx + 100, currUserOffset.dy + 100),
     );
 
     return AssignmentBlock(
@@ -118,7 +118,7 @@ class BlockFactory {
         ).topLeft;
     final assignNode = ArrayAddNode(
       'node_${Randomizer.getRandomInt()}',
-      Offset(currUserOffset.dx + 50, currUserOffset.dy + 50),
+      Offset(currUserOffset.dx + 100, currUserOffset.dy + 100),
     );
 
     return AssignmentBlock(
@@ -135,7 +135,7 @@ class BlockFactory {
         ).topLeft;
     final assignNode = LengthNode(
       'node_${Randomizer.getRandomInt()}',
-      Offset(currUserOffset.dx + 50, currUserOffset.dy + 50),
+      Offset(currUserOffset.dx + 100, currUserOffset.dy + 100),
     );
 
     return AssignmentBlock(
@@ -157,7 +157,7 @@ class BlockFactory {
     final printNode = PrintNode(
       consoleService: consoleService,
       id: 'node_${Randomizer.getRandomInt()}',
-      position: Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+      position: Offset(currUserOffset.dx + 100, currUserOffset.dy + 100),
     );
 
     return PrintBlock(
@@ -177,7 +177,7 @@ class BlockFactory {
         ).topLeft;
     final startNode = StartNode(
       'node_${Randomizer.getRandomInt()}',
-      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+      Offset(currUserOffset.dx + 100, currUserOffset.dy + 100),
     );
 
     return LogicBlock(
@@ -200,7 +200,7 @@ class BlockFactory {
         ).topLeft;
     final multiplyNode = MultiplyNode(
       'node_${Randomizer.getRandomInt()}',
-      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+      Offset(currUserOffset.dx + 100, currUserOffset.dy + 100),
     );
 
     return LogicBlock(
@@ -226,7 +226,7 @@ class BlockFactory {
         ).topLeft;
     final addictionNode = AddNode(
       'node_${Randomizer.getRandomInt()}',
-      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+      Offset(currUserOffset.dx + 100, currUserOffset.dy + 100),
     );
 
     return LogicBlock(
@@ -250,7 +250,7 @@ class BlockFactory {
         ).topLeft;
     final concatNode = ConcatNode(
       'node_${Randomizer.getRandomInt()}',
-      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+      Offset(currUserOffset.dx + 100, currUserOffset.dy + 100),
     );
 
     return LogicBlock(
@@ -276,7 +276,7 @@ class BlockFactory {
         ).topLeft;
     final divideNode = DivideNode(
       'node_${Randomizer.getRandomInt()}',
-      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+      Offset(currUserOffset.dx + 100, currUserOffset.dy + 100),
     );
 
     return LogicBlock(
@@ -300,7 +300,7 @@ class BlockFactory {
         ).topLeft;
     final assignNode = IncrementNode(
       'node_${Randomizer.getRandomInt()}',
-      Offset(currUserOffset.dx + 50, currUserOffset.dy + 50),
+      Offset(currUserOffset.dx + 100, currUserOffset.dy + 100),
     );
 
     return AssignmentBlock(
@@ -317,7 +317,7 @@ class BlockFactory {
         ).topLeft;
     final modNode = ModNode(
       'node_${Randomizer.getRandomInt()}',
-      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+      Offset(currUserOffset.dx + 100, currUserOffset.dy + 100),
     );
 
     return LogicBlock(
@@ -343,7 +343,7 @@ class BlockFactory {
         ).topLeft;
     final subNode = SubNode(
       'node_${Randomizer.getRandomInt()}',
-      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+      Offset(currUserOffset.dx + 100, currUserOffset.dy + 100),
     );
 
     return LogicBlock(
@@ -367,7 +367,7 @@ class BlockFactory {
         ).topLeft;
     final equalsNode = EqualsNode(
       'node_${Randomizer.getRandomInt()}',
-      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+      Offset(currUserOffset.dx + 100, currUserOffset.dy + 100),
     );
 
     return LogicBlock(
@@ -391,7 +391,7 @@ class BlockFactory {
         ).topLeft;
     final moreNode = MoreNode(
       'node_${Randomizer.getRandomInt()}',
-      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+      Offset(currUserOffset.dx + 100, currUserOffset.dy + 100),
     );
 
     return LogicBlock(
@@ -412,10 +412,10 @@ class BlockFactory {
     final currUserOffset =
         UserPositionUtils.getVisibleContentRect(
           transformationController,
-        ).topLeft;
+        ).bottomRight;
     final greaterOrEqualNode = GreaterOrEqualNode(
       'node_${Randomizer.getRandomInt()}',
-      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+      Offset(currUserOffset.dx + 100, currUserOffset.dy + 100),
     );
 
     return LogicBlock(
@@ -439,7 +439,7 @@ class BlockFactory {
         ).topLeft;
     final lessNode = LessNode(
       'node_${Randomizer.getRandomInt()}',
-      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+      Offset(currUserOffset.dx + 100, currUserOffset.dy + 100),
     );
 
     return LogicBlock(
@@ -463,7 +463,7 @@ class BlockFactory {
         ).topLeft;
     final lessNodeOrEqualNode = LessOrEqualNode(
       'node_${Randomizer.getRandomInt()}',
-      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+      Offset(currUserOffset.dx + 100, currUserOffset.dy + 100),
     );
 
     return LogicBlock(
@@ -487,7 +487,7 @@ class BlockFactory {
         ).topLeft;
     final ifElseNode = IfElseNode(
       'node_${Randomizer.getRandomInt()}',
-      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+      Offset(currUserOffset.dx + 100, currUserOffset.dy + 100),
     );
 
     return IfElseBlock(
@@ -511,7 +511,7 @@ class BlockFactory {
         ).topLeft;
     final whileNode = WhileNode(
       'node_${Randomizer.getRandomInt()}',
-      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+      Offset(currUserOffset.dx + 100, currUserOffset.dy + 100),
     );
 
     return WhileBlock(
@@ -530,7 +530,7 @@ class BlockFactory {
         ).topLeft;
     final stringNode = StringAssignNode(
       'node_${Randomizer.getRandomInt()}',
-      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+      Offset(currUserOffset.dx + 100, currUserOffset.dy + 100),
     );
 
     return CommentBlock(
@@ -549,7 +549,7 @@ class BlockFactory {
         ).topLeft;
     final swapNode = SwapNode(
       'node_${Randomizer.getRandomInt()}',
-      Offset(currUserOffset.dx + 50, currUserOffset.dy + 100),
+      Offset(currUserOffset.dx + 100, currUserOffset.dy + 100),
     );
 
     return SwapBlock(

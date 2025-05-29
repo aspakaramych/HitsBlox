@@ -9,7 +9,7 @@ import 'package:app/core/nodes/IfElseNode.dart';
 import 'package:app/core/nodes/StartNode.dart';
 import 'package:app/core/nodes/WhileNode.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
-import 'package:app/core/widgets/program_processing_toast_widget.dart';
+import 'package:app/core/widgets/custom_toast.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -136,32 +136,10 @@ class Engine {
       SelectedBlockService selectedBlockService,
       BuildContext context) async {
     if (_debugMode){
-      showToast(
-        context,
-        Toast(
-          lifeTime: Duration(seconds: 1),
-          child: ProgramProcessingToast(
-            title: 'Program is running in debug mode',
-            description: 'Debug mode is enable',
-            backgroundColor: Colors.grey,
-            textColor: Colors.white,
-          ),
-        ),
-      );
+      CustomToast.showCustomToast(context, 'Режим debug', 'Debug активирован', Colors.grey);
     }
     else{
-      showToast(
-        context,
-        Toast(
-          lifeTime: Duration(seconds: 1),
-          child: ProgramProcessingToast(
-            title: 'Program running',
-            description: 'Program is running, wait next message',
-            backgroundColor: Colors.grey,
-            textColor: Colors.grey,
-          ),
-        ),
-      );
+      CustomToast.showCustomToastWithDuration(context, 'Программа запущена', 'Идёт выполнение программы', Colors.grey, 1);
     }
     this.graph = nodeGraph;
     this.registry = variableRegistry;
@@ -180,7 +158,7 @@ class Engine {
     for (var node in graph.nodes){
       if (node.inputs.length == 0 && node is !StartNode){
         console.log("Ноды должны быть соединены со стартом");
-        _showErrorToast(context, "Ноды должны быть соединены со стартом");
+        CustomToast.showCustomToast(context, 'Ошибка', "Ноды должны быть соединены со стартом", Colors.red);
         return;
       }
     }
@@ -190,7 +168,7 @@ class Engine {
     }
     if (queue.isEmpty){
       console.log("Отсутствует start node");
-      _showErrorToast(context, "Отсутствует блок start");
+      CustomToast.showCustomToast(context, 'Ошибка', "Отсутствует блок start", Colors.red);
       return;
     }
 
@@ -275,7 +253,7 @@ class Engine {
 
           } catch (ex) {
             console.log(ex.toString());
-            _showErrorToast(context, ex.toString());
+            CustomToast.showCustomToast(context, 'Ошибка', ex.toString(), Colors.red);
             return;
           }
         } else {
@@ -287,7 +265,7 @@ class Engine {
       if (!progressMadeInThisIteration && queue.isNotEmpty) {
         print("Обнаружена блокировка. Невозможно выполнить оставшиеся ноды.");
         console.log("Обнаружена блокировка. Невозможно выполнить оставшиеся ноды.");
-        _showErrorToast(context, "Программа заблокирована: не все узлы могут быть выполнены.");
+        CustomToast.showCustomToast(context, 'Ошибка', "Программа заблокирована: не все узлы могут быть выполнены.", Colors.green);
         break;
       }
       if (!_debugMode){
@@ -297,34 +275,8 @@ class Engine {
     }
 
     if (queue.isEmpty) {
-      showToast(
-        context,
-        Toast(
-          lifeTime: Duration(seconds: 1),
-          child: ProgramProcessingToast(
-            title: 'Successful running',
-            description: 'The program was completed successfully',
-            backgroundColor: Colors.green,
-            textColor: Colors.white,
-          ),
-        ),
-      );
+      CustomToast.showCustomToast(context, 'Успех', 'Программа выполнена успешно', Colors.green);
       selectedBlockService.clear();
     }
-  }
-
-  void _showErrorToast(BuildContext context, String errorMessage) {
-    showToast(
-      context,
-      Toast(
-        lifeTime: Duration(seconds: 1),
-        child: ProgramProcessingToast(
-          title: 'Error',
-          description: errorMessage,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-        ),
-      ),
-    );
   }
 }

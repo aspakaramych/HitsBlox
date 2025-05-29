@@ -8,6 +8,9 @@ import 'package:app/utils/serialization_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:toastify/toastify.dart';
+
+import '../core/widgets/custom_toast.dart';
 
 class MainScreen extends StatefulWidget {
   final savedState;
@@ -93,7 +96,20 @@ class _MainScreenState extends State<MainScreen>
 
     prefs.setString(widget.screenName, jsonString);
 
-    log(jsonString);
+    showToast(
+      context,
+      Toast(
+        lifeTime: Duration(seconds: 1),
+        child: CustomToast(
+          title: 'Сохраняем..',
+          description: "Сохранено успешно!",
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+        ),
+      ),
+    );
+
+    // log(jsonString);
 
     // _testScreen.loadFromJson(_testScreen.saveScreenState());
   }

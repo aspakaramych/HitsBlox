@@ -1,4 +1,4 @@
-import 'package:app/core/widgets/program_processing_toast_widget.dart';
+import 'package:app/core/widgets/custom_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:toastify/toastify.dart';
@@ -9,7 +9,7 @@ class ShowHelpToast {
       context,
       Toast(
         lifeTime: Duration(seconds: 10),
-        child: ProgramProcessingToast(
+        child: CustomToast(
           title: 'IfElseCreated',
           description:
               'Подключите в входные пины переменные или значения типа bool, (BoolAsign, More, Less, Equals)',
@@ -25,7 +25,7 @@ class ShowHelpToast {
       context,
       Toast(
         lifeTime: Duration(seconds: 10),
-        child: ProgramProcessingToast(
+        child: CustomToast(
           title: 'WhileCreated',
           description:
               'Чтобы зациклить, подключите выходной пин из тела цикла ко входному в while(обязательно заполните все выходные пины while)',
@@ -41,7 +41,7 @@ class ShowHelpToast {
       context,
       Toast(
         lifeTime: Duration(seconds: 10),
-        child: ProgramProcessingToast(
+        child: CustomToast(
           title: 'IntAssignCreated',
           description:
               'Сначала напишите название переменной, через равно число, элемент массива или арифмитическое выражение, в конце поставьте ; (a = 12;, b = a[i];, a = 45 * 5 + b[i];)',
@@ -57,7 +57,7 @@ class ShowHelpToast {
       context,
       Toast(
         lifeTime: Duration(seconds: 10),
-        child: ProgramProcessingToast(
+        child: CustomToast(
           title: 'StringAssignCreated',
           description:
               'Сначала напишите название переменной, через равно напишите строчку в "", в конце поставьте ; (a = "пупу";)',
@@ -73,7 +73,7 @@ class ShowHelpToast {
       context,
       Toast(
         lifeTime: Duration(seconds: 10),
-        child: ProgramProcessingToast(
+        child: CustomToast(
           title: 'BoolAssignCreated',
           description:
               'Сначала напишите название переменной, через равно напишите true или false, в конце поставьте ; (a = true;, b = false;)',
@@ -89,7 +89,7 @@ class ShowHelpToast {
       context,
       Toast(
         lifeTime: Duration(seconds: 10),
-        child: ProgramProcessingToast(
+        child: CustomToast(
           title: 'ArrayAssignCreated',
           description:
               'type a = {}; \ntype a = []; \ntype - тип значений в массиве(int, string, bool) \na - название переменной (любое) \n{value1, value2, ...} заполнить своими значениями \n[size] создать массив размером size, зполненный стандартными значениями(0, "", true)',
@@ -104,7 +104,7 @@ class ShowHelpToast {
       context,
       Toast(
         lifeTime: Duration(seconds: 10),
-        child: ProgramProcessingToast(
+        child: CustomToast(
           title: 'ArrayAddCreated',
           description:
           'Сначала напишите название уже созданного массива, в [] укажите индекс, через равно укажите значение, которое вы хотите присвоить этому элементу массива(a[i] = 45;)',
@@ -119,7 +119,7 @@ class ShowHelpToast {
       context,
       Toast(
         lifeTime: Duration(seconds: 10),
-        child: ProgramProcessingToast(
+        child: CustomToast(
           title: 'LengthCreated',
           description:
           'На вход соедините блок с массивом, внутри напишите название переменной, значение которой будет длинной массива',
@@ -134,7 +134,7 @@ class ShowHelpToast {
       context,
       Toast(
         lifeTime: Duration(seconds: 10),
-        child: ProgramProcessingToast(
+        child: CustomToast(
           title: 'OperationsCreated',
           description:
           'На вход подается 2 числа \nВерхний треугольник - a \nНижний треугольник - b',
@@ -149,7 +149,7 @@ class ShowHelpToast {
       context,
       Toast(
         lifeTime: Duration(seconds: 10),
-        child: ProgramProcessingToast(
+        child: CustomToast(
           title: 'SwapCreated',
           description:
           'В поля пишутся переменные или массивы с индексами',
@@ -164,7 +164,7 @@ class ShowHelpToast {
       context,
       Toast(
         lifeTime: Duration(seconds: 10),
-        child: ProgramProcessingToast(
+        child: CustomToast(
           title: 'IncrementCreated',
           description:
           'Напишите переменную, после неё:\n++ если хотите увеличить на 1\n-- если хотите уменьшить на 1',
@@ -179,7 +179,7 @@ class ShowHelpToast {
       context,
       Toast(
         lifeTime: Duration(seconds: 10),
-        child: ProgramProcessingToast(
+        child: CustomToast(
           title: 'ConcatCreated',
           description:
           'На вход подается 2 строки \nВерхний треугольник - a \nНижний треугольник - b',
@@ -194,7 +194,7 @@ class ShowHelpToast {
       context,
       Toast(
         lifeTime: Duration(seconds: 10),
-        child: ProgramProcessingToast(
+        child: CustomToast(
           title: 'LogicCreated',
           description:
           'На вход подается 2 числа или bool значения \nВерхний треугольник - a \nНижний треугольник - b',
@@ -209,7 +209,7 @@ class ShowHelpToast {
       context,
       Toast(
         lifeTime: Duration(seconds: 10),
-        child: ProgramProcessingToast(
+        child: CustomToast(
           title: 'PrintCreated',
           description:
           'Если хотите вывести значение переменной, напишите ее в {}({a})',

@@ -24,6 +24,7 @@ import 'package:toastify/toastify.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/ConsoleService.dart';
+import '../../core/widgets/custom_toast.dart';
 import '../../utils/hints_notifier.dart';
 
 part 'horizontal_bottom_bar.dart';
