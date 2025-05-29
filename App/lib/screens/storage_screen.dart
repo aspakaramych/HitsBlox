@@ -34,6 +34,7 @@ class _StorageSavesState extends State<StorageSaves> {
     setState(() {
       keys = prefs.getKeys().toList();
       keys.remove('9d6b82da-eaec-4634-8bdb-743f029cb961');
+      keys.remove('95a51e91-aa1c-46b4-9591-0ee3f9fb5e39');
       itemCount = keys.length;
     });
   }

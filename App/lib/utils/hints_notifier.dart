@@ -19,12 +19,12 @@ class HintsNotifier with ChangeNotifier {
   Future<void> _loadHintsPreference() async {
     final prefs = await SharedPreferences.getInstance();
 
-    _areHintsEnabled = prefs.getBool('areHintsEnabled') ?? false;
+    _areHintsEnabled = prefs.getBool('areHintsEnabled') ?? true;
     notifyListeners();
   }
 
   Future<void> _saveHintsPreference(bool value) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('areHintsEnabled', value); //TODO: заменить на guid
+    await prefs.setBool('95a51e91-aa1c-46b4-9591-0ee3f9fb5e39', value);
   }
 }
