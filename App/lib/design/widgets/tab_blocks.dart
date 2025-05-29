@@ -105,6 +105,7 @@ class BlocksTabs extends StatefulWidget {
 }
 
 class _BlocksTabsState extends State<BlocksTabs>  with SingleTickerProviderStateMixin {
+  late var hintsNotifier = Provider.of<HintsNotifier>(context);
   late TabController _tabController;
 
   @override
@@ -156,13 +157,15 @@ class _BlocksTabsState extends State<BlocksTabs>  with SingleTickerProviderState
                   children: [
                     for (var item in widget.blocks.entries)
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: 10),
+                        padding: EdgeInsets.only(top: 10, bottom: 10),
                         margin: EdgeInsets.symmetric(horizontal: 10),
                         child: BlocksGrid(blocks: item.value)
                       )
                   ]
               )
-            )
+            ),
+            if (hintsNotifier.areHintsEnabled)
+            Text("*удаление - длинное нажатие по блоку", style: Theme.of(context).textTheme.bodySmall,)
           ]
         ),
       ),

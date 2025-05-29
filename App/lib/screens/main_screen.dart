@@ -138,180 +138,186 @@ class _MainScreenState extends State<MainScreen>
   @override
   Widget build(BuildContext context) {
     if (MediaQuery.of(context).orientation == Orientation.portrait) {
-      return Stack(
-        children: [
-          _testScreen,
-          Stack(
-            children: [
-              if (_isDebugConsoleOpen)
-                Positioned(
-                  height: 200,
-                  top: 115,
-                  right: 20,
-                  child:
-                  DebugConsole(
-                    onClose: _toggleDebugConsole,
-                    debugConsoleService: _testScreen.debugConsoleService,
-                  ),
-                ),
-              if (_testScreen.engine.getDebugMode())
-              Align(
-                alignment: Alignment.centerRight,
-                child: VerticalDebugBar(
-                  onNextPressed: () {
-                    _testScreen.engine.next();
-                  },
-                  onStopPressed: () {
-                    _toggleDebugConsole();
-                    setState(() {
-                      _isDebugConsoleOpen = false;
-                    });
-                    _testScreen.engine.setDebugMode(false);
-                  },
-                  onMenuPressed: () {
-                    _toggleDebugConsole();
-                  },
-                ),
-              ),
-              Column(
-                children: [
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: HorizontalTopBar(
-                      play: () {
-                        _testScreen.consoleService.clear();
-                        _testScreen.engine.setDebugMode(false);
-                        _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, context);
-                      },
-                      debug: () {
-                        _testScreen.consoleService.clear();
-                        _toggleDebugMode();
-                        _testScreen.engine.setDebugMode(true);
-                        _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, context);
-                      },
+      return PopScope(
+        canPop: false,
+        child: Stack(
+          children: [
+            _testScreen,
+            Stack(
+              children: [
+                if (_isDebugConsoleOpen)
+                  Positioned(
+                    height: 200,
+                    top: 115,
+                    right: 20,
+                    child:
+                    DebugConsole(
+                      onClose: _toggleDebugConsole,
+                      debugConsoleService: _testScreen.debugConsoleService,
                     ),
                   ),
-                  Expanded(child: Center()),
-                  AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 500),
-                    transitionBuilder: (child, animation) {
-                      final curvedAnimation = CurvedAnimation(
-                        parent: animation,
-                        curve: Curves.easeOutCubic,
-                      );
-                      return SlideTransition(
-                        position: Tween<Offset>(
-                          begin: const Offset(0, 2),
-                          end: Offset.zero,
-                          ).animate(curvedAnimation),
-                        child: child,
-                      );
+                if (_testScreen.engine.getDebugMode())
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: VerticalDebugBar(
+                    onNextPressed: () {
+                      _testScreen.engine.next();
                     },
-                    child: _isAddSectionVisible
-                    ? SizedBox(
-                      key: const ValueKey('BlocksTabs'),
-                      height: 360,
-                      child: BlocksTabs(blocks: _testScreen.blocks),
-                    )
-                        : const SizedBox.shrink(),
+                    onStopPressed: () {
+                      _toggleDebugConsole();
+                      setState(() {
+                        _isDebugConsoleOpen = false;
+                      });
+                      _testScreen.engine.setDebugMode(false);
+                    },
+                    onMenuPressed: () {
+                      _toggleDebugConsole();
+                    },
                   ),
-                  HorizontalBottomBar(
-                    iconButton: !_isAddSectionVisible ? 'lib/design/assets/icons/add.svg' : 'lib/design/assets/icons/down.svg',
-                    onTerminalPressed: () => _showTerminalPanel(context),
-                    onAddPressed: () => _toggleAddSection(),
-                    onSavePressed: () => _saveScreen(),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
+                ),
+                Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: HorizontalTopBar(
+                        play: () {
+                          _testScreen.consoleService.clear();
+                          _testScreen.engine.setDebugMode(false);
+                          _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, context);
+                        },
+                        debug: () {
+                          _testScreen.consoleService.clear();
+                          _toggleDebugMode();
+                          _testScreen.engine.setDebugMode(true);
+                          _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, context);
+                        },
+                      ),
+                    ),
+                    Expanded(child: Center()),
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 500),
+                      transitionBuilder: (child, animation) {
+                        final curvedAnimation = CurvedAnimation(
+                          parent: animation,
+                          curve: Curves.easeOutCubic,
+                        );
+                        return SlideTransition(
+                          position: Tween<Offset>(
+                            begin: const Offset(0, 2),
+                            end: Offset.zero,
+                            ).animate(curvedAnimation),
+                          child: child,
+                        );
+                      },
+                      child: _isAddSectionVisible
+                      ? SizedBox(
+                        key: const ValueKey('BlocksTabs'),
+                        height: 360,
+                        child: BlocksTabs(blocks: _testScreen.blocks),
+                      )
+                          : const SizedBox.shrink(),
+                    ),
+                    HorizontalBottomBar(
+                      iconButton: !_isAddSectionVisible ? 'lib/design/assets/icons/add.svg' : 'lib/design/assets/icons/down.svg',
+                      onTerminalPressed: () => _showTerminalPanel(context),
+                      onAddPressed: () => _toggleAddSection(),
+                      onSavePressed: () => _saveScreen(),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       );
     } else {
-      return Stack(
-        children: [
-          _testScreen,
-          Stack(
-            children: [
-              if (_isDebugConsoleOpen)
-                Positioned(
-                  height: 200,
-                  top: 180,
-                  left: 20,
-                  child:
-                  DebugConsole(
-                    onClose: _toggleDebugConsole,
-                    debugConsoleService: _testScreen.debugConsoleService,
-                  ),
-                ),
-              if (_testScreen.engine.getDebugMode())
-              Align(
-                alignment: Alignment.topCenter,
-                child: HorizontalDebugBar(
-                  onNextPressed: () {
-                    _testScreen.engine.next();
-                  },
-                  onStopPressed: () {
-                    _toggleDebugConsole();
-                    _toggleDebugMode();
-                    _testScreen.engine.setDebugMode(false);
-                  },
-                  onMenuPressed: () {
-                    _toggleDebugConsole();
-                  },
-                ),
-              ),
-              Row(
-                children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: VerticalTopBar(
-                      play: () {
-                        _testScreen.engine.setDebugMode(false);
-                        _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, context);
-                      },
-                      debug: () {
-                        _toggleDebugMode();
-                        _testScreen.engine.setDebugMode(true);
-                        _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, context);
-                      },
+      return PopScope(
+        canPop: false,
+        child: Stack(
+          children: [
+            _testScreen,
+            Stack(
+              children: [
+                if (_isDebugConsoleOpen)
+                  Positioned(
+                    height: 200,
+                    top: 180,
+                    left: 20,
+                    child:
+                    DebugConsole(
+                      onClose: _toggleDebugConsole,
+                      debugConsoleService: _testScreen.debugConsoleService,
                     ),
                   ),
-                  Expanded(child: Center()),
-                  AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 500),
-                    transitionBuilder: (child, animation) {
-                      final curvedAnimation = CurvedAnimation(
-                        parent: animation,
-                        curve: Curves.easeOutCubic,
-                      );
-                      return SlideTransition(
-                        position: Tween<Offset>(
-                          begin: const Offset(2, 0),
-                          end: Offset.zero,
-                        ).animate(curvedAnimation),
-                        child: child,
-                      );
+                if (_testScreen.engine.getDebugMode())
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: HorizontalDebugBar(
+                    onNextPressed: () {
+                      _testScreen.engine.next();
                     },
-                    child: _isAddSectionVisible
-                        ? SizedBox(
-                      key: const ValueKey('BlocksTabs'),
-                      height: 360,
-                      child: BlocksTabs(blocks: _testScreen.blocks),
-                    )
-                        : const SizedBox.shrink(),
+                    onStopPressed: () {
+                      _toggleDebugConsole();
+                      _toggleDebugMode();
+                      _testScreen.engine.setDebugMode(false);
+                    },
+                    onMenuPressed: () {
+                      _toggleDebugConsole();
+                    },
                   ),
-                  VerticalBottomBar(
-                    iconButton: !_isAddSectionVisible ? 'lib/design/assets/icons/add.svg' : 'lib/design/assets/icons/right.svg',
-                    onTerminalPressed: () => _showTerminalPanel(context),
-                    onAddPressed: () => _toggleAddSection(),
-                    onSavePressed: () => _saveScreen(),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
+                ),
+                Row(
+                  children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: VerticalTopBar(
+                        play: () {
+                          _testScreen.engine.setDebugMode(false);
+                          _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, context);
+                        },
+                        debug: () {
+                          _toggleDebugMode();
+                          _testScreen.engine.setDebugMode(true);
+                          _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, context);
+                        },
+                      ),
+                    ),
+                    Expanded(child: Center()),
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 500),
+                      transitionBuilder: (child, animation) {
+                        final curvedAnimation = CurvedAnimation(
+                          parent: animation,
+                          curve: Curves.easeOutCubic,
+                        );
+                        return SlideTransition(
+                          position: Tween<Offset>(
+                            begin: const Offset(2, 0),
+                            end: Offset.zero,
+                          ).animate(curvedAnimation),
+                          child: child,
+                        );
+                      },
+                      child: _isAddSectionVisible
+                          ? SizedBox(
+                        key: const ValueKey('BlocksTabs'),
+                        height: 360,
+                        child: BlocksTabs(blocks: _testScreen.blocks),
+                      )
+                          : const SizedBox.shrink(),
+                    ),
+                    VerticalBottomBar(
+                      iconButton: !_isAddSectionVisible ? 'lib/design/assets/icons/add.svg' : 'lib/design/assets/icons/right.svg',
+                      onTerminalPressed: () => _showTerminalPanel(context),
+                      onAddPressed: () => _toggleAddSection(),
+                      onSavePressed: () => _saveScreen(),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       );
     }
   }

@@ -45,7 +45,7 @@ class _SettingsScreenState extends State<SettingsScreen>{
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              margin: EdgeInsets.only(right: 20, left: 20, top: 40),
               child: Material(
                 elevation: 5,
                 borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -59,7 +59,6 @@ class _SettingsScreenState extends State<SettingsScreen>{
                       topRight: Radius.circular(15),
                     )
                   ),
-
                   padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
                   child: Align(
                     alignment: Alignment.bottomLeft,

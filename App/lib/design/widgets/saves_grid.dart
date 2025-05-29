@@ -63,7 +63,7 @@ class _GridSavesState extends State<GridSaves> {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: BoxConstraints(maxHeight: 600),
+      constraints: BoxConstraints(maxHeight: 500),
       child: GridView.builder(
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

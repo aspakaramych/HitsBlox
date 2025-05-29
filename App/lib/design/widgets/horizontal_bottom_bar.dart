@@ -19,9 +19,9 @@ class HorizontalBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 175,
+      height: 151,
       color: Colors.transparent,
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      padding: EdgeInsets.only(bottom: 20, right: 20, left: 20),
       width: double.infinity,
       child: Stack(
         alignment: Alignment.bottomCenter,

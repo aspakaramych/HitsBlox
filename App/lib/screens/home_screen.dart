@@ -100,11 +100,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Expanded(
                         child: Align(
-                            alignment: Alignment.bottomCenter,
+                            alignment: Alignment.topCenter,
                             child: ConstrainedBox(
                               constraints: BoxConstraints(maxWidth: 400),
                               child: Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 20),
+                                  margin: EdgeInsets.only(right: 20, left: 20, top: 40),
                                   child: GridSaves()
                               ),
                             )

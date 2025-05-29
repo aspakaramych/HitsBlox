@@ -40,7 +40,7 @@ class _BouncingIconState extends State<BouncingIcon>
       animation: _controller,
       builder: (context, child) {
         final value = _animation.value;
-        final double offset = (value >= 0.5 ? 1 - value : value) * 50;
+        final double offset = (value >= 0.5 ? 1 - value : value) * 160;
 
         return Transform.translate(
           offset: Offset(0, -offset),
