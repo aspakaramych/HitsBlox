@@ -1,10 +1,10 @@
 import 'dart:ui';
 
-import 'package:app/core/nodes/PrintNode.dart';
+import 'package:app/core/nodes/print_node.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:app/blocks/positioned_block.dart';
 
-import '../core/ConsoleService.dart';
+import '../core/console_service.dart';
 import '../utils/offset_extension.dart';
 
 class PrintBlock implements PositionedBlock {

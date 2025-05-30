@@ -1,23 +1,23 @@
 import 'dart:ui';
 
-import 'package:app/core/nodes/AddNode.dart';
-import 'package:app/core/nodes/ConcatNode.dart';
-import 'package:app/core/nodes/DivideNode.dart';
-import 'package:app/core/nodes/EqualsNode.dart';
-import 'package:app/core/nodes/GreaterOrEqualNode.dart';
-import 'package:app/core/nodes/IfElseNode.dart';
-import 'package:app/core/nodes/LessNode.dart';
-import 'package:app/core/nodes/LessOrEqualNode.dart';
-import 'package:app/core/nodes/ModNode.dart';
-import 'package:app/core/nodes/MoreNode.dart';
-import 'package:app/core/nodes/MultiplyNode.dart';
-import 'package:app/core/nodes/PrintNode.dart';
-import 'package:app/core/nodes/StartNode.dart';
-import 'package:app/core/nodes/SubNode.dart';
+import 'package:app/core/nodes/add_node.dart';
+import 'package:app/core/nodes/concat_node.dart';
+import 'package:app/core/nodes/divide_node.dart';
+import 'package:app/core/nodes/equals_node.dart';
+import 'package:app/core/nodes/greater_or_equal_node.dart';
+import 'package:app/core/nodes/if_else_node.dart';
+import 'package:app/core/nodes/less_node.dart';
+import 'package:app/core/nodes/less_or_equal_node.dart';
+import 'package:app/core/nodes/mod_node.dart';
+import 'package:app/core/nodes/more_node.dart';
+import 'package:app/core/nodes/multiply_node.dart';
+import 'package:app/core/nodes/print_node.dart';
+import 'package:app/core/nodes/start_node.dart';
+import 'package:app/core/nodes/sub_node.dart';
 
-import 'BoolAssignNode.dart';
-import 'IntAssignNode.dart';
-import 'StringAssignNode.dart';
+import 'bool_assign_node.dart';
+import 'int_assign_node.dart';
+import 'string_assign_node.dart';
 
 class NodeFactory {
   static createNode(Offset position, String id, String type) {

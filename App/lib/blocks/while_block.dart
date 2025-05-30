@@ -1,9 +1,9 @@
 import 'dart:ui';
 
 import 'package:app/blocks/positioned_block.dart';
-import 'package:app/core/nodes/AssignNode.dart';
+import 'package:app/core/nodes/assign_node.dart';
 
-import '../core/nodes/WhileNode.dart';
+import '../core/nodes/while_node.dart';
 import '../utils/offset_extension.dart';
 
 class WhileBlock implements PositionedBlock{

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../core/abstracts/Node.dart';
+import '../core/abstracts/node.dart';
 
 class SelectedBlockService with ChangeNotifier{
   final List<String> activeNodeIds = [];

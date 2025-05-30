@@ -1,12 +1,12 @@
 import 'dart:ui';
 
-import 'package:app/core/nodes/ArrayAddNode.dart';
-import 'package:app/core/nodes/ArrayAsignNode.dart';
-import 'package:app/core/nodes/BoolAssignNode.dart';
-import 'package:app/core/nodes/IncrementNode.dart';
-import 'package:app/core/nodes/IntAssignNode.dart';
-import 'package:app/core/nodes/LengthNode.dart';
-import 'package:app/core/nodes/StringAssignNode.dart';
+import 'package:app/core/nodes/array_add_node.dart';
+import 'package:app/core/nodes/array_assign_node.dart';
+import 'package:app/core/nodes/bool_assign_node.dart';
+import 'package:app/core/nodes/increment_node.dart';
+import 'package:app/core/nodes/int_assign_node.dart';
+import 'package:app/core/nodes/length_node.dart';
+import 'package:app/core/nodes/string_assign_node.dart';
 
 class AssignmentNodeFactory {
   static createNode(Offset position, String id, String type) {

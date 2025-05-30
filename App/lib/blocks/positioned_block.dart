@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:app/utils/offset_extension.dart';
 
-import '../core/abstracts/Node.dart';
+import '../core/abstracts/node.dart';
 
 class PositionedBlock {
   final Offset position;

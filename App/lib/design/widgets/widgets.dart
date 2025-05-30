@@ -3,15 +3,15 @@ library;
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:app/core/NodeGraph.dart';
+import 'package:app/core/node_graph.dart';
 import 'package:app/core/debug_console_service.dart';
-import 'package:app/core/literals/VariableLiteral.dart';
+import 'package:app/core/literals/variable_literal.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:app/screens/home_screen.dart';
 import 'package:app/screens/main_screen.dart';
 import 'package:app/screens/settings_screen.dart';
 import 'package:app/screens/test_screen.dart';
-import 'package:app/utils/ShowHelpToast.dart';
+import 'package:app/utils/help_toast.dart';
 import 'package:app/utils/toast_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -19,11 +19,11 @@ import 'package:provider/provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_drawing/path_drawing.dart';
-import 'package:app/core/Engine.dart';
+import 'package:app/core/engine.dart';
 import 'package:toastify/toastify.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../core/ConsoleService.dart';
+import '../../core/console_service.dart';
 import '../../core/widgets/custom_toast.dart';
 import '../../utils/hints_notifier.dart';
 

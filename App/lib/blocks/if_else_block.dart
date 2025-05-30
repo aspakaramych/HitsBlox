@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:app/core/abstracts/Node.dart';
+import 'package:app/core/abstracts/node.dart';
 import 'package:app/blocks/position.dart';
 import 'package:app/blocks/positioned_block.dart';
 import 'package:app/utils/offset_extension.dart';

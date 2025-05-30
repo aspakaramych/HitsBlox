@@ -11,11 +11,11 @@ import '../blocks/positioned_block.dart';
 import '../blocks/print_block.dart';
 import '../blocks/swap_block.dart';
 import '../blocks/while_block.dart';
-import '../core/Connection.dart';
-import '../core/ConsoleService.dart';
-import '../core/Engine.dart';
-import '../core/NodeGraph.dart';
-import '../core/abstracts/Node.dart';
+import '../core/connection.dart';
+import '../core/console_service.dart';
+import '../core/engine.dart';
+import '../core/node_graph.dart';
+import '../core/abstracts/node.dart';
 import '../core/registry/VariableRegistry.dart';
 
 class SerializationUtils {

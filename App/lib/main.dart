@@ -11,7 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'design/AppRouter.dart';
+import 'design/app_router.dart';
 
 import 'package:app/utils/hints_notifier.dart';
 
