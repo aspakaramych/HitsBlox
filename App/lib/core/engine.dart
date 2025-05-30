@@ -190,6 +190,10 @@ class Engine {
 
       for (var item in currentBatch) {
         final Node node = item.node;
+        if (!state.getAreRunning()){
+          CustomToast.showCustomToast(context, 'Программа остановлена', 'Программа остановлена', Colors.grey);
+          return;
+        }
         if (_debugMode){
           _debugCompleter = Completer<void>();
           console.clear();
