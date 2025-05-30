@@ -186,6 +186,7 @@ class _MainScreenState extends State<MainScreen>
                       },
                       onStopPressed: () {
                         _testScreen.debugNotifier.setDebugMode(false);
+                        _testScreen.engine.resume(_testScreen.debugNotifier);
                       },
                       onMenuPressed: () {
                         _toggleDebugConsole();
@@ -288,7 +289,7 @@ class _MainScreenState extends State<MainScreen>
                       debugConsoleService: _testScreen.debugConsoleService,
                     ),
                   ),
-                if (_testScreen.engine.getDebugMode())
+                if (_testScreen.debugNotifier.getDebugMode())
                   Align(
                     alignment: Alignment.topCenter,
                     child: HorizontalDebugBar(
@@ -299,6 +300,7 @@ class _MainScreenState extends State<MainScreen>
                         _toggleDebugConsole();
                         _toggleDebugMode();
                         _testScreen.debugNotifier.setDebugMode(false);
+                        _testScreen.engine.resume(_testScreen.debugNotifier);
                       },
                       onMenuPressed: () {
                         _toggleDebugConsole();
