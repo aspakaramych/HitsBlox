@@ -31,7 +31,9 @@ class WhileNode extends Node {
 
       var trimmedLine = line.trim();
       if (trimmedLine.isEmpty) return [];
-
+      if (trimmedLine[trimmedLine.length - 1] == ';'){
+        trimmedLine = trimmedLine.substring(0, trimmedLine.length - 1);
+      }
       var match = RegExp(
         r'^\s*([a-zA-Z_]\w*(?:$\s*[^\$$]+\s*$)?)\s*([=<>!]=?|>=|<=|!=)\s*([a-zA-Z_]\w*(?:$\s*[^\$$]+\s*$)?|[-+]?\d+|"(.*?)"|true|false)\s*$',
       ).firstMatch(trimmedLine);
