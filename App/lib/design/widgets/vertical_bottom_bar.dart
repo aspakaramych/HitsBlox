@@ -18,121 +18,123 @@ class VerticalBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 175,
-      color: Colors.transparent,
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      height: double.infinity,
-      child: Stack(
-        alignment: Alignment.centerRight,
-        children: [
-          PhysicalModel(
-            elevation: 10,
-            color: Colors.transparent,
-            shadowColor: Colors.black.withOpacity(0.0001),
-            clipBehavior: Clip.none,
-            shape: BoxShape.rectangle,
-            child: Container(
-              child: CustomPaint(
-                painter: BottomBarShadowPainter(shape),
-                child: SizedBox(
-                  height: 370,
-                  width: 80,
+    return Padding(
+      padding: EdgeInsets.only(top: 20, bottom: 20, right: 20),
+      child: SizedBox(
+        width: 150,
+        height: 370,
+        child: Stack(
+          clipBehavior: Clip.none,
+          alignment: Alignment.centerRight,
+          children: [
+            PhysicalModel(
+              elevation: 10,
+              color: Colors.transparent,
+              shadowColor: Colors.black.withOpacity(0.0001),
+              clipBehavior: Clip.none,
+              shape: BoxShape.rectangle,
+              child: Container(
+                child: CustomPaint(
+                  painter: BottomBarShadowPainter(shape),
+                  child: SizedBox(
+                    height: 370,
+                    width: 80,
+                  ),
                 ),
               ),
             ),
-          ),
 
-          ClipPath(
-            clipper: CustomSvgClipper(shape),
-            child: ConstrainedBox(
-              constraints: BoxConstraints(maxHeight: 370),
-              child: Container(
-                color: Theme.of(context).colorScheme.secondaryContainer,
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    IconButton(
-                      icon: SvgPicture.asset(
-                        'lib/design/assets/icons/settings.svg',
-                        width: 40,
-                        height: 40,
-                        colorFilter: ColorFilter.mode(
-                            Theme.of(context).colorScheme.onSecondaryContainer, BlendMode.srcIn),
+            ClipPath(
+              clipper: CustomSvgClipper(shape),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxHeight: 370),
+                child: Container(
+                  color: Theme.of(context).colorScheme.secondaryContainer,
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      IconButton(
+                        icon: SvgPicture.asset(
+                          'lib/design/assets/icons/settings.svg',
+                          width: 40,
+                          height: 40,
+                          colorFilter: ColorFilter.mode(
+                              Theme.of(context).colorScheme.onSecondaryContainer, BlendMode.srcIn),
+                        ),
+                        onPressed: () =>
+                            Navigator.pushNamed(
+                              context,
+                              '/settings',
+                            ),
                       ),
-                      onPressed: () =>
+                      IconButton(
+                        icon: SvgPicture.asset(
+                          'lib/design/assets/icons/download.svg',
+                          width: 40,
+                          height: 40,
+                          colorFilter: ColorFilter.mode(
+                              Theme.of(context).colorScheme.onSecondaryContainer, BlendMode.srcIn),
+                        ),
+                        onPressed: onSavePressed,
+                      ),
+                      SizedBox(height: 40,),
+                      IconButton(
+                        icon: SvgPicture.asset(
+                          'lib/design/assets/icons/terminal.svg',
+                          width: 40,
+                          height: 40,
+                          colorFilter: ColorFilter.mode(
+                              Theme.of(context).colorScheme.onSecondaryContainer, BlendMode.srcIn),
+                        ),
+                        onPressed: onTerminalPressed,
+                      ),
+                      IconButton(
+                        icon: SvgPicture.asset(
+                          'lib/design/assets/icons/home.svg',
+                          width: 40,
+                          height: 40,
+                          colorFilter: ColorFilter.mode(
+                              Theme.of(context).colorScheme.onSecondaryContainer, BlendMode.srcIn),
+                        ),
+                        onPressed: () {
                           Navigator.pushNamed(
                             context,
-                            '/settings',
-                          ),
-                    ),
-                    IconButton(
-                      icon: SvgPicture.asset(
-                        'lib/design/assets/icons/download.svg',
-                        width: 40,
-                        height: 40,
-                        colorFilter: ColorFilter.mode(
-                            Theme.of(context).colorScheme.onSecondaryContainer, BlendMode.srcIn),
+                            '/home',
+                          );
+                        },
                       ),
-                      onPressed: onSavePressed,
-                    ),
-                    SizedBox(height: 40,),
-                    IconButton(
-                      icon: SvgPicture.asset(
-                        'lib/design/assets/icons/terminal.svg',
-                        width: 40,
-                        height: 40,
-                        colorFilter: ColorFilter.mode(
-                            Theme.of(context).colorScheme.onSecondaryContainer, BlendMode.srcIn),
-                      ),
-                      onPressed: onTerminalPressed,
-                    ),
-                    IconButton(
-                      icon: SvgPicture.asset(
-                        'lib/design/assets/icons/home.svg',
-                        width: 40,
-                        height: 40,
-                        colorFilter: ColorFilter.mode(
-                            Theme.of(context).colorScheme.onSecondaryContainer, BlendMode.srcIn),
-                      ),
-                      onPressed: () {
-                        Navigator.pushNamed(
-                          context,
-                          '/home',
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-
-          Positioned(
-            right: 60,
-            child: Material(
-              elevation: 2,
-              borderRadius: BorderRadius.circular(50),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: IconButton(
-                  icon: SvgPicture.asset(
-                    iconButton,
-                    width: 55,
-                    height: 55,
-                    colorFilter:
-                    ColorFilter.mode(Theme.of(context).colorScheme.onPrimaryContainer, BlendMode.srcIn),
+                    ],
                   ),
-                  onPressed: onAddPressed,
                 ),
               ),
             ),
-          ),
-        ],
+
+            Positioned(
+              right: 60,
+              child: Material(
+                elevation: 2,
+                borderRadius: BorderRadius.circular(50),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: IconButton(
+                    icon: SvgPicture.asset(
+                      iconButton,
+                      width: 55,
+                      height: 55,
+                      colorFilter:
+                      ColorFilter.mode(Theme.of(context).colorScheme.onPrimaryContainer, BlendMode.srcIn),
+                    ),
+                    onPressed: onAddPressed,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
