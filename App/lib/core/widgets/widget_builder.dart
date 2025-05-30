@@ -1,4 +1,4 @@
-import 'package:app/core/abstracts/Node.dart';
+import 'package:app/core/abstracts/node.dart';
 import 'package:app/core/widgets/print_block_widget.dart';
 import 'package:app/core/widgets/swap_block_widget.dart';
 import 'package:app/core/widgets/while_block_widget.dart';

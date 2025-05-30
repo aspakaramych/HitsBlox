@@ -3,14 +3,14 @@ import 'package:app/blocks/logic_block.dart';
 import 'package:app/blocks/print_block.dart';
 import 'package:app/blocks/swap_block.dart';
 import 'package:app/blocks/while_block.dart';
-import 'package:app/core/ConsoleService.dart';
-import 'package:app/core/Engine.dart';
-import 'package:app/core/NodeGraph.dart';
+import 'package:app/core/console_service.dart';
+import 'package:app/core/engine.dart';
+import 'package:app/core/node_graph.dart';
 import 'package:app/core/debug_console_service.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:app/core/widgets/widget_builder.dart';
 import 'package:app/design/widgets/widgets.dart';
-import 'package:app/utils/Randomizer.dart';
+import 'package:app/utils/randomizer.dart';
 import 'package:app/utils/pair.dart';
 import 'package:app/utils/selected_block_service.dart';
 import 'package:app/utils/user_position_utils.dart';
@@ -19,7 +19,7 @@ import 'package:flutter/material.dart';
 import '../blocks/assignment_block.dart';
 import '../blocks/block_service.dart';
 import '../blocks/comment_block.dart';
-import '../core/abstracts/Node.dart';
+import '../core/abstracts/node.dart';
 import '../core/pins/Pin.dart';
 import '../utils/background_painter.dart';
 import '../utils/bezier_line_painter.dart';
@@ -166,12 +166,12 @@ class _TestScreenState extends State<TestScreen>
           return InteractiveViewer(
             transformationController: _transformationController,
             constrained: false,
-            minScale: 0.5,
-            maxScale: 2.0,
+            minScale: 0.1,
+            maxScale: 3.0,
             child: Container(
               constraints: BoxConstraints(
-                minWidth: constraints.maxWidth * 10,
-                minHeight: constraints.maxHeight * 10,
+                minWidth: 8000.0,
+                minHeight: 4000.0,
               ),
               color: Theme.of(context).colorScheme.surface,
               child: Stack(
@@ -179,8 +179,8 @@ class _TestScreenState extends State<TestScreen>
                 children: [
                   CustomPaint(
                     size: Size(
-                      constraints.maxWidth * 10,
-                      constraints.maxHeight * 10,
+                      8000.0,
+                      4000.0,
                     ),
                     painter: BackgroundPainter(context: context),
                   ),

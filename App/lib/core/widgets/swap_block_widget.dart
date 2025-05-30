@@ -1,6 +1,7 @@
 import 'package:app/blocks/swap_block.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/hints.dart';
 import '../../utils/sizes.dart';
 import '../../utils/triangle_painter.dart';
 
@@ -140,8 +141,8 @@ class _SwapBlockWidgetState extends State<SwapBlockWidget> {
                                         widget.block.node.rawExpressionFirst = text;
                                         widget.onEditToggle();
                                       },
-                                      decoration: const InputDecoration(
-                                        hintText: 'a={value};',
+                                      decoration: InputDecoration(
+                                        hintText: Hints.SWAP.hintText,
                                         contentPadding: EdgeInsets.all(6),
                                         enabledBorder: InputBorder.none,
                                         focusedBorder: InputBorder.none,
@@ -186,8 +187,8 @@ class _SwapBlockWidgetState extends State<SwapBlockWidget> {
                                         widget.block.node.rawExpressionSecond = text;
                                         widget.onEditToggle();
                                       },
-                                      decoration: const InputDecoration(
-                                        hintText: 'a={value};',
+                                      decoration: InputDecoration(
+                                        hintText: Hints.SWAP.hintText,
                                         contentPadding: EdgeInsets.all(6),
                                         enabledBorder: InputBorder.none,
                                         focusedBorder: InputBorder.none,

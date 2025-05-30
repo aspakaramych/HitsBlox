@@ -1,6 +1,7 @@
 import 'package:app/blocks/print_block.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/hints.dart';
 import '../../utils/sizes.dart';
 import '../../utils/triangle_painter.dart';
 
@@ -138,8 +139,8 @@ class _PrintBlockWidgetState extends State<PrintBlockWidget> {
                                     widget.block.node.rawExpression = text;
                                     widget.onEditToggle();
                                   },
-                                  decoration: const InputDecoration(
-                                    hintText: '{value}',
+                                  decoration: InputDecoration(
+                                    hintText: Hints.PRINT.hintText,
                                     contentPadding: EdgeInsets.all(6),
                                     enabledBorder: InputBorder.none,
                                     focusedBorder: InputBorder.none,

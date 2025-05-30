@@ -2,27 +2,27 @@ import 'package:app/blocks/comment_block.dart';
 import 'package:app/blocks/if_else_block.dart';
 import 'package:app/blocks/swap_block.dart';
 import 'package:app/blocks/while_block.dart';
-import 'package:app/core/ConsoleService.dart';
-import 'package:app/core/nodes/AddNode.dart';
-import 'package:app/core/nodes/ArrayAddNode.dart';
-import 'package:app/core/nodes/ArrayAsignNode.dart';
-import 'package:app/core/nodes/ConcatNode.dart';
-import 'package:app/core/nodes/DivideNode.dart';
-import 'package:app/core/nodes/EqualsNode.dart';
-import 'package:app/core/nodes/GreaterOrEqualNode.dart';
-import 'package:app/core/nodes/IfElseNode.dart';
-import 'package:app/core/nodes/IncrementNode.dart';
-import 'package:app/core/nodes/LengthNode.dart';
-import 'package:app/core/nodes/LessNode.dart';
-import 'package:app/core/nodes/LessOrEqualNode.dart';
-import 'package:app/core/nodes/ModNode.dart';
-import 'package:app/core/nodes/MoreNode.dart';
-import 'package:app/core/nodes/MultiplyNode.dart';
-import 'package:app/core/nodes/PrintNode.dart';
-import 'package:app/core/nodes/StartNode.dart';
-import 'package:app/core/nodes/SubNode.dart';
-import 'package:app/core/nodes/SwapNode.dart';
-import 'package:app/core/nodes/WhileNode.dart';
+import 'package:app/core/console_service.dart';
+import 'package:app/core/nodes/add_node.dart';
+import 'package:app/core/nodes/array_add_node.dart';
+import 'package:app/core/nodes/array_assign_node.dart';
+import 'package:app/core/nodes/concat_node.dart';
+import 'package:app/core/nodes/divide_node.dart';
+import 'package:app/core/nodes/equals_node.dart';
+import 'package:app/core/nodes/greater_or_equal_node.dart';
+import 'package:app/core/nodes/if_else_node.dart';
+import 'package:app/core/nodes/increment_node.dart';
+import 'package:app/core/nodes/length_node.dart';
+import 'package:app/core/nodes/less_node.dart';
+import 'package:app/core/nodes/less_or_equal_node.dart';
+import 'package:app/core/nodes/mod_node.dart';
+import 'package:app/core/nodes/more_node.dart';
+import 'package:app/core/nodes/multiply_node.dart';
+import 'package:app/core/nodes/print_node.dart';
+import 'package:app/core/nodes/start_node.dart';
+import 'package:app/core/nodes/sub_node.dart';
+import 'package:app/core/nodes/swap_node.dart';
+import 'package:app/core/nodes/while_node.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:app/blocks/assignment_block.dart';
 import 'package:app/blocks/logic_block.dart';
@@ -30,10 +30,10 @@ import 'package:app/blocks/position.dart';
 import 'package:app/blocks/print_block.dart';
 import 'package:flutter/material.dart';
 
-import '../core/nodes/BoolAssignNode.dart';
-import '../core/nodes/IntAssignNode.dart';
-import '../core/nodes/StringAssignNode.dart';
-import '../utils/Randomizer.dart';
+import '../core/nodes/bool_assign_node.dart';
+import '../core/nodes/int_assign_node.dart';
+import '../core/nodes/string_assign_node.dart';
+import '../utils/randomizer.dart';
 import '../utils/user_position_utils.dart';
 
 class BlockFactory {
@@ -373,7 +373,7 @@ class BlockFactory {
     return LogicBlock(
       position: equalsNode.position,
       node: equalsNode,
-      blockName: "equals",
+      blockName: "==",
       width: 120,
       height: 120,
       leftArrows: List.of([
@@ -397,7 +397,7 @@ class BlockFactory {
     return LogicBlock(
       position: moreNode.position,
       node: moreNode,
-      blockName: "more",
+      blockName: ">",
       width: 120,
       height: 120,
       leftArrows: List.of([
@@ -445,7 +445,7 @@ class BlockFactory {
     return LogicBlock(
       position: lessNode.position,
       node: lessNode,
-      blockName: "less",
+      blockName: "<",
       width: 120,
       height: 120,
       leftArrows: List.of([

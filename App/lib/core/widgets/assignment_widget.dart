@@ -1,15 +1,16 @@
-import 'package:app/core/nodes/ArrayAddNode.dart';
-import 'package:app/core/nodes/IntAssignNode.dart';
-import 'package:app/core/nodes/StringAssignNode.dart';
+import 'package:app/core/nodes/array_add_node.dart';
+import 'package:app/core/nodes/int_assign_node.dart';
+import 'package:app/core/nodes/string_assign_node.dart';
+import 'package:app/utils/hints.dart';
 import 'package:flutter/material.dart';
 
 import '../../blocks/assignment_block.dart';
 import '../../utils/sizes.dart';
 import '../../utils/triangle_painter.dart';
 import '../../blocks/assignment_block.dart';
-import '../abstracts/Node.dart';
-import '../nodes/ArrayAsignNode.dart';
-import '../nodes/BoolAssignNode.dart';
+import '../abstracts/node.dart';
+import '../nodes/array_assign_node.dart';
+import '../nodes/bool_assign_node.dart';
 
 class AssignmentBlockWidget extends StatefulWidget {
   final AssignmentBlock block;
@@ -106,7 +107,7 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
         widget.onEditToggle();
       },
       decoration: InputDecoration(
-        hintText: (widget.block.blockName != 'array') ? 'a=value;' : 'type a = [size]',
+        hintText: HintsUtils.getHintText(widget.block.node),
         contentPadding: const EdgeInsets.all(6),
         enabledBorder: InputBorder.none,
         focusedBorder: InputBorder.none,

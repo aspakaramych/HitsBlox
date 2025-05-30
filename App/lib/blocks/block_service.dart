@@ -5,7 +5,7 @@ import 'package:app/design/widgets/widgets.dart';
 import 'package:app/screens/test_screen.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../core/abstracts/Node.dart';
+import '../core/abstracts/node.dart';
 import 'assignment_block.dart';
 import 'block_factory.dart';
 import 'comment_block.dart';
