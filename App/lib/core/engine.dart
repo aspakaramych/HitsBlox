@@ -10,6 +10,7 @@ import 'package:app/core/nodes/start_node.dart';
 import 'package:app/core/nodes/while_node.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:app/core/widgets/custom_toast.dart';
+import 'package:app/utils/engine_state.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -102,19 +103,11 @@ class Engine {
   late NodeGraph graph;
   late VariableRegistry registry;
   bool _debugMode = false;
-  bool _isStoped = true;
   Completer<void>? _debugCompleter;
   Node? _curNode;
 
   Engine();
 
-  bool stopState(){
-    return _isStoped;
-  }
-
-  void setStopState(bool enable){
-    _isStoped = enable;
-  }
 
   Node? getCurNode(){
     return _curNode;
@@ -143,6 +136,7 @@ class Engine {
       ConsoleService console,
       DebugConsoleService debugConsoleService,
       SelectedBlockService selectedBlockService,
+      EngineState state,
       BuildContext context) async {
     if (_debugMode){
       CustomToast.showCustomToast(context, 'Режим debug', 'Debug активирован', Colors.grey);
@@ -153,7 +147,7 @@ class Engine {
     this.graph = nodeGraph;
     this.registry = variableRegistry;
     registry.Clear();
-    setStopState(false);
+    state.setRunning(true);
 
     final Queue<QueueItem> queue = Queue();
     ExecutionContext currentGlobalContext = ExecutionContext.global();
@@ -185,7 +179,7 @@ class Engine {
     bool progressMadeInThisIteration;
 
     while (queue.isNotEmpty) {
-      if (_isStoped){
+      if (!state.getAreRunning()){
         CustomToast.showCustomToast(context, 'Программа остановлена', 'Программа остановлена', Colors.grey);
         return;
       }
@@ -196,6 +190,10 @@ class Engine {
 
       for (var item in currentBatch) {
         final Node node = item.node;
+        if (!state.getAreRunning()){
+          CustomToast.showCustomToast(context, 'Программа остановлена', 'Программа остановлена', Colors.grey);
+          return;
+        }
         if (_debugMode){
           _debugCompleter = Completer<void>();
           console.clear();
@@ -289,6 +287,7 @@ class Engine {
     }
 
     if (queue.isEmpty) {
+      state.setRunning(false);
       CustomToast.showCustomToast(context, 'Успех', 'Программа выполнена успешно', Colors.green);
       selectedBlockService.clear();
     }
