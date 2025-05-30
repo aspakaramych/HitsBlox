@@ -72,38 +72,17 @@ class ExecutionContext {
     newLevels.removeLast();
     return ExecutionContext(newLevels);
   }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-          other is ExecutionContext &&
-              runtimeType == other.runtimeType &&
-              const ListEquality().equals(_levels, other._levels);
-
-  @override
-  int get hashCode => const ListEquality().hash(_levels);
 }
 
 class QueueItem {
   final Node node;
   final ExecutionContext context;
   QueueItem(this.node, this.context);
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-          other is QueueItem &&
-              runtimeType == other.runtimeType &&
-              node == other.node &&
-              context == other.context;
-  @override
-  int get hashCode => node.hashCode ^ context.hashCode;
 }
 
 class Engine {
   late NodeGraph graph;
   late VariableRegistry registry;
-  bool _debugMode = false;
   Completer<void>? _debugCompleter;
   Node? _curNode;
 
@@ -121,9 +100,6 @@ class Engine {
     }
   }
 
-  bool getDebugMode(){
-    return _debugMode;
-  }
 
   void next(){
     _debugCompleter?.complete();
@@ -281,7 +257,7 @@ class Engine {
         CustomToast.showCustomToast(context, 'Ошибка', "Программа заблокирована: не все узлы могут быть выполнены.", Colors.green);
         break;
       }
-      if (!_debugMode){
+      if (!debugMode.getDebugMode()){
         await Future<void>.delayed(Duration(milliseconds: 100));
       }
 

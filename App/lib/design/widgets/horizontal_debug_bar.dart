@@ -29,7 +29,7 @@ class HorizontalDebugBar extends StatelessWidget {
               ),
               CustomIconButton(
                   pic: 'lib/design/assets/icons/to_end.svg',
-                  function: onNextPressed,
+                  function: onStopPressed,
                   color: Theme.of(context).colorScheme.onSecondaryContainer
               ),
               CustomIconButton(
