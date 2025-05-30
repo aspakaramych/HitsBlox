@@ -28,8 +28,8 @@ class VerticalDebugBar extends StatelessWidget {
                   color: Theme.of(context).colorScheme.onSecondaryContainer
               ),
               CustomIconButton(
-                  pic: 'lib/design/assets/icons/stop.svg',
-                  function: onStopPressed,
+                  pic: 'lib/design/assets/icons/to_end.svg',
+                  function: onNextPressed,
                   color: Theme.of(context).colorScheme.onSecondaryContainer
               ),
               CustomIconButton(
