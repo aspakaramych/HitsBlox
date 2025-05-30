@@ -47,7 +47,7 @@ class _HorizontalTopBarState extends State<HorizontalTopBar> {
     return Container(
       width: 150,
       height: 70,
-      margin: EdgeInsets.only(top: 20, right: 20),
+      margin: EdgeInsets.only(top: 50, right: 20),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.secondaryContainer,
         borderRadius: BorderRadius.all(Radius.circular(15)),
