@@ -22,10 +22,10 @@ class Connection {
 
   factory Connection.fromJson(Map<String, dynamic> json) {
     return Connection(
-        fromNodeId: json['fromNodeId'],
-        fromPinId: json['fromPinId'],
-        toNodeId: json['toNodeId'],
-        toPinId: json['toPinId']
+      fromNodeId: json['fromNodeId'],
+      fromPinId: json['fromPinId'],
+      toNodeId: json['toNodeId'],
+      toPinId: json['toPinId'],
     );
   }
 }

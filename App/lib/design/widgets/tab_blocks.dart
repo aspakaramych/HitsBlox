@@ -24,7 +24,11 @@ class _BlockCardState extends State<BlockCard> {
     return GestureDetector(
       onTap: () {
         widget.item.action();
-        toastService.Show(context, widget.item.name, hintsNotifier.areHintsEnabled);
+        toastService.Show(
+          context,
+          widget.item.name,
+          hintsNotifier.areHintsEnabled,
+        );
       },
       child: Material(
         borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -41,7 +45,7 @@ class _BlockCardState extends State<BlockCard> {
                 child: Text(
                   widget.item.name,
                   style: Theme.of(context).textTheme.headlineMedium,
-                )
+                ),
               ),
               Expanded(
                 child: Container(
@@ -50,19 +54,21 @@ class _BlockCardState extends State<BlockCard> {
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                     boxShadow: [
                       BoxShadow(
-                        color: Theme.of(context).colorScheme.shadow.withOpacity(0.2),
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.shadow.withOpacity(0.2),
                         spreadRadius: 0,
                         blurRadius: 5,
                         offset: Offset(0, -5),
-                      )
+                      ),
                     ],
                   ),
-                )
-              )
+                ),
+              ),
             ],
           ),
         ),
-      )
+      ),
     );
   }
 }
@@ -104,7 +110,8 @@ class BlocksTabs extends StatefulWidget {
   State<BlocksTabs> createState() => _BlocksTabsState();
 }
 
-class _BlocksTabsState extends State<BlocksTabs>  with SingleTickerProviderStateMixin {
+class _BlocksTabsState extends State<BlocksTabs>
+    with SingleTickerProviderStateMixin {
   late var hintsNotifier = Provider.of<HintsNotifier>(context);
   late TabController _tabController;
 
@@ -125,7 +132,7 @@ class _BlocksTabsState extends State<BlocksTabs>  with SingleTickerProviderState
     return Container(
       width: 360,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(15))
+        borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
       child: Material(
         elevation: 5,
@@ -134,9 +141,7 @@ class _BlocksTabsState extends State<BlocksTabs>  with SingleTickerProviderState
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.only(
-                bottom: 10
-              ),
+              margin: EdgeInsets.only(bottom: 10),
               child: TabBar(
                 dividerColor: Colors.transparent,
                 controller: _tabController,
@@ -144,29 +149,35 @@ class _BlocksTabsState extends State<BlocksTabs>  with SingleTickerProviderState
                 tabAlignment: TabAlignment.start,
                 enableFeedback: true,
                 indicator: UnderlineTabIndicator(
-                  borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 2.0),
+                  borderSide: BorderSide(
+                    color: Theme.of(context).colorScheme.primary,
+                    width: 2.0,
+                  ),
                 ),
                 tabs: [
-                  for (var item in widget.blocks.entries)
-                    Tab(text: item.key)
-              ]),
+                  for (var item in widget.blocks.entries) Tab(text: item.key),
+                ],
+              ),
             ),
             Expanded(
               child: TabBarView(
                 controller: _tabController,
-                  children: [
-                    for (var item in widget.blocks.entries)
-                      Container(
-                        padding: EdgeInsets.only(top: 10, bottom: 10),
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: BlocksGrid(blocks: item.value)
-                      )
-                  ]
-              )
+                children: [
+                  for (var item in widget.blocks.entries)
+                    Container(
+                      padding: EdgeInsets.only(top: 10, bottom: 10),
+                      margin: EdgeInsets.symmetric(horizontal: 10),
+                      child: BlocksGrid(blocks: item.value),
+                    ),
+                ],
+              ),
             ),
             if (hintsNotifier.areHintsEnabled)
-            Text("*удаление - длинное нажатие по блоку", style: Theme.of(context).textTheme.bodySmall,)
-          ]
+              Text(
+                "*удаление - длинное нажатие по блоку",
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+          ],
         ),
       ),
     );

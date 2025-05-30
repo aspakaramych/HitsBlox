@@ -1,14 +1,13 @@
 part of "widgets.dart";
 
 class DebugConsole extends StatefulWidget {
-
   final VoidCallback onClose;
   final DebugConsoleService debugConsoleService;
 
   const DebugConsole({
     super.key,
     required this.onClose,
-    required this.debugConsoleService
+    required this.debugConsoleService,
   });
 
   @override
@@ -45,10 +44,7 @@ class _DebugConsoleState extends State<DebugConsole> {
       child: Container(
         padding: EdgeInsets.all(10),
         width: 250,
-        height: MediaQuery
-            .of(context)
-            .size
-            .height * 0.3,
+        height: MediaQuery.of(context).size.height * 0.3,
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.secondaryContainer,
           borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -57,10 +53,7 @@ class _DebugConsoleState extends State<DebugConsole> {
           children: [
             Text(
               "Переменные",
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .headlineSmall,
+              style: Theme.of(context).textTheme.headlineSmall,
               textAlign: TextAlign.center,
             ),
             Expanded(
@@ -70,10 +63,7 @@ class _DebugConsoleState extends State<DebugConsole> {
                   children: [
                     Text(
                       '>${logs.join('\n>')}',
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .bodyLarge,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ],
                 ),

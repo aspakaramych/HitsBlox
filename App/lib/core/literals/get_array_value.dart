@@ -17,7 +17,7 @@ class GetArrayValue implements Expression {
       if (index != null) {
         return GetArrayValue(arrayName, index);
       }
-      if (registry.getValue(indexStr) is int){
+      if (registry.getValue(indexStr) is int) {
         return GetArrayValue(arrayName, registry.getValue(indexStr));
       }
     }
@@ -30,7 +30,9 @@ class GetArrayValue implements Expression {
     if (array is List && index >= 0 && index < array.length) {
       return array[index];
     } else {
-      throw RangeError('Индекс за пределами массива или переменная не является массивом: $arrayName[$index]');
+      throw RangeError(
+        'Индекс за пределами массива или переменная не является массивом: $arrayName[$index]',
+      );
     }
   }
 }

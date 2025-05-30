@@ -80,131 +80,173 @@ class _SwapBlockWidgetState extends State<SwapBlockWidget> {
                 Column(
                   children: [
                     Center(
-                        child: Text(
-                          widget.block.blockName,
-                          style: theme.textTheme.headlineSmall,
-                        ),
+                      child: Text(
+                        widget.block.blockName,
+                        style: theme.textTheme.headlineSmall,
                       ),
+                    ),
                     ConstrainedBox(
-                      constraints: BoxConstraints(minHeight: widget.block.height - 60),
+                      constraints: BoxConstraints(
+                        minHeight: widget.block.height - 60,
+                      ),
                       child: Container(
                         width: widget.block.width,
                         decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.primaryContainer,
-                            borderRadius: BorderRadius.circular(15),
-                            border: Border.all(
-                              color: (widget.mark) ? Colors.red : Theme.of(context).colorScheme.primaryContainer,
-                              width: 2,
+                          color: Theme.of(context).colorScheme.primaryContainer,
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(
+                            color:
+                                (widget.mark)
+                                    ? Colors.red
+                                    : Theme.of(
+                                      context,
+                                    ).colorScheme.primaryContainer,
+                            width: 2,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.shadow.withOpacity(0.2),
+                              spreadRadius: 0,
+                              blurRadius: 5,
+                              offset: Offset(0, -5),
                             ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Theme.of(context).colorScheme.shadow.withOpacity(0.2),
-                                spreadRadius: 0,
-                                blurRadius: 5,
-                                offset: Offset(0, -5),
-                              )
-                            ]
+                          ],
                         ),
                         child: Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 45, vertical: 10),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Theme.of(context).colorScheme.secondaryContainer,
-                                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                                  ),
-                                  child: Container(
-                                    decoration: BoxDecoration(borderRadius: BorderRadius.all(
-                                        Radius.circular(15),
-                                      ),
-                                      color: Colors.transparent,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Theme.of(context).colorScheme.shadow.withOpacity(0.2),
-                                        ),
-                                        BoxShadow(
-                                          color: Theme.of(context).colorScheme.secondaryContainer,
-                                          spreadRadius: -4.0,
-                                          blurRadius: 4.0,
-                                        ),
-                                      ],
-                                    ),
-                                    child: TextField(
-                                      controller: TextEditingController(
-                                        text: widget.block.node.rawExpressionFirst,
-                                      ),
-                                      maxLines: 1,
-                                      keyboardType: TextInputType.text,
-                                      textInputAction: TextInputAction.done,
-                                      onSubmitted: (text) {
-                                        widget.block.node.rawExpressionFirst = text;
-                                        widget.onEditToggle();
-                                      },
-                                      decoration: InputDecoration(
-                                        hintText: Hints.SWAP.hintText,
-                                        contentPadding: EdgeInsets.all(6),
-                                        enabledBorder: InputBorder.none,
-                                        focusedBorder: InputBorder.none,
-                                        disabledBorder: InputBorder.none,
-                                      ),
-                                      style: theme.textTheme.labelLarge,
-                                    ),
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 45,
+                                vertical: 10,
+                              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color:
+                                      Theme.of(
+                                        context,
+                                      ).colorScheme.secondaryContainer,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(15),
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 45, vertical: 10),
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: Theme.of(context).colorScheme.secondaryContainer,
-                                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                                  ),
-                                  child: Container(
-                                    decoration: BoxDecoration(borderRadius: BorderRadius.all(
+                                    borderRadius: BorderRadius.all(
                                       Radius.circular(15),
                                     ),
-                                      color: Colors.transparent,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Theme.of(context).colorScheme.shadow.withOpacity(0.2),
-                                        ),
-                                        BoxShadow(
-                                          color: Theme.of(context).colorScheme.secondaryContainer,
-                                          spreadRadius: -4.0,
-                                          blurRadius: 4.0,
-                                        ),
-                                      ],
-                                    ),
-                                    child: TextField(
-                                      controller: TextEditingController(
-                                        text: widget.block.node.rawExpressionSecond,
+                                    color: Colors.transparent,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.shadow.withOpacity(0.2),
                                       ),
-                                      maxLines: 1,
-                                      keyboardType: TextInputType.text,
-                                      textInputAction: TextInputAction.done,
-                                      onSubmitted: (text) {
-                                        widget.block.node.rawExpressionSecond = text;
-                                        widget.onEditToggle();
-                                      },
-                                      decoration: InputDecoration(
-                                        hintText: Hints.SWAP.hintText,
-                                        contentPadding: EdgeInsets.all(6),
-                                        enabledBorder: InputBorder.none,
-                                        focusedBorder: InputBorder.none,
-                                        disabledBorder: InputBorder.none,
+                                      BoxShadow(
+                                        color:
+                                            Theme.of(
+                                              context,
+                                            ).colorScheme.secondaryContainer,
+                                        spreadRadius: -4.0,
+                                        blurRadius: 4.0,
                                       ),
-                                      style: theme.textTheme.labelLarge,
+                                    ],
+                                  ),
+                                  child: TextField(
+                                    controller: TextEditingController(
+                                      text:
+                                          widget.block.node.rawExpressionFirst,
                                     ),
+                                    maxLines: null,
+                                    keyboardType: TextInputType.text,
+                                    textInputAction: TextInputAction.done,
+                                    onSubmitted: (text) {
+                                      widget.block.node.rawExpressionFirst =
+                                          text;
+                                      widget.onEditToggle();
+                                    },
+                                    decoration: InputDecoration(
+                                      hintText: Hints.SWAP.hintText,
+                                      contentPadding: EdgeInsets.all(6),
+                                      enabledBorder: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
+                                      disabledBorder: InputBorder.none,
+                                    ),
+                                    style: theme.textTheme.labelLarge,
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 45,
+                                vertical: 10,
+                              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color:
+                                      Theme.of(
+                                        context,
+                                      ).colorScheme.secondaryContainer,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(15),
+                                  ),
+                                ),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(15),
+                                    ),
+                                    color: Colors.transparent,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.shadow.withOpacity(0.2),
+                                      ),
+                                      BoxShadow(
+                                        color:
+                                            Theme.of(
+                                              context,
+                                            ).colorScheme.secondaryContainer,
+                                        spreadRadius: -4.0,
+                                        blurRadius: 4.0,
+                                      ),
+                                    ],
+                                  ),
+                                  child: TextField(
+                                    controller: TextEditingController(
+                                      text:
+                                          widget.block.node.rawExpressionSecond,
+                                    ),
+                                    maxLines: null,
+                                    keyboardType: TextInputType.text,
+                                    textInputAction: TextInputAction.done,
+                                    onSubmitted: (text) {
+                                      widget.block.node.rawExpressionSecond =
+                                          text;
+                                      widget.onEditToggle();
+                                    },
+                                    decoration: InputDecoration(
+                                      hintText: Hints.SWAP.hintText,
+                                      contentPadding: EdgeInsets.all(6),
+                                      enabledBorder: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
+                                      disabledBorder: InputBorder.none,
+                                    ),
+                                    style: theme.textTheme.labelLarge,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 ),
+
                 /// левая стрелка
                 Positioned(
                   left: 15,

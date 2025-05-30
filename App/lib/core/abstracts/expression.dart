@@ -1,5 +1,5 @@
 import 'package:app/core/registry/VariableRegistry.dart';
 
-abstract class Expression{
+abstract class Expression {
   dynamic evaluate(VariableRegistry registry);
 }

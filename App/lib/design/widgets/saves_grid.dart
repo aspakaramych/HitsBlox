@@ -27,8 +27,7 @@ class _GridSavesState extends State<GridSaves> {
       keys.remove('95a51e91-aa1c-46b4-9591-0ee3f9fb5e39');
       if (keys.length >= 4) {
         keys.insert(3, "Новое сохранение");
-      }
-      else {
+      } else {
         keys.add("Новое сохранение");
       }
       itemCount = min(4, keys.length);
@@ -44,8 +43,7 @@ class _GridSavesState extends State<GridSaves> {
       keys.remove(key);
       if (keys.length >= 4) {
         keys.insert(3, "Новое сохранение");
-      }
-      else {
+      } else {
         keys.add("Новое сохранение");
       }
       itemCount = min(4, keys.length);
@@ -80,68 +78,88 @@ class _GridSavesState extends State<GridSaves> {
               GestureDetector(
                 onTap: () async {
                   var savedState = null;
-                  if(key != "Новое сохранение") {
+                  if (key != "Новое сохранение") {
                     savedState = await _loadScreen(key);
                   }
                   Navigator.push(
                     context,
                     PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) => key != "Новое сохранение"
-                          ? MainScreen(savedState, screenName: key)
-                          : MainScreen('create_new_screen', screenName: ''),
+                      pageBuilder:
+                          (context, animation, secondaryAnimation) =>
+                              key != "Новое сохранение"
+                                  ? MainScreen(savedState, screenName: key)
+                                  : MainScreen(
+                                    'create_new_screen',
+                                    screenName: '',
+                                  ),
                     ),
                   );
                 },
                 child: Stack(
                   children: [
-                    if(key != "Новое сохранение")
-                    Material(
-                      elevation: 5,
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
-                      child: Container(
-                        padding: EdgeInsets.all(20),
+                    if (key != "Новое сохранение")
+                      Material(
+                        elevation: 5,
+                        borderRadius: BorderRadius.all(Radius.circular(25)),
+                        child: Container(
+                          padding: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color:
+                                Theme.of(context).colorScheme.primaryContainer,
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          child: Center(
+                            child: Text(
+                              '$key',
+                              // maxLines: 1,
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                          ),
+                        ),
+                      )
+                    else if (key == "Новое сохранение")
+                      Container(
                         decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.primaryContainer,
-                          borderRadius: BorderRadius.circular(25),
+                          color:
+                              Theme.of(context).colorScheme.secondaryContainer,
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
                         ),
                         child: Center(
-                          child: Text(
-                            '$key',
-                            // maxLines: 1,
-                            style: Theme.of(context).textTheme.titleLarge
+                          child: SvgPicture.asset(
+                            'lib/design/assets/icons/add.svg',
+                            width: 40,
+                            height: 40,
+                            colorFilter: ColorFilter.mode(
+                              Theme.of(
+                                context,
+                              ).colorScheme.onSecondaryContainer,
+                              BlendMode.srcIn,
+                            ),
                           ),
                         ),
                       ),
-                    )
-                    else if(key == "Новое сохранение")
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.secondaryContainer,
-                          borderRadius: BorderRadius.all(Radius.circular(25))
-                        ),
-                        child: Center(
-                            child: SvgPicture.asset(
-                              'lib/design/assets/icons/add.svg',
-                              width: 40,
-                              height: 40,
-                              colorFilter: ColorFilter.mode(
-                                  Theme.of(context).colorScheme.onSecondaryContainer, BlendMode.srcIn),)
-                        ),
-                      ),
-          ])
+                  ],
+                ),
               ),
               if (key != "Новое сохранение")
                 Positioned(
                   bottom: 20,
                   right: 20,
                   child: GestureDetector(
-                    onTap: () => showDeleteConfirmationDialog(context, key, _deleteSave),
+                    onTap:
+                        () => showDeleteConfirmationDialog(
+                          context,
+                          key,
+                          _deleteSave,
+                        ),
                     child: SvgPicture.asset(
                       'lib/design/assets/icons/trash.svg',
                       width: 20,
                       height: 20,
-                      colorFilter:
-                      ColorFilter.mode(Theme.of(context).colorScheme.error, BlendMode.srcIn),
+                      colorFilter: ColorFilter.mode(
+                        Theme.of(context).colorScheme.error,
+                        BlendMode.srcIn,
+                      ),
                     ),
                   ),
                 ),

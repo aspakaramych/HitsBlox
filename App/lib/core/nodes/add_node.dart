@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import 'package:app/core/pins/EmptyPin.dart';
-import 'package:app/core/pins/Pin.dart';
+import 'package:app/core/pins/empty_pin.dart';
+import 'package:app/core/pins/pin.dart';
 import 'package:app/core/abstracts/node.dart';
 import 'package:app/core/models/binary_operations.dart';
 import 'package:app/core/models/commands/assign_variable_command.dart';
@@ -13,6 +13,7 @@ import '../literals/variable_literal.dart';
 class AddNode extends Node {
   @override
   final String id;
+
   @override
   String get title => "Сложение";
 
@@ -20,7 +21,6 @@ class AddNode extends Node {
     inputs.add(EmptyPin());
     inputs.add(EmptyPin());
   }
-
 
   @override
   Future<void> execute(VariableRegistry registry) async {
@@ -30,18 +30,16 @@ class AddNode extends Node {
     var resultPin = outputs[0];
     int aVal, bVal;
     if (aPin != null && bPin != null && resultPin != null) {
-      if (aPin.getValue() is int){
+      if (aPin.getValue() is int) {
         aVal = aPin.getValue();
-      } else{
+      } else {
         aVal = registry.getValue(aPin.getValue());
       }
-      if (bPin.getValue() is int){
+      if (bPin.getValue() is int) {
         bVal = bPin.getValue();
-      }
-      else{
+      } else {
         bVal = registry.getValue(bPin.getValue());
       }
-
 
       if (aVal == null || bVal == null) return;
 
@@ -49,16 +47,18 @@ class AddNode extends Node {
       resultPin.setValue(sum);
     }
   }
+
   bool areAllInputsReady() {
-    for (var p in inputs){
+    for (var p in inputs) {
       if (p != null && !p.hasValue()) {
         return false;
       }
     }
     return true;
   }
-  void clearOutputs(){
-    for (var p in outputs){
+
+  void clearOutputs() {
+    for (var p in outputs) {
       p.setValue(null);
     }
   }

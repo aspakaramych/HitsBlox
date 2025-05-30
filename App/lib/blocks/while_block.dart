@@ -6,7 +6,7 @@ import 'package:app/core/nodes/assign_node.dart';
 import '../core/nodes/while_node.dart';
 import '../utils/offset_extension.dart';
 
-class WhileBlock implements PositionedBlock{
+class WhileBlock implements PositionedBlock {
   @override
   Offset position;
   String blockName;

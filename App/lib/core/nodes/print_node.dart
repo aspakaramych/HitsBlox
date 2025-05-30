@@ -3,7 +3,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 import '../console_service.dart';
-import 'package:app/core/pins/Pin.dart';
+import 'package:app/core/pins/pin.dart';
 import '../abstracts/node.dart';
 import '../registry/VariableRegistry.dart';
 
@@ -23,13 +23,11 @@ class PrintNode extends Node {
     required this.consoleService,
     required String this.id,
     required Offset position,
-  }) : super(position) {
-
-  }
+  }) : super(position) {}
 
   String parseInput(String text, VariableRegistry registry) {
     var result = text;
-    if (result == ""){
+    if (result == "") {
       return "";
     }
     final regex = RegExp(r'\{(\w+)\}');
@@ -43,18 +41,21 @@ class PrintNode extends Node {
 
     return result;
   }
+
   @override
   Future<void> execute(VariableRegistry registry) async {
     clearOutputs();
     var parsedText = parseInput(rawExpression, registry);
-    if (parsedText == "" && inputs[0].value != null){
+    if (parsedText == "" && inputs[0].value != null) {
       consoleService.log(inputs[0].value.toString());
       return;
     }
     consoleService.log(parsedText);
   }
+
   bool areAllInputsReady() {
-    final execIn = inputs.firstWhereOrNull((p) => p.id.contains('exec_in')) as Pin?;
+    final execIn =
+        inputs.firstWhereOrNull((p) => p.id.contains('exec_in')) as Pin?;
 
     if (execIn == null) {
       return false;
@@ -74,10 +75,19 @@ class PrintNode extends Node {
     };
   }
 
-  factory PrintNode.fromJson(Map<String, dynamic> json, ConsoleService consoleService) {
-    final node = PrintNode(consoleService: consoleService, id: json['id'], position: OffsetExtension.fromJson(json['position']));
-    final inputPins = (json['inputs'] as List).map((p) => pinFromJson(p)).toList();
-    final outputPins = (json['outputs'] as List).map((p) => pinFromJson(p)).toList();
+  factory PrintNode.fromJson(
+    Map<String, dynamic> json,
+    ConsoleService consoleService,
+  ) {
+    final node = PrintNode(
+      consoleService: consoleService,
+      id: json['id'],
+      position: OffsetExtension.fromJson(json['position']),
+    );
+    final inputPins =
+        (json['inputs'] as List).map((p) => pinFromJson(p)).toList();
+    final outputPins =
+        (json['outputs'] as List).map((p) => pinFromJson(p)).toList();
 
     node.inputs = inputPins;
     node.outputs = outputPins;
@@ -85,9 +95,11 @@ class PrintNode extends Node {
 
     return node;
   }
-  void clearOutputs(){
-    for (var p in outputs){
+
+  void clearOutputs() {
+    for (var p in outputs) {
       p.setValue(null);
-    };
+    }
+    ;
   }
 }

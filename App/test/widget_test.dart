@@ -7,7 +7,7 @@
 
 import 'package:app/blocks/block_factory.dart';
 import 'package:app/core/nodes/assignment_node_factory.dart';
-import 'package:app/core/pins/Pin.dart';
+import 'package:app/core/pins/pin.dart';
 import 'package:app/utils/offset_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

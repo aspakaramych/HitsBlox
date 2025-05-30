@@ -9,12 +9,12 @@ import 'package:app/core/literals/string_literal.dart';
 import 'package:app/core/literals/variable_literal.dart';
 import 'package:app/core/models/commands/array_set_command.dart';
 import 'package:app/core/nodes/assign_node.dart';
-import 'package:app/core/pins/Pin.dart';
+import 'package:app/core/pins/pin.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 
-class ArrayAddNode extends Node implements AssignNode{
+class ArrayAddNode extends Node implements AssignNode {
   final List<Command> commands = [];
 
   @override
@@ -30,35 +30,41 @@ class ArrayAddNode extends Node implements AssignNode{
   ArrayAddNode(String this.id, Offset position) : super(position) {}
 
   @override
-    void setAssignmentsFromText(String text, VariableRegistry registry) {
-      rawExpression = text;
-      commands.clear();
+  void setAssignmentsFromText(String text, VariableRegistry registry) {
+    rawExpression = text;
+    commands.clear();
 
-      var lines = text.split(';');
-      for (var line in lines) {
-        var trimmedLine = line.trim();
-        if (trimmedLine.isEmpty) continue;
+    var lines = text.split(';');
+    for (var line in lines) {
+      var trimmedLine = line.trim();
+      if (trimmedLine.isEmpty) continue;
 
-        final match = RegExp(r'^\s*(.+?)\s*=\s*(.*?)\s*$').firstMatch(trimmedLine);
-        if (match == null) continue;
+      final match = RegExp(
+        r'^\s*(.+?)\s*=\s*(.*?)\s*$',
+      ).firstMatch(trimmedLine);
+      if (match == null) continue;
 
-        var targetStr = match.group(1)!.trim();
-        var valueStr = match.group(2)!.trim();
+      var targetStr = match.group(1)!.trim();
+      var valueStr = match.group(2)!.trim();
 
+      final arrayMatch = RegExp(
+        r'^\s*(\w+)\s*(\[\d+\])\s*$',
+      ).firstMatch(targetStr);
+      if (arrayMatch == null) continue;
 
-        final arrayMatch = RegExp(r'^\s*(\w+)\s*(\[\d+\])\s*$').firstMatch(targetStr);
-        if (arrayMatch == null) continue;
+      var arrayName = arrayMatch.group(1)!;
+      var index = int.parse(
+        arrayMatch.group(2)!.substring(1, arrayMatch.group(2)!.length - 1),
+      );
 
-        var arrayName = arrayMatch.group(1)!;
-        var index = int.parse(arrayMatch.group(2)!.substring(1, arrayMatch.group(2)!.length - 1));
-
-        commands.add(ArraySetCommand(
+      commands.add(
+        ArraySetCommand(
           arrayName: arrayName,
           index: index,
           valueExpression: parseValue(valueStr),
-        ));
-      }
-
+        ),
+      );
+    }
   }
 
   Expression parseValue(String exprStr) {
@@ -68,7 +74,7 @@ class ArrayAddNode extends Node implements AssignNode{
       return StringLiteral(exprStr.substring(1, exprStr.length - 1));
     } else if (int.tryParse(exprStr) != null) {
       return IntLiteral(int.parse(exprStr));
-    } else if(exprStr == 'true' || exprStr == 'false'){
+    } else if (exprStr == 'true' || exprStr == 'false') {
       return BoolLiteral(exprStr == 'true');
     } else {
       return VariableLiteral(exprStr);
@@ -91,7 +97,7 @@ class ArrayAddNode extends Node implements AssignNode{
 
   bool areAllInputsReady() {
     final execIn =
-    inputs.firstWhereOrNull((p) => p.id.contains('exec_in')) as Pin?;
+        inputs.firstWhereOrNull((p) => p.id.contains('exec_in')) as Pin?;
 
     if (execIn == null) {
       return false;
@@ -99,9 +105,11 @@ class ArrayAddNode extends Node implements AssignNode{
 
     return true;
   }
-  void clearOutputs(){
-    for (var p in outputs){
+
+  void clearOutputs() {
+    for (var p in outputs) {
       p.setValue(null);
-    };
+    }
+    ;
   }
 }

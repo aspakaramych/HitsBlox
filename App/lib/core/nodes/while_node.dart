@@ -6,7 +6,7 @@ import 'package:app/core/abstracts/node.dart';
 import 'package:app/core/literals/get_array_value.dart';
 import 'package:app/core/literals/int_literal.dart';
 import 'package:app/core/literals/variable_literal.dart';
-import 'package:app/core/pins/Pin.dart';
+import 'package:app/core/pins/pin.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -29,21 +29,20 @@ class WhileNode extends Node {
 
     var line = text;
 
-      var trimmedLine = line.trim();
-      if (trimmedLine.isEmpty) return [];
-      if (trimmedLine[trimmedLine.length - 1] == ';'){
-        trimmedLine = trimmedLine.substring(0, trimmedLine.length - 1);
-      }
-      var match = RegExp(
-        r'^\s*([a-zA-Z_]\w*(?:$\s*[^\$$]+\s*$)?)\s*([=<>!]=?|>=|<=|!=)\s*([a-zA-Z_]\w*(?:$\s*[^\$$]+\s*$)?|[-+]?\d+|"(.*?)"|true|false)\s*$',
-      ).firstMatch(trimmedLine);
-      if (match == null) return [];
+    var trimmedLine = line.trim();
+    if (trimmedLine.isEmpty) return [];
+    if (trimmedLine[trimmedLine.length - 1] == ';') {
+      trimmedLine = trimmedLine.substring(0, trimmedLine.length - 1);
+    }
+    var match = RegExp(
+      r'^\s*([a-zA-Z_]\w*(?:$\s*[^\$$]+\s*$)?)\s*([=<>!]=?|>=|<=|!=)\s*([a-zA-Z_]\w*(?:$\s*[^\$$]+\s*$)?|[-+]?\d+|"(.*?)"|true|false)\s*$',
+    ).firstMatch(trimmedLine);
+    if (match == null) return [];
 
-      var leftExpr = match.group(1)!;
-      var operator = match.group(2)!;
-      var rightExpr = match.group(3)!;
-      return [leftExpr, operator, rightExpr];
-
+    var leftExpr = match.group(1)!;
+    var operator = match.group(2)!;
+    var rightExpr = match.group(3)!;
+    return [leftExpr, operator, rightExpr];
   }
 
   Expression parseExpression(String exprStr, VariableRegistry registry) {
@@ -66,7 +65,7 @@ class WhileNode extends Node {
   Future<void> execute(VariableRegistry registry) async {
     clearOutputs();
     var express = setAssignmentsFromText(rawExpression);
-    if (express == []){
+    if (express == []) {
       throw Exception("Ввели пустое условие");
     }
     var leftExpr = express[0];
@@ -74,25 +73,32 @@ class WhileNode extends Node {
     var rightExpr = express[2];
     var expressionLeft = parseExpression(leftExpr, registry);
     var expressionRight = parseExpression(rightExpr, registry);
-    if (operator == "==" || operator == ">" || operator == "<" || operator == "!="){
-      switch (operator){
+    if (operator == "==" ||
+        operator == ">" ||
+        operator == "<" ||
+        operator == "!=") {
+      switch (operator) {
         case "==":
-          if (expressionLeft.evaluate(registry) == expressionRight.evaluate(registry)){
+          if (expressionLeft.evaluate(registry) ==
+              expressionRight.evaluate(registry)) {
             outputs[0].setValue(MyTrue());
             return;
           }
         case ">":
-          if (expressionLeft.evaluate(registry) > expressionRight.evaluate(registry)){
+          if (expressionLeft.evaluate(registry) >
+              expressionRight.evaluate(registry)) {
             outputs[0].setValue(MyTrue());
             return;
           }
         case "<":
-          if (expressionLeft.evaluate(registry) < expressionRight.evaluate(registry)){
+          if (expressionLeft.evaluate(registry) <
+              expressionRight.evaluate(registry)) {
             outputs[0].setValue(MyTrue());
             return;
           }
         case "!=":
-          if (expressionLeft.evaluate(registry) != expressionRight.evaluate(registry)){
+          if (expressionLeft.evaluate(registry) !=
+              expressionRight.evaluate(registry)) {
             outputs[0].setValue(MyTrue());
             return;
           }
@@ -102,8 +108,6 @@ class WhileNode extends Node {
     }
     throw Exception("неизвестный оператор в while");
   }
-
-
 
   String strToRaw(String x) => '\r$x';
 
@@ -128,10 +132,15 @@ class WhileNode extends Node {
   }
 
   factory WhileNode.fromJson(Map<String, dynamic> json) {
-    final node = WhileNode(json['id'], OffsetExtension.fromJson(json['position']));
+    final node = WhileNode(
+      json['id'],
+      OffsetExtension.fromJson(json['position']),
+    );
 
-    final inputPins = (json['inputs'] as List).map((p) => pinFromJson(p)).toList();
-    final outputPins = (json['outputs'] as List).map((p) => pinFromJson(p)).toList();
+    final inputPins =
+        (json['inputs'] as List).map((p) => pinFromJson(p)).toList();
+    final outputPins =
+        (json['outputs'] as List).map((p) => pinFromJson(p)).toList();
     final rawExpression = json['rawExpression'];
 
     node.inputs = inputPins;

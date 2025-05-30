@@ -2,7 +2,7 @@ import 'package:app/core/connection.dart';
 import 'package:app/core/console_service.dart';
 import 'package:app/core/abstracts/node.dart';
 import 'package:app/core/nodes/while_node.dart';
-import 'package:app/core/pins/EmptyPin.dart';
+import 'package:app/core/pins/empty_pin.dart';
 import 'package:collection/collection.dart';
 
 import 'nodes/assign_node.dart';
@@ -46,34 +46,44 @@ class NodeGraph {
   }
 
   void disconnect(String nodeId) {
-    for (var connection in connections){
-      if (connection.toNodeId == nodeId || connection.fromNodeId == nodeId){
-
+    for (var connection in connections) {
+      if (connection.toNodeId == nodeId || connection.fromNodeId == nodeId) {
         var nodeFrom = getNodeById(connection.fromNodeId);
         nodeFrom?.outputs.removeWhere((p) => p.id == connection.fromPinId);
         var nodeTo = getNodeById(connection.toNodeId);
         nodeTo?.inputs.removeWhere((p) => p.id == connection.toPinId);
       }
     }
-    connections.removeWhere((conn) => conn.fromNodeId == nodeId || conn.toNodeId == nodeId);
+    connections.removeWhere(
+      (conn) => conn.fromNodeId == nodeId || conn.toNodeId == nodeId,
+    );
   }
 
-  void deleteConnectionBetweenNodes(String firstNode, String secondNode, Node first, Node second) {
+  void deleteConnectionBetweenNodes(
+    String firstNode,
+    String secondNode,
+    Node first,
+    Node second,
+  ) {
     var connection = connections.firstWhereOrNull(
-          (conn) => conn.fromNodeId == firstNode && conn.toNodeId == secondNode,
+      (conn) => conn.fromNodeId == firstNode && conn.toNodeId == secondNode,
     );
 
     connections.removeWhere(
-          (conn) => conn.fromNodeId == firstNode && conn.toNodeId == secondNode,
+      (conn) => conn.fromNodeId == firstNode && conn.toNodeId == secondNode,
     );
     if (connection != null) {
       var nodeFrom = getNodeById(connection.fromNodeId);
-      final indexFrom = nodeFrom?.outputs.indexWhere((p) => p.id == connection.fromPinId);
+      final indexFrom = nodeFrom?.outputs.indexWhere(
+        (p) => p.id == connection.fromPinId,
+      );
       if (indexFrom != null && indexFrom >= 0) {
         nodeFrom?.outputs[indexFrom] = EmptyPin();
       }
       var nodeTo = getNodeById(connection.toNodeId);
-      final indexTo = nodeTo?.inputs.indexWhere((p) => p.id == connection.toPinId);
+      final indexTo = nodeTo?.inputs.indexWhere(
+        (p) => p.id == connection.toPinId,
+      );
       if (indexTo != null && indexTo >= 0) {
         nodeTo?.inputs[indexTo] = EmptyPin();
       }
@@ -88,11 +98,11 @@ class NodeGraph {
   }
 
   static Map<String, dynamic> serializeToJson(Node node) {
-    if(node is WhileNode) {
+    if (node is WhileNode) {
       return WhileNode.toJson_(node);
-    } else if(node is AssignNode) {
+    } else if (node is AssignNode) {
       return AssignNode.toJson_(node);
-    }  else if(node is SwapNode) {
+    } else if (node is SwapNode) {
       return SwapNode.toJson_(node);
     } else if (node is PrintNode) {
       return PrintNode.toJson_(node);
@@ -113,16 +123,21 @@ class NodeGraph {
     );
   }
 
-  static List<Node> getNodesFromJson(Map<String, dynamic> json, ConsoleService consoleService) {
+  static List<Node> getNodesFromJson(
+    Map<String, dynamic> json,
+    ConsoleService consoleService,
+  ) {
     List<Node> newNodes = [];
-    for(var node in json['nodes']) {
-      if(node['title'].contains('while')) {
+    for (var node in json['nodes']) {
+      if (node['title'].contains('while')) {
         newNodes.add(WhileNode.fromJson(node));
-      } else if(node['title'] == "Swap") {
+      } else if (node['title'] == "Swap") {
         newNodes.add(SwapNode.fromJson(node));
-      } else if(node['title'].contains('Присвоить') || node['title'].contains('Добавить') || node['title'] == "Инкремент") {
+      } else if (node['title'].contains('Присвоить') ||
+          node['title'].contains('Добавить') ||
+          node['title'] == "Инкремент") {
         newNodes.add(AssignNode.fromJson(node));
-      } else if(node['title'] == "Распечатать") {
+      } else if (node['title'] == "Распечатать") {
         newNodes.add(PrintNode.fromJson(node, consoleService));
       } else {
         newNodes.add(Node.fromJson(node));

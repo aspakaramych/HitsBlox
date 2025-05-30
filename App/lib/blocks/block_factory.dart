@@ -293,7 +293,9 @@ class BlockFactory {
     );
   }
 
-  static createIncrementBlock(TransformationController transformationController) {
+  static createIncrementBlock(
+    TransformationController transformationController,
+  ) {
     final currUserOffset =
         UserPositionUtils.getVisibleContentRect(
           transformationController,
@@ -408,7 +410,9 @@ class BlockFactory {
     );
   }
 
-  static createGreaterOrEqualsBlock(TransformationController transformationController) {
+  static createGreaterOrEqualsBlock(
+    TransformationController transformationController,
+  ) {
     final currUserOffset =
         UserPositionUtils.getVisibleContentRect(
           transformationController,
@@ -456,7 +460,9 @@ class BlockFactory {
     );
   }
 
-  static createLessOrEqualsBlock(TransformationController transformationController) {
+  static createLessOrEqualsBlock(
+    TransformationController transformationController,
+  ) {
     final currUserOffset =
         UserPositionUtils.getVisibleContentRect(
           transformationController,

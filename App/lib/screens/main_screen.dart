@@ -112,7 +112,7 @@ class _MainScreenState extends State<MainScreen>
       ),
     );
 
-    print(jsonString);
+    log(jsonString);
 
     // _testScreen.loadFromJson(_testScreen.saveScreenState());
   }
@@ -185,10 +185,6 @@ class _MainScreenState extends State<MainScreen>
                         _testScreen.engine.next();
                       },
                       onStopPressed: () {
-                        _toggleDebugConsole();
-                        setState(() {
-                          _isDebugConsoleOpen = false;
-                        });
                         _testScreen.debugNotifier.setDebugMode(false);
                       },
                       onMenuPressed: () {

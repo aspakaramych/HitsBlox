@@ -10,7 +10,7 @@ class BoolLiteral implements Expression {
   bool evaluate(VariableRegistry registry) => value;
 
   @override
-  String toString(){
+  String toString() {
     return value ? "true" : "false";
   }
 }

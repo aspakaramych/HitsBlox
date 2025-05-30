@@ -44,7 +44,11 @@ class PrintBlock implements PositionedBlock {
     };
   }
 
-  factory PrintBlock.fromJson(Map<String, dynamic> json, VariableRegistry registry, ConsoleService consoleService) {
+  factory PrintBlock.fromJson(
+    Map<String, dynamic> json,
+    VariableRegistry registry,
+    ConsoleService consoleService,
+  ) {
     return PrintBlock(
       position: OffsetExtension.fromJson(json['position']),
       node: PrintNode.fromJson(json['node'], consoleService),

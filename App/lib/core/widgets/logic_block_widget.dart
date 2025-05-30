@@ -69,42 +69,61 @@ class _LogicBlockWidgetState extends State<LogicBlockWidget> {
                     width: widget.block.width,
                     height: widget.block.height - 30,
                     decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primaryContainer,
-                        borderRadius: BorderRadius.circular(15),
-                        border: Border.all(
-                          color: (widget.mark) ? Colors.red : Theme.of(context).colorScheme.primaryContainer,
-                          width: 2,
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(
+                        color:
+                            (widget.mark)
+                                ? Colors.red
+                                : Theme.of(
+                                  context,
+                                ).colorScheme.primaryContainer,
+                        width: 2,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.shadow.withOpacity(0.2),
+                          spreadRadius: 0,
+                          blurRadius: 5,
+                          offset: Offset(0, -5),
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Theme.of(context).colorScheme.shadow.withOpacity(0.2),
-                            spreadRadius: 0,
-                            blurRadius: 5,
-                            offset: Offset(0, -5),)
-                        ]
+                      ],
                     ),
                   ),
                 ),
+
                 /// левая стрелка
-                for(int i = 0; i < widget.block.leftArrows.length; i++)
+                for (int i = 0; i < widget.block.leftArrows.length; i++)
                   Positioned(
                     left: widget.block.leftArrows[i].position.dx,
                     top: widget.block.leftArrows[i].position.dy,
                     child: GestureDetector(
-                      onTap: () => widget.onLeftArrowClick(widget.block.leftArrows[i].position, i),
+                      onTap:
+                          () => widget.onLeftArrowClick(
+                            widget.block.leftArrows[i].position,
+                            i,
+                          ),
                       child: SizedBox(
                         width: 30,
                         height: 30,
                         child: SizedBox(
                           width: 15,
                           height: 15,
-                          child: CustomPaint(painter: TrianglePainter(Sizes.arrowSize, Theme.of(context).colorScheme.onPrimaryContainer)),
+                          child: CustomPaint(
+                            painter: TrianglePainter(
+                              Sizes.arrowSize,
+                              Theme.of(context).colorScheme.onPrimaryContainer,
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
+
                 /// правая стрелка
-                for(int i = 0; i < widget.block.rightArrows.length; i++)
+                for (int i = 0; i < widget.block.rightArrows.length; i++)
                   Positioned(
                     right: 0,
                     top: widget.block.rightArrows[i].position.dy,
@@ -116,7 +135,12 @@ class _LogicBlockWidgetState extends State<LogicBlockWidget> {
                         child: SizedBox(
                           width: 15,
                           height: 15,
-                          child: CustomPaint(painter: TrianglePainter(Sizes.arrowSize, Theme.of(context).colorScheme.onPrimaryContainer)),
+                          child: CustomPaint(
+                            painter: TrianglePainter(
+                              Sizes.arrowSize,
+                              Theme.of(context).colorScheme.onPrimaryContainer,
+                            ),
+                          ),
                         ),
                       ),
                     ),

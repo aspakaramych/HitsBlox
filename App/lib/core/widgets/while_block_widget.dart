@@ -82,82 +82,107 @@ class _WhileBlockWidgetState extends State<WhileBlockWidget> {
                   children: [
                     Center(
                       child: RichText(
-                          text: TextSpan(
-                              text: widget.block.blockName,
-                              style: theme.textTheme.headlineSmall
-                          )
+                        text: TextSpan(
+                          text: widget.block.blockName,
+                          style: theme.textTheme.headlineSmall,
+                        ),
                       ),
                     ),
-                      ConstrainedBox(
-                        constraints: BoxConstraints(minHeight: widget.block.height - 30),
-                        child: Container(
-                          width: widget.block.width,
-                          decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.primaryContainer,
-                              borderRadius: BorderRadius.circular(15),
-                              border: Border.all(
-                                color: (widget.mark) ? Colors.red : Theme.of(context).colorScheme.primaryContainer,
-                                width: 2,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Theme.of(context).colorScheme.shadow.withOpacity(0.2),
-                                  spreadRadius: 0,
-                                  blurRadius: 5,
-                                  offset: Offset(0, -5),
-                                )
-                              ]
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: widget.block.height - 30,
+                      ),
+                      child: Container(
+                        width: widget.block.width,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primaryContainer,
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(
+                            color:
+                                (widget.mark)
+                                    ? Colors.red
+                                    : Theme.of(
+                                      context,
+                                    ).colorScheme.primaryContainer,
+                            width: 2,
                           ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 45, vertical: 15),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.shadow.withOpacity(0.2),
+                              spreadRadius: 0,
+                              blurRadius: 5,
+                              offset: Offset(0, -5),
+                            ),
+                          ],
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 45,
+                            vertical: 15,
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color:
+                                  Theme.of(
+                                    context,
+                                  ).colorScheme.secondaryContainer,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15),
+                              ),
+                            ),
                             child: Container(
                               decoration: BoxDecoration(
-                                  color: Theme.of(context).colorScheme.secondaryContainer,
-                                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(15),
                                 ),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                                  color: Colors.transparent,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Theme.of(context).colorScheme.shadow.withOpacity(0.2),
-                                    ),
-                                    BoxShadow(
-                                      color: Theme.of(context).colorScheme.secondaryContainer,
-                                      spreadRadius: -4.0,
-                                      blurRadius: 4.0,
-                                    ),
-                                  ],
-                                ),
-                                child: TextField(
-                                  controller: TextEditingController(
-                                    text: widget.block.node.rawExpression,
+                                color: Colors.transparent,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.shadow.withOpacity(0.2),
                                   ),
-                                  maxLines: 1,
-                                  keyboardType: TextInputType.text,
-                                  textInputAction: TextInputAction.done,
-                                  onSubmitted: (text) {
-                                    widget.block.node.rawExpression = text;
-                                    widget.onEditToggle();
-                                  },
-                                  decoration: const InputDecoration(
-                                    hintText: 'a={value};',
-                                    //border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.all(6),
-                                    enabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                    disabledBorder: InputBorder.none,
+                                  BoxShadow(
+                                    color:
+                                        Theme.of(
+                                          context,
+                                        ).colorScheme.secondaryContainer,
+                                    spreadRadius: -4.0,
+                                    blurRadius: 4.0,
                                   ),
-                                  style: theme.textTheme.labelLarge,
+                                ],
+                              ),
+                              child: TextField(
+                                controller: TextEditingController(
+                                  text: widget.block.node.rawExpression,
                                 ),
+                                maxLines: 1,
+                                keyboardType: TextInputType.text,
+                                textInputAction: TextInputAction.done,
+                                onSubmitted: (text) {
+                                  widget.block.node.rawExpression = text;
+                                  widget.onEditToggle();
+                                },
+                                decoration: const InputDecoration(
+                                  hintText: 'a={value};',
+                                  //border: OutlineInputBorder(),
+                                  contentPadding: EdgeInsets.all(6),
+                                  enabledBorder: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  disabledBorder: InputBorder.none,
+                                ),
+                                style: theme.textTheme.labelLarge,
                               ),
                             ),
                           ),
                         ),
                       ),
+                    ),
                   ],
                 ),
+
                 /// левая стрелка
                 Positioned(
                   left: 15,
@@ -170,7 +195,12 @@ class _WhileBlockWidgetState extends State<WhileBlockWidget> {
                       child: SizedBox(
                         width: 15,
                         height: 15,
-                        child: CustomPaint(painter: TrianglePainter(Sizes.arrowSize, Theme.of(context).colorScheme.onPrimaryContainer)),
+                        child: CustomPaint(
+                          painter: TrianglePainter(
+                            Sizes.arrowSize,
+                            Theme.of(context).colorScheme.onPrimaryContainer,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -188,7 +218,12 @@ class _WhileBlockWidgetState extends State<WhileBlockWidget> {
                       child: SizedBox(
                         width: 15,
                         height: 15,
-                        child: CustomPaint(painter: TrianglePainter(Sizes.arrowSize, Theme.of(context).colorScheme.onPrimaryContainer)),
+                        child: CustomPaint(
+                          painter: TrianglePainter(
+                            Sizes.arrowSize,
+                            Theme.of(context).colorScheme.onPrimaryContainer,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -206,7 +241,12 @@ class _WhileBlockWidgetState extends State<WhileBlockWidget> {
                       child: SizedBox(
                         width: 15,
                         height: 15,
-                        child: CustomPaint(painter: TrianglePainter(Sizes.arrowSize, Theme.of(context).colorScheme.onPrimaryContainer)),
+                        child: CustomPaint(
+                          painter: TrianglePainter(
+                            Sizes.arrowSize,
+                            Theme.of(context).colorScheme.onPrimaryContainer,
+                          ),
+                        ),
                       ),
                     ),
                   ),

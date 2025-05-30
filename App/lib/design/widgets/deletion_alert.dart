@@ -1,13 +1,19 @@
 part of 'widgets.dart';
 
-void showDeleteConfirmationDialog(BuildContext context, String fileName, Future<void> Function(String) delete ) {
+void showDeleteConfirmationDialog(
+  BuildContext context,
+  String fileName,
+  Future<void> Function(String) delete,
+) {
   showDialog(
     context: context,
     barrierDismissible: false,
     builder: (BuildContext dialogContext) {
       return AlertDialog(
         title: Text('Подтверждение удаления'),
-        content: Text('Вы уверены, что хотите удалить файл "$fileName"? Это действие нельзя будет отменить.'),
+        content: Text(
+          'Вы уверены, что хотите удалить файл "$fileName"? Это действие нельзя будет отменить.',
+        ),
         actions: <Widget>[
           TextButton(
             child: Text('Отмена'),
@@ -42,10 +48,6 @@ void showDeleteConfirmationDialog(BuildContext context, String fileName, Future<
             textColor: Colors.white,
           ),
         ),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Удаление отменено.')),
       );
     }
   });

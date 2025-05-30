@@ -6,7 +6,7 @@ import 'package:app/core/nodes/assign_node.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../pins/Pin.dart';
+import '../pins/pin.dart';
 import '../abstracts/command.dart';
 import '../abstracts/expression.dart';
 import '../abstracts/node.dart';
@@ -17,11 +17,9 @@ import '../registry/VariableRegistry.dart';
 class BoolAssignNode extends Node implements AssignNode {
   final List<Command> commands = [];
 
-
   @override
   String rawExpression = '';
   final TextEditingController controller = TextEditingController();
-
 
   @override
   final String id;
@@ -29,8 +27,7 @@ class BoolAssignNode extends Node implements AssignNode {
   @override
   String get title => "Присвоить (bool)";
 
-  BoolAssignNode(String this.id, Offset position) : super(position) {
-  }
+  BoolAssignNode(String this.id, Offset position) : super(position) {}
 
   @override
   void setAssignmentsFromText(String text, VariableRegistry registry) {
@@ -51,7 +48,7 @@ class BoolAssignNode extends Node implements AssignNode {
       Expression expression = parseExpression(exprStr, registry);
 
       commands.add(AssignVariableCommand<bool>(variableName, expression));
-      for (var p in outputs){
+      for (var p in outputs) {
         p.setValue(variableName);
       }
     }
@@ -68,8 +65,7 @@ class BoolAssignNode extends Node implements AssignNode {
       } on FormatException {
         return VariableLiteral(exprStr);
       }
-    }
-    else{
+    } else {
       return VariableLiteral(exprStr);
     }
   }
@@ -87,8 +83,8 @@ class BoolAssignNode extends Node implements AssignNode {
   void setText(String text) => rawExpression = text;
 
   bool areAllInputsReady() {
-    final execIn = inputs.firstWhereOrNull((p) =>
-        p.id.contains('exec_in')) as Pin?;
+    final execIn =
+        inputs.firstWhereOrNull((p) => p.id.contains('exec_in')) as Pin?;
 
     if (execIn == null) {
       return false;
@@ -96,9 +92,11 @@ class BoolAssignNode extends Node implements AssignNode {
 
     return true;
   }
-  void clearOutputs(){
-    for (var p in outputs){
+
+  void clearOutputs() {
+    for (var p in outputs) {
       p.setValue(null);
-    };
+    }
+    ;
   }
 }

@@ -6,7 +6,7 @@ import 'package:app/core/nodes/assign_node.dart';
 import '../core/nodes/swap_node.dart';
 import '../utils/offset_extension.dart';
 
-class SwapBlock implements PositionedBlock{
+class SwapBlock implements PositionedBlock {
   @override
   Offset position;
   String blockName;

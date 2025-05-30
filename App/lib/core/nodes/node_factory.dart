@@ -21,7 +21,7 @@ import 'string_assign_node.dart';
 
 class NodeFactory {
   static createNode(Offset position, String id, String type) {
-    switch(type) {
+    switch (type) {
       case 'Присвоить (int)':
         return IntAssignNode(id, position);
       case 'Присвоить (bool)':

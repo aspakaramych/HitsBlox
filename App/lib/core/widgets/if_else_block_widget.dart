@@ -44,10 +44,40 @@ class _IfElseBlockWidgetState extends State<IfElseBlockWidget> {
       setState(() {
         widget.block.height += 40;
         widget.block.leftArrows.add(
-          Position(Offset(widget.block.leftArrows[widget.block.leftArrows.length - 1].position.dx, widget.block.leftArrows[widget.block.leftArrows.length - 1].position.dy + 40), false),
+          Position(
+            Offset(
+              widget
+                  .block
+                  .leftArrows[widget.block.leftArrows.length - 1]
+                  .position
+                  .dx,
+              widget
+                      .block
+                      .leftArrows[widget.block.leftArrows.length - 1]
+                      .position
+                      .dy +
+                  40,
+            ),
+            false,
+          ),
         );
         widget.block.rightArrows.add(
-          Position(Offset(widget.block.rightArrows[widget.block.rightArrows.length - 1].position.dx, widget.block.rightArrows[widget.block.leftArrows.length - 1].position.dy + 40), false),
+          Position(
+            Offset(
+              widget
+                  .block
+                  .rightArrows[widget.block.rightArrows.length - 1]
+                  .position
+                  .dx,
+              widget
+                      .block
+                      .rightArrows[widget.block.leftArrows.length - 1]
+                      .position
+                      .dy +
+                  40,
+            ),
+            false,
+          ),
         );
       });
     }
@@ -82,23 +112,32 @@ class _IfElseBlockWidgetState extends State<IfElseBlockWidget> {
                     width: widget.block.width,
                     height: widget.block.height - 30,
                     decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primaryContainer,
-                        // border: Border.all(color: Colors.black, width: 3),
-                        borderRadius: BorderRadius.circular(15),
-                        border: Border.all(
-                          color: (widget.mark) ? Colors.red : Theme.of(context).colorScheme.primaryContainer,
-                          width: 2,
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                      // border: Border.all(color: Colors.black, width: 3),
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(
+                        color:
+                            (widget.mark)
+                                ? Colors.red
+                                : Theme.of(
+                                  context,
+                                ).colorScheme.primaryContainer,
+                        width: 2,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.shadow.withOpacity(0.2),
+                          spreadRadius: 0,
+                          blurRadius: 5,
+                          offset: Offset(0, -5),
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Theme.of(context).colorScheme.shadow.withOpacity(0.2),
-                            spreadRadius: 0,
-                            blurRadius: 5,
-                            offset: Offset(0, -5),)
-                        ]
+                      ],
                     ),
                   ),
                 ),
+
                 /// левая стрелка
                 for (int i = 0; i < widget.block.leftArrows.length; i++)
                   Positioned(
@@ -108,7 +147,7 @@ class _IfElseBlockWidgetState extends State<IfElseBlockWidget> {
                       onTap:
                           () => widget.onLeftArrowClick(
                             widget.block.leftArrows[i].position,
-                            i
+                            i,
                           ),
                       child: SizedBox(
                         width: 30,
@@ -117,7 +156,10 @@ class _IfElseBlockWidgetState extends State<IfElseBlockWidget> {
                           width: 15,
                           height: 15,
                           child: CustomPaint(
-                            painter: TrianglePainter(Sizes.arrowSize, Theme.of(context).colorScheme.onPrimaryContainer),
+                            painter: TrianglePainter(
+                              Sizes.arrowSize,
+                              Theme.of(context).colorScheme.onPrimaryContainer,
+                            ),
                           ),
                         ),
                       ),
@@ -133,9 +175,12 @@ class _IfElseBlockWidgetState extends State<IfElseBlockWidget> {
                       backgroundColor: Theme.of(context).colorScheme.primary,
                       shape: CircleBorder(),
                       onPressed: () => expandBlock(),
-                      child: Icon(Icons.add, color: Theme.of(context).colorScheme.onPrimary),
+                      child: Icon(
+                        Icons.add,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                     ),
-                  )
+                  ),
                 ),
 
                 /// правая стрелка
@@ -144,7 +189,11 @@ class _IfElseBlockWidgetState extends State<IfElseBlockWidget> {
                     right: 0,
                     top: widget.block.rightArrows[i].position.dy,
                     child: GestureDetector(
-                      onTap: () => widget.onRightArrowClick(widget.block.rightArrows[i].position, i),
+                      onTap:
+                          () => widget.onRightArrowClick(
+                            widget.block.rightArrows[i].position,
+                            i,
+                          ),
                       child: SizedBox(
                         width: 30,
                         height: 30,
@@ -152,7 +201,10 @@ class _IfElseBlockWidgetState extends State<IfElseBlockWidget> {
                           width: 15,
                           height: 15,
                           child: CustomPaint(
-                            painter: TrianglePainter(Sizes.arrowSize, Theme.of(context).colorScheme.onPrimaryContainer),
+                            painter: TrianglePainter(
+                              Sizes.arrowSize,
+                              Theme.of(context).colorScheme.onPrimaryContainer,
+                            ),
                           ),
                         ),
                       ),
@@ -170,8 +222,7 @@ class _IfElseBlockWidgetState extends State<IfElseBlockWidget> {
                     ),
                     SizedBox(
                       height: 40,
-                      child:
-                      Center(
+                      child: Center(
                         child: Text(
                           "if",
                           style: Theme.of(context).textTheme.titleLarge,
@@ -181,18 +232,16 @@ class _IfElseBlockWidgetState extends State<IfElseBlockWidget> {
                     for (int i = 0; i < widget.block.leftArrows.length - 1; i++)
                       SizedBox(
                         height: 40,
-                        child:
-                          Center(
-                            child: Text(
-                              "else if",
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
+                        child: Center(
+                          child: Text(
+                            "else if",
+                            style: Theme.of(context).textTheme.titleLarge,
                           ),
+                        ),
                       ),
                     SizedBox(
                       height: 40,
-                      child:
-                      Center(
+                      child: Center(
                         child: Text(
                           "else",
                           style: Theme.of(context).textTheme.titleLarge,

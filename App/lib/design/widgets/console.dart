@@ -3,10 +3,7 @@ part of 'widgets.dart';
 class Console extends StatefulWidget {
   final ConsoleService consoleService;
 
-  const Console({
-    super.key,
-    required this.consoleService,
-  });
+  const Console({super.key, required this.consoleService});
 
   @override
   State<Console> createState() => _ConsoleState();
@@ -14,30 +11,33 @@ class Console extends StatefulWidget {
 
 class _ConsoleState extends State<Console> {
   late ConsoleService _consoleService;
+  late List<String> logs;
 
   @override
   void initState() {
     super.initState();
     _consoleService = widget.consoleService;
+    _consoleService.addListener(_onLogsChanged);
   }
 
   void _onLogsChanged() {
-    setState(() {});
+    setState(() {
+      logs = _consoleService.logs;
+    });
   }
 
   @override
   void dispose() {
+    _consoleService.removeListener(_onLogsChanged);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final logs = _consoleService.logs;
-
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.outlineVariant,
-        borderRadius: BorderRadius.all(Radius.circular(15))
+        borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
       margin: EdgeInsets.symmetric(horizontal: 20),
       padding: EdgeInsets.all(16),

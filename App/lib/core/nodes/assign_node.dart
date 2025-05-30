@@ -4,14 +4,18 @@ import 'package:app/core/abstracts/node.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:app/utils/offset_extension.dart';
 
-import '../pins/Pin.dart';
+import '../pins/pin.dart';
 import 'assignment_node_factory.dart';
 
-abstract class AssignNode extends Node{
+abstract class AssignNode extends Node {
   String get id;
+
   String rawExpression = '';
+
   void setAssignmentsFromText(String text, VariableRegistry registry);
+
   void setText(String text);
+
   List<Pin> outputs = [];
   List<Pin> inputs = [];
 
@@ -20,7 +24,6 @@ abstract class AssignNode extends Node{
   String get title;
 
   AssignNode(this.position) : super(position);
-
 
   static Map<String, dynamic> toJson_(AssignNode node) {
     return {
@@ -39,8 +42,10 @@ abstract class AssignNode extends Node{
       json['id'],
       json['title'],
     );
-    final inputPins = (json['inputs'] as List).map((p) => pinFromJson(p)).toList();
-    final outputPins = (json['outputs'] as List).map((p) => pinFromJson(p)).toList();
+    final inputPins =
+        (json['inputs'] as List).map((p) => pinFromJson(p)).toList();
+    final outputPins =
+        (json['outputs'] as List).map((p) => pinFromJson(p)).toList();
     final rawExpression = json['rawExpression'];
 
     node.inputs = inputPins;

@@ -199,7 +199,9 @@ class BlockService {
           name: ">=",
           action:
               () => addLogicBlock(
-                BlockFactory.createGreaterOrEqualsBlock(_transformationController),
+                BlockFactory.createGreaterOrEqualsBlock(
+                  _transformationController,
+                ),
               ),
         ),
       ],

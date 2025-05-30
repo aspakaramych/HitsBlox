@@ -1,16 +1,17 @@
 import 'dart:ui';
 
 import '../abstracts/node.dart';
-import '../pins/EmptyPin.dart';
+import '../pins/empty_pin.dart';
 import '../registry/VariableRegistry.dart';
 
-class LessOrEqualNode extends Node{
+class LessOrEqualNode extends Node {
   @override
   final String id;
+
   @override
   String get title => "<=";
 
-  LessOrEqualNode(String this.id, Offset position) : super(position){
+  LessOrEqualNode(String this.id, Offset position) : super(position) {
     inputs.add(EmptyPin());
     inputs.add(EmptyPin());
   }
@@ -23,23 +24,20 @@ class LessOrEqualNode extends Node{
     var resultPin = outputs[0];
     dynamic aVal, bVal;
     if (aPin != null && bPin != null && resultPin != null) {
-      try{
+      try {
         aVal = registry.getValue(aPin.getValue());
-      }
-      catch (e){
+      } catch (e) {
         aVal = aPin.getValue();
       }
 
-      try{
+      try {
         bVal = registry.getValue(bPin.getValue());
-      }
-      catch(e){
+      } catch (e) {
         bVal = bPin.getValue();
       }
 
-
       if (aVal == null || bVal == null) return;
-      if (aVal is int && bVal is int){
+      if (aVal is int && bVal is int) {
         bool znac = aVal <= bVal;
         resultPin.setValue(znac);
         return;
@@ -47,8 +45,8 @@ class LessOrEqualNode extends Node{
     }
   }
 
-  void clearOutputs(){
-    for (var p in outputs){
+  void clearOutputs() {
+    for (var p in outputs) {
       p.setValue(null);
     }
   }

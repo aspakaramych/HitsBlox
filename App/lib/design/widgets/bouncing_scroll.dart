@@ -21,9 +21,10 @@ class _BouncingIconState extends State<BouncingIcon>
       vsync: this,
     );
 
-    _animation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.bounceInOut),
-    );
+    _animation = Tween<double>(
+      begin: 0,
+      end: 1,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.bounceInOut));
 
     _controller.repeat();
   }
@@ -42,10 +43,7 @@ class _BouncingIconState extends State<BouncingIcon>
         final value = _animation.value;
         final double offset = (value >= 0.5 ? 1 - value : value) * 160;
 
-        return Transform.translate(
-          offset: Offset(0, -offset),
-          child: child,
-        );
+        return Transform.translate(offset: Offset(0, -offset), child: child);
       },
       child: SvgPicture.asset(
         "lib/design/assets/icons/scroll.svg",

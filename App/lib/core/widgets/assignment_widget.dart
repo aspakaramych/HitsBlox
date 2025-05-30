@@ -53,52 +53,9 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
     return arr;
   }
 
-  bool Validate(String text) {
-    return true;
-    if (widget.block.node is IntAssignNode) {
-      var reg = RegExp(r"(^\s*([a-zA-Z_][a-zA-Z0-9_]*)(\s*=\s*(.+?)\s*)?;$)"); //TODO: при желании дописать регулярки, но как будто велик шанс, что она всё сломает, сейчас они самые базовые вещи проверяют
-      if (!reg.hasMatch(text)) {
-        return false;
-      }
-    }
-    if (widget.block.node is BoolAssignNode) {
-      var reg = RegExp(r"(^\s*([a-zA-Z_][a-zA-Z0-9_]*)(\s*=\s*(.+?)\s*)?;$)");
-      if (!reg.hasMatch(text)) {
-        return false;
-      }
-    }
-    if (widget.block.node is ArrayAddNode) {
-      var reg = RegExp(r"^\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*\[\s*([^\]]+?)\s*\]\s*=\s*(.+?)\s*;?$");
-      if (!reg.hasMatch(text)) {
-        return false;
-      }
-    }
-    if (widget.block.node is ArrayAsignNode) {
-      var reg = RegExp(r"^\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*\[\s*([^\]]+?)\s*\]\s*=\s*(.+?)\s*;?$");
-      if (!reg.hasMatch(text)) {
-        return false;
-      }
-    }
-    if (widget.block.node is StringAssignNode) {
-      var reg = RegExp(r"(^\s*([a-zA-Z_][a-zA-Z0-9_]*)(\s*=\s*(.+?)\s*)?;$)");
-      if (!reg.hasMatch(text)) {
-        return false;
-      }
-    }
-    if (widget.block.node is StringAssignNode) {
-      var reg = RegExp(r"(^\s*([a-zA-Z_][a-zA-Z0-9_]*)(\s*=\s*(.+?)\s*)?;$)");
-      if (!reg.hasMatch(text)) {
-        return false;
-      }
-    }
-    return true;
-  }
-
   Widget buildActiveInputField() {
     return TextField(
-      controller: TextEditingController(
-        text: widget.block.node.rawExpression,
-      ),
+      controller: TextEditingController(text: widget.block.node.rawExpression),
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.done,
       maxLines: null,
@@ -160,76 +117,105 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                       Center(
                         child: Text(
                           widget.block.blockName,
-                          style: theme.textTheme.headlineSmall
-                        )
+                          style: theme.textTheme.headlineSmall,
+                        ),
                       ),
                       ConstrainedBox(
-                        constraints: BoxConstraints(minHeight: widget.block.height - 30),
+                        constraints: BoxConstraints(
+                          minHeight: widget.block.height - 30,
+                        ),
                         child: Container(
                           width: widget.block.width,
                           decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.primaryContainer,
+                            color:
+                                Theme.of(context).colorScheme.primaryContainer,
                             borderRadius: BorderRadius.circular(15),
                             border: Border.all(
-                              color: (widget.mark) ? Colors.red : Theme.of(context).colorScheme.primaryContainer,
+                              color:
+                                  (widget.mark)
+                                      ? Colors.red
+                                      : Theme.of(
+                                        context,
+                                      ).colorScheme.primaryContainer,
                               width: 2,
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: Theme.of(context).colorScheme.shadow.withOpacity(0.2),
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.shadow.withOpacity(0.2),
                                 spreadRadius: 0,
                                 blurRadius: 5,
                                 offset: Offset(0, -5),
-                              )
-                            ]
+                              ),
+                            ],
                           ),
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 45, vertical: 10),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 45,
+                              vertical: 10,
+                            ),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color:
+                                    Theme.of(
+                                      context,
+                                    ).colorScheme.secondaryContainer,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(15),
+                                ),
+                              ),
                               child: Container(
+                                padding: EdgeInsets.all(5),
                                 decoration: BoxDecoration(
-                                  color: Theme.of(context).colorScheme.secondaryContainer,
-                                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                                ),
-                                child: Container(
-                                  padding: EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                                    color: Colors.transparent,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Theme.of(context).colorScheme.shadow.withOpacity(0.2),
-                                      ),
-                                      BoxShadow(
-                                        color: (Validate(widget.block.node.rawExpression)) ? Theme.of(context).colorScheme.secondaryContainer : Theme.of(context).colorScheme.errorContainer,
-                                        spreadRadius: -4.0,
-                                        blurRadius: 4.0,
-                                      ),
-                                    ],
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(15),
                                   ),
-                                  child: (widget.block.isEditing)
-                                  ? buildActiveInputField()
-                                      : (() {
-                                    List<String> arr = divideParams();
-                                    if (arr.isEmpty) return buildActiveInputField();
-                                    return Column(
-                                      children: [
-                                        for (String item in arr)
-                                          Text(
-                                            item,
-                                            style: Theme.of(context).textTheme.labelLarge,
-                                            maxLines: 1,
-                                          )
-                                      ],
-                                    );
-                                  })()
-                                  )
+                                  color: Colors.transparent,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.shadow.withOpacity(0.2),
+                                    ),
+                                    BoxShadow(
+                                      color:
+                                          Theme.of(
+                                            context,
+                                          ).colorScheme.secondaryContainer,
+                                      spreadRadius: -4.0,
+                                      blurRadius: 4.0,
+                                    ),
+                                  ],
                                 ),
-                              )
-                            )
-                          )
-                        ]
-                      )
-                    ,
+                                child:
+                                    (widget.block.isEditing)
+                                        ? buildActiveInputField()
+                                        : (() {
+                                          List<String> arr = divideParams();
+                                          if (arr.isEmpty)
+                                            return buildActiveInputField();
+                                          return Column(
+                                            children: [
+                                              for (String item in arr)
+                                                Text(
+                                                  item,
+                                                  style:
+                                                      Theme.of(
+                                                        context,
+                                                      ).textTheme.labelLarge,
+                                                  maxLines: null,
+                                                ),
+                                            ],
+                                          );
+                                        })(),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
 
                   // левая стрелка
                   Positioned(
@@ -243,7 +229,12 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                         child: SizedBox(
                           width: 15,
                           height: 15,
-                          child: CustomPaint(painter: TrianglePainter(Sizes.arrowSize, Theme.of(context).colorScheme.onPrimaryContainer)),
+                          child: CustomPaint(
+                            painter: TrianglePainter(
+                              Sizes.arrowSize,
+                              Theme.of(context).colorScheme.onPrimaryContainer,
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -261,17 +252,22 @@ class _AssignmentBlockWidgetState extends State<AssignmentBlockWidget> {
                         child: SizedBox(
                           width: 15,
                           height: 15,
-                          child: CustomPaint(painter: TrianglePainter(Sizes.arrowSize, Theme.of(context).colorScheme.onPrimaryContainer)),
+                          child: CustomPaint(
+                            painter: TrianglePainter(
+                              Sizes.arrowSize,
+                              Theme.of(context).colorScheme.onPrimaryContainer,
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
-              ]
-              ),
+                ],
               ),
             ),
           ),
         ),
-      );
+      ),
+    );
   }
 }

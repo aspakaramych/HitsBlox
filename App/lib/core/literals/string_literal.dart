@@ -1,7 +1,7 @@
 import 'package:app/core/abstracts/expression.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 
-class StringLiteral implements Expression{
+class StringLiteral implements Expression {
   final String value;
 
   StringLiteral(this.value);

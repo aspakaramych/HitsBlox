@@ -20,13 +20,13 @@ class _HorizontalTopBarState extends State<HorizontalTopBar> {
   late bool _areRunning;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     _areRunning = widget.state.getAreRunning();
     widget.state.addListener(_updateIcon);
   }
 
-  void _updateIcon(){
+  void _updateIcon() {
     setState(() {
       _areRunning = widget.state.getAreRunning();
     });
@@ -62,9 +62,12 @@ class _HorizontalTopBarState extends State<HorizontalTopBar> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ElevatedButton(
-                onPressed: (!_areRunning)
-                    ? widget.play
-                    : () {widget.state.setRunning(false);},
+                onPressed:
+                    (!_areRunning)
+                        ? widget.play
+                        : () {
+                          widget.state.setRunning(false);
+                        },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
                   maximumSize: Size(40, 40),
@@ -78,7 +81,10 @@ class _HorizontalTopBarState extends State<HorizontalTopBar> {
                       : 'lib/design/assets/icons/stop.svg',
                   width: 40,
                   height: 40,
-                  colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.onSecondaryContainer, BlendMode.srcIn),
+                  colorFilter: ColorFilter.mode(
+                    Theme.of(context).colorScheme.onSecondaryContainer,
+                    BlendMode.srcIn,
+                  ),
                 ),
               ),
               ElevatedButton(
@@ -94,7 +100,10 @@ class _HorizontalTopBarState extends State<HorizontalTopBar> {
                   'lib/design/assets/icons/debug.svg',
                   width: 40,
                   height: 40,
-                  colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.onSecondaryContainer, BlendMode.srcIn),
+                  colorFilter: ColorFilter.mode(
+                    Theme.of(context).colorScheme.onSecondaryContainer,
+                    BlendMode.srcIn,
+                  ),
                 ),
               ),
             ],

@@ -2,7 +2,7 @@ import 'package:app/core/abstracts/command.dart';
 import 'package:app/core/abstracts/expression.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 
-class AssignVariableCommand<T> implements Command{
+class AssignVariableCommand<T> implements Command {
   final String variableName;
   final Expression expression;
 
@@ -13,5 +13,4 @@ class AssignVariableCommand<T> implements Command{
     var result = expression.evaluate(registry);
     registry.setValue<T>(variableName, result as T);
   }
-
 }

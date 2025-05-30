@@ -12,13 +12,10 @@ class AboutSection extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'О нас',
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
+            Text('О нас', style: Theme.of(context).textTheme.headlineSmall),
             const SizedBox(height: 12.0),
             const Text(
-              'Это приложение создано командой [Оперативно придумываем название]. Мы очень старались.',
+              'Это приложение создано командой [Оперативно придумываем название]. \nМы очень старались.',
               style: TextStyle(fontSize: 16.0),
             ),
             const SizedBox(height: 8.0),
@@ -27,20 +24,11 @@ class AboutSection extends StatelessWidget {
               style: TextStyle(fontSize: 14.0, color: Colors.grey),
             ),
             const SizedBox(height: 16.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                TextButton.icon(
-                  onPressed: () => _launchURL('https://github.com/aspakaramych/HitsBlox'),
-                  icon: const Icon(Icons.web),
-                  label: const Text('Наш github'),
-                ),
-                TextButton.icon(
-                  onPressed: () => _launchURL('pomogite@stud.tsu.ru'),
-                  icon: const Icon(Icons.email),
-                  label: const Text('Связаться с нами'),
-                ),
-              ],
+            TextButton.icon(
+              onPressed:
+                  () => _launchURL('https://github.com/aspakaramych/HitsBlox'),
+              icon: const Icon(Icons.web),
+              label: const Text('Наш github'),
             ),
           ],
         ),

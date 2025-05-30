@@ -11,9 +11,7 @@ class ArrayLiteral<T> implements Expression {
     return elements.map((e) {
       var value = e.evaluate(registry);
       if (T != dynamic && value is! T) {
-        throw Exception(
-          "TypeError. Expected ${T}, got ${value.runtimeType}",
-        );
+        throw Exception("TypeError. Expected ${T}, got ${value.runtimeType}");
       }
       return value as T;
     }).toList();

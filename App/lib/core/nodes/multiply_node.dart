@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:app/core/pins/Pin.dart';
+import 'package:app/core/pins/pin.dart';
 import 'package:app/core/abstracts/node.dart';
 import 'package:app/core/models/binary_operations.dart';
 import 'package:app/core/models/commands/assign_variable_command.dart';
@@ -8,10 +8,9 @@ import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:collection/collection.dart';
 import '../abstracts/command.dart';
 import '../literals/variable_literal.dart';
-import '../pins/EmptyPin.dart';
+import '../pins/empty_pin.dart';
 
 class MultiplyNode extends Node {
-
   @override
   final String id;
 
@@ -22,7 +21,6 @@ class MultiplyNode extends Node {
     inputs.add(EmptyPin());
     inputs.add(EmptyPin());
   }
-
 
   @override
   Future<void> execute(VariableRegistry registry) async {
@@ -58,9 +56,11 @@ class MultiplyNode extends Node {
     }
     return true;
   }
-  void clearOutputs(){
-    for (var p in outputs){
+
+  void clearOutputs() {
+    for (var p in outputs) {
       p.setValue(null);
-    };
+    }
+    ;
   }
 }

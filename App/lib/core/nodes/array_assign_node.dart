@@ -8,7 +8,7 @@ import 'package:app/core/literals/string_literal.dart';
 import 'package:app/core/literals/variable_literal.dart';
 import 'package:app/core/models/commands/assign_variable_command.dart';
 import 'package:app/core/nodes/assign_node.dart';
-import 'package:app/core/pins/Pin.dart';
+import 'package:app/core/pins/pin.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,7 +19,6 @@ class ArrayAsignNode extends Node implements AssignNode {
   @override
   String rawExpression = '';
   final TextEditingController controller = TextEditingController();
-
 
   @override
   final String id;
@@ -114,7 +113,6 @@ class ArrayAsignNode extends Node implements AssignNode {
         case "bool":
           return ArrayLiteral<bool>(expressions);
       }
-
     }
     return VariableLiteral(exprStr);
   }
@@ -143,9 +141,11 @@ class ArrayAsignNode extends Node implements AssignNode {
 
     return true;
   }
-  void clearOutputs(){
-    for (var p in outputs){
+
+  void clearOutputs() {
+    for (var p in outputs) {
       p.setValue(null);
-    };
+    }
+    ;
   }
 }

@@ -7,14 +7,13 @@ import 'package:app/core/literals/variable_literal.dart';
 import 'package:app/core/models/binary_operations.dart';
 import 'package:app/core/models/commands/assign_variable_command.dart';
 import 'package:app/core/nodes/assign_node.dart';
-import 'package:app/core/pins/Pin.dart';
+import 'package:app/core/pins/pin.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 
 class Token {
-  final String
-  type;
+  final String type;
   final String value;
 
   Token(this.type, this.value);
@@ -84,6 +83,7 @@ class IntAssignNode extends Node implements AssignNode {
       }
     }
   }
+
   Expression _parseExpressionWithShuntingYard(
     String expressionText,
     VariableRegistry registry,
@@ -110,9 +110,7 @@ class IntAssignNode extends Node implements AssignNode {
 
         match = arrayAccessRegex.firstMatch(remainingText);
         if (match != null) {
-          tokens.add(
-            Token('ARRAY_ACCESS', match.group(0)!),
-          );
+          tokens.add(Token('ARRAY_ACCESS', match.group(0)!));
           remainingText = remainingText.substring(match.end).trimLeft();
           continue;
         }

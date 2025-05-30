@@ -123,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: ConstrainedBox(constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height), child: StorageScreen()),
+                  child: ConstrainedBox(constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height, maxWidth: 360), child: StorageScreen()),
                   ),
               ],
             )

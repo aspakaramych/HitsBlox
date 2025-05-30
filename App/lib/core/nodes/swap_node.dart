@@ -11,7 +11,7 @@ import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:app/utils/offset_extension.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../pins/Pin.dart';
+import '../pins/pin.dart';
 
 class SwapNode extends Node {
   String rawExpressionFirst = '';
@@ -29,9 +29,7 @@ class SwapNode extends Node {
 
   List<String> setAssignmentsFromText(String text) {
     var line = text.trim();
-    var match = RegExp(
-      r'^([a-zA-Z_]\w*)\[([^\]]+)\]$',
-    ).firstMatch(line);
+    var match = RegExp(r'^([a-zA-Z_]\w*)\[([^\]]+)\]$').firstMatch(line);
     if (match == null) return [];
     var varName = match.group(1)!;
     var idxMatch = match.group(2)!;
@@ -42,18 +40,15 @@ class SwapNode extends Node {
   Future<void> execute(VariableRegistry registry) async {
     List<String> first = setAssignmentsFromText(rawExpressionFirst);
     List<String> second = setAssignmentsFromText(rawExpressionSecond);
-    var val1 = registry.getValue(first[1]) is int
-        ? registry.getValue(first[1])
-        : int.tryParse(first[1]);
-    var val2 = registry.getValue(second[1]) is int
-        ? registry.getValue(second[1])
-        : int.tryParse(second[1]);
-    var command = SwapCommand(
-      first[0],
-      val1,
-      second[0],
-      val2,
-    );
+    var val1 =
+        registry.getValue(first[1]) is int
+            ? registry.getValue(first[1])
+            : int.tryParse(first[1]);
+    var val2 =
+        registry.getValue(second[1]) is int
+            ? registry.getValue(second[1])
+            : int.tryParse(second[1]);
+    var command = SwapCommand(first[0], val1, second[0], val2);
     command.execute(registry);
   }
 

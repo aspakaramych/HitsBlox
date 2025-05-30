@@ -16,7 +16,12 @@ class CustomToast extends StatelessWidget {
   final Color backgroundColor;
   final Color textColor;
 
-  static void showCustomToast(BuildContext context, String title, String message, Color color) {
+  static void showCustomToast(
+    BuildContext context,
+    String title,
+    String message,
+    Color color,
+  ) {
     showToast(
       context,
       Toast(
@@ -31,7 +36,13 @@ class CustomToast extends StatelessWidget {
     );
   }
 
-  static void showCustomToastWithDuration(BuildContext context, String title, String message, Color color, int sec) {
+  static void showCustomToastWithDuration(
+    BuildContext context,
+    String title,
+    String message,
+    Color color,
+    int sec,
+  ) {
     showToast(
       context,
       Toast(
@@ -59,10 +70,7 @@ class CustomToast extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(right: 8),
-            child: const Icon(
-              Icons.info,
-              color: Colors.white,
-            ),
+            child: const Icon(Icons.info, color: Colors.white),
           ),
           Expanded(
             child: Column(
@@ -81,7 +89,7 @@ class CustomToast extends StatelessWidget {
           ),
           const SizedBox(height: 10, width: 8),
           IconButton(
-            icon: Icon(Icons.close, size: 25, color: Colors.white,),
+            icon: Icon(Icons.close, size: 25, color: Colors.white),
             onPressed: () => Toastify.of(context).remove(this),
           ),
         ],

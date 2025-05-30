@@ -102,7 +102,14 @@ class TestScreenWidgetBuilder {
             return;
           }
 
-          makeConnection(temp.node as Node, block.node as Node, index, outputIndex, false, temp is IfElseBlock);
+          makeConnection(
+            temp.node as Node,
+            block.node as Node,
+            index,
+            outputIndex,
+            false,
+            temp is IfElseBlock,
+          );
           widget.calibrations["${temp.nodeId}${block.nodeId}"] = Offset(0, 60);
           if (currOutputCalibration != null) {
             widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] =
@@ -184,7 +191,14 @@ class TestScreenWidgetBuilder {
             return;
           }
 
-          makeConnection(temp.node as Node, block.node as Node, index, outputIndex, true, temp is IfElseBlock);
+          makeConnection(
+            temp.node as Node,
+            block.node as Node,
+            index,
+            outputIndex,
+            true,
+            temp is IfElseBlock,
+          );
           widget.calibrations["${temp.nodeId}${block.nodeId}"] = Offset(
             0,
             position.dy + 10,
@@ -274,7 +288,14 @@ class TestScreenWidgetBuilder {
             refreshUI();
             return;
           }
-          makeConnection(temp.node as Node, block.node as Node, index, outputIndex, false, temp is IfElseBlock);
+          makeConnection(
+            temp.node as Node,
+            block.node as Node,
+            index,
+            outputIndex,
+            false,
+            temp is IfElseBlock,
+          );
           widget.calibrations["${temp.nodeId}${block.nodeId}"] = Offset(
             0,
             block.height / 2 + 15,
@@ -357,7 +378,14 @@ class TestScreenWidgetBuilder {
             refreshUI();
             return;
           }
-          makeConnection(temp.node as Node, block.node as Node, inputIndex, outputIndex, true, temp is IfElseBlock);
+          makeConnection(
+            temp.node as Node,
+            block.node as Node,
+            inputIndex,
+            outputIndex,
+            true,
+            temp is IfElseBlock,
+          );
           widget.calibrations["${temp.nodeId}${block.nodeId}"] = Offset(
             0,
             position.dy + 5,
@@ -447,7 +475,14 @@ class TestScreenWidgetBuilder {
             refreshUI();
             return;
           }
-          makeConnection(temp.node as Node, block.node as Node, index, outputIndex, false, temp is IfElseBlock);
+          makeConnection(
+            temp.node as Node,
+            block.node as Node,
+            index,
+            outputIndex,
+            false,
+            temp is IfElseBlock,
+          );
           widget.calibrations["${temp.nodeId}${block.nodeId}"] = Offset(0, 55);
 
           if (currOutputCalibration != null) {
@@ -554,7 +589,14 @@ class TestScreenWidgetBuilder {
             return;
           }
 
-          makeConnection(temp.node as Node, block.node as Node, index, outputIndex, false, temp is IfElseBlock);
+          makeConnection(
+            temp.node as Node,
+            block.node as Node,
+            index,
+            outputIndex,
+            false,
+            temp is IfElseBlock,
+          );
           widget.calibrations["${temp.nodeId}${block.nodeId}"] = Offset(0, 60);
           if (currOutputCalibration != null) {
             widget.outputCalibrations["${temp.nodeId}${block.nodeId}"] =

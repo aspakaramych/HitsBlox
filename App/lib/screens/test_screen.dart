@@ -21,7 +21,7 @@ import '../blocks/assignment_block.dart';
 import '../blocks/block_service.dart';
 import '../blocks/comment_block.dart';
 import '../core/abstracts/node.dart';
-import '../core/pins/Pin.dart';
+import '../core/pins/pin.dart';
 import '../utils/background_painter.dart';
 import '../utils/bezier_line_painter.dart';
 import '../utils/debug_notifier.dart';

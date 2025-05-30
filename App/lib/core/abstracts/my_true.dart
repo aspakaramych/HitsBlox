@@ -1,8 +1,7 @@
-class MyTrue{
-  final bool flag =true;
-  MyTrue(){
+class MyTrue {
+  final bool flag = true;
 
-  }
+  MyTrue() {}
 
   @override
   String toString() => "";

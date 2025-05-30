@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 
-class DebugConsoleService with ChangeNotifier{
+class DebugConsoleService with ChangeNotifier {
   final List<String> logs = [];
 
   void log(String message) {

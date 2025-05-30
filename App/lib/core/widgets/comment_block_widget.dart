@@ -32,8 +32,6 @@ class _CommentBlockWidgetState extends State<CommentBlockWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Positioned(
       left: _currentOffset.dx,
       top: _currentOffset.dy,
@@ -85,7 +83,7 @@ class _CommentBlockWidgetState extends State<CommentBlockWidget> {
                   focusedBorder: InputBorder.none,
                   disabledBorder: InputBorder.none,
                 ),
-                style: theme.textTheme.labelLarge,
+                style: Theme.of(context).textTheme.labelLarge,
               ),
             ),
           ),

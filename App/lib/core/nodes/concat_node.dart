@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:app/core/pins/Pin.dart';
+import 'package:app/core/pins/pin.dart';
 import 'package:app/core/abstracts/node.dart';
 import 'package:app/core/models/commands/assign_variable_command.dart';
 import 'package:app/core/models/commands/concat_command.dart';
@@ -8,7 +8,7 @@ import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:collection/collection.dart';
 import '../abstracts/command.dart';
 import '../literals/variable_literal.dart';
-import '../pins/EmptyPin.dart';
+import '../pins/empty_pin.dart';
 
 class ConcatNode extends Node {
   @override
@@ -22,7 +22,6 @@ class ConcatNode extends Node {
     inputs.add(EmptyPin());
   }
 
-
   @override
   Future<void> execute(VariableRegistry registry) async {
     clearOutputs();
@@ -32,17 +31,15 @@ class ConcatNode extends Node {
     String aVal, bVal;
 
     if (aPin != null && bPin != null && resultPin != null) {
-      if (registry.getValue(aPin.getValue()) != null){
+      if (registry.getValue(aPin.getValue()) != null) {
         aVal = registry.getValue(aPin.getValue());
-      }
-      else{
+      } else {
         aVal = aPin.getValue();
       }
 
-      if (registry.getValue(bPin.getValue()) != null){
+      if (registry.getValue(bPin.getValue()) != null) {
         bVal = registry.getValue(bPin.getValue());
-      }
-      else{
+      } else {
         bVal = bPin.getValue();
       }
 
@@ -50,17 +47,20 @@ class ConcatNode extends Node {
       resultPin.setValue(sum);
     }
   }
+
   bool areAllInputsReady() {
-    for (var p in inputs){
+    for (var p in inputs) {
       if (p != null && !p.hasValue()) {
         return false;
       }
     }
     return true;
   }
-  void clearOutputs(){
-    for (var p in outputs){
+
+  void clearOutputs() {
+    for (var p in outputs) {
       p.setValue(null);
-    };
+    }
+    ;
   }
 }

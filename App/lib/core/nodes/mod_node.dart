@@ -1,12 +1,12 @@
 import 'dart:ui';
 
 import 'package:app/core/abstracts/node.dart';
-import 'package:app/core/pins/Pin.dart';
+import 'package:app/core/pins/pin.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 
-import '../pins/EmptyPin.dart';
+import '../pins/empty_pin.dart';
 
-class ModNode extends Node{
+class ModNode extends Node {
   @override
   final String id;
 
@@ -17,7 +17,6 @@ class ModNode extends Node{
     inputs.add(EmptyPin());
     inputs.add(EmptyPin());
   }
-
 
   @override
   Future<void> execute(VariableRegistry registry) async {
@@ -56,9 +55,11 @@ class ModNode extends Node{
     }
     return true;
   }
-  void clearOutputs(){
-    for (var p in outputs){
+
+  void clearOutputs() {
+    for (var p in outputs) {
       p.setValue(null);
-    };
+    }
+    ;
   }
 }

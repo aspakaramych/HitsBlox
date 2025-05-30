@@ -9,10 +9,7 @@ class Position {
   Position(this.position, this.isWired);
 
   Map<String, dynamic> toJson() {
-    return {
-      'offset': position.toJson(),
-      'isWired': isWired,
-    };
+    return {'offset': position.toJson(), 'isWired': isWired};
   }
 
   factory Position.fromJson(Map<String, dynamic> json) {

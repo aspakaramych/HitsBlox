@@ -10,7 +10,7 @@ class IntLiteral implements Expression {
   int evaluate(VariableRegistry registry) => value;
 
   @override
-  String toString(){
+  String toString() {
     return value.toString();
   }
 }

@@ -5,7 +5,7 @@ import 'package:app/core/nodes/assign_node.dart';
 
 import '../utils/offset_extension.dart';
 
-class AssignmentBlock implements PositionedBlock{
+class AssignmentBlock implements PositionedBlock {
   @override
   Offset position;
   String blockName;

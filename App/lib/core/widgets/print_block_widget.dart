@@ -87,74 +87,99 @@ class _PrintBlockWidgetState extends State<PrintBlockWidget> {
                       ),
                     ),
                     ConstrainedBox(
-                      constraints: BoxConstraints(minHeight: widget.block.height - 30),
+                      constraints: BoxConstraints(
+                        minHeight: widget.block.height - 30,
+                      ),
                       child: Container(
                         width: widget.block.width,
                         decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.primaryContainer,
-                            borderRadius: BorderRadius.circular(15),
-                            border: Border.all(
-                              color: (widget.mark) ? Colors.red : Theme.of(context).colorScheme.primaryContainer,
-                              width: 2,
+                          color: Theme.of(context).colorScheme.primaryContainer,
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(
+                            color:
+                                (widget.mark)
+                                    ? Colors.red
+                                    : Theme.of(
+                                      context,
+                                    ).colorScheme.primaryContainer,
+                            width: 2,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.shadow.withOpacity(0.2),
+                              spreadRadius: 0,
+                              blurRadius: 5,
+                              offset: Offset(0, -5),
                             ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Theme.of(context).colorScheme.shadow.withOpacity(0.2),
-                                spreadRadius: 0,
-                                blurRadius: 5,
-                                offset: Offset(0, -5),
-                              )
-                            ]
+                          ],
                         ),
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 45, vertical: 10),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 45,
+                            vertical: 10,
+                          ),
                           child: Container(
                             decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.secondaryContainer,
-                              borderRadius: BorderRadius.all(Radius.circular(15)),
+                              color:
+                                  Theme.of(
+                                    context,
+                                  ).colorScheme.secondaryContainer,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15),
+                              ),
                             ),
                             child: Container(
-                                padding: EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                                  color: Colors.transparent,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Theme.of(context).colorScheme.shadow.withOpacity(0.2),
-                                    ),
-                                    BoxShadow(
-                                      color: Theme.of(context).colorScheme.secondaryContainer,
-                                      spreadRadius: -4.0,
-                                      blurRadius: 4.0,
-                                    ),
-                                  ],
+                              padding: EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(15),
                                 ),
-                                child: TextField(
-                                  controller: TextEditingController(
-                                    text: widget.block.node.rawExpression,
+                                color: Colors.transparent,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.shadow.withOpacity(0.2),
                                   ),
-                                  keyboardType: TextInputType.text,
-                                  textInputAction: TextInputAction.done,
-                                  onSubmitted: (text) {
-                                    widget.block.node.rawExpression = text;
-                                    widget.onEditToggle();
-                                  },
-                                  decoration: InputDecoration(
-                                    hintText: Hints.PRINT.hintText,
-                                    contentPadding: EdgeInsets.all(6),
-                                    enabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                    disabledBorder: InputBorder.none,
+                                  BoxShadow(
+                                    color:
+                                        Theme.of(
+                                          context,
+                                        ).colorScheme.secondaryContainer,
+                                    spreadRadius: -4.0,
+                                    blurRadius: 4.0,
                                   ),
-                                  style: Theme.of(context).textTheme.labelLarge,
-                                )
-                            )
-                          )
-                        )
+                                ],
+                              ),
+                              child: TextField(
+                                controller: TextEditingController(
+                                  text: widget.block.node.rawExpression,
+                                ),
+                                keyboardType: TextInputType.text,
+                                textInputAction: TextInputAction.done,
+                                onSubmitted: (text) {
+                                  widget.block.node.rawExpression = text;
+                                  widget.onEditToggle();
+                                },
+                                decoration: InputDecoration(
+                                  hintText: Hints.PRINT.hintText,
+                                  contentPadding: EdgeInsets.all(6),
+                                  enabledBorder: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  disabledBorder: InputBorder.none,
+                                ),
+                                style: Theme.of(context).textTheme.labelLarge,
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ],
                 ),
+
                 /// левая стрелка
                 Positioned(
                   left: 15,
@@ -167,7 +192,12 @@ class _PrintBlockWidgetState extends State<PrintBlockWidget> {
                       child: SizedBox(
                         width: 15,
                         height: 15,
-                        child: CustomPaint(painter: TrianglePainter(Sizes.arrowSize, Theme.of(context).colorScheme.onPrimaryContainer)),
+                        child: CustomPaint(
+                          painter: TrianglePainter(
+                            Sizes.arrowSize,
+                            Theme.of(context).colorScheme.onPrimaryContainer,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -185,7 +215,12 @@ class _PrintBlockWidgetState extends State<PrintBlockWidget> {
                       child: SizedBox(
                         width: 15,
                         height: 15,
-                        child: CustomPaint(painter: TrianglePainter(Sizes.arrowSize, Theme.of(context).colorScheme.onPrimaryContainer)),
+                        child: CustomPaint(
+                          painter: TrianglePainter(
+                            Sizes.arrowSize,
+                            Theme.of(context).colorScheme.onPrimaryContainer,
+                          ),
+                        ),
                       ),
                     ),
                   ),
