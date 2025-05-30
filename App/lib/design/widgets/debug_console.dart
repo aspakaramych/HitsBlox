@@ -32,6 +32,12 @@ class _DebugConsoleState extends State<DebugConsole> {
   }
 
   @override
+  void dispose() {
+    widget.debugConsoleService.removeListener(_updateLogs);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Material(
       elevation: 2,

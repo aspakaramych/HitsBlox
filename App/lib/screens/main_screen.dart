@@ -161,15 +161,17 @@ class _MainScreenState extends State<MainScreen>
             _testScreen,
             Stack(
               children: [
-                if (_isDebugConsoleOpen)
                   Positioned(
                     height: 200,
                     top: 115,
                     right: 20,
-                    child:
-                    DebugConsole(
-                      onClose: _toggleDebugConsole,
-                      debugConsoleService: _testScreen.debugConsoleService,
+                    child: Visibility(
+                      visible: _isDebugConsoleOpen,
+                      maintainState: true,
+                      child: DebugConsole(
+                        onClose: _toggleDebugConsole,
+                        debugConsoleService: _testScreen.debugConsoleService,
+                      ),
                     ),
                   ),
                 if (_testScreen.engine.getDebugMode())
