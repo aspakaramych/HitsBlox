@@ -185,6 +185,7 @@ class _MainScreenState extends State<MainScreen>
                       onStopPressed: () {
                         _testScreen.debugNotifier.setDebugMode(false);
                         _testScreen.engine.resume(_testScreen.debugNotifier);
+                        _testScreen.selectedBlockService.clear();
                       },
                       onMenuPressed: () {
                         _toggleDebugConsole();
@@ -228,7 +229,11 @@ class _MainScreenState extends State<MainScreen>
                         state: _testScreen.state,
                         debugNotifier: _testScreen.debugNotifier,
                         stop: () {
-                          _testScreen.engine.stop(_testScreen.debugNotifier, _testScreen.state);
+                          _testScreen.engine.stop(
+                            _testScreen.debugNotifier,
+                            _testScreen.state,
+                          );
+                          _testScreen.selectedBlockService.clear();
                         },
                       ),
                     ),
@@ -299,10 +304,9 @@ class _MainScreenState extends State<MainScreen>
                         _testScreen.engine.next();
                       },
                       onStopPressed: () {
-                        _toggleDebugConsole();
-                        _toggleDebugMode();
                         _testScreen.debugNotifier.setDebugMode(false);
                         _testScreen.engine.resume(_testScreen.debugNotifier);
+                        _testScreen.selectedBlockService.clear();
                       },
                       onMenuPressed: () {
                         _toggleDebugConsole();
@@ -315,6 +319,7 @@ class _MainScreenState extends State<MainScreen>
                       alignment: Alignment.topLeft,
                       child: VerticalTopBar(
                         play: () {
+                          _testScreen.consoleService.clear();
                           _testScreen.debugNotifier.setDebugMode(false);
                           _testScreen.engine.run(
                             _testScreen.nodeGraph,
@@ -328,6 +333,7 @@ class _MainScreenState extends State<MainScreen>
                           );
                         },
                         debug: () {
+                          _testScreen.consoleService.clear();
                           _toggleDebugMode();
                           _testScreen.debugNotifier.setDebugMode(true);
                           _testScreen.engine.run(
@@ -342,6 +348,14 @@ class _MainScreenState extends State<MainScreen>
                           );
                         },
                         state: _testScreen.state,
+                        debugNotifier: _testScreen.debugNotifier,
+                        stop: () {
+                          _testScreen.engine.stop(
+                            _testScreen.debugNotifier,
+                            _testScreen.state,
+                          );
+                          _testScreen.selectedBlockService.clear();
+                        },
                       ),
                     ),
                     Expanded(child: Center()),

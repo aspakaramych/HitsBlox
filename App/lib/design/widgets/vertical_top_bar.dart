@@ -2,14 +2,19 @@ part of 'widgets.dart';
 
 class VerticalTopBar extends StatefulWidget {
   final VoidCallback play;
+  final VoidCallback stop;
+
   final VoidCallback debug;
   final EngineState state;
+  final DebugNotifier debugNotifier;
 
   const VerticalTopBar({
     super.key,
     required this.play,
     required this.debug,
     required this.state,
+    required this.stop,
+    required this.debugNotifier,
   });
 
   @override
@@ -82,11 +87,9 @@ class _VerticalTopBarState extends State<VerticalTopBar> {
               ),
               ElevatedButton(
                 onPressed:
-                    (!_areRunning)
-                        ? widget.play
-                        : () {
-                          widget.state.setRunning(false);
-                        },
+                (!_areRunning)
+                    ? widget.play
+                    : widget.stop,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
                   maximumSize: Size(40, 40),

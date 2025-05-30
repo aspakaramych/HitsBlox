@@ -312,6 +312,7 @@ class Engine {
               ex.toString(),
               Colors.red,
             );
+            state.setRunning(false);
             return;
           }
         } else {
