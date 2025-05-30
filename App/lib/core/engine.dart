@@ -104,6 +104,10 @@ class Engine {
     }
   }
 
+  void stop(DebugNotifier debugMode){
+    _debugCompleter?.complete();
+    debugMode.setDebugMode(false);
+  }
 
   void next() {
     _debugCompleter?.complete();
