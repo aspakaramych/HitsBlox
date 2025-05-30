@@ -1,4 +1,1 @@
-enum BockType {
-  assignment,
-  binaryOperation
-}
+enum BockType { assignment, binaryOperation }

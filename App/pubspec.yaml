@@ -36,12 +36,22 @@ dependencies:
   cupertino_icons: ^1.0.8
   collection: ^1.19.1
   gesture_zoom_box: ^0.0.4
+  shared_preferences: ^2.5.3
+  toastify: ^0.0.2
+  provider: ^6.0.0
+  url_launcher: ^6.3.1
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_svg: ^2.0.5
+  path_drawing: ^1.0.1
+  visibility_detector: ^0.4.0+2
+  google_fonts: ^6.1.0
+  flutter_launcher_icons: ^0.14.3
+  flutter_native_splash: ^2.4.6
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -57,6 +67,7 @@ dev_dependencies:
 flutter:
   assets:
     - lib/design/assets/icons/
+    - lib/design/assets/logo.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -93,3 +104,13 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "lib/design/assets/logo.png"
+
+flutter_native_splash:
+  color: "#f8f9ff"
+  image: "lib/design/assets/logo.png"
+  android: true
+  ios: true

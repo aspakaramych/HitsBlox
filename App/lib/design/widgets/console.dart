@@ -1,24 +1,30 @@
 part of 'widgets.dart';
 
 class Console extends StatefulWidget {
-  const Console({super.key});
+  final ConsoleService consoleService;
+
+  const Console({super.key, required this.consoleService});
 
   @override
   State<Console> createState() => _ConsoleState();
 }
 
 class _ConsoleState extends State<Console> {
-  late final ConsoleService _consoleService; //TODO: эту штуку надо импортировать откуда-то
+  late ConsoleService _consoleService;
+  late List<String> logs = [];
 
   @override
   void initState() {
     super.initState();
-    _consoleService = ConsoleService();
+    _consoleService = widget.consoleService;
+    logs = _consoleService.logs;
     _consoleService.addListener(_onLogsChanged);
   }
 
   void _onLogsChanged() {
-    setState(() {});
+    setState(() {
+      logs = _consoleService.logs;
+    });
   }
 
   @override
@@ -29,9 +35,12 @@ class _ConsoleState extends State<Console> {
 
   @override
   Widget build(BuildContext context) {
-    final logs = _consoleService.logs;
-
     return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.outlineVariant,
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+      ),
+      margin: EdgeInsets.symmetric(horizontal: 20),
       padding: EdgeInsets.all(16),
       child: Column(
         children: [
@@ -39,7 +48,7 @@ class _ConsoleState extends State<Console> {
             alignment: Alignment.center,
             child: Text(
               "Консоль",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.text),
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
           ),
           SizedBox(height: 10),
@@ -49,8 +58,8 @@ class _ConsoleState extends State<Console> {
               child: ListView(
                 children: [
                   Text(
-                    '>' + logs.join('\n>'),
-                    style: TextStyle(fontFamily: 'monospace', fontSize: 14, color: AppColors.text),
+                    '>${logs.join('\n>')}',
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ],
               ),
