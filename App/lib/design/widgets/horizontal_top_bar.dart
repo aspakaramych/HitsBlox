@@ -4,12 +4,14 @@ class HorizontalTopBar extends StatefulWidget {
   final VoidCallback debug;
   final VoidCallback play;
   final EngineState state;
+  final DebugNotifier debugNotifier;
 
   const HorizontalTopBar({
     super.key,
     required this.play,
     required this.debug,
     required this.state,
+    required this.debugNotifier,
   });
 
   @override
@@ -45,7 +47,10 @@ class _HorizontalTopBarState extends State<HorizontalTopBar> {
       height: 70,
       margin: EdgeInsets.only(top: 20, right: 20),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.secondaryContainer,
+        color: Theme
+            .of(context)
+            .colorScheme
+            .secondaryContainer,
         borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
       child: Material(
@@ -55,7 +60,10 @@ class _HorizontalTopBarState extends State<HorizontalTopBar> {
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 15),
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.secondaryContainer,
+            color: Theme
+                .of(context)
+                .colorScheme
+                .secondaryContainer,
             borderRadius: BorderRadius.all(Radius.circular(15)),
           ),
           child: Row(
@@ -63,11 +71,12 @@ class _HorizontalTopBarState extends State<HorizontalTopBar> {
             children: [
               ElevatedButton(
                 onPressed:
-                    (!_areRunning)
-                        ? widget.play
-                        : () {
-                          widget.state.setRunning(false);
-                        },
+                (!_areRunning)
+                    ? widget.play
+                    : () {
+                  widget.state.setRunning(false);
+                  widget.debugNotifier.setDebugMode(false);
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
                   maximumSize: Size(40, 40),
@@ -82,7 +91,10 @@ class _HorizontalTopBarState extends State<HorizontalTopBar> {
                   width: 40,
                   height: 40,
                   colorFilter: ColorFilter.mode(
-                    Theme.of(context).colorScheme.onSecondaryContainer,
+                    Theme
+                        .of(context)
+                        .colorScheme
+                        .onSecondaryContainer,
                     BlendMode.srcIn,
                   ),
                 ),
@@ -101,7 +113,10 @@ class _HorizontalTopBarState extends State<HorizontalTopBar> {
                   width: 40,
                   height: 40,
                   colorFilter: ColorFilter.mode(
-                    Theme.of(context).colorScheme.onSecondaryContainer,
+                    Theme
+                        .of(context)
+                        .colorScheme
+                        .onSecondaryContainer,
                     BlendMode.srcIn,
                   ),
                 ),
