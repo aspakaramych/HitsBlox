@@ -23,7 +23,7 @@ class _ConsoleState extends State<Console> {
   void _onLogsChanged() {
     setState(() {
       logs = _consoleService.logs;
-    );
+    });
   }
 
   @override
