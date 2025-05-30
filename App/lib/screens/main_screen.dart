@@ -227,7 +227,7 @@ class _MainScreenState extends State<MainScreen>
                             context,
                           );
                         },
-                        state: _testScreen.state,
+                        state: _testScreen.state, debugNotifier: _testScreen.debugNotifier,
                       ),
                     ),
                     Expanded(child: Center()),
