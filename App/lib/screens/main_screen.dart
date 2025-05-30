@@ -201,14 +201,15 @@ class _MainScreenState extends State<MainScreen>
                         play: () {
                           _testScreen.consoleService.clear();
                           _testScreen.engine.setDebugMode(false);
-                          _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, context);
+                          _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, _testScreen.state, context);
                         },
                         debug: () {
                           _testScreen.consoleService.clear();
                           _toggleDebugMode();
                           _testScreen.engine.setDebugMode(true);
-                          _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, context);
+                          _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, _testScreen.state, context);
                         },
+                        state: _testScreen.state,
                       ),
                     ),
                     Expanded(child: Center()),
@@ -291,13 +292,14 @@ class _MainScreenState extends State<MainScreen>
                       child: VerticalTopBar(
                         play: () {
                           _testScreen.engine.setDebugMode(false);
-                          _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, context);
+                          _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, _testScreen.state, context);
                         },
                         debug: () {
                           _toggleDebugMode();
                           _testScreen.engine.setDebugMode(true);
-                          _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, context);
+                          _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, _testScreen.state, context);
                         },
+                        state: _testScreen.state,
                       ),
                     ),
                     Expanded(child: Center()),
