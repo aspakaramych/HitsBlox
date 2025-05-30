@@ -102,10 +102,19 @@ class Engine {
   late NodeGraph graph;
   late VariableRegistry registry;
   bool _debugMode = false;
+  bool _isStoped = true;
   Completer<void>? _debugCompleter;
   Node? _curNode;
 
   Engine();
+
+  bool stopState(){
+    return _isStoped;
+  }
+
+  void setStopState(bool enable){
+    _isStoped = enable;
+  }
 
   Node? getCurNode(){
     return _curNode;
@@ -144,6 +153,7 @@ class Engine {
     this.graph = nodeGraph;
     this.registry = variableRegistry;
     registry.Clear();
+    setStopState(false);
 
     final Queue<QueueItem> queue = Queue();
     ExecutionContext currentGlobalContext = ExecutionContext.global();
@@ -175,6 +185,10 @@ class Engine {
     bool progressMadeInThisIteration;
 
     while (queue.isNotEmpty) {
+      if (_isStoped){
+        CustomToast.showCustomToast(context, 'Программа остановлена', 'Программа остановлена', Colors.grey);
+        return;
+      }
       final List<QueueItem> currentBatch = queue.toList();
       queue.clear();
 

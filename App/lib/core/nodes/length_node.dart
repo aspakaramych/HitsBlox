@@ -20,6 +20,10 @@ class LengthNode extends Node implements AssignNode{
 
   @override
   Future<void> execute(VariableRegistry registry) async {
+    var nameVar = rawExpression.trim();
+    if (nameVar[nameVar.length - 1] == ';'){
+      nameVar = nameVar.substring(0, nameVar.length-1);
+    }
     if (inputs.length != 1){
       throw Exception("Должен можно подсоединить только 1 входной пин");
     }
@@ -30,9 +34,9 @@ class LengthNode extends Node implements AssignNode{
     if (input is bool && input is int){
       throw Exception("Вы передали не массив или строку");
     }
-    registry.setValue(rawExpression, input.length);
+    registry.setValue(nameVar, input.length);
     for (var p in outputs){
-      p.setValue(rawExpression);
+      p.setValue(nameVar);
     }
   }
 
