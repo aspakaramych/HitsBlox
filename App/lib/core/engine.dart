@@ -16,6 +16,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:toastify/toastify.dart';
 
+import '../utils/debug_notifier.dart';
 import '../utils/selected_block_service.dart';
 
 class ExecutionLevel {
@@ -113,9 +114,8 @@ class Engine {
     return _curNode;
   }
 
-  void setDebugMode(bool enable){
-    _debugMode = enable;
-    if (!_debugMode){
+  void resume(DebugNotifier debugMode){
+    if (!debugMode.getDebugMode()){
       _debugCompleter?.complete();
       _debugCompleter = null;
     }
@@ -137,8 +137,9 @@ class Engine {
       DebugConsoleService debugConsoleService,
       SelectedBlockService selectedBlockService,
       EngineState state,
+      DebugNotifier debugMode,
       BuildContext context) async {
-    if (_debugMode){
+    if (debugMode.getDebugMode()){
       CustomToast.showCustomToast(context, 'Режим debug', 'Debug активирован', Colors.grey);
     }
     else{
@@ -194,7 +195,7 @@ class Engine {
           CustomToast.showCustomToast(context, 'Программа остановлена', 'Программа остановлена', Colors.grey);
           return;
         }
-        if (_debugMode){
+        if (debugMode.getDebugMode()){
           _debugCompleter = Completer<void>();
           console.clear();
           var registerStr = registry.toString();

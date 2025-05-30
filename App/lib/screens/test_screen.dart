@@ -24,6 +24,7 @@ import '../core/abstracts/node.dart';
 import '../core/pins/Pin.dart';
 import '../utils/background_painter.dart';
 import '../utils/bezier_line_painter.dart';
+import '../utils/debug_notifier.dart';
 
 class TestScreen extends StatefulWidget {
   String saveName = '';
@@ -34,6 +35,7 @@ class TestScreen extends StatefulWidget {
   DebugConsoleService debugConsoleService = DebugConsoleService();
   SelectedBlockService selectedBlockService = SelectedBlockService();
   EngineState state = EngineState();
+  DebugNotifier debugNotifier = DebugNotifier();
   Engine engine = Engine();
   VariableRegistry registry = VariableRegistry();
 
