@@ -1,19 +1,15 @@
 import 'dart:convert';
 
-import 'package:app/screens/home_screen.dart';
-import 'package:app/screens/settings_screen.dart';
+import 'package:app/design/theme/app_theme.dart';
 import 'package:app/screens/test_screen.dart';
+import 'package:app/utils/hints_notifier.dart';
 import 'package:app/utils/util.dart';
 import 'package:flutter/material.dart';
-import 'package:app/screens/main_screen.dart';
-import 'package:app/design/theme/app_theme.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'design/app_router.dart';
-
-import 'package:app/utils/hints_notifier.dart';
 
 TestScreen testScreen = TestScreen();
 
