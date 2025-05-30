@@ -44,6 +44,8 @@ class _MainScreenState extends State<MainScreen>
       SerializationUtils.loadFromJson(widget.savedState, _testScreen);
     }
     SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+
+    _testScreen.debugNotifier.addListener(_toggleDebugMode);
   }
 
   @override
@@ -79,7 +81,8 @@ class _MainScreenState extends State<MainScreen>
 
   void _toggleDebugMode() {
     setState(() {
-      _isDebugMode = !_isDebugMode;
+      _isDebugMode = _testScreen.debugNotifier.getDebugMode();
+      _isDebugConsoleOpen = (!_isDebugMode) ? false : _isDebugConsoleOpen;
     });
   }
 
@@ -109,7 +112,7 @@ class _MainScreenState extends State<MainScreen>
       ),
     );
 
-    // log(jsonString);
+    print(jsonString);
 
     // _testScreen.loadFromJson(_testScreen.saveScreenState());
   }
@@ -161,38 +164,38 @@ class _MainScreenState extends State<MainScreen>
             _testScreen,
             Stack(
               children: [
-                  Positioned(
-                    height: 200,
-                    top: 115,
-                    right: 20,
-                    child: Visibility(
-                      visible: _isDebugConsoleOpen,
-                      maintainState: true,
-                      child: DebugConsole(
-                        onClose: _toggleDebugConsole,
-                        debugConsoleService: _testScreen.debugConsoleService,
-                      ),
+                Positioned(
+                  height: 200,
+                  top: 115,
+                  right: 20,
+                  child: Visibility(
+                    visible: _isDebugConsoleOpen,
+                    maintainState: true,
+                    child: DebugConsole(
+                      onClose: _toggleDebugConsole,
+                      debugConsoleService: _testScreen.debugConsoleService,
                     ),
                   ),
-                if (_testScreen.engine.getDebugMode())
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: VerticalDebugBar(
-                    onNextPressed: () {
-                      _testScreen.engine.next();
-                    },
-                    onStopPressed: () {
-                      _toggleDebugConsole();
-                      setState(() {
-                        _isDebugConsoleOpen = false;
-                      });
-                      _testScreen.debugNotifier.setDebugMode(false);
-                    },
-                    onMenuPressed: () {
-                      _toggleDebugConsole();
-                    },
-                  ),
                 ),
+                if (_isDebugMode)
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: VerticalDebugBar(
+                      onNextPressed: () {
+                        _testScreen.engine.next();
+                      },
+                      onStopPressed: () {
+                        _toggleDebugConsole();
+                        setState(() {
+                          _isDebugConsoleOpen = false;
+                        });
+                        _testScreen.debugNotifier.setDebugMode(false);
+                      },
+                      onMenuPressed: () {
+                        _toggleDebugConsole();
+                      },
+                    ),
+                  ),
                 Column(
                   children: [
                     Align(
@@ -201,13 +204,31 @@ class _MainScreenState extends State<MainScreen>
                         play: () {
                           _testScreen.consoleService.clear();
                           _testScreen.debugNotifier.setDebugMode(false);
-                          _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, _testScreen.state, _testScreen.debugNotifier, context);
+                          _testScreen.engine.run(
+                            _testScreen.nodeGraph,
+                            _testScreen.registry,
+                            _testScreen.consoleService,
+                            _testScreen.debugConsoleService,
+                            _testScreen.selectedBlockService,
+                            _testScreen.state,
+                            _testScreen.debugNotifier,
+                            context,
+                          );
                         },
                         debug: () {
                           _testScreen.consoleService.clear();
                           _toggleDebugMode();
                           _testScreen.debugNotifier.setDebugMode(true);
-                          _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, _testScreen.state, _testScreen.debugNotifier, context);
+                          _testScreen.engine.run(
+                            _testScreen.nodeGraph,
+                            _testScreen.registry,
+                            _testScreen.consoleService,
+                            _testScreen.debugConsoleService,
+                            _testScreen.selectedBlockService,
+                            _testScreen.state,
+                            _testScreen.debugNotifier,
+                            context,
+                          );
                         },
                         state: _testScreen.state,
                       ),
@@ -224,20 +245,24 @@ class _MainScreenState extends State<MainScreen>
                           position: Tween<Offset>(
                             begin: const Offset(0, 2),
                             end: Offset.zero,
-                            ).animate(curvedAnimation),
+                          ).animate(curvedAnimation),
                           child: child,
                         );
                       },
-                      child: _isAddSectionVisible
-                      ? SizedBox(
-                        key: const ValueKey('BlocksTabs'),
-                        height: 360,
-                        child: BlocksTabs(blocks: _testScreen.blocks),
-                      )
-                          : const SizedBox.shrink(),
+                      child:
+                          _isAddSectionVisible
+                              ? SizedBox(
+                                key: const ValueKey('BlocksTabs'),
+                                height: 360,
+                                child: BlocksTabs(blocks: _testScreen.blocks),
+                              )
+                              : const SizedBox.shrink(),
                     ),
                     HorizontalBottomBar(
-                      iconButton: !_isAddSectionVisible ? 'lib/design/assets/icons/add.svg' : 'lib/design/assets/icons/down.svg',
+                      iconButton:
+                          !_isAddSectionVisible
+                              ? 'lib/design/assets/icons/add.svg'
+                              : 'lib/design/assets/icons/down.svg',
                       onTerminalPressed: () => _showTerminalPanel(context),
                       onAddPressed: () => _toggleAddSection(),
                       onSavePressed: () => _saveScreen(),
@@ -262,29 +287,28 @@ class _MainScreenState extends State<MainScreen>
                     height: 200,
                     top: 180,
                     left: 20,
-                    child:
-                    DebugConsole(
+                    child: DebugConsole(
                       onClose: _toggleDebugConsole,
                       debugConsoleService: _testScreen.debugConsoleService,
                     ),
                   ),
                 if (_testScreen.engine.getDebugMode())
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: HorizontalDebugBar(
-                    onNextPressed: () {
-                      _testScreen.engine.next();
-                    },
-                    onStopPressed: () {
-                      _toggleDebugConsole();
-                      _toggleDebugMode();
-                      _testScreen.debugNotifier.setDebugMode(false);
-                    },
-                    onMenuPressed: () {
-                      _toggleDebugConsole();
-                    },
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: HorizontalDebugBar(
+                      onNextPressed: () {
+                        _testScreen.engine.next();
+                      },
+                      onStopPressed: () {
+                        _toggleDebugConsole();
+                        _toggleDebugMode();
+                        _testScreen.debugNotifier.setDebugMode(false);
+                      },
+                      onMenuPressed: () {
+                        _toggleDebugConsole();
+                      },
+                    ),
                   ),
-                ),
                 Row(
                   children: [
                     Align(
@@ -292,12 +316,30 @@ class _MainScreenState extends State<MainScreen>
                       child: VerticalTopBar(
                         play: () {
                           _testScreen.debugNotifier.setDebugMode(false);
-                          _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, _testScreen.state, _testScreen.debugNotifier, context);
+                          _testScreen.engine.run(
+                            _testScreen.nodeGraph,
+                            _testScreen.registry,
+                            _testScreen.consoleService,
+                            _testScreen.debugConsoleService,
+                            _testScreen.selectedBlockService,
+                            _testScreen.state,
+                            _testScreen.debugNotifier,
+                            context,
+                          );
                         },
                         debug: () {
                           _toggleDebugMode();
                           _testScreen.debugNotifier.setDebugMode(true);
-                          _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, _testScreen.state, _testScreen.debugNotifier, context);
+                          _testScreen.engine.run(
+                            _testScreen.nodeGraph,
+                            _testScreen.registry,
+                            _testScreen.consoleService,
+                            _testScreen.debugConsoleService,
+                            _testScreen.selectedBlockService,
+                            _testScreen.state,
+                            _testScreen.debugNotifier,
+                            context,
+                          );
                         },
                         state: _testScreen.state,
                       ),
@@ -318,16 +360,20 @@ class _MainScreenState extends State<MainScreen>
                           child: child,
                         );
                       },
-                      child: _isAddSectionVisible
-                          ? SizedBox(
-                        key: const ValueKey('BlocksTabs'),
-                        height: 360,
-                        child: BlocksTabs(blocks: _testScreen.blocks),
-                      )
-                          : const SizedBox.shrink(),
+                      child:
+                          _isAddSectionVisible
+                              ? SizedBox(
+                                key: const ValueKey('BlocksTabs'),
+                                height: 360,
+                                child: BlocksTabs(blocks: _testScreen.blocks),
+                              )
+                              : const SizedBox.shrink(),
                     ),
                     VerticalBottomBar(
-                      iconButton: !_isAddSectionVisible ? 'lib/design/assets/icons/add.svg' : 'lib/design/assets/icons/right.svg',
+                      iconButton:
+                          !_isAddSectionVisible
+                              ? 'lib/design/assets/icons/add.svg'
+                              : 'lib/design/assets/icons/right.svg',
                       onTerminalPressed: () => _showTerminalPanel(context),
                       onAddPressed: () => _toggleAddSection(),
                       onSavePressed: () => _saveScreen(),

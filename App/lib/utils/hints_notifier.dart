@@ -19,7 +19,7 @@ class HintsNotifier with ChangeNotifier {
   Future<void> _loadHintsPreference() async {
     final prefs = await SharedPreferences.getInstance();
 
-    _areHintsEnabled = prefs.getBool('areHintsEnabled') ?? true;
+    _areHintsEnabled = prefs.getBool('95a51e91-aa1c-46b4-9591-0ee3f9fb5e39') ?? true;
     notifyListeners();
   }
 
