@@ -10,6 +10,7 @@ import 'package:app/core/debug_console_service.dart';
 import 'package:app/core/registry/VariableRegistry.dart';
 import 'package:app/core/widgets/widget_builder.dart';
 import 'package:app/design/widgets/widgets.dart';
+import 'package:app/utils/engine_state.dart';
 import 'package:app/utils/randomizer.dart';
 import 'package:app/utils/pair.dart';
 import 'package:app/utils/selected_block_service.dart';
@@ -32,6 +33,7 @@ class TestScreen extends StatefulWidget {
   ConsoleService consoleService = ConsoleService();
   DebugConsoleService debugConsoleService = DebugConsoleService();
   SelectedBlockService selectedBlockService = SelectedBlockService();
+  EngineState state = EngineState();
   Engine engine = Engine();
   VariableRegistry registry = VariableRegistry();
 
