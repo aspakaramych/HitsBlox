@@ -186,7 +186,7 @@ class _MainScreenState extends State<MainScreen>
                       setState(() {
                         _isDebugConsoleOpen = false;
                       });
-                      _testScreen.engine.setDebugMode(false);
+                      _testScreen.debugNotifier.setDebugMode(false);
                     },
                     onMenuPressed: () {
                       _toggleDebugConsole();
@@ -200,14 +200,14 @@ class _MainScreenState extends State<MainScreen>
                       child: HorizontalTopBar(
                         play: () {
                           _testScreen.consoleService.clear();
-                          _testScreen.engine.setDebugMode(false);
-                          _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, _testScreen.state, context);
+                          _testScreen.debugNotifier.setDebugMode(false);
+                          _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, _testScreen.state, _testScreen.debugNotifier, context);
                         },
                         debug: () {
                           _testScreen.consoleService.clear();
                           _toggleDebugMode();
-                          _testScreen.engine.setDebugMode(true);
-                          _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, _testScreen.state, context);
+                          _testScreen.debugNotifier.setDebugMode(true);
+                          _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, _testScreen.state, _testScreen.debugNotifier, context);
                         },
                         state: _testScreen.state,
                       ),
@@ -278,7 +278,7 @@ class _MainScreenState extends State<MainScreen>
                     onStopPressed: () {
                       _toggleDebugConsole();
                       _toggleDebugMode();
-                      _testScreen.engine.setDebugMode(false);
+                      _testScreen.debugNotifier.setDebugMode(false);
                     },
                     onMenuPressed: () {
                       _toggleDebugConsole();
@@ -291,13 +291,13 @@ class _MainScreenState extends State<MainScreen>
                       alignment: Alignment.topLeft,
                       child: VerticalTopBar(
                         play: () {
-                          _testScreen.engine.setDebugMode(false);
-                          _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, _testScreen.state, context);
+                          _testScreen.debugNotifier.setDebugMode(false);
+                          _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, _testScreen.state, _testScreen.debugNotifier, context);
                         },
                         debug: () {
                           _toggleDebugMode();
-                          _testScreen.engine.setDebugMode(true);
-                          _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, _testScreen.state, context);
+                          _testScreen.debugNotifier.setDebugMode(true);
+                          _testScreen.engine.run(_testScreen.nodeGraph, _testScreen.registry, _testScreen.consoleService, _testScreen.debugConsoleService, _testScreen.selectedBlockService, _testScreen.state, _testScreen.debugNotifier, context);
                         },
                         state: _testScreen.state,
                       ),
