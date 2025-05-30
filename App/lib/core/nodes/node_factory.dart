@@ -38,9 +38,9 @@ class NodeFactory {
         return EqualsNode(id, position);
       case 'Условие':
         return IfElseNode(id, position);
-      case 'Меньше':
+      case '<':
         return LessNode(id, position);
-      case 'Больше':
+      case '>':
         return MoreNode(id, position);
       case 'Умножение':
         return MultiplyNode(id, position);
