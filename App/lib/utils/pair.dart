@@ -9,14 +9,14 @@ class Pair {
   Map<String, dynamic> toJson() {
     return {
       'first': PositionedBlock.toJson(first),
-      'second': PositionedBlock.toJson(second)
+      'second': PositionedBlock.toJson(second),
     };
   }
 
   factory Pair.fromJson(Map<String, dynamic> json) {
     return Pair(
-        PositionedBlock.fromJson(json['first']),
-        PositionedBlock.fromJson(json['second'])
+      PositionedBlock.fromJson(json['first']),
+      PositionedBlock.fromJson(json['second']),
     );
   }
 }

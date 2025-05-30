@@ -11,7 +11,7 @@ class Console extends StatefulWidget {
 
 class _ConsoleState extends State<Console> {
   late ConsoleService _consoleService;
-  late List<String> logs = [];
+  late List<String> logs;
 
   @override
   void initState() {

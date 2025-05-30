@@ -1,6 +1,7 @@
 import 'package:app/blocks/while_block.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/hints.dart';
 import '../../utils/sizes.dart';
 import '../../utils/triangle_painter.dart';
 
@@ -60,7 +61,6 @@ class _WhileBlockWidgetState extends State<WhileBlockWidget> {
             if (widget.block.wasEdited) {
               return;
             }
-            // widget.block.height += 30;
             widget.block.wasEdited = true;
           });
         },
@@ -165,9 +165,8 @@ class _WhileBlockWidgetState extends State<WhileBlockWidget> {
                                   widget.block.node.rawExpression = text;
                                   widget.onEditToggle();
                                 },
-                                decoration: const InputDecoration(
-                                  hintText: 'a={value};',
-                                  //border: OutlineInputBorder(),
+                                decoration: InputDecoration(
+                                  hintText: HintsUtils.getHintText(widget.block.node),
                                   contentPadding: EdgeInsets.all(6),
                                   enabledBorder: InputBorder.none,
                                   focusedBorder: InputBorder.none,

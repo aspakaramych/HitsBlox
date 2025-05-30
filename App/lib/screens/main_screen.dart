@@ -113,8 +113,6 @@ class _MainScreenState extends State<MainScreen>
     );
 
     log(jsonString);
-
-    // _testScreen.loadFromJson(_testScreen.saveScreenState());
   }
 
   Future<String?> showSaveDialog(BuildContext context) async {
@@ -227,7 +225,11 @@ class _MainScreenState extends State<MainScreen>
                             context,
                           );
                         },
-                        state: _testScreen.state, debugNotifier: _testScreen.debugNotifier,
+                        state: _testScreen.state,
+                        debugNotifier: _testScreen.debugNotifier,
+                        stop: () {
+                          _testScreen.engine.stop(_testScreen.debugNotifier, _testScreen.state);
+                        },
                       ),
                     ),
                     Expanded(child: Center()),

@@ -82,6 +82,7 @@ class ExecutionContext {
 class QueueItem {
   final Node node;
   final ExecutionContext context;
+
   QueueItem(this.node, this.context);
 }
 
@@ -104,8 +105,17 @@ class Engine {
     }
   }
 
-  void stop(DebugNotifier debugMode){
-    _debugCompleter?.complete();
+   void reset(){
+     _curNode = null;
+     _debugCompleter = null;
+   }
+
+  void stop(DebugNotifier debugMode, EngineState state) {
+    if (_debugCompleter != null) {
+      _debugCompleter?.complete();
+    }
+    _debugCompleter = null;
+    state.setRunning(false);
     debugMode.setDebugMode(false);
   }
 
@@ -124,6 +134,7 @@ class Engine {
     DebugNotifier debugMode,
     BuildContext context,
   ) async {
+    reset();
     if (debugMode.getDebugMode()) {
       CustomToast.showCustomToast(
         context,
@@ -324,7 +335,7 @@ class Engine {
         );
         break;
       }
-      if (!debugMode.getDebugMode()){
+      if (!debugMode.getDebugMode()) {
         await Future<void>.delayed(Duration(milliseconds: 100));
       }
     }

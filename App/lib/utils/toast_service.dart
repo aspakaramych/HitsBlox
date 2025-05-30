@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 
 import 'help_toast.dart';
 
-class ToastService{
+class ToastService {
   final ShowHelpToast showHelpToast = ShowHelpToast();
-  void Show(BuildContext context, String name, bool enable){
+
+  void Show(BuildContext context, String name, bool enable) {
     if (enable) {
-      switch (name){
+      switch (name) {
         case "conditional":
           showHelpToast.showIfElseToast(context);
           return;

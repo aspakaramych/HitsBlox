@@ -13,20 +13,32 @@ class AppRouter {
 
   AppRouter(this.toggleTheme, this.isDarkMode) {
     homeScreen = HomeScreen();
-    mainScreen = MainScreen(null, screenName: '',);
-    settingsScreen = SettingsScreen(toggleTheme: toggleTheme, isDarkMode: isDarkMode);
+    mainScreen = MainScreen(null, screenName: '');
+    settingsScreen = SettingsScreen(
+      toggleTheme: toggleTheme,
+      isDarkMode: isDarkMode,
+    );
   }
 
   Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) => homeScreen);
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => homeScreen,
+        );
       case '/edit':
-        return PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) => mainScreen);
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => mainScreen,
+        );
       case '/settings':
-        return PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) => settingsScreen);
+        return PageRouteBuilder(
+          pageBuilder:
+              (context, animation, secondaryAnimation) => settingsScreen,
+        );
       default:
-        return PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) => homeScreen);
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => homeScreen,
+        );
     }
   }
 }

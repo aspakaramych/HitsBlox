@@ -21,7 +21,8 @@ import '../core/registry/VariableRegistry.dart';
 class SerializationUtils {
   static Map<String, dynamic> saveScreenState(TestScreen widget) {
     return {
-      'assignmentBlocks': widget.assignmentBlocks.map((b) => b.toJson()).toList(),
+      'assignmentBlocks':
+          widget.assignmentBlocks.map((b) => b.toJson()).toList(),
       'logicBlocks': widget.logicBlocks.map((b) => b.toJson()).toList(),
       'printBlocks': widget.printBlocks.map((b) => b.toJson()).toList(),
       'ifElseBlocks': widget.ifElseBlocks.map((b) => b.toJson()).toList(),
@@ -30,10 +31,10 @@ class SerializationUtils {
       'commentBlocks': widget.commentBlocks.map((b) => b.toJson()).toList(),
       'wiredBlocks': widget.wiredBlocks.map((p) => p.toJson()).toList(),
       'calibrations': widget.calibrations.map(
-            (key, value) => MapEntry(key, {'dx': value.dx, 'dy': value.dy}),
+        (key, value) => MapEntry(key, {'dx': value.dx, 'dy': value.dy}),
       ),
       'outputCalibrations': widget.outputCalibrations.map(
-            (key, value) => MapEntry(key, {'dx': value.dx, 'dy': value.dy}),
+        (key, value) => MapEntry(key, {'dx': value.dx, 'dy': value.dy}),
       ),
       'nodeGraph': widget.nodeGraph.toJson(),
     };
@@ -51,8 +52,12 @@ class SerializationUtils {
     widget.printBlocks =
         screenJson['printBlocks']
             .map<PrintBlock>(
-              (block) => PrintBlock.fromJson(block, widget.registry, widget.consoleService),
-        )
+              (block) => PrintBlock.fromJson(
+                block,
+                widget.registry,
+                widget.consoleService,
+              ),
+            )
             .toList();
     widget.ifElseBlocks =
         screenJson['ifElseBlocks']
@@ -75,34 +80,34 @@ class SerializationUtils {
             .map<Pair>((block) => Pair.fromJson(block))
             .toList();
     widget.calibrations =
-    ((screenJson['calibrations'] as Map<String, dynamic>)?.map((
-        key,
-        value,
-        ) {
-      final dx = value['dx'] as double? ?? 0.0;
-      final dy = value['dy'] as double? ?? 0.0;
-      return MapEntry(key, Offset(dx, dy));
-    }) ??
-        <String, Offset>{});
+        ((screenJson['calibrations'] as Map<String, dynamic>)?.map((
+              key,
+              value,
+            ) {
+              final dx = value['dx'] as double? ?? 0.0;
+              final dy = value['dy'] as double? ?? 0.0;
+              return MapEntry(key, Offset(dx, dy));
+            }) ??
+            <String, Offset>{});
     widget.outputCalibrations =
-    ((screenJson['outputCalibrations'] as Map<String, dynamic>)?.map((
-        key,
-        value,
-        ) {
-      final dx = value['dx'] as double? ?? 0.0;
-      final dy = value['dy'] as double? ?? 0.0;
-      return MapEntry(key, Offset(dx, dy));
-    }) ??
-        <String, Offset>{});
+        ((screenJson['outputCalibrations'] as Map<String, dynamic>)?.map((
+              key,
+              value,
+            ) {
+              final dx = value['dx'] as double? ?? 0.0;
+              final dy = value['dy'] as double? ?? 0.0;
+              return MapEntry(key, Offset(dx, dy));
+            }) ??
+            <String, Offset>{});
     _refillNodeGraph(screenJson['nodeGraph'], widget);
     _refillWiredBlocks(widget);
   }
 
   static void _refillNodeGraph(Map<String, dynamic> json, TestScreen widget) {
     List<Connection> connections =
-    json['connections']
-        .map<Connection>((con) => Connection.fromJson(con))
-        .toList();
+        json['connections']
+            .map<Connection>((con) => Connection.fromJson(con))
+            .toList();
 
     widget.nodeGraph = NodeGraph.from(_refillNodes(widget), connections);
   }
@@ -137,14 +142,20 @@ class SerializationUtils {
       var oldFirst = widget.wiredBlocks[i].first;
       var oldSecond = widget.wiredBlocks[i].second;
       PositionedBlock? newFirst = _findPositionedBlock(oldFirst.nodeId, widget);
-      PositionedBlock? newSecond = _findPositionedBlock(oldSecond.nodeId, widget);
+      PositionedBlock? newSecond = _findPositionedBlock(
+        oldSecond.nodeId,
+        widget,
+      );
       newWiredBlocks.add(Pair(newFirst!, newSecond!));
     }
 
     widget.wiredBlocks = newWiredBlocks;
   }
 
-  static PositionedBlock? _findPositionedBlock(String nodeId, TestScreen widget) {
+  static PositionedBlock? _findPositionedBlock(
+    String nodeId,
+    TestScreen widget,
+  ) {
     for (var block in widget.assignmentBlocks) {
       if (block.nodeId == nodeId) {
         return block;
@@ -197,5 +208,4 @@ class SerializationUtils {
 
     widget.wiredBlocks = [];
   }
-
 }

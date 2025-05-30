@@ -32,7 +32,7 @@ class _VerticalTopBarState extends State<VerticalTopBar> {
     super.dispose();
   }
 
-  void _updateIcon(){
+  void _updateIcon() {
     setState(() {
       _areRunning = widget.state.getAreRunning();
     });
@@ -74,13 +74,19 @@ class _VerticalTopBarState extends State<VerticalTopBar> {
                   'lib/design/assets/icons/debug.svg',
                   width: 40,
                   height: 40,
-                  colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.onSecondaryContainer, BlendMode.srcIn),
+                  colorFilter: ColorFilter.mode(
+                    Theme.of(context).colorScheme.onSecondaryContainer,
+                    BlendMode.srcIn,
+                  ),
                 ),
               ),
               ElevatedButton(
-                onPressed: (!_areRunning)
-                    ? widget.play
-                    : () {widget.state.setRunning(false);},
+                onPressed:
+                    (!_areRunning)
+                        ? widget.play
+                        : () {
+                          widget.state.setRunning(false);
+                        },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
                   maximumSize: Size(40, 40),
@@ -89,12 +95,15 @@ class _VerticalTopBarState extends State<VerticalTopBar> {
                   padding: EdgeInsets.zero,
                 ),
                 child: SvgPicture.asset(
-                    (!_areRunning)
-                        ? 'lib/design/assets/icons/play.svg'
-                        : 'lib/design/assets/icons/stop.svg',
+                  (!_areRunning)
+                      ? 'lib/design/assets/icons/play.svg'
+                      : 'lib/design/assets/icons/stop.svg',
                   width: 40,
                   height: 40,
-                  colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.onSecondaryContainer, BlendMode.srcIn),
+                  colorFilter: ColorFilter.mode(
+                    Theme.of(context).colorScheme.onSecondaryContainer,
+                    BlendMode.srcIn,
+                  ),
                 ),
               ),
             ],

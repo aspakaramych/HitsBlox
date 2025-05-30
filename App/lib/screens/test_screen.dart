@@ -68,7 +68,14 @@ class _TestScreenState extends State<TestScreen>
   late BlockService _blockService;
   late TestScreenWidgetBuilder _widgetBuilder;
 
-  void makeConnection(Node first, Node second, int inputIndex, int outputIndex, bool severalInputsMode, bool severalOutputsMode) {
+  void makeConnection(
+    Node first,
+    Node second,
+    int inputIndex,
+    int outputIndex,
+    bool severalInputsMode,
+    bool severalOutputsMode,
+  ) {
     String newOutputPinId = 'exec_out_${Randomizer.getRandomInt()}';
     String newInputPinId = 'exec_in_${Randomizer.getRandomInt()}';
 
@@ -86,7 +93,7 @@ class _TestScreenState extends State<TestScreen>
       isExecutionPin: true,
     );
 
-    if(severalOutputsMode) {
+    if (severalOutputsMode) {
       widget.nodeGraph.nodes
           .firstWhere((n) => n.id == first.id)
           .addOutputOnIndex(outputPin, outputIndex);
@@ -96,7 +103,7 @@ class _TestScreenState extends State<TestScreen>
           .addOutput(outputPin);
     }
 
-    if(severalInputsMode) {
+    if (severalInputsMode) {
       widget.nodeGraph.nodes
           .firstWhere((n) => n.id == second.id)
           .addInputOnIndex(inputPin, inputIndex);
@@ -133,7 +140,7 @@ class _TestScreenState extends State<TestScreen>
 
   void deleteCalibrations(String nodeId) {
     var keysToRemove =
-    widget.calibrations.keys.where((key) => key.contains(nodeId)).toList();
+        widget.calibrations.keys.where((key) => key.contains(nodeId)).toList();
 
     for (var key in keysToRemove) {
       widget.calibrations.remove(key);
@@ -156,7 +163,17 @@ class _TestScreenState extends State<TestScreen>
       );
     });
     _blockService = BlockService(widget, refreshUI);
-    _widgetBuilder = TestScreenWidgetBuilder(widget, refreshUI, deleteNode, deleteConnection, deleteConnectionBetween, deleteCalibrations, makeConnection, temp, currOutputCalibration);
+    _widgetBuilder = TestScreenWidgetBuilder(
+      widget,
+      refreshUI,
+      deleteNode,
+      deleteConnection,
+      deleteConnectionBetween,
+      deleteCalibrations,
+      makeConnection,
+      temp,
+      currOutputCalibration,
+    );
     widget.blocks = _blockService.getBlocks(_transformationController);
     widget.selectedBlockService.addListener(refreshUI);
   }
@@ -173,19 +190,13 @@ class _TestScreenState extends State<TestScreen>
             minScale: 0.1,
             maxScale: 3.0,
             child: Container(
-              constraints: BoxConstraints(
-                minWidth: 8000.0,
-                minHeight: 4000.0,
-              ),
+              constraints: BoxConstraints(minWidth: 8000.0, minHeight: 4000.0),
               color: Theme.of(context).colorScheme.surface,
               child: Stack(
                 // clipBehavior: Clip.none,
                 children: [
                   CustomPaint(
-                    size: Size(
-                      8000.0,
-                      4000.0,
-                    ),
+                    size: Size(8000.0, 4000.0),
                     painter: BackgroundPainter(context: context),
                   ),
 

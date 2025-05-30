@@ -16,7 +16,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late ScrollController _scrollController;
-  bool _isStorageVisible = false;
   bool _hasSnapped = false;
 
   bool _isAnimating = false;
@@ -26,9 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _scrollController = ScrollController();
     _scrollController.addListener(_onScroll);
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   }
 
   @override
@@ -100,33 +97,45 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Expanded(
                         child: Align(
-                            alignment: Alignment.topCenter,
-                            child: ConstrainedBox(
-                              constraints: BoxConstraints(maxWidth: 400),
-                              child: Container(
-                                  margin: EdgeInsets.only(right: 20, left: 20, top: 40),
-                                  child: GridSaves()
+                          alignment: Alignment.topCenter,
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(maxWidth: 400),
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                right: 20,
+                                left: 20,
+                                top: 40,
                               ),
-                            )
+                              child: GridSaves(),
+                            ),
+                          ),
                         ),
                       ),
                       BouncingIcon(),
                       // Container(margin: EdgeInsets.symmetric(vertical: 0), child: SvgPicture.asset("lib/design/assets/icons/scroll.svg", colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.onSecondary, BlendMode.srcIn),)),
                       HorizontalBottomBar(
                         onTerminalPressed: null,
-                        onAddPressed: () {Navigator.pushNamed(context, '/edit');},
+                        onAddPressed: () {
+                          Navigator.pushNamed(context, '/edit');
+                        },
                         onSavePressed: null,
                         iconButton: 'lib/design/assets/icons/right.svg',
                         activeButton: 'home',
-                        ),
+                      ),
                     ],
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: ConstrainedBox(constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height, maxWidth: 360), child: StorageScreen()),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: MediaQuery.of(context).size.height,
+                      maxWidth: 360,
+                    ),
+                    child: StorageScreen(),
                   ),
+                ),
               ],
-            )
+            ),
           ),
         ],
       ),

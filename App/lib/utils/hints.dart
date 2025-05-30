@@ -17,9 +17,9 @@ enum Hints {
   ARRAYADD("arr[idx] = value"),
   LENGTH("name"),
   INCREMENT("name++ | name--"),
-  PRINT("name"),
+  PRINT("text | {name}"),
   WHILE("predicate"),
-  SWAP("name / arr[idx]"),;
+  SWAP("name / arr[idx]");
 
   const Hints(this.hintText);
 
@@ -28,23 +28,23 @@ enum Hints {
 
 class HintsUtils {
   static String getHintText(Node node) {
-    if(node is IntAssignNode) {
+    if (node is IntAssignNode) {
       return Hints.INT.hintText;
-    } else if(node is StringAssignNode) {
+    } else if (node is StringAssignNode) {
       return Hints.STRING.hintText;
-    } else if(node is BoolAssignNode) {
+    } else if (node is BoolAssignNode) {
       return Hints.BOOL.hintText;
-    } else if(node is ArrayAsignNode) {
+    } else if (node is ArrayAsignNode) {
       return Hints.ARRAY.hintText;
-    } else if(node is ArrayAddNode) {
+    } else if (node is ArrayAddNode) {
       return Hints.ARRAYADD.hintText;
-    } else if(node is LengthNode) {
+    } else if (node is LengthNode) {
       return Hints.LENGTH.hintText;
-    } else if(node is IncrementNode) {
+    } else if (node is IncrementNode) {
       return Hints.INCREMENT.hintText;
-    } else if(node is PrintNode) {
+    } else if (node is PrintNode) {
       return Hints.PRINT.hintText;
-    } else if(node is WhileNode) {
+    } else if (node is WhileNode) {
       return Hints.WHILE.hintText;
     }
 

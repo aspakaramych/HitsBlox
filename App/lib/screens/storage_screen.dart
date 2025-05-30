@@ -10,7 +10,6 @@ import 'package:app/design/widgets/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StorageSaves extends StatefulWidget {
-
   const StorageSaves({super.key});
 
   @override
@@ -78,15 +77,17 @@ class _StorageSavesState extends State<StorageSaves> {
               GestureDetector(
                 onTap: () async {
                   var savedState = null;
-                  if(key != "Новое сохранение") {
+                  if (key != "Новое сохранение") {
                     savedState = await _loadScreen(key);
                   }
                   Navigator.push(
                     context,
                     PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) => key != "Новое сохранение"
-                          ? MainScreen(savedState, screenName: key)
-                          : MainScreen(null, screenName: ''),
+                      pageBuilder:
+                          (context, animation, secondaryAnimation) =>
+                              key != "Новое сохранение"
+                                  ? MainScreen(savedState, screenName: key)
+                                  : MainScreen(null, screenName: ''),
                     ),
                   );
                 },
@@ -101,26 +102,33 @@ class _StorageSavesState extends State<StorageSaves> {
                     ),
                     child: Center(
                       child: Text(
-                          '$key',
-                          // maxLines: 1,
-                          style: Theme.of(context).textTheme.titleLarge
+                        '$key',
+                        maxLines: null,
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
                   ),
-                )
+                ),
               ),
               if (key != "Новое сохранение")
                 Positioned(
                   bottom: 20,
                   right: 20,
                   child: GestureDetector(
-                    onTap: () => showDeleteConfirmationDialog(context, key, _deleteSave),
+                    onTap:
+                        () => showDeleteConfirmationDialog(
+                          context,
+                          key,
+                          _deleteSave,
+                        ),
                     child: SvgPicture.asset(
                       'lib/design/assets/icons/trash.svg',
                       width: 20,
                       height: 20,
-                      colorFilter:
-                      ColorFilter.mode(Theme.of(context).colorScheme.error, BlendMode.srcIn),
+                      colorFilter: ColorFilter.mode(
+                        Theme.of(context).colorScheme.error,
+                        BlendMode.srcIn,
+                      ),
                     ),
                   ),
                 ),

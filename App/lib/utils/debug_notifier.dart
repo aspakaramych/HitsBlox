@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class DebugNotifier with ChangeNotifier{
+class DebugNotifier with ChangeNotifier {
   bool _debugMode = false;
 
-  bool getDebugMode(){
+  bool getDebugMode() {
     return _debugMode;
   }
 

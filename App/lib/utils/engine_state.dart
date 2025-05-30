@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class EngineState with ChangeNotifier{
+class EngineState with ChangeNotifier {
   bool _areRunning = false;
 
-  bool getAreRunning(){
+  bool getAreRunning() {
     return _areRunning;
   }
 

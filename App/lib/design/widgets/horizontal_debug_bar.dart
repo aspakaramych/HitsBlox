@@ -34,9 +34,9 @@ class HorizontalDebugBar extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onSecondaryContainer,
               ),
               CustomIconButton(
-                  pic: 'lib/design/assets/icons/to_end.svg',
-                  function: onStopPressed,
-                  color: Theme.of(context).colorScheme.onSecondaryContainer
+                pic: 'lib/design/assets/icons/to_end.svg',
+                function: onStopPressed,
+                color: Theme.of(context).colorScheme.onSecondaryContainer,
               ),
               CustomIconButton(
                 pic: 'lib/design/assets/icons/bug-folder.svg',

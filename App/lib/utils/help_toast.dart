@@ -99,6 +99,7 @@ class ShowHelpToast {
       ),
     );
   }
+
   void showArrayAddToast(BuildContext context) {
     showToast(
       context,
@@ -107,13 +108,14 @@ class ShowHelpToast {
         child: CustomToast(
           title: 'ArrayAddCreated',
           description:
-          'Сначала напишите название уже созданного массива, в [] укажите индекс, через равно укажите значение, которое вы хотите присвоить этому элементу массива(a[i] = 45;)',
+              'Сначала напишите название уже созданного массива, в [] укажите индекс, через равно укажите значение, которое вы хотите присвоить этому элементу массива(a[i] = 45;)',
           backgroundColor: Colors.grey,
           textColor: Colors.grey,
         ),
       ),
     );
   }
+
   void showLengthToast(BuildContext context) {
     showToast(
       context,
@@ -122,13 +124,14 @@ class ShowHelpToast {
         child: CustomToast(
           title: 'LengthCreated',
           description:
-          'На вход соедините блок с массивом, внутри напишите название переменной, значение которой будет длинной массива',
+              'На вход соедините блок с массивом, внутри напишите название переменной, значение которой будет длинной массива',
           backgroundColor: Colors.grey,
           textColor: Colors.grey,
         ),
       ),
     );
   }
+
   void showBinToast(BuildContext context) {
     showToast(
       context,
@@ -137,13 +140,14 @@ class ShowHelpToast {
         child: CustomToast(
           title: 'OperationsCreated',
           description:
-          'На вход подается 2 числа \nВерхний треугольник - a \nНижний треугольник - b',
+              'На вход подается 2 числа \nВерхний треугольник - a \nНижний треугольник - b',
           backgroundColor: Colors.grey,
           textColor: Colors.grey,
         ),
       ),
     );
   }
+
   void showSwapToast(BuildContext context) {
     showToast(
       context,
@@ -151,14 +155,14 @@ class ShowHelpToast {
         lifeTime: Duration(seconds: 10),
         child: CustomToast(
           title: 'SwapCreated',
-          description:
-          'В поля пишутся переменные или массивы с индексами',
+          description: 'В поля пишутся переменные или массивы с индексами',
           backgroundColor: Colors.grey,
           textColor: Colors.grey,
         ),
       ),
     );
   }
+
   void showIncrementToast(BuildContext context) {
     showToast(
       context,
@@ -167,13 +171,14 @@ class ShowHelpToast {
         child: CustomToast(
           title: 'IncrementCreated',
           description:
-          'Напишите переменную, после неё:\n++ если хотите увеличить на 1\n-- если хотите уменьшить на 1',
+              'Напишите переменную, после неё:\n++ если хотите увеличить на 1\n-- если хотите уменьшить на 1',
           backgroundColor: Colors.grey,
           textColor: Colors.grey,
         ),
       ),
     );
   }
+
   void showConcatToast(BuildContext context) {
     showToast(
       context,
@@ -182,13 +187,14 @@ class ShowHelpToast {
         child: CustomToast(
           title: 'ConcatCreated',
           description:
-          'На вход подается 2 строки \nВерхний треугольник - a \nНижний треугольник - b',
+              'На вход подается 2 строки \nВерхний треугольник - a \nНижний треугольник - b',
           backgroundColor: Colors.grey,
           textColor: Colors.grey,
         ),
       ),
     );
   }
+
   void showLogicToast(BuildContext context) {
     showToast(
       context,
@@ -197,13 +203,14 @@ class ShowHelpToast {
         child: CustomToast(
           title: 'LogicCreated',
           description:
-          'На вход подается 2 числа или bool значения \nВерхний треугольник - a \nНижний треугольник - b',
+              'На вход подается 2 числа или bool значения \nВерхний треугольник - a \nНижний треугольник - b',
           backgroundColor: Colors.grey,
           textColor: Colors.grey,
         ),
       ),
     );
   }
+
   void showPrintToast(BuildContext context) {
     showToast(
       context,
@@ -212,7 +219,7 @@ class ShowHelpToast {
         child: CustomToast(
           title: 'PrintCreated',
           description:
-          'Если хотите вывести значение переменной, напишите ее в {}({a})',
+              'Если хотите вывести значение переменной, напишите ее в {}({a})',
           backgroundColor: Colors.grey,
           textColor: Colors.grey,
         ),

@@ -174,7 +174,7 @@ class _BlocksTabsState extends State<BlocksTabs>
             ),
             if (hintsNotifier.areHintsEnabled)
               Text(
-                "*удаление - длинное нажатие по блоку",
+                "удаление - длинное нажатие по блоку",
                 style: Theme.of(context).textTheme.bodySmall,
               ),
           ],

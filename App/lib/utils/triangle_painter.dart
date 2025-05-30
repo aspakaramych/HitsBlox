@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TrianglePainter extends CustomPainter {
-
   Size arrowSize;
   Color color;
 
@@ -28,5 +27,4 @@ class TrianglePainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return false;
   }
-
 }
