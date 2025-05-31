@@ -48,7 +48,7 @@ class _VerticalTopBarState extends State<VerticalTopBar> {
     return Container(
       width: 70,
       height: 150,
-      margin: EdgeInsets.only(top: 20, left: 20),
+      margin: EdgeInsets.only(top: 20, left: 50),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.secondaryContainer,
         borderRadius: BorderRadius.all(Radius.circular(15)),

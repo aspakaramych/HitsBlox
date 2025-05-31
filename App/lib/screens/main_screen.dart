@@ -164,7 +164,7 @@ class _MainScreenState extends State<MainScreen>
               children: [
                 Positioned(
                   height: 200,
-                  top: 115,
+                  top: 125,
                   right: 20,
                   child: Visibility(
                     visible: _isDebugConsoleOpen,
@@ -290,7 +290,7 @@ class _MainScreenState extends State<MainScreen>
                   Positioned(
                     height: 200,
                     top: 180,
-                    left: 20,
+                    left: 50,
                     child: DebugConsole(
                       onClose: _toggleDebugConsole,
                       debugConsoleService: _testScreen.debugConsoleService,
